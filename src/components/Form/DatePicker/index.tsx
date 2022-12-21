@@ -7,7 +7,12 @@ import dayjs from 'dayjs';
 import useBreakpoint from 'hooks/useBreakpoint';
 import { omit } from 'lodash';
 import type { ReactNode } from 'react';
-import type { Control, FieldValues, Path } from 'react-hook-form';
+import type {
+  Control,
+  FieldValues,
+  Path,
+  UnPackAsyncDefaultValues,
+} from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import { DateFormat } from 'utils/const';
 
@@ -20,7 +25,7 @@ interface DatePickerProps<TFormValues extends FieldValues>
     DesktopDatePickerProps<Date | Dayjs, Date | Dayjs>,
     'onChange' | 'renderInput' | 'value'
   > {
-  name: Path<TFormValues>;
+  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
   control: Control<TFormValues>;
   required?: boolean;
   labelCol?: number;

@@ -53,6 +53,7 @@ const nextConfig = {
     DEPLOY_ENV: process.env.DEPLOY_ENV,
     DOMAIN: process.env.DOMAIN,
     IMAGE_DOMAIN: process.env.IMAGE_DOMAIN,
+    PROJECT_NAME: process.env.PROJECT_NAME
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find(

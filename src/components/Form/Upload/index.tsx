@@ -14,7 +14,12 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import type { ChangeEvent } from 'react';
 import { useMemo, useState } from 'react';
-import type { Control, FieldValues, Path } from 'react-hook-form';
+import type {
+  Control,
+  FieldValues,
+  Path,
+  UnPackAsyncDefaultValues,
+} from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import api from 'utils/api';
 import Helper from 'utils/helpers';
@@ -28,7 +33,7 @@ const ImageCrop = dynamic(() => import('./ImageCrop'), { ssr: false });
 interface UploadFieldProps<TFormValues extends FieldValues> {
   label?: string;
   required?: boolean;
-  name: Path<TFormValues>;
+  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
   control: Control<TFormValues>;
   maxItems?: number;
   helperText?: string;

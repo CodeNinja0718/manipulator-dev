@@ -9,7 +9,12 @@ import {
 import type { RadioGroupProps } from '@mui/material/RadioGroup';
 import type { IListItem } from 'hooks/types';
 import type { ReactNode } from 'react';
-import type { Control, FieldValues, Path } from 'react-hook-form';
+import type {
+  Control,
+  FieldValues,
+  Path,
+  UnPackAsyncDefaultValues,
+} from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
 import HelperText from '../HelperText';
@@ -19,7 +24,7 @@ interface RadioFieldProps<TFormValues extends FieldValues>
   extends RadioGroupProps {
   label?: string;
   required?: boolean;
-  name: Path<TFormValues>;
+  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
   control: Control<TFormValues>;
   data: IListItem[];
   labelCol?: number;

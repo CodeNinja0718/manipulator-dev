@@ -10,7 +10,12 @@ import {
 } from '@mui/material';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
-import type { Control, FieldValues, Path } from 'react-hook-form';
+import type {
+  Control,
+  FieldValues,
+  Path,
+  UnPackAsyncDefaultValues,
+} from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
 import HelperText from '../HelperText';
@@ -20,7 +25,7 @@ import styles from '../styles';
 interface TextInputProps<TFormValues extends FieldValues>
   extends OutlinedInputProps {
   label?: string;
-  name: Path<TFormValues>;
+  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
   control: Control<TFormValues>;
   maxLength?: number;
   required?: boolean;

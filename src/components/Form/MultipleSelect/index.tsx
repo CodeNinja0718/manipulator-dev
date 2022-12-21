@@ -2,7 +2,12 @@ import { Box, FormControl, MenuItem, Select as MuiSelect } from '@mui/material';
 import type { SelectChangeEvent, SelectProps } from '@mui/material/Select';
 import type { IListItem } from 'hooks/types';
 import { find, get } from 'lodash';
-import type { Control, FieldValues, Path } from 'react-hook-form';
+import type {
+  Control,
+  FieldValues,
+  Path,
+  UnPackAsyncDefaultValues,
+} from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
 import HelperText from '../HelperText';
@@ -13,7 +18,7 @@ interface SelectFieldProps<TFormValues extends FieldValues>
   extends SelectProps {
   label?: string;
   required?: boolean;
-  name: Path<TFormValues>;
+  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
   control: Control<TFormValues>;
   maxLength?: number;
   data: IListItem[];
