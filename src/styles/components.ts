@@ -9,7 +9,7 @@ const components: ThemeOptions['components'] = {
         '&:not(.Mui-error):not(.Mui-disabled)': {
           '&:hover': {
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#269271',
+              borderColor: '#249287',
             },
           },
         },
@@ -40,7 +40,7 @@ const components: ThemeOptions['components'] = {
             borderRadius: '8px',
             fontSize: 16,
             '&.Mui-disabled': {
-              backgroundColor: '#f6f8f9',
+              backgroundColor: '#cccccc',
             },
           },
         },
@@ -60,7 +60,8 @@ const components: ThemeOptions['components'] = {
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: '5px',
+        minWidth: '100px',
+        borderRadius: '35px',
       },
       sizeMedium: {
         lineHeight: '21px',
@@ -71,8 +72,12 @@ const components: ThemeOptions['components'] = {
       },
       containedPrimary: {
         boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
+        '&.Mui-disabled': {
+          color: '#fff',
+        },
       },
       outlinedPrimary: {
+        borderColor: '#249287',
         boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
       },
     },
@@ -80,8 +85,6 @@ const components: ThemeOptions['components'] = {
       {
         props: {
           size: 'large',
-          variant: 'contained',
-          color: 'primary',
         },
         style: {
           padding: '22px 24px 23px',
@@ -90,24 +93,34 @@ const components: ThemeOptions['components'] = {
       {
         props: {
           size: 'medium',
-          variant: 'contained',
-          color: 'primary',
         },
         style: {
-          padding: '10px 8px 9px',
+          padding: '19.5px 20px',
         },
       },
       {
         props: {
-          size: 'medium',
-          variant: 'outlined',
-          color: 'primary',
+          size: 'small',
         },
         style: {
-          padding: '9px 7px 8px',
+          padding: '15px 18px',
         },
       },
     ],
+  },
+  MuiTypography: {
+    defaultProps: {
+      variantMapping: {
+        h1: 'h1',
+        h2: 'h2',
+        h3: 'h3',
+        h4: 'h4',
+        h5: 'h5',
+        h6: 'h6',
+        body1: 'p',
+        body2: 'span',
+      },
+    },
   },
 };
 

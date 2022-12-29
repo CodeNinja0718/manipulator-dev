@@ -48,27 +48,31 @@ declare module '@mui/material/styles' {
 
 const palette: MuiPaletteOptions = {
   primary: {
-    main: '#269271',
+    main: '#249287',
     contrastText: '#fff',
   },
   secondary: {
-    main: '#ffff00',
+    main: '#659d3b',
   },
-  tertiary: '#ffcd00',
+  tertiary: '#ea6500',
   error: {
-    main: '#e60012',
+    main: '#d42828',
   },
   success: {
     main: '#51b873',
   },
+  warning: {
+    main: '#ea6500',
+  },
   text: {
-    primary: '#000',
+    primary: '#333333',
   },
   heading: '#5a524f',
   white: '#fff',
   backgroundColor: '#f4f2f1',
   action: {
     hoverOpacity: 0.4,
+    disabledBackground: '#cccccc',
   },
 };
 

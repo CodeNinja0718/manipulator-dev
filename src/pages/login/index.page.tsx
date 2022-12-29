@@ -59,6 +59,7 @@ const LoginPage = () => {
           color="primary"
           variant="contained"
           type="submit"
+          sx={{ borderRadius: '35px', pt: '1.185rem', pb: '1.185rem', mt: 2 }}
         >
           パスワードをリセットする
         </LoadingButton>
