@@ -80,6 +80,21 @@ const components: ThemeOptions['components'] = {
         borderColor: '#249287',
         boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
       },
+      iconSizeSmall: {
+        '& > *:first-child': {
+          fontSize: 15,
+        },
+      },
+      iconSizeMedium: {
+        '& > *:first-child': {
+          fontSize: 15,
+        },
+      },
+      iconSizeLarge: {
+        '& > *:first-child': {
+          fontSize: 21,
+        },
+      },
     },
     variants: [
       {
