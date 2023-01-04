@@ -62,6 +62,14 @@ const ComponentPage = () => {
         </Button>
         <br />
         <Button
+          size="xs"
+          variant="contained"
+          color="warning"
+          endIcon={<ArrowForwardIosIcon fontSize="small" />}
+        >
+          整体師編
+        </Button>
+        <Button
           size="small"
           variant="contained"
           color="warning"
@@ -94,7 +102,9 @@ const ComponentPage = () => {
         <Typography variant="h3" fontWeight={700}>
           Typography
         </Typography>
-
+        <Typography variant="title" style={{ display: 'inline' }}>
+          Responsive title
+        </Typography>
         <Typography variant="h1">Responsive h1</Typography>
         <Typography variant="h2">Responsive h2</Typography>
         <Typography variant="h3">Responsive h3</Typography>

@@ -1,8 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import type {
-  PaletteOptions as MuiPaletteOptions,
-  Shadows,
-} from '@mui/material';
+import type { PaletteOptions as MuiPaletteOptions } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { Noto_Sans_JP } from '@next/font/google';
 
@@ -31,6 +28,15 @@ declare module '@mui/material/styles' {
     tertiary: string;
     heading: string;
   }
+
+  interface TypographyVariants {
+    title: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    title?: React.CSSProperties;
+  }
 }
 
 declare module '@mui/material/InputBase' {
@@ -41,8 +47,19 @@ declare module '@mui/material/InputBase' {
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
-    card: true;
     tablet: true;
+  }
+}
+
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    title: true;
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsSizeOverrides {
+    xs: true;
   }
 }
 
@@ -76,45 +93,32 @@ const palette: MuiPaletteOptions = {
   },
 };
 
-const basicTheme = createTheme({
-  palette,
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      card: 700,
-      tablet: 768,
-      md: 900,
-      lg: 1200,
-      xl: 1440,
-    },
-  },
-});
-
 // Create a theme instance.
 const theme = createTheme({
   components,
   palette,
   typography: {
-    fontFamily: noto.style.fontFamily,
+    fontFamily: `HiraginoKakuGothicPro,${noto.style.fontFamily}`,
     allVariants: {
       whiteSpace: 'pre-line',
       wordBreak: 'break-word',
       lineHeight: 'normal',
     },
   },
-  breakpoints: basicTheme.breakpoints,
-  shadows: [
-    ...createTheme({}).shadows.map((shadow, i) =>
-      i === 0 ? '0 0 5px 0 rgba(0, 0, 0, 0.25);' : shadow,
-    ),
-  ] as Shadows,
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      tablet: 768,
+      md: 900,
+      lg: 1200,
+      xl: 1440,
+    },
+  },
+  spacing: (factor: number) => `${factor}px`,
   shape: {
-    borderRadius: 8,
+    borderRadius: 0,
   },
 });
-
-// Responsive breakpoint
-export const tabletDown = basicTheme.breakpoints.down('tablet'); // 768px
 
 export default theme;

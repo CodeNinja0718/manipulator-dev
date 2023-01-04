@@ -7,19 +7,22 @@ interface LabelProps {
   extraLabel?: string | ReactNode;
   size?: 'small' | 'medium' | 'large';
   className?: string;
+  htmlFor?: string;
 }
 
 const labelStyle = {
   large: {
-    fontSize: 16,
-    mb: '12px',
+    fontSize: 18,
+    fontWeight: 'bold',
+    mb: 8,
   },
   medium: {
     fontSize: 16,
-    mb: '6px',
+    mb: 8,
     fontWeight: 'bold',
   },
   small: {},
+  center: {},
 };
 
 const requiredStyle = {
@@ -28,11 +31,16 @@ const requiredStyle = {
   },
   medium: {
     fontSize: 12,
-    lineHeight: 2.19,
   },
   small: {},
 };
-const Label = ({ label, required, size = 'medium', className }: LabelProps) => {
+const Label = ({
+  label,
+  required,
+  size = 'medium',
+  className,
+  htmlFor,
+}: LabelProps) => {
   return (
     <Box display="flex" justifyContent="space-between">
       <Box display="flex" alignItems="center" flex={1}>
@@ -41,14 +49,13 @@ const Label = ({ label, required, size = 'medium', className }: LabelProps) => {
           color="heading"
           sx={labelStyle[size]}
           className={className}
+          htmlFor={htmlFor}
         >
           {label}
           {required && (
             <Typography
               component="span"
               sx={requiredStyle[size]}
-              fontSize={15}
-              lineHeight={2.33}
               color="primary"
             >
               （必須）

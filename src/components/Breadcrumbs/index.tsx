@@ -11,7 +11,6 @@ import Link from 'next/link';
 import router, { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 import React, { useEffect, useState } from 'react';
-import { tabletDown } from 'styles/theme';
 
 import styles from './styles';
 
@@ -93,12 +92,12 @@ const Breadcrumbs = ({
     <Container
       maxWidth="lg"
       disableGutters
-      sx={{
+      sx={(theme) => ({
         p: 4,
-        [tabletDown]: {
+        [theme.breakpoints.down('tablet')]: {
           p: 2,
         },
-      }}
+      })}
     >
       <Box>
         <MiuBreadcrumb

@@ -1,5 +1,4 @@
 import 'react-toastify/dist/ReactToastify.css';
-import '../styles/global.css';
 import 'utils/yup.config';
 
 import type { EmotionCache } from '@emotion/react';
@@ -19,12 +18,14 @@ import jaLocale from 'locales/ja/index.json';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import { NextIntlProvider } from 'next-intl';
 import type { ReactElement, ReactNode } from 'react';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import createEmotionCache from 'styles/createEmotionCache';
-import theme from 'styles/theme';
+import theme from 'theme';
+import createEmotionCache from 'theme/createEmotionCache';
 import queryClient from 'utils/queryClient';
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -43,7 +44,10 @@ type AppPropsWithLayout<P = {}> = {
 const clientSideEmotionCache = createEmotionCache();
 
 function MyApp(
-  props: AppPropsWithLayout<{ dehydratedState: DehydratedState }>,
+  props: AppPropsWithLayout<{
+    dehydratedState: DehydratedState;
+    session: Session;
+  }>,
 ) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -71,19 +75,9 @@ function MyApp(
             <NextNProgress />
             <NextIntlProvider messages={jaLocale}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                {/* <AnimatePresence mode="wait"> */}
-                {getLayout(
-                  // <motion.div
-                  //   key={router.route}
-                  //   initial="in"
-                  //   animate="inactive"
-                  //   exit="out"
-                  //   variants={variants}
-                  // >
-                  <Component {...pageProps} />,
-                  // </motion.div>,
-                )}
-                {/* </AnimatePresence> */}
+                <SessionProvider session={pageProps.session}>
+                  {getLayout(<Component {...pageProps} />)}
+                </SessionProvider>
                 <ConfirmModal />
               </LocalizationProvider>
             </NextIntlProvider>

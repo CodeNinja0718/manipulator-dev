@@ -95,12 +95,14 @@ const TextField = <TFormValues extends FieldValues>({
           extraLabel={extraLabel}
           size={props.size}
           className="textFieldLabel"
+          htmlFor={name}
         />
       )}
 
       <OutlinedInput
         className="tabletStyle"
         sx={styles.input}
+        id={name}
         {...props}
         {...otherField}
         type={

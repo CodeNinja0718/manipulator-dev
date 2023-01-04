@@ -4,7 +4,6 @@ import { useScroll } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { tabletDown } from 'styles/theme';
 
 import styles from './styles';
 
@@ -40,34 +39,36 @@ export default function Layout({
       <Header />
       <Box
         component="main"
-        sx={{
-          ...styles.main,
-          minHeight: {
-            xs: `calc(100vh - 136px)`,
-            tablet: showFooter ? `calc(100vh - 273px)` : `calc(100vh - 77px)`,
-          },
-          [tabletDown]: {
-            minHeight: showFooter
-              ? `calc(100vh - 273px)`
-              : `calc(100vh - 77px)`,
-          },
-        }}
+        sx={[
+          ...(Array.isArray(styles.main) ? styles.main : [styles.main]),
+          (theme) => ({
+            minHeight: {
+              xs: `calc(100vh - 136px)`,
+              tablet: showFooter ? `calc(100vh - 273px)` : `calc(100vh - 77px)`,
+            },
+            [theme.breakpoints.down('tablet')]: {
+              minHeight: showFooter
+                ? `calc(100vh - 273px)`
+                : `calc(100vh - 77px)`,
+            },
+          }),
+        ]}
       >
         {children}
       </Box>
 
       <IconButton
-        sx={
-          [
-            styles.fabButton,
-            {
-              opacity,
-              pointerEvents: opacity === 1 ? 'normal' : 'none',
-              bottom,
-              transform: `scale(${opacity ? 1 : 0})`,
-            },
-          ] as never
-        }
+        sx={[
+          ...(Array.isArray(styles.fabButton)
+            ? styles.fabButton
+            : [styles.fabButton]),
+          {
+            opacity,
+            pointerEvents: opacity === 1 ? 'normal' : 'none',
+            bottom,
+            transform: `scale(${opacity ? 1 : 0})`,
+          },
+        ]}
         color="primary"
         onClick={() =>
           window.scrollTo({

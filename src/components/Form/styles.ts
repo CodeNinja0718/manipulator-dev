@@ -1,6 +1,7 @@
+import type { SxProps } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   required: (theme: Theme) => ({
     border: `solid 1px ${theme.palette.error.main}`,
     p: { xs: '0px 3px', tablet: '1px 7px 2px' },
@@ -155,6 +156,6 @@ const styles = {
       height: { xs: 20, tablet: 24 },
     },
   },
-} as const;
+};
 
 export default styles;
