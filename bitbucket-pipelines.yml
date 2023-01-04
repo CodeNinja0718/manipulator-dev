@@ -1,0 +1,55 @@
+definitions:
+  steps:
+    - step: &prepare
+        name: prepare
+        image: alpine
+        artifacts:
+          - .env.local
+    - step: &build
+        name: build
+        image: public.ecr.aws/e2s7v1k5/auto-build-image
+        services:
+          - docker
+        caches:
+          - docker
+        script:
+          - env > .env.local
+          - auto_build aws_configure
+          - auto_build docker_login
+          - cat .env.local
+          - auto_build
+    - step: &deploy
+        name: deploy
+        image: public.ecr.aws/e2s7v1k5/auto-deploy-image
+        services:
+          - docker
+        script:
+          - auto_deploy kubernetes
+  services:
+    docker:
+      memory: 3072
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          <<: *build
+          deployment: BuildDevelopment
+      - step:
+          <<: *deploy
+          deployment: Development
+          image: public.ecr.aws/e2s7v1k5/auto-deploy-image:next
+    uat:
+      - step:
+          <<: *build
+          deployment: BuildUAT
+      - step:
+          <<: *deploy
+          deployment: UAT
+    master:
+      - step:
+          <<: *build
+          deployment: BuildProduction
+      - step:
+          <<: *deploy
+          deployment: Production
