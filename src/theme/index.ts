@@ -19,10 +19,12 @@ declare module '@mui/material/styles' {
     backgroundColor: string;
     tertiary: string;
     heading: string;
+    grown: string;
   }
 
   interface PaletteOptions {
     white?: string;
+    grown?: string;
     button?: string;
     backgroundColor: string;
     tertiary: string;
@@ -48,6 +50,7 @@ declare module '@mui/material/InputBase' {
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
     tablet: true;
+    mobile: true;
   }
 }
 
@@ -85,6 +88,7 @@ const palette: MuiPaletteOptions = {
     primary: '#333333',
   },
   heading: '#5a524f',
+  grown: '#413732',
   white: '#fff',
   backgroundColor: '#f4f2f1',
   action: {
@@ -108,6 +112,7 @@ const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
+      mobile: 426,
       sm: 600,
       tablet: 768,
       md: 900,

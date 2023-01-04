@@ -2,6 +2,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Layout from 'components/Layout';
+import type { ReactElement } from 'react';
 
 const ComponentPage = () => {
   return (
@@ -157,6 +159,10 @@ const ComponentPage = () => {
       </Box>
     </Box>
   );
+};
+
+ComponentPage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout isCard>{page}</Layout>;
 };
 
 export default ComponentPage;

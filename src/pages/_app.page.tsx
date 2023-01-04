@@ -13,7 +13,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ConfirmModal from 'components/ConfirmModal';
 import DataProvider from 'components/DataProvider';
 import NextNProgress from 'components/ProgressBar';
-import Footer from 'layouts/Footer/index.page';
 import jaLocale from 'locales/ja/index.json';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -85,7 +84,6 @@ function MyApp(
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </ThemeProvider>
-      <Footer />
     </CacheProvider>
   );
 }

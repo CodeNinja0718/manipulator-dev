@@ -1,16 +1,77 @@
-import { Box, Container, Typography } from '@mui/material';
+import FacebookIcon from '@icons/facebook_icon.svg';
+import InstagramIcon from '@icons/instagram_icon.svg';
+import TwitterIcon from '@icons/twitter_icon.svg';
+import { Box, Container, Link, Stack, Typography } from '@mui/material';
+import SvgIcon from '@mui/material/SvgIcon';
+import theme from 'theme';
+import { COMMON_FOOTER, FOOTER_ITEMS } from 'utils/const';
+
+import styles from './styles';
+
+const navbar = FOOTER_ITEMS;
+const socialItems = [
+  {
+    href: 'instagram',
+    icon: InstagramIcon,
+  },
+  {
+    href: 'twitter',
+    icon: TwitterIcon,
+  },
+  {
+    href: 'facebook',
+    icon: FacebookIcon,
+  },
+];
 
 const Footer = () => {
   return (
-    <Box className="page-footer" py={3} bgcolor="white">
+    <Box sx={styles.footerBox}>
       <Container maxWidth="xl">
-        <Box
-          display="flex"
+        <Stack
+          direction="row"
+          flexWrap="wrap"
           justifyContent="center"
-          mt={3}
-          sx={{ svg: { width: 134, height: 50 } }}
-        ></Box>
-        <Typography textAlign="center" fontSize={12} mt={3}></Typography>
+          gap={30}
+          pt={33}
+          sx={{
+            [theme.breakpoints.down('mobile')]: {
+              justifyContent: 'flex-start',
+              rowGap: 16,
+            },
+          }}
+        >
+          {navbar.map((section, index) => (
+            <Box key={index}>
+              <Link
+                color="primary.contrastText"
+                key={section.href}
+                href={`/${section.href}`}
+                underline="hover"
+              >
+                <Typography>{section.label}</Typography>
+              </Link>
+            </Box>
+          ))}
+        </Stack>
+
+        <Stack
+          direction="row"
+          flexWrap="wrap"
+          justifyContent="center"
+          gap={20}
+          mt={39}
+        >
+          {socialItems.map((item) => (
+            <Link key={item.href} href={`/${item.href}`} sx={{ height: 16.6 }}>
+              <SvgIcon component={item.icon} sx={{ color: 'white' }} />
+            </Link>
+          ))}
+        </Stack>
+
+        <Typography textAlign="center" mt={56}>
+          © {COMMON_FOOTER.MANIPULATIVE_NAVIGATION} {new Date().getFullYear()}
+        </Typography>
       </Container>
     </Box>
   );

@@ -13,9 +13,11 @@ const Footer = dynamic(() => import('./Footer'));
 export default function Layout({
   children,
   showFooter = true,
+  isCard = false,
 }: {
   children: ReactNode;
   showFooter?: boolean;
+  isCard?: boolean;
 }) {
   const pageHeight =
     typeof document !== 'undefined' ? document.body.scrollHeight : 0;
@@ -41,20 +43,32 @@ export default function Layout({
         component="main"
         sx={[
           ...(Array.isArray(styles.main) ? styles.main : [styles.main]),
-          (theme) => ({
+          () => ({
             minHeight: {
-              xs: `calc(100vh - 136px)`,
-              tablet: showFooter ? `calc(100vh - 273px)` : `calc(100vh - 77px)`,
-            },
-            [theme.breakpoints.down('tablet')]: {
-              minHeight: showFooter
-                ? `calc(100vh - 273px)`
-                : `calc(100vh - 77px)`,
+              xs: showFooter ? `calc(100vh - 322px)` : `calc(100vh - 51px)`,
+              mobile: showFooter ? `calc(100vh - 284px)` : `calc(100vh - 51px)`,
             },
           }),
         ]}
       >
-        {children}
+        <Box
+          sx={
+            isCard
+              ? {
+                  maxWidth: 950,
+                  bgcolor: 'white',
+                  padding: 40,
+                  boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
+                }
+              : {}
+          }
+          width="100%"
+          margin="0 auto"
+          mt={22}
+          mb={103}
+        >
+          {children}
+        </Box>
       </Box>
 
       <IconButton

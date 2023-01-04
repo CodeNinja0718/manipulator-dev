@@ -13,7 +13,6 @@ const components: ThemeOptions['components'] = {
         --toastify-toast-width: 360px !important;
         --toastify-color-success: ${theme.palette.success.main} !important;
         --toastify-color-error: ${theme.palette.error.main} !important;
-        --footer-background: #413732;
       }
 
       /** Classes for the displayed toast **/

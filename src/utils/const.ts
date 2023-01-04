@@ -38,3 +38,26 @@ export const GENDER_TEXT = {
   FEMALE: '男性',
   UNANSWERED: '未回答',
 };
+
+export const FOOTER_ITEMS = [
+  {
+    label: '利用規約',
+    href: 'terms-of-service',
+  },
+  {
+    label: 'プライバシーポリシー',
+    href: 'privacy-policy',
+  },
+  {
+    label: '運営会社',
+    href: 'operating-company',
+  },
+  {
+    label: 'お問い合わせ',
+    href: 'inquiry',
+  },
+];
+
+export const COMMON_FOOTER = {
+  MANIPULATIVE_NAVIGATION: '整体なび',
+};
