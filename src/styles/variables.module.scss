@@ -1,0 +1,10 @@
+$primary-color: #ea6500;
+$primary-color-bold: #eb6600;
+$text-primary-color: #333333;
+
+
+:export {
+  primaryColor: $primary-color;
+  primaryColorBold: $primary-color-bold;
+  textPrimaryColor: $text-primary-color;
+}
