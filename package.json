@@ -17,7 +17,9 @@
     "lint:fix": "next lint --fix",
     "test": "jest --watch",
     "prepare": "husky install",
-    "convert-svg": "npx @svgr/cli --out-dir dist --ignore-existing -- icons    "
+    "convert-svg": "npx @svgr/cli --out-dir dist --ignore-existing -- icons",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "lint-staged": {
     "*.{js,jsx,.ts,.tsx}": [
@@ -64,9 +66,18 @@
     "zustand": "^4.1.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@next/bundle-analyzer": "^13.0.7",
+    "@storybook/addon-actions": "^6.5.15",
+    "@storybook/addon-essentials": "^6.5.15",
+    "@storybook/addon-interactions": "^6.5.15",
+    "@storybook/addon-links": "^6.5.15",
+    "@storybook/builder-webpack5": "^6.5.15",
+    "@storybook/manager-webpack5": "^6.5.15",
+    "@storybook/react": "^6.5.15",
+    "@storybook/testing-library": "^0.0.13",
     "@svgr/cli": "^6.5.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -78,6 +89,7 @@
     "@types/react-scroll": "^1.8.5",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
+    "babel-loader": "^8.3.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.30.0",
     "eslint-config-airbnb-base": "^15.0.0",
