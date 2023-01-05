@@ -1,3 +1,4 @@
+const path = require('path');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -77,6 +78,9 @@ const nextConfig = {
   i18n: {
     locales: ['ja'],
     defaultLocale: 'ja',
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
   },
 };
 

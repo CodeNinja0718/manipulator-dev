@@ -10,6 +10,7 @@ const MuiTypography = {
       body1: 'p',
       body2: 'span',
       title: 'h1',
+      subtitle1: 'h3',
     },
   },
   variants: [
@@ -32,6 +33,15 @@ const MuiTypography = {
           borderRadius: 3,
           transform: 'translateY(50%)',
         },
+      },
+    },
+    {
+      props: {
+        variant: 'subtitle1',
+      },
+      style: {
+        color: '#eb6600',
+        fontSize: 18,
       },
     },
   ],

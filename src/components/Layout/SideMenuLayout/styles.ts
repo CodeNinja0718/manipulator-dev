@@ -1,17 +1,32 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
+import variables from '../../../styles/variables.module.scss';
+
 const styles = {
   container: {
     display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
+    height: '100vh',
+  },
+  sideMenuBox: {
+    px: { xs: 20 },
+    py: { xs: 30 },
+    width: '260px',
+    background: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+  },
+  sideMenuTitleBox: {
+    pb: '10px',
+    borderBottom: `3px solid ${variables.primaryColorBold}`,
+    display: 'block',
+  },
+  contentBox: {
+    width: 'calc(100% - 260px)',
   },
   sideMenu: {
-    flex: '1 0 auto',
-    maxWidth: '232px',
-    bgcolor: '#7d90b0',
-    mr: { tablet: 2 },
-    display: { sl: 'block', xs: 'none' },
+    bgcolor: '#ffffff',
+    borderTopLeftRadius: 30,
+    px: { xs: 20 },
+    py: { xs: 30 },
+    display: 'block',
   },
   listItem: {
     // p: 2,
@@ -20,30 +35,11 @@ const styles = {
     textDecoration: 'unset',
   },
   listItemButton: {
-    p: 2,
-    '& svg': {
-      color: 'white',
-      mr: 1,
-    },
-    '&.MuiListItemButton-root': {
-      color: 'white',
-    },
-    '&.Mui-selected': {
-      backgroundColor: 'secondary.main',
-      color: 'heading',
-      '& svg': {
-        color: 'heading',
-      },
-      '&:hover': {
-        bgcolor: 'secondary.main',
-      },
-    },
-    '& .MuiListItemText-root': {
-      '& .MuiListItemText-primary': {
-        fontWeight: 500,
-        fontSize: 14,
-      },
-    },
+    color: variables.primaryColor,
+  },
+  listItemText: {
+    color: variables.textPrimaryColor,
+    ml: '10px',
   },
   userName: {
     color: 'white',
