@@ -1,7 +1,5 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-import variables from '../../../styles/variables.module.scss';
-
 const styles = {
   container: {
     display: 'flex',
@@ -15,7 +13,7 @@ const styles = {
   },
   sideMenuTitleBox: {
     pb: '10px',
-    borderBottom: `3px solid ${variables.primaryColorBold}`,
+    borderBottom: `3px solid ${(theme: Theme) => theme.palette.orangeBoldText}`,
     display: 'block',
   },
   contentBox: {
@@ -35,10 +33,10 @@ const styles = {
     textDecoration: 'unset',
   },
   listItemButton: {
-    color: variables.primaryColor,
+    color: (theme: Theme) => theme.palette.orangeText,
   },
   listItemText: {
-    color: variables.textPrimaryColor,
+    color: (theme: Theme) => theme.palette.text.primary,
     ml: '10px',
   },
   userName: {
