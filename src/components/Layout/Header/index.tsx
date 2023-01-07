@@ -11,13 +11,13 @@ import styles from './styles';
 
 const navbar: any[] = [
   {
-    href: '/register',
+    href: '/',
     label: 'ホーム',
     icon: HomeSvg,
     viewBox: '0 0 36 40',
   },
   {
-    href: '/',
+    href: '/register',
     label: '新規会員登録',
     icon: RegisterSvg,
     viewBox: '0 0 29 31',
