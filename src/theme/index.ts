@@ -17,9 +17,12 @@ declare module '@mui/material/styles' {
     white: string;
     button: string;
     backgroundColor: string;
-    tertiary: string;
     heading: string;
     grown: string;
+    orange: object;
+    orangeText: string;
+    orangeGradient: string;
+    greenGradient: string;
   }
 
   interface PaletteOptions {
@@ -27,8 +30,11 @@ declare module '@mui/material/styles' {
     grown?: string;
     button?: string;
     backgroundColor: string;
-    tertiary: string;
     heading: string;
+    orange: object;
+    orangeText: string;
+    orangeGradient?: string;
+    greenGradient?: string;
   }
 
   interface TypographyVariants {
@@ -64,6 +70,9 @@ declare module '@mui/material/Button' {
   interface ButtonPropsSizeOverrides {
     xs: true;
   }
+  interface ButtonPropsColorOverrides {
+    orange: true;
+  }
 }
 
 const palette: MuiPaletteOptions = {
@@ -74,16 +83,17 @@ const palette: MuiPaletteOptions = {
   secondary: {
     main: '#659d3b',
   },
-  tertiary: '#ea6500',
   error: {
     main: '#d42828',
   },
   success: {
     main: '#51b873',
   },
-  warning: {
+  orange: {
     main: '#ea6500',
+    contrastText: '#fff',
   },
+  orangeText: '#ea6500',
   text: {
     primary: '#333333',
   },
@@ -91,6 +101,8 @@ const palette: MuiPaletteOptions = {
   grown: '#413732',
   white: '#fff',
   backgroundColor: '#f4f2f1',
+  orangeGradient: 'linear-gradient(295deg, #ff872b, #ec6702 53%, #eb6600)',
+  greenGradient: 'linear-gradient(to bottom, #a3cc30, #5e983c)',
   action: {
     hoverOpacity: 0.4,
     disabledBackground: '#cccccc',

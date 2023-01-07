@@ -1,5 +1,5 @@
-// src/themes/dark.theme.js
-
+/* eslint-disable unused-imports/no-unused-vars */
+import type { PaletteOptions as MuiPaletteOptions } from '@mui/material';
 import { createTheme } from '@mui/material';
 
 import components from './components';
@@ -9,9 +9,12 @@ declare module '@mui/material/styles' {
     white: string;
     button: string;
     backgroundColor: string;
-    tertiary: string;
     heading: string;
     grown: string;
+    orange: object;
+    orangeText: string;
+    orangeGradient: string;
+    greenGradient: string;
   }
 
   interface PaletteOptions {
@@ -19,8 +22,11 @@ declare module '@mui/material/styles' {
     grown?: string;
     button?: string;
     backgroundColor: string;
-    tertiary: string;
     heading: string;
+    orange: object;
+    orangeText: string;
+    orangeGradient?: string;
+    greenGradient?: string;
   }
 
   interface TypographyVariants {
@@ -56,40 +62,49 @@ declare module '@mui/material/Button' {
   interface ButtonPropsSizeOverrides {
     xs: true;
   }
+  interface ButtonPropsColorOverrides {
+    orange: true;
+  }
 }
 
+const palette: MuiPaletteOptions = {
+  primary: {
+    main: '#249287',
+    contrastText: '#fff',
+  },
+  secondary: {
+    main: '#659d3b',
+  },
+  error: {
+    main: '#d42828',
+  },
+  success: {
+    main: '#51b873',
+  },
+  orange: {
+    main: '#ea6500',
+    contrastText: '#fff',
+  },
+  orangeText: '#ea6500',
+  text: {
+    primary: '#333333',
+  },
+  heading: '#5a524f',
+  grown: '#413732',
+  white: '#fff',
+  backgroundColor: '#f4f2f1',
+  orangeGradient: 'linear-gradient(295deg, #ff872b, #ec6702 53%, #eb6600)',
+  greenGradient: 'linear-gradient(to bottom, #a3cc30, #5e983c)',
+  action: {
+    hoverOpacity: 0.4,
+    disabledBackground: '#cccccc',
+  },
+};
+
+// Create a theme instance.
 export const theme = createTheme({
   components,
-  palette: {
-    primary: {
-      main: '#249287',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#659d3b',
-    },
-    tertiary: '#ea6500',
-    error: {
-      main: '#d42828',
-    },
-    success: {
-      main: '#51b873',
-    },
-    warning: {
-      main: '#ea6500',
-    },
-    text: {
-      primary: '#333333',
-    },
-    heading: '#5a524f',
-    grown: '#413732',
-    white: '#fff',
-    backgroundColor: '#f4f2f1',
-    action: {
-      hoverOpacity: 0.4,
-      disabledBackground: '#cccccc',
-    },
-  },
+  palette,
   typography: {
     allVariants: {
       whiteSpace: 'pre-line',

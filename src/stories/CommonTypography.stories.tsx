@@ -5,7 +5,7 @@ import { Typography } from './CommonTypography';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Components/CommonTypography',
+  title: 'Components/Typography',
   component: Typography,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
@@ -17,6 +17,7 @@ export default {
         'h3',
         'h4',
         'h5',
+        'title',
         'subtitle1',
         'subtitle2',
         'body1',
@@ -28,7 +29,7 @@ export default {
     },
     color: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'error', 'grown'],
+      options: ['primary', 'secondary', 'error', 'grown', 'text', 'orangeText'],
     },
   },
   args: {

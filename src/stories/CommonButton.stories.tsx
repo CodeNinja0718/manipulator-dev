@@ -11,6 +11,10 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     size: { control: 'select', options: ['xs', 'small', 'medium', 'large'] },
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'error', 'orange', 'warning', 'info'],
+    },
   },
   args: {
     size: 'small',
@@ -22,9 +26,9 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
-export const DefaultButton = Template.bind({});
+export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-DefaultButton.args = {
+Default.args = {
   label: 'Button',
   color: 'secondary',
   sx: { width: 200 },
@@ -41,7 +45,7 @@ EndiconButton.args = {
 export const ColorButton = Template.bind({});
 ColorButton.args = {
   label: 'Button',
-  color: 'warning',
+  color: 'orange',
   sx: { width: 200 },
 };
 
