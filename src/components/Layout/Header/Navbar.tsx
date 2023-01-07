@@ -1,20 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable unused-imports/no-unused-vars */
-import { Box, Drawer, Stack, Typography } from '@mui/material';
+import { Box, Drawer, Stack, SvgIcon, Typography } from '@mui/material';
 import { useUser } from 'hooks';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-import { Link as ScrollLink } from 'react-scroll';
+import { useState } from 'react';
 
 import SidebarMobile from './SidebarMobile';
 import styles from './styles';
 
-const navbar: any[] = [];
-
-const Navbar = ({ isMobile = false }: { isMobile?: boolean }) => {
+const Navbar = ({
+  isMobile = false,
+  navbar = [],
+}: {
+  isMobile?: boolean;
+  navbar: any[];
+}) => {
   useUser({ enabled: false });
-  const { pathname } = useRouter();
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const handleCloseSidebar = () => {
     setIsOpenSidebar(false);
@@ -24,86 +25,40 @@ const Navbar = ({ isMobile = false }: { isMobile?: boolean }) => {
     <Box display="flex">
       <Stack
         direction="row"
-        spacing="38px"
+        spacing={40}
         flex={1}
         sx={
           isMobile ? styles.navbarMobileContainer : styles.navbarTabletContainer
         }
       >
-        {navbar.map((section) =>
-          pathname === '/' ? (
-            <>
-              {section?.isDirectLink ? (
-                <Link
-                  key={section.href}
-                  href={section.href}
-                  target="_blank"
-                  rel="noreferrer"
+        {navbar.map((section) => (
+          <>
+            <Link key={section.href} href={section.href} rel="noreferrer">
+              <Box display="flex" alignItems="center">
+                <Box height={20}>
+                  <SvgIcon
+                    component={section.icon}
+                    sx={{ color: 'white', width: 'auto', height: 'inherit' }}
+                    viewBox={section.viewBox}
+                  />
+                </Box>
+                <Typography
+                  component="span"
+                  fontWeight={500}
+                  color="white"
+                  ml={20}
                 >
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
-                </Link>
-              ) : (
-                <ScrollLink
-                  to={section.href}
-                  smooth
-                  offset={-96}
-                  key={section.href}
-                >
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
-                </ScrollLink>
-              )}
-            </>
-          ) : (
-            <>
-              {section?.isDirectLink ? (
-                <Link
-                  key={section.href}
-                  href={section.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
-                </Link>
-              ) : (
-                <Link key={section.href} href={`/#${section.href}`}>
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
-                </Link>
-              )}
-            </>
-          ),
-        )}
+                  {section.label}
+                </Typography>
+              </Box>
+            </Link>
+          </>
+        ))}
       </Stack>
       <Drawer
         anchor="right"
         open={isOpenSidebar}
         onClose={() => setIsOpenSidebar(false)}
-        sx={{
-          display: { sl: 'none', xs: 'block' },
-        }}
       >
         <SidebarMobile onCloseSidebar={handleCloseSidebar} />
       </Drawer>

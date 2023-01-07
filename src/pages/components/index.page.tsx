@@ -44,14 +44,14 @@ const ComponentPage = () => {
         <Button size="small" variant="outlined" color="error">
           error
         </Button>
-        <Button size="small" variant="text" color="warning">
-          warning
+        <Button size="small" variant="text" color="orange">
+          orange
         </Button>
-        <Button size="small" variant="contained" color="warning">
-          warning
+        <Button size="small" variant="contained" color="orange">
+          orange
         </Button>
-        <Button size="small" variant="outlined" color="warning">
-          warning
+        <Button size="small" variant="outlined" color="orange">
+          orange
         </Button>
         <Button size="small" variant="text" disabled>
           disabled
@@ -66,7 +66,7 @@ const ComponentPage = () => {
         <Button
           size="xs"
           variant="contained"
-          color="warning"
+          color="orange"
           endIcon={<ArrowForwardIosIcon fontSize="small" />}
         >
           整体師編
@@ -74,7 +74,7 @@ const ComponentPage = () => {
         <Button
           size="small"
           variant="contained"
-          color="warning"
+          color="orange"
           endIcon={<ArrowForwardIosIcon fontSize="small" />}
           sx={{
             width: 200,
@@ -85,7 +85,7 @@ const ComponentPage = () => {
         <Button
           size="medium"
           variant="contained"
-          color="warning"
+          color="orange"
           endIcon={<ArrowForwardIosIcon fontSize="small" />}
         >
           整体師編
@@ -93,7 +93,7 @@ const ComponentPage = () => {
         <Button
           size="large"
           variant="contained"
-          color="warning"
+          color="orange"
           endIcon={<ArrowForwardIosIcon fontSize="small" />}
         >
           整体師編
@@ -147,8 +147,8 @@ const ComponentPage = () => {
         <Typography variant="h3" color="secondary" fontWeight={700}>
           Text Color secondary
         </Typography>
-        <Typography variant="h3" color="tertiary" fontWeight={700}>
-          Text Color tertiary
+        <Typography variant="h3" color="orangeText" fontWeight={700}>
+          Text Color orange
         </Typography>
         <Typography variant="h3" color="error" fontWeight={700}>
           Text Color error

@@ -1,9 +1,6 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
-  appBar: {
-    boxShadow: 'none',
-  },
   logoContainer: {
     display: 'flex',
     width: 134,
@@ -61,6 +58,13 @@ const styles = {
     display: {
       xs: 'none',
       lg: 'flex',
+    },
+    '& a': {
+      textDecoration: 'none',
+      '&:hover, &:active, &:focus': {
+        opacity: 0.75,
+        transition: '0.5s',
+      },
     },
   },
   sideMenu: {

@@ -1,4 +1,4 @@
-const MuiButton = {
+const MuiAppBar = {
   styleOverrides: {
     root: {
       minWidth: '100px',
@@ -65,4 +65,4 @@ const MuiButton = {
   ],
 };
 
-export default MuiButton;
+export default MuiAppBar;
