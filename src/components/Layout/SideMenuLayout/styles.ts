@@ -71,7 +71,6 @@ const styles = {
       pl: '5px',
     },
   },
-
   userName: {
     color: 'white',
     fontSize: 18,
