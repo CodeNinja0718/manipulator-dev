@@ -1,8 +1,8 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import type {
-		PaletteColorOptions,
-		PaletteOptions as MuiPaletteOptions,
-	} from '@mui/material';
+  PaletteColorOptions,
+  PaletteOptions as MuiPaletteOptions,
+} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 
 import components from './components';
