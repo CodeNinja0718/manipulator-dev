@@ -40,32 +40,30 @@ const Navbar = ({
         sx={{ display: { xs: 'none', sm: 'flex' } }}
       >
         {navbar.map((section) => (
-          <>
-            <Link
-              style={{ textDecoration: 'none' }}
-              key={section.href}
-              href={section.href}
-              rel="noreferrer"
-            >
-              <Box display="flex" alignItems="center">
-                <Box height={20}>
-                  <SvgIcon
-                    component={section.icon}
-                    sx={{ color: iconColor, width: 'auto', height: 'inherit' }}
-                    viewBox={section.viewBox}
-                  />
-                </Box>
-                <Typography
-                  component="span"
-                  fontWeight={500}
-                  color={color}
-                  ml={20}
-                >
-                  {section.label}
-                </Typography>
+          <Link
+            style={{ textDecoration: 'none' }}
+            key={section.href}
+            href={section.href}
+            rel="noreferrer"
+          >
+            <Box display="flex" alignItems="center">
+              <Box height={20}>
+                <SvgIcon
+                  component={section.icon}
+                  sx={{ color: iconColor, width: 'auto', height: 'inherit' }}
+                  viewBox={section.viewBox}
+                />
               </Box>
-            </Link>
-          </>
+              <Typography
+                component="span"
+                fontWeight={500}
+                color={color}
+                ml={20}
+              >
+                {section.label}
+              </Typography>
+            </Box>
+          </Link>
         ))}
       </Stack>
       <IconButton

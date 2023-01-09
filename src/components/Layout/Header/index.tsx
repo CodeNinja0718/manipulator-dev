@@ -64,7 +64,6 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
         </Stack>
       </Box>
     </SidebarDesktop>
-
     // <AppBar
     //   component="nav"
     //   position="sticky"
