@@ -1,21 +1,32 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-import variables from '../../../styles/variables.module.scss';
-
 const styles = {
-  container: {
+  mainBox: {
+    backgroundColor: 'white',
+    backgroundImage: 'url(/images/main_bg.webp)',
+    backgroundSize: 'contain',
+    backgroundPosition: 'top center',
+    p: { xs: '0px', tablet: '0px' },
+  },
+  main: {
+    minHeight: {
+      xs: `calc(100vh - 322px)`,
+      mobile: `calc(100vh - 284px)`,
+    },
     display: 'flex',
-    height: '100vh',
+    flexDirection: 'column',
+    mb: '110px',
   },
   sideMenuBox: {
-    px: { xs: 20 },
+    pl: { xs: 20 },
     py: { xs: 30 },
     width: '260px',
     background: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
   },
   sideMenuTitleBox: {
     pb: '10px',
-    borderBottom: `3px solid ${variables.primaryColorBold}`,
+    borderBottom: `3px solid`,
+    borderBottomColor: 'tertiary.dark',
     display: 'block',
   },
   contentBox: {
@@ -24,7 +35,7 @@ const styles = {
   sideMenu: {
     bgcolor: '#ffffff',
     borderTopLeftRadius: 30,
-    px: { xs: 20 },
+    pl: { xs: 20 },
     py: { xs: 30 },
     display: 'block',
   },
@@ -33,12 +44,32 @@ const styles = {
   },
   link: {
     textDecoration: 'unset',
+    background: '#000000',
   },
   listItemButton: {
-    color: variables.primaryColor,
+    color: 'tertiary.main',
+
+    '& svg': {
+      fontSize: '20px',
+    },
+    '&.Mui-selected': {
+      backgroundColor: '#ffffff',
+
+      '& .MuiListItemText-root': {
+        '& .MuiListItemText-primary': {
+          color: 'tertiary.main',
+        },
+      },
+      '&:hover': {
+        backgroundColor: 'rgb(234 101 0 / 20%)',
+      },
+    },
+    '&.MuiButtonBase-root': {
+      pl: '5px',
+    },
   },
   listItemText: {
-    color: variables.textPrimaryColor,
+    color: 'text.primary',
     ml: '10px',
   },
   userName: {

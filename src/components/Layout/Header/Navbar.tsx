@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable unused-imports/no-unused-vars */
+import { HomeOutlined, LoginOutlined } from '@mui/icons-material';
 import { Box, Drawer, Stack, Typography } from '@mui/material';
 import { useUser } from 'hooks';
 import Link from 'next/link';
@@ -10,7 +11,18 @@ import { Link as ScrollLink } from 'react-scroll';
 import SidebarMobile from './SidebarMobile';
 import styles from './styles';
 
-const navbar: any[] = [];
+const navbar: any[] = [
+  {
+    href: '/1',
+    label: 'ホーム',
+    icon: <HomeOutlined />,
+  },
+  {
+    href: '/7',
+    label: 'ログアウト',
+    icon: <LoginOutlined />,
+  },
+];
 
 const Navbar = ({ isMobile = false }: { isMobile?: boolean }) => {
   useUser({ enabled: false });
@@ -30,70 +42,150 @@ const Navbar = ({ isMobile = false }: { isMobile?: boolean }) => {
           isMobile ? styles.navbarMobileContainer : styles.navbarTabletContainer
         }
       >
-        {navbar.map((section) =>
+        {navbar.map((section, index) =>
           pathname === '/' ? (
-            <>
+            <div key={`${section.href}_0`}>
               {section?.isDirectLink ? (
                 <Link
-                  key={section.href}
+                  key={`${section.href}_1`}
                   href={section.href}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
+                  <Box display={'flex'} alignItems={'center'}>
+                    <Box
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'tertiary.main'
+                      }
+                      lineHeight={0}
+                      component={'span'}
+                    >
+                      {section.icon}
+                    </Box>
+
+                    <Typography
+                      component={'span'}
+                      fontWeight={500}
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'text.primary'
+                      }
+                      sx={styles.navbarItem}
+                    >
+                      {section.label}
+                    </Typography>
+                  </Box>
                 </Link>
               ) : (
                 <ScrollLink
                   to={section.href}
                   smooth
                   offset={-96}
-                  key={section.href}
+                  key={`${section.href}_2`}
                 >
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
+                  <Box display={'flex'} alignItems={'center'}>
+                    <Box
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'tertiary.main'
+                      }
+                      lineHeight={0}
+                      component={'span'}
+                    >
+                      {section.icon}
+                    </Box>
+
+                    <Typography
+                      component={'span'}
+                      fontWeight={500}
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'text.primary'
+                      }
+                      sx={styles.navbarItem}
+                    >
+                      {section.label}
+                    </Typography>
+                  </Box>
                 </ScrollLink>
               )}
-            </>
+            </div>
           ) : (
-            <>
+            <div key={`${section.href}_0`}>
               {section?.isDirectLink ? (
                 <Link
-                  key={section.href}
+                  key={`${section.href}_3`}
                   href={section.href}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
+                  <Box display={'flex'} alignItems={'center'}>
+                    <Box
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'tertiary.main'
+                      }
+                      lineHeight={0}
+                      component={'span'}
+                    >
+                      {section.icon}
+                    </Box>
+
+                    <Typography
+                      component={'span'}
+                      fontWeight={500}
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'text.primary'
+                      }
+                      sx={styles.navbarItem}
+                    >
+                      {section.label}
+                    </Typography>
+                  </Box>
                 </Link>
               ) : (
-                <Link key={section.href} href={`/#${section.href}`}>
-                  <Typography
-                    fontWeight={500}
-                    color="#443b38"
-                    sx={styles.navbarItem}
-                  >
-                    {section.label}
-                  </Typography>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  key={`${section.href}_4`}
+                  href={`/#${section.href}`}
+                >
+                  <Box display={'flex'} alignItems={'center'}>
+                    <Box
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'tertiary.main'
+                      }
+                      lineHeight={0}
+                      component={'span'}
+                    >
+                      {section.icon}
+                    </Box>
+
+                    <Typography
+                      component={'span'}
+                      fontWeight={500}
+                      color={
+                        index === navbar.length - 1
+                          ? 'text.secondary'
+                          : 'text.primary'
+                      }
+                      sx={styles.navbarItem}
+                    >
+                      {section.label}
+                    </Typography>
+                  </Box>
                 </Link>
               )}
-            </>
+            </div>
           ),
         )}
       </Stack>

@@ -1,5 +1,6 @@
 // src/themes/dark.theme.js
 
+import type { PaletteColorOptions } from '@mui/material';
 import { createTheme } from '@mui/material';
 
 import components from './components';
@@ -19,7 +20,7 @@ declare module '@mui/material/styles' {
     grown?: string;
     button?: string;
     backgroundColor: string;
-    tertiary: string;
+    tertiary: PaletteColorOptions;
     heading: string;
   }
 
@@ -68,7 +69,10 @@ export const theme = createTheme({
     secondary: {
       main: '#659d3b',
     },
-    tertiary: '#ea6500',
+    tertiary: {
+      main: '#ea6500',
+      dark: '#eb6600',
+    },
     error: {
       main: '#d42828',
     },

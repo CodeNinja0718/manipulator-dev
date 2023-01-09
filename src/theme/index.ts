@@ -1,5 +1,8 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import type { PaletteOptions as MuiPaletteOptions } from '@mui/material';
+import type {
+  PaletteColorOptions,
+  PaletteOptions as MuiPaletteOptions,
+} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { Noto_Sans_JP } from '@next/font/google';
 
@@ -27,7 +30,7 @@ declare module '@mui/material/styles' {
     grown?: string;
     button?: string;
     backgroundColor: string;
-    tertiary: string;
+    tertiary: PaletteColorOptions;
     heading: string;
   }
 
@@ -74,7 +77,10 @@ const palette: MuiPaletteOptions = {
   secondary: {
     main: '#659d3b',
   },
-  tertiary: '#ea6500',
+  tertiary: {
+    main: '#ea6500',
+    dark: '#eb6600',
+  },
   error: {
     main: '#d42828',
   },
@@ -86,6 +92,7 @@ const palette: MuiPaletteOptions = {
   },
   text: {
     primary: '#333333',
+    secondary: '#666666',
   },
   heading: '#5a524f',
   grown: '#413732',

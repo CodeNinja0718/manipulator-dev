@@ -1,4 +1,13 @@
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import {
+  AccountCircleOutlined,
+  AutoStoriesOutlined,
+  CreditCardOutlined,
+  DiscountOutlined,
+  FavoriteRounded,
+  ListOutlined,
+  LocalOfferOutlined,
+  MapOutlined,
+} from '@mui/icons-material';
 import { Box, Container, Typography } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -7,84 +16,106 @@ import Link from 'components/Link';
 import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 
+import Footer from '../Footer';
+import Header from '../Header';
 import styles from './styles';
 
 const customerMenus: any[] = [
   {
     path: '/',
     label: '予約履歴',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <LocalOfferOutlined />,
   },
   {
-    path: '/',
+    path: '/1',
     label: '回数券',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <MapOutlined />,
   },
   {
-    path: '/',
+    path: '/2',
     label: 'クーポン',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <DiscountOutlined />,
   },
   {
-    path: '/',
+    path: '/3',
     label: 'お気に入り',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <FavoriteRounded />,
   },
   {
-    path: '/',
+    path: '/4',
     label: '会員情報',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <AccountCircleOutlined />,
   },
   {
-    path: '/',
+    path: '/5',
     label: 'クレジットカード情報',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <CreditCardOutlined />,
   },
   {
-    path: '/',
+    path: '/6',
     label: 'ご利用ガイド',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <AutoStoriesOutlined />,
   },
   {
-    path: '/',
+    path: '/7',
     label: 'その他',
-    icon: <LocalOfferOutlinedIcon />,
+    icon: <ListOutlined />,
   },
 ];
 const SideMenuLayout = ({ children }: { children: ReactNode }) => {
   const { route } = useRouter();
 
   return (
-    <Container maxWidth="lg" disableGutters sx={styles.container}>
-      <Box display={{ xs: 'flex' }}>
-        <Box sx={styles.sideMenuBox}>
-          <Box sx={styles.sideMenu}>
-            <Box sx={styles.sideMenuTitleBox}>
-              <Typography variant="subtitle1">会員メニュー</Typography>
-            </Box>
-            <List component="nav" aria-label="side-menu" sx={styles.listItem}>
-              {customerMenus.map((menu) => (
-                <Link href={menu.path} key={menu.path} sx={styles.link}>
-                  <ListItemButton
-                    sx={styles.listItemButton}
-                    selected={route.startsWith(menu.path)}
+    <div>
+      <Container sx={styles.mainBox} maxWidth={false}>
+        <Header />
+        <Box component="main" sx={styles.main}>
+          <Box
+            sx={{
+              maxWidth: 950,
+              bgcolor: 'white',
+              boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
+            }}
+            width="100%"
+            margin="0 auto"
+          >
+            <Box display={{ xs: 'flex' }}>
+              <Box sx={styles.sideMenuBox}>
+                <Box sx={styles.sideMenu}>
+                  <Box sx={styles.sideMenuTitleBox}>
+                    <Typography variant="subtitle1">マイページ</Typography>
+                  </Box>
+                  <List
+                    component="nav"
+                    aria-label="side-menu"
+                    sx={styles.listItem}
                   >
-                    {menu.icon}{' '}
-                    <ListItemText
-                      sx={styles.listItemText}
-                      primary={menu.label}
-                    />
-                  </ListItemButton>
-                </Link>
-              ))}
-            </List>
+                    {customerMenus.map((menu) => (
+                      <Link href={menu.path} key={menu.path} sx={styles.link}>
+                        <ListItemButton
+                          sx={styles.listItemButton}
+                          selected={route.startsWith(menu.path)}
+                        >
+                          {menu.icon}
+                          <ListItemText
+                            sx={styles.listItemText}
+                            primary={menu.label}
+                          />
+                        </ListItemButton>
+                      </Link>
+                    ))}
+                  </List>
+                </Box>
+              </Box>
+              <Box sx={styles.contentBox} overflow="hidden">
+                {children}
+              </Box>
+            </Box>
           </Box>
         </Box>
-        <Box sx={styles.contentBox} overflow="hidden">
-          {children}
-        </Box>
-      </Box>
-    </Container>
+        <Footer />
+      </Container>
+    </div>
   );
 };
 

@@ -1,11 +1,14 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles: Record<string, SxProps<Theme>> = {
-  main: {
+  mainBox: {
     backgroundColor: 'white',
     backgroundImage: 'url(/images/main_bg.webp)',
     backgroundSize: 'contain',
     backgroundPosition: 'top center',
+    p: { xs: '0px', tablet: '0px' },
+  },
+  main: {
     minHeight: 'calc(100vh - 163px)',
     display: 'flex',
     flexDirection: 'column',

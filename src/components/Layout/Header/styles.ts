@@ -3,27 +3,32 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   appBar: {
     boxShadow: 'none',
+    padding: '35px',
+    height: '106px',
+  },
+  appBarBox: {
+    width: 950,
+    margin: '0 auto',
+  },
+  logo: {
+    fontSize: '28px',
+    letterSpacing: '5px',
   },
   logoContainer: {
     display: 'flex',
-    width: 134,
-    height: 51,
-    ml: 5,
+    textDecorationLine: 'none',
   },
   navbarItem: {
-    transition: 'all 0.3s cubic-bezier(0.33, 1, 0.68, 1)',
-    '&:hover': {
-      bgcolor: 'primary.main',
-      p: '4px 8px',
-      m: '-4px -8px',
-      color: 'white',
-      borderRadius: 1,
-    },
+    ml: 12,
+    textDecorationLine: 'none',
     fontSize: {
       xs: 12,
-      lg: 20,
-      tablet: 20,
+      lg: 16,
+      tablet: 16,
     },
+  },
+  navbarHref: {
+    textDecorationLine: 'none',
   },
   whiteButton: {
     fontSize: 24,
