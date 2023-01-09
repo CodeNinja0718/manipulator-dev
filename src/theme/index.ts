@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import { createTheme } from '@mui/material/styles';
 import { Noto_Sans_JP } from '@next/font/google';
 
@@ -10,6 +11,7 @@ export const noto = Noto_Sans_JP({
   fallback: ['sans-serif'],
 });
 
+// Create a theme instance.
 const theme = createTheme({
   ...defaultTheme,
   typography: {

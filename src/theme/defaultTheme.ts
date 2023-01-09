@@ -1,8 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import type {
-  PaletteColorOptions,
-  PaletteOptions as MuiPaletteOptions,
-} from '@mui/material';
+import type { PaletteOptions as MuiPaletteOptions } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 
 import components from './components';
@@ -12,11 +9,11 @@ declare module '@mui/material/styles' {
     white: string;
     button: string;
     backgroundColor: string;
-    tertiary: string;
     heading: string;
     grown: string;
     orange: object;
     orangeText: string;
+    orangeBoldText: string;
     orangeGradient: string;
     greenGradient: string;
   }
@@ -26,10 +23,10 @@ declare module '@mui/material/styles' {
     grown?: string;
     button?: string;
     backgroundColor: string;
-    tertiary: PaletteColorOptions;
     heading: string;
     orange: object;
     orangeText: string;
+    orangeBoldText: string;
     orangeGradient?: string;
     greenGradient?: string;
   }
@@ -80,10 +77,6 @@ const palette: MuiPaletteOptions = {
   secondary: {
     main: '#659d3b',
   },
-  tertiary: {
-    main: '#ea6500',
-    dark: '#eb6600',
-  },
   error: {
     main: '#d42828',
   },
@@ -95,9 +88,9 @@ const palette: MuiPaletteOptions = {
     contrastText: '#fff',
   },
   orangeText: '#ea6500',
+  orangeBoldText: '#eb6600',
   text: {
     primary: '#333333',
-    secondary: '#666666',
   },
   heading: '#5a524f',
   grown: '#413732',

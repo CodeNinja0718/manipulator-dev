@@ -1,48 +1,85 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
-  container: {
+  logo: {
+    fontSize: '28px',
+    letterSpacing: '5px',
+    fontWeight: '500',
+  },
+  appBar: {
+    boxShadow: 'none',
+    padding: '25px',
+    height: '106px',
+  },
+  mainBox: {
+    backgroundColor: 'white',
+    backgroundImage: 'url(/images/main_bg.webp)',
+    backgroundSize: 'contain',
+    backgroundPosition: 'top center',
+    p: { xs: '0px', tablet: '0px' },
+  },
+  main: {
+    minHeight: {
+      xs: `calc(100vh - 322px)`,
+      mobile: `calc(100vh - 284px)`,
+    },
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
+    mb: '110px',
+  },
+  sideMenuBox: {
+    pl: { xs: 20 },
+    py: { xs: 30 },
+    width: '260px',
+    background: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+    display: { xs: 'none', sm: 'block' },
+  },
+  sideMenuTitleBox: {
+    pb: '10px',
+    borderBottom: `3px solid `,
+    borderBottomColor: 'orangeBoldText',
+    display: 'block',
+  },
+  contentBox: {
+    width: 'calc(100% - 260px)',
   },
   sideMenu: {
-    flex: '1 0 auto',
-    maxWidth: '232px',
-    bgcolor: '#7d90b0',
-    mr: { tablet: 2 },
-    display: { sl: 'block', xs: 'none' },
+    bgcolor: '#ffffff',
+    borderTopLeftRadius: 30,
+    pl: { xs: 20 },
+    py: { xs: 30 },
+    display: 'block',
   },
   listItem: {
     // p: 2,
   },
   link: {
     textDecoration: 'unset',
+    background: '#000000',
   },
   listItemButton: {
-    p: 2,
+    color: (theme: Theme) => theme.palette.orangeText,
+  },
+  listItemText: {
+    color: (theme: Theme) => theme.palette.text.primary,
+    ml: '10px',
     '& svg': {
-      color: 'white',
-      mr: 1,
-    },
-    '&.MuiListItemButton-root': {
-      color: 'white',
+      fontSize: '20px',
     },
     '&.Mui-selected': {
-      backgroundColor: 'secondary.main',
-      color: 'heading',
-      '& svg': {
-        color: 'heading',
+      backgroundColor: '#ffffff',
+
+      '& .MuiListItemText-root': {
+        '& .MuiListItemText-primary': {
+          color: 'tertiary.main',
+        },
       },
       '&:hover': {
-        bgcolor: 'secondary.main',
+        backgroundColor: 'rgb(234 101 0 / 20%)',
       },
     },
-    '& .MuiListItemText-root': {
-      '& .MuiListItemText-primary': {
-        fontWeight: 500,
-        fontSize: 14,
-      },
+    '&.MuiButtonBase-root': {
+      pl: '5px',
     },
   },
   userName: {
