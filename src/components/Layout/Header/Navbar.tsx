@@ -1,19 +1,29 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable unused-imports/no-unused-vars */
-import { Box, Drawer, Stack, SvgIcon, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import type { PropTypes } from '@mui/material';
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Stack,
+  SvgIcon,
+  Typography,
+} from '@mui/material';
 import { useUser } from 'hooks';
 import Link from 'next/link';
 import { useState } from 'react';
 
 import SidebarMobile from './SidebarMobile';
-import styles from './styles';
 
 const Navbar = ({
-  isMobile = false,
   navbar = [],
+  color = 'white',
+  iconColor = 'white',
 }: {
-  isMobile?: boolean;
   navbar: any[];
+  color?: PropTypes.Color | string;
+  iconColor?: PropTypes.Color | string;
 }) => {
   useUser({ enabled: false });
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -27,25 +37,28 @@ const Navbar = ({
         direction="row"
         spacing={40}
         flex={1}
-        sx={
-          isMobile ? styles.navbarMobileContainer : styles.navbarTabletContainer
-        }
+        sx={{ display: { xs: 'none', sm: 'flex' } }}
       >
         {navbar.map((section) => (
           <>
-            <Link key={section.href} href={section.href} rel="noreferrer">
+            <Link
+              style={{ textDecoration: 'none' }}
+              key={section.href}
+              href={section.href}
+              rel="noreferrer"
+            >
               <Box display="flex" alignItems="center">
                 <Box height={20}>
                   <SvgIcon
                     component={section.icon}
-                    sx={{ color: 'white', width: 'auto', height: 'inherit' }}
+                    sx={{ color: iconColor, width: 'auto', height: 'inherit' }}
                     viewBox={section.viewBox}
                   />
                 </Box>
                 <Typography
                   component="span"
                   fontWeight={500}
-                  color="white"
+                  color={color}
                   ml={20}
                 >
                   {section.label}
@@ -55,6 +68,15 @@ const Navbar = ({
           </>
         ))}
       </Stack>
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        sx={{ display: { xs: 'block', sm: 'none' } }}
+        onClick={() => setIsOpenSidebar(true)}
+      >
+        <MenuIcon />
+      </IconButton>
       <Drawer
         anchor="right"
         open={isOpenSidebar}

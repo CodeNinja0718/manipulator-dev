@@ -1,6 +1,7 @@
 import HomeSvg from '@icons/icon_home.svg';
 import LoginSvg from '@icons/icon_logout.svg';
 import RegisterSvg from '@icons/icon_profile.svg';
+import type { PropTypes, SxProps, Theme } from '@mui/material';
 import { Box, Stack } from '@mui/material';
 import Link from 'next/link';
 import * as React from 'react';
@@ -8,6 +9,14 @@ import * as React from 'react';
 import Navbar from './Navbar';
 import SidebarDesktop from './SidebarDesktop';
 import styles from './styles';
+
+interface HeaderProps {
+  color?: PropTypes.Color | 'transparent';
+  textColor?: PropTypes.Color | string;
+  iconColor?: PropTypes.Color | string;
+  logo?: React.ReactNode;
+  sx?: SxProps<Theme> | undefined;
+}
 
 const navbar: any[] = [
   {
@@ -30,26 +39,32 @@ const navbar: any[] = [
   },
 ];
 
-const Header = () => {
+const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
   return (
-    <SidebarDesktop position="sticky" color="secondary">
-      <Box display="flex" width="100%" justifyContent="space-between">
+    <SidebarDesktop position="sticky" color={color ?? 'secondary'} sx={sx}>
+      <Box
+        display="flex"
+        width="100%"
+        justifyContent="space-between"
+        sx={styles.appBarBox}
+      >
         <Stack
           direction="row"
           width="100%"
           gap={{ xs: 1, tablet: 2 }}
           alignItems="center"
           justifyContent="inherit"
-          pl={20}
-          pr={20}
         >
-          <Box sx={styles.logoContainer} component={Link} href="/"></Box>
+          <Box sx={styles.logoContainer} component={Link} href="/">
+            {logo}
+          </Box>
           <Box display="flex" pt={15} pb={15}>
-            <Navbar navbar={navbar} />
+            <Navbar navbar={navbar} color={textColor} iconColor={iconColor} />
           </Box>
         </Stack>
       </Box>
     </SidebarDesktop>
+
     // <AppBar
     //   component="nav"
     //   position="sticky"

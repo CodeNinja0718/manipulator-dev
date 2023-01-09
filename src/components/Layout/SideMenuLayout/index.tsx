@@ -13,6 +13,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Link from 'components/Link';
+import { gradientComponent } from 'hoc/GrandientComponent';
 import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 
@@ -68,7 +69,17 @@ const SideMenuLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Container sx={styles.mainBox} maxWidth={false}>
-        <Header />
+        <Header
+          color="transparent"
+          textColor="text.primary"
+          iconColor="orangeText"
+          sx={styles.appBar}
+          logo={
+            <Typography variant="h1" sx={styles.logo} color="orangeText">
+              整体なび
+            </Typography>
+          }
+        />
         <Box component="main" sx={styles.main}>
           <Box
             sx={{
@@ -80,33 +91,43 @@ const SideMenuLayout = ({ children }: { children: ReactNode }) => {
             margin="0 auto"
           >
             <Box display={{ xs: 'flex' }}>
-              <Box sx={styles.sideMenuBox}>
-                <Box sx={styles.sideMenu}>
-                  <Box sx={styles.sideMenuTitleBox}>
-                    <Typography variant="subtitle1">マイページ</Typography>
+              {gradientComponent(
+                <>
+                  <Box sx={styles.sideMenuBox}>
+                    <Box sx={styles.sideMenu}>
+                      <Box sx={styles.sideMenuTitleBox}>
+                        <Typography variant="subtitle1">マイページ</Typography>
+                      </Box>
+                      <List
+                        component="nav"
+                        aria-label="side-menu"
+                        sx={styles.listItem}
+                      >
+                        {customerMenus.map((menu) => (
+                          <Link
+                            href={menu.path}
+                            key={menu.path}
+                            sx={styles.link}
+                          >
+                            <ListItemButton
+                              sx={styles.listItemButton}
+                              selected={route.startsWith(menu.path)}
+                            >
+                              {menu.icon}
+                              <ListItemText
+                                sx={styles.listItemText}
+                                primary={menu.label}
+                              />
+                            </ListItemButton>
+                          </Link>
+                        ))}
+                      </List>
+                    </Box>
                   </Box>
-                  <List
-                    component="nav"
-                    aria-label="side-menu"
-                    sx={styles.listItem}
-                  >
-                    {customerMenus.map((menu) => (
-                      <Link href={menu.path} key={menu.path} sx={styles.link}>
-                        <ListItemButton
-                          sx={styles.listItemButton}
-                          selected={route.startsWith(menu.path)}
-                        >
-                          {menu.icon}
-                          <ListItemText
-                            sx={styles.listItemText}
-                            primary={menu.label}
-                          />
-                        </ListItemButton>
-                      </Link>
-                    ))}
-                  </List>
-                </Box>
-              </Box>
+                </>,
+                'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+              )}
+
               <Box sx={styles.contentBox} overflow="hidden">
                 {children}
               </Box>

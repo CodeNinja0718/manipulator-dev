@@ -1,19 +1,11 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
-  // appBar: {
-  //   boxShadow: 'none',
-  //   padding: '35px',
-  //   height: '106px',
-  // },
-  // appBarBox: {
-  //   width: 950,
-  //   margin: '0 auto',
-  // },
-  // logo: {
-  //   fontSize: '28px',
-  //   letterSpacing: '5px',
-  // },
+  appBarBox: {
+    maxWidth: 950,
+    margin: '0 auto',
+  },
+
   logoContainer: {
     display: 'flex',
     textDecorationLine: 'none',

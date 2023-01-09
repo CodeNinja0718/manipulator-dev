@@ -1,6 +1,16 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
+  logo: {
+    fontSize: '28px',
+    letterSpacing: '5px',
+    fontWeight: '500',
+  },
+  appBar: {
+    boxShadow: 'none',
+    padding: '25px',
+    height: '106px',
+  },
   mainBox: {
     backgroundColor: 'white',
     backgroundImage: 'url(/images/main_bg.webp)',
@@ -22,6 +32,7 @@ const styles = {
     py: { xs: 30 },
     width: '260px',
     background: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+    display: { xs: 'none', sm: 'block' },
   },
   sideMenuTitleBox: {
     pb: '10px',
