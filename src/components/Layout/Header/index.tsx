@@ -41,7 +41,12 @@ const navbar: any[] = [
 
 const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
   return (
-    <SidebarDesktop position="sticky" color={color ?? 'secondary'} sx={sx}>
+    <SidebarDesktop
+      position="sticky"
+      color={color ?? 'secondary'}
+      sx={sx}
+      gradient="orange"
+    >
       <Box
         display="flex"
         width="100%"
