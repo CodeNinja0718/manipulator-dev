@@ -21,7 +21,12 @@ import Footer from '../Footer';
 import Header from '../Header';
 import styles from './styles';
 
-const customerMenus: any[] = [
+interface CustomerMenu {
+  path: string;
+  label: string;
+  icon: React.ReactNode;
+}
+const customerMenus: CustomerMenu[] = [
   {
     path: '/',
     label: '予約履歴',
