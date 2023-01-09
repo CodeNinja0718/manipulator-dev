@@ -4,6 +4,7 @@ import RegisterSvg from '@icons/icon_profile.svg';
 import type { PropTypes, SxProps, Theme } from '@mui/material';
 import { Box, Stack } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import Navbar from './Navbar';
@@ -40,12 +41,16 @@ const navbar: any[] = [
 ];
 
 const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
+  const router = useRouter();
+  const { pathname } = router;
+  const isGradient = pathname.indexOf('reservation-history');
+
   return (
     <SidebarDesktop
       position="sticky"
       color={color ?? 'secondary'}
       sx={sx}
-      gradient="orange"
+      gradient={isGradient === -1 ? 'orange' : ''}
     >
       <Box
         display="flex"
