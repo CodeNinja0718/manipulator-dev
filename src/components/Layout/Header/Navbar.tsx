@@ -32,27 +32,25 @@ const Navbar = ({
         }
       >
         {navbar.map((section) => (
-          <>
-            <Link key={section.href} href={section.href} rel="noreferrer">
-              <Box display="flex" alignItems="center">
-                <Box height={20}>
-                  <SvgIcon
-                    component={section.icon}
-                    sx={{ color: 'white', width: 'auto', height: 'inherit' }}
-                    viewBox={section.viewBox}
-                  />
-                </Box>
-                <Typography
-                  component="span"
-                  fontWeight={500}
-                  color="white"
-                  ml={20}
-                >
-                  {section.label}
-                </Typography>
+          <Link key={section.href} href={section.href} rel="noreferrer">
+            <Box display="flex" alignItems="center">
+              <Box height={20}>
+                <SvgIcon
+                  component={section.icon}
+                  sx={{ color: 'white', width: 'auto', height: 'inherit' }}
+                  viewBox={section.viewBox}
+                />
               </Box>
-            </Link>
-          </>
+              <Typography
+                component="span"
+                fontWeight={500}
+                color="white"
+                ml={20}
+              >
+                {section.label}
+              </Typography>
+            </Box>
+          </Link>
         ))}
       </Stack>
       <Drawer
