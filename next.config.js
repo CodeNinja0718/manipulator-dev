@@ -79,9 +79,6 @@ const nextConfig = {
     locales: ['ja'],
     defaultLocale: 'ja',
   },
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
