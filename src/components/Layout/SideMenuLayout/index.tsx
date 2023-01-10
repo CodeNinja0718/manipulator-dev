@@ -8,25 +8,23 @@ import {
   LocalOfferOutlined,
   MapOutlined,
 } from '@mui/icons-material';
-import { Box, Container, Typography } from '@mui/material';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Link from 'components/Link';
+import { Box, Container } from '@mui/material';
 import { gradientComponent } from 'hoc/GrandientComponent';
-import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 
 import Footer from '../Footer';
 import Header from '../Header';
+import Logo from '../Header/Logo';
+import SideMenu from './SideMenu';
 import styles from './styles';
 
-interface CustomerMenu {
+export interface SideMenuItem {
   path: string;
   label: string;
   icon: React.ReactNode;
+  children?: SideMenuItem[];
 }
-const customerMenus: CustomerMenu[] = [
+const customerMenus: SideMenuItem[] = [
   {
     path: '/',
     label: '予約履歴',
@@ -69,8 +67,6 @@ const customerMenus: CustomerMenu[] = [
   },
 ];
 const SideMenuLayout = ({ children }: { children: ReactNode }) => {
-  const { route } = useRouter();
-
   return (
     <div>
       <Container sx={styles.mainBox} maxWidth={false}>
@@ -79,11 +75,7 @@ const SideMenuLayout = ({ children }: { children: ReactNode }) => {
           textColor="text.primary"
           iconColor="orangeText"
           sx={styles.appBar}
-          logo={
-            <Typography variant="h1" sx={styles.logo} color="orangeText">
-              整体なび
-            </Typography>
-          }
+          logo={<Logo />}
         />
         <Box component="main" sx={styles.main}>
           <Box
@@ -96,40 +88,18 @@ const SideMenuLayout = ({ children }: { children: ReactNode }) => {
             margin="0 auto"
           >
             <Box display={{ xs: 'flex' }}>
+              {/* {
+              gradientComponent(
+                <Box sx={{display: { xs: 'none', tablet: 'block' }}}>
+                  <SideMenu menus={customerMenus} />
+                <Box/>,
+                'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+              )
+              } */}
               {gradientComponent(
-                <>
-                  <Box sx={styles.sideMenuBox}>
-                    <Box sx={styles.sideMenu}>
-                      <Box sx={styles.sideMenuTitleBox}>
-                        <Typography variant="subtitle1">マイページ</Typography>
-                      </Box>
-                      <List
-                        component="nav"
-                        aria-label="side-menu"
-                        sx={styles.listItem}
-                      >
-                        {customerMenus.map((menu) => (
-                          <Link
-                            href={menu.path}
-                            key={menu.path}
-                            sx={styles.link}
-                          >
-                            <ListItemButton
-                              sx={styles.listItemButton}
-                              selected={route.startsWith(menu.path)}
-                            >
-                              {menu.icon}
-                              <ListItemText
-                                sx={styles.listItemText}
-                                primary={menu.label}
-                              />
-                            </ListItemButton>
-                          </Link>
-                        ))}
-                      </List>
-                    </Box>
-                  </Box>
-                </>,
+                <Box sx={{ display: { xs: 'none', tablet: 'block' } }}>
+                  <SideMenu menus={customerMenus} />
+                </Box>,
                 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
               )}
 

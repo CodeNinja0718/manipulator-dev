@@ -68,7 +68,7 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
           <Box sx={styles.logoContainer} component={Link} href="/">
             {logo}
           </Box>
-          <Box display="flex" pt={15} pb={15}>
+          <Box display="flex" pt={{ tablet: 15 }} pb={{ tablet: 15 }}>
             <Navbar navbar={navbar} color={textColor} iconColor={iconColor} />
           </Box>
         </Stack>

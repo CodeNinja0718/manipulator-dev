@@ -37,7 +37,7 @@ const Navbar = ({
         direction="row"
         spacing={40}
         flex={1}
-        sx={{ display: { xs: 'none', sm: 'flex' } }}
+        sx={{ display: { xs: 'none', tablet: 'flex' } }}
       >
         {navbar.map((section) => (
           <Link
@@ -66,15 +66,21 @@ const Navbar = ({
           </Link>
         ))}
       </Stack>
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ display: { xs: 'block', sm: 'none' } }}
-        onClick={() => setIsOpenSidebar(true)}
-      >
-        <MenuIcon />
-      </IconButton>
+      <Box color="white">
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{
+            display: { xs: 'block', tablet: 'none' },
+            width: '40px',
+            height: '40px',
+          }}
+          onClick={() => setIsOpenSidebar(true)}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Box>
       <Drawer
         anchor="right"
         open={isOpenSidebar}

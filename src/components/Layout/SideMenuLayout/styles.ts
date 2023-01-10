@@ -1,15 +1,15 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
-  logo: {
-    fontSize: '28px',
-    letterSpacing: '5px',
-    fontWeight: '500',
-  },
   appBar: {
     boxShadow: 'none',
-    padding: '25px',
-    height: '106px',
+    padding: { xs: '10px 15px', tablet: '25px' },
+    height: { xs: '65px', tablet: '106px' },
+    backgroundImage: {
+      xs: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+      tablet: 'none',
+    },
+    color: 'white',
   },
   mainBox: {
     backgroundColor: 'white',
@@ -29,10 +29,9 @@ const styles = {
   },
   sideMenuBox: {
     pl: { xs: 20 },
-    py: { xs: 30 },
-    width: '260px',
+    py: { xs: 0, tablet: 30 },
+    width: { xs: '100%', tablet: '260px' },
     background: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
-    display: { xs: 'none', sm: 'block' },
   },
   sideMenuTitleBox: {
     pb: '10px',
