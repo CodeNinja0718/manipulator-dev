@@ -5,7 +5,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "test -f .husky/commit-msg && next dev || yarn generate-config-commit && next dev",
     "build": "next build",
     "start": "next start",
     "build-stats": "cross-env ANALYZE=true npm run build",
@@ -19,7 +19,8 @@
     "prepare": "husky install",
     "convert-svg": "npx @svgr/cli --out-dir dist --ignore-existing -- icons",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "generate-config-commit": "yarn husky add .husky/commit-msg \"yarn commitlint --edit $1\""
   },
   "lint-staged": {
     "*.{js,jsx,.ts,.tsx}": [
