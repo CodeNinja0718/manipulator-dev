@@ -9,7 +9,7 @@ interface AppBarProps extends MuiAppBarProps {
   gradient?: string;
 }
 
-const SidebarDesktop = ({ children, gradient, ...props }: AppBarProps) => {
+const DesktopNavbar = ({ children, gradient, ...props }: AppBarProps) => {
   return gradientComponent(
     <AppBar component="nav" {...props}>
       {children}
@@ -18,4 +18,4 @@ const SidebarDesktop = ({ children, gradient, ...props }: AppBarProps) => {
   );
 };
 
-export default SidebarDesktop;
+export default DesktopNavbar;

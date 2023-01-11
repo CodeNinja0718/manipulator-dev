@@ -1,20 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable unused-imports/no-unused-vars */
-import MenuIcon from '@mui/icons-material/Menu';
 import type { PropTypes } from '@mui/material';
-import {
-  Box,
-  Drawer,
-  IconButton,
-  Stack,
-  SvgIcon,
-  Typography,
-} from '@mui/material';
+import { Box, Stack, SvgIcon, Typography } from '@mui/material';
 import { useUser } from 'hooks';
 import Link from 'next/link';
-import { useState } from 'react';
-
-import SidebarMobile from './SidebarMobile';
 
 const Navbar = ({
   navbar = [],
@@ -26,10 +13,6 @@ const Navbar = ({
   iconColor?: PropTypes.Color | string;
 }) => {
   useUser({ enabled: false });
-  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const handleCloseSidebar = () => {
-    setIsOpenSidebar(false);
-  };
 
   return (
     <Box display="flex">
@@ -66,28 +49,6 @@ const Navbar = ({
           </Link>
         ))}
       </Stack>
-      <Box color="white">
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{
-            display: { xs: 'block', tablet: 'none' },
-            width: '40px',
-            height: '40px',
-          }}
-          onClick={() => setIsOpenSidebar(true)}
-        >
-          <MenuIcon />
-        </IconButton>
-      </Box>
-      <Drawer
-        anchor="right"
-        open={isOpenSidebar}
-        onClose={() => setIsOpenSidebar(false)}
-      >
-        <SidebarMobile onCloseSidebar={handleCloseSidebar} />
-      </Drawer>
     </Box>
   );
 };

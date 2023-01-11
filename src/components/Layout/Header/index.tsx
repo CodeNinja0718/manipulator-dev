@@ -1,14 +1,18 @@
 import HomeSvg from '@icons/icon_home.svg';
 import LoginSvg from '@icons/icon_logout.svg';
 import RegisterSvg from '@icons/icon_profile.svg';
+import MenuIcon from '@mui/icons-material/Menu';
 import type { PropTypes, SxProps, Theme } from '@mui/material';
-import { Box, Stack } from '@mui/material';
+import { Box, IconButton, Stack } from '@mui/material';
+import useGlobalState from 'hooks/useGlobalState';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import * as React from 'react';
+import React from 'react';
 
-import Navbar from './Navbar';
-import SidebarDesktop from './SidebarDesktop';
+import CommonDrawer from '../CommonDrawer';
+import Navbar from '../Navbar';
+import DesktopNavbar from '../Navbar/DesktopNavbar';
+import MobileNavbar from '../Navbar/MobileNavbar';
 import styles from './styles';
 
 interface HeaderProps {
@@ -44,9 +48,13 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
   const router = useRouter();
   const { pathname } = router;
   const isGradient = pathname.indexOf('reservation-history');
+  const { openDrawer, setOpenDrawer } = useGlobalState();
+  const handleCloseSidebar = () => {
+    setOpenDrawer(false);
+  };
 
   return (
-    <SidebarDesktop
+    <DesktopNavbar
       position="sticky"
       color={color ?? 'secondary'}
       sx={sx}
@@ -65,28 +73,42 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
           alignItems="center"
           justifyContent="inherit"
         >
-          <Box sx={styles.logoContainer} component={Link} href="/">
-            {logo}
+          <Box sx={styles.logoContainer}>
+            <Link
+              href="/"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              {logo}
+            </Link>
           </Box>
+          {/* Mobile - Reponsive */}
           <Box display="flex" pt={{ tablet: 15 }} pb={{ tablet: 15 }}>
             <Navbar navbar={navbar} color={textColor} iconColor={iconColor} />
+            <Box color="white">
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{
+                  display: { xs: 'block', tablet: 'none' },
+                  width: '40px',
+                  height: '40px',
+                }}
+                onClick={() => setOpenDrawer(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
           </Box>
+          {/* Drawer In Mobile */}
+          <CommonDrawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+            <MobileNavbar onCloseSidebar={handleCloseSidebar} />
+          </CommonDrawer>
         </Stack>
       </Box>
-    </SidebarDesktop>
-    // <AppBar
-    //   component="nav"
-    //   position="sticky"
-    //   color="secondary"
-    //   sx={styles.appBar}
-    // >
-    //   <Box display="flex" justifyContent="space-between">
-    //     <Stack direction="row" gap={{ xs: 1, tablet: 2 }} alignItems="center">
-    //       <Box sx={styles.logoContainer} component={Link} href="/"></Box>
-    //     </Stack>
-    //     <Navbar navbar={navbar} />
-    //   </Box>
-    // </AppBar>
+    </DesktopNavbar>
   );
 };
 

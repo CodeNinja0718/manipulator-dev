@@ -16,6 +16,7 @@ declare module '@mui/material/styles' {
     orangeBoldText: string;
     orangeGradient: string;
     greenGradient: string;
+    gray: string;
   }
 
   interface PaletteOptions {
@@ -29,6 +30,7 @@ declare module '@mui/material/styles' {
     orangeBoldText: string;
     orangeGradient?: string;
     greenGradient?: string;
+    gray?: string;
   }
 
   interface TypographyVariants {
@@ -89,6 +91,7 @@ const palette: MuiPaletteOptions = {
   },
   orangeText: '#ea6500',
   orangeBoldText: '#eb6600',
+  gray: '#707070',
   text: {
     primary: '#333333',
   },

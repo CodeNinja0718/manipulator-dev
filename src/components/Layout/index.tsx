@@ -12,11 +12,9 @@ const Footer = dynamic(() => import('./Footer'));
 
 export default function Layout({
   children,
-  showFooter = true,
   isCard = false,
 }: {
   children: ReactNode;
-  showFooter?: boolean;
   isCard?: boolean;
 }) {
   const pageHeight =
@@ -46,10 +44,8 @@ export default function Layout({
             ...(Array.isArray(styles.main) ? styles.main : [styles.main]),
             () => ({
               minHeight: {
-                xs: showFooter ? `calc(100vh - 322px)` : `calc(100vh - 51px)`,
-                mobile: showFooter
-                  ? `calc(100vh - 284px)`
-                  : `calc(100vh - 51px)`,
+                xs: `calc(100vh - 322px)`,
+                mobile: `calc(100vh - 284px)`,
               },
             }),
           ]}
@@ -86,7 +82,6 @@ export default function Layout({
               transform: `scale(${opacity ? 1 : 0})`,
             },
           ]}
-          color="primary"
           onClick={() =>
             window.scrollTo({
               top: 0,
@@ -96,7 +91,7 @@ export default function Layout({
         >
           <ArrowUpward />
         </IconButton>
-        {showFooter && <Footer />}
+        <Footer />
       </Container>
     </div>
   );

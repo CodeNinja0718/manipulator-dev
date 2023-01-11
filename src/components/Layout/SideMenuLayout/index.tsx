@@ -14,7 +14,7 @@ import type { ReactNode } from 'react';
 
 import Footer from '../Footer';
 import Header from '../Header';
-import Logo from '../Header/Logo';
+import Logo from '../Navbar/Logo';
 import SideMenu from './SideMenu';
 import styles from './styles';
 
@@ -88,14 +88,6 @@ const SideMenuLayout = ({ children }: { children: ReactNode }) => {
             margin="0 auto"
           >
             <Box display={{ xs: 'flex' }}>
-              {/* {
-              gradientComponent(
-                <Box sx={{display: { xs: 'none', tablet: 'block' }}}>
-                  <SideMenu menus={customerMenus} />
-                <Box/>,
-                'linear-gradient(to bottom, #ff9a4d, #eb6600)',
-              )
-              } */}
               {gradientComponent(
                 <Box sx={{ display: { xs: 'none', tablet: 'block' } }}>
                   <SideMenu menus={customerMenus} />

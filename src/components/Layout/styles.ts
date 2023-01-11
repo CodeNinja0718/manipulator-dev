@@ -14,14 +14,14 @@ const styles: Record<string, SxProps<Theme>> = {
     flexDirection: 'column',
   },
   fabButton: (theme: Theme) => ({
-    width: { xs: 40, tablet: 56 },
-    height: { xs: 40, tablet: 56 },
+    width: { xs: 24, tablet: 40 },
+    height: { xs: 24, tablet: 40 },
     position: 'fixed',
     right: 24,
     zIndex: 2,
     transition: 'all 0.6s cubic-bezier(0.33, 1, 0.68, 1)',
+    color: theme.palette.gray,
     bgcolor: 'white',
-    border: `solid 2px ${theme.palette.primary.main}`,
     '&:hover': {
       bgcolor: 'white',
     },
