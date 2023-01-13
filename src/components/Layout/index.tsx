@@ -45,7 +45,7 @@ export default function Layout({
             () => ({
               minHeight: {
                 xs: `calc(100vh - 322px)`,
-                mobile: `calc(100vh - 284px)`,
+                mobile: `calc(100vh - 293px)`,
               },
             }),
           ]}
@@ -63,8 +63,6 @@ export default function Layout({
             }
             width="100%"
             margin="0 auto"
-            mt={22}
-            mb={103}
           >
             {children}
           </Box>

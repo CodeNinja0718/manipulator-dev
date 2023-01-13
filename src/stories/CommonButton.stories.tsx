@@ -42,6 +42,14 @@ EndiconButton.args = {
   endIcon: <ArrowForwardIosIcon fontSize="small" />,
 };
 
+export const StarticonButton = Template.bind({});
+StarticonButton.args = {
+  label: 'Button',
+  color: 'secondary',
+  sx: { width: 200 },
+  startIcon: <ArrowForwardIosIcon fontSize="small" />,
+};
+
 export const ColorButton = Template.bind({});
 ColorButton.args = {
   label: 'Button',

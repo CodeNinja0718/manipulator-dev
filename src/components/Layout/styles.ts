@@ -12,6 +12,10 @@ const styles: Record<string, SxProps<Theme>> = {
     minHeight: 'calc(100vh - 163px)',
     display: 'flex',
     flexDirection: 'column',
+    mt: {
+      xs: 0,
+      normalTablet: 55.6,
+    },
   },
   fabButton: (theme: Theme) => ({
     width: { xs: 24, tablet: 40 },

@@ -21,7 +21,7 @@ const styles = {
   main: {
     minHeight: {
       xs: `calc(100vh - 322px)`,
-      mobile: `calc(100vh - 284px)`,
+      mobile: `calc(100vh - 293px)`,
     },
     display: 'flex',
     flexDirection: 'column',
@@ -36,7 +36,7 @@ const styles = {
   sideMenuTitleBox: {
     pb: '10px',
     borderBottom: `3px solid `,
-    borderBottomColor: 'orangeBoldText',
+    borderBottomColor: 'orangeBold',
     display: 'block',
   },
   contentBox: {

@@ -54,61 +54,66 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
   };
 
   return (
-    <DesktopNavbar
-      position="sticky"
-      color={color ?? 'secondary'}
-      sx={sx}
-      gradient={isGradient === -1 ? 'orange' : ''}
-    >
-      <Box
-        display="flex"
-        width="100%"
-        justifyContent="space-between"
-        sx={styles.appBarBox}
+    <>
+      <DesktopNavbar
+        position="fixed"
+        color={color ?? 'secondary'}
+        sx={sx}
+        gradient={isGradient === -1 ? 'orange' : ''}
       >
-        <Stack
-          direction="row"
+        <Box
+          display="flex"
           width="100%"
-          gap={{ xs: 1, tablet: 2 }}
-          alignItems="center"
-          justifyContent="inherit"
+          justifyContent="space-between"
+          sx={styles.appBarBox}
         >
-          <Box sx={styles.logoContainer}>
-            <Link
-              href="/"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {logo}
-            </Link>
-          </Box>
-          {/* Mobile - Reponsive */}
-          <Box display="flex" pt={{ tablet: 15 }} pb={{ tablet: 15 }}>
-            <Navbar navbar={navbar} color={textColor} iconColor={iconColor} />
-            <Box color="white">
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{
-                  display: { xs: 'block', tablet: 'none' },
-                  width: '40px',
-                  height: '40px',
+          <Stack
+            direction="row"
+            width="100%"
+            gap={{ xs: 1, tablet: 2 }}
+            alignItems="center"
+            justifyContent="inherit"
+          >
+            <Box sx={styles.logoContainer}>
+              <Link
+                href="/"
+                style={{
+                  textDecoration: 'none',
                 }}
-                onClick={() => setOpenDrawer(true)}
               >
-                <MenuIcon />
-              </IconButton>
+                {logo}
+              </Link>
             </Box>
-          </Box>
-          {/* Drawer In Mobile */}
-          <CommonDrawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
-            <MobileNavbar onCloseSidebar={handleCloseSidebar} />
-          </CommonDrawer>
-        </Stack>
+
+            <Box display="flex" pt={{ tablet: 15 }} pb={{ tablet: 15 }}>
+              <Navbar navbar={navbar} color={textColor} iconColor={iconColor} />
+            </Box>
+          </Stack>
+        </Box>
+      </DesktopNavbar>
+
+      {/* Mobile - Reponsive */}
+      <Box color="white" position="fixed" zIndex={1} right={0}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{
+            display: { xs: 'block', tablet: 'none' },
+            width: '40px',
+            height: '40px',
+          }}
+          onClick={() => setOpenDrawer(true)}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        {/* Drawer In Mobile */}
+        <CommonDrawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+          <MobileNavbar onCloseSidebar={handleCloseSidebar} />
+        </CommonDrawer>
       </Box>
-    </DesktopNavbar>
+    </>
   );
 };
 

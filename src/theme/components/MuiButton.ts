@@ -15,6 +15,15 @@ const MuiAppBar = {
         height: 14,
       },
     },
+    startIcon: {
+      position: 'absolute',
+      margin: 0,
+      left: 17,
+      svg: {
+        width: 16,
+        height: 24,
+      },
+    },
   },
   variants: [
     {
@@ -26,6 +35,7 @@ const MuiAppBar = {
         minHeight: 62,
         borderRadius: 31,
         '& .MuiButton-endIcon': {},
+        '& .MuiButton-startIcon': {},
       },
     },
     {
@@ -37,6 +47,7 @@ const MuiAppBar = {
         minHeight: 50,
         borderRadius: 25,
         '& .MuiButton-endIcon': {},
+        '& .MuiButton-startIcon': {},
       },
     },
     {
@@ -48,6 +59,7 @@ const MuiAppBar = {
         minHeight: 40,
         borderRadius: 25,
         '& .MuiButton-endIcon': {},
+        '& .MuiButton-startIcon': {},
       },
     },
     {
@@ -60,6 +72,7 @@ const MuiAppBar = {
         borderRadius: 25,
         padding: '0px 12px',
         '& .MuiButton-endIcon': {},
+        '& .MuiButton-startIcon': {},
       },
     },
   ],

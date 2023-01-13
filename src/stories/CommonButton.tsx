@@ -7,7 +7,7 @@ import React from 'react';
 // Only include variant, size, and color
 type ButtonBaseProps = Pick<
   MuiButtonProps,
-  'variant' | 'color' | 'disabled' | 'endIcon' | 'sx'
+  'variant' | 'color' | 'disabled' | 'endIcon' | 'startIcon' | 'sx'
 >;
 
 // Use all except disableRipple

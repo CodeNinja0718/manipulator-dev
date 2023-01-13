@@ -13,7 +13,7 @@ declare module '@mui/material/styles' {
     grown: string;
     orange: object;
     orangeText: string;
-    orangeBoldText: string;
+    orangeBold: string;
     orangeGradient: string;
     greenGradient: string;
     gray: string;
@@ -27,7 +27,7 @@ declare module '@mui/material/styles' {
     heading: string;
     orange: object;
     orangeText: string;
-    orangeBoldText: string;
+    orangeBold: string;
     orangeGradient?: string;
     greenGradient?: string;
     gray?: string;
@@ -52,7 +52,9 @@ declare module '@mui/material/InputBase' {
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
     tablet: true;
+    normalTablet: true;
     mobile: true;
+    normalMobile: true;
   }
 }
 
@@ -67,6 +69,12 @@ declare module '@mui/material/Button' {
     xs: true;
   }
   interface ButtonPropsColorOverrides {
+    orange: true;
+  }
+}
+
+declare module '@mui/material/SvgIcon' {
+  interface SvgIconPropsColorOverrides {
     orange: true;
   }
 }
@@ -90,7 +98,7 @@ const palette: MuiPaletteOptions = {
     contrastText: '#fff',
   },
   orangeText: '#ea6500',
-  orangeBoldText: '#eb6600',
+  orangeBold: '#eb6600',
   gray: '#707070',
   text: {
     primary: '#333333',
@@ -121,10 +129,12 @@ const defaultTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
+      normalMobile: 375,
       mobile: 426,
       sm: 600,
       tablet: 768,
       md: 900,
+      normalTablet: 1024,
       lg: 1200,
       xl: 1440,
     },
