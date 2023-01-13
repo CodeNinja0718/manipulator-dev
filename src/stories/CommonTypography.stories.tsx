@@ -33,7 +33,6 @@ export default {
     },
   },
   args: {
-    size: 'primary',
     variant: 'h1',
     fontWeight: '400',
     gutterBottom: false,

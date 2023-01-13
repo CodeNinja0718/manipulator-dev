@@ -1,5 +1,6 @@
 const MuiTypography = {
   defaultProps: {
+    fontFamily: 'inherit',
     variantMapping: {
       h1: 'h1',
       h2: 'h2',
