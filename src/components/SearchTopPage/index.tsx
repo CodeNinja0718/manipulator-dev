@@ -4,6 +4,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
+
 import styles from './styles';
 
 const SearchTopPage = () => {
