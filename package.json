@@ -60,6 +60,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.0",
     "react-intersection-observer": "^9.4.1",
+    "react-otp-input": "^2.4.0",
     "react-scroll": "^1.8.9",
     "react-toastify": "^9.1.1",
     "sharp": "^0.31.2",

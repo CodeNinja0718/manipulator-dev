@@ -54,3 +54,6 @@ out
 
 # Husky
 .husky
+
+# Dotenv local files
+.env
