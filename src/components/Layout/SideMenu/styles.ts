@@ -10,6 +10,7 @@ const styles = {
       tablet: 'none',
     },
     color: 'white',
+    display: { xs: 'none', tablet: 'block' },
   },
   mainBox: {
     backgroundColor: 'white',
@@ -41,7 +42,7 @@ const styles = {
     display: 'block',
   },
   contentBox: {
-    width: 'calc(100% - 260px)',
+    width: { xs: '100%', tablet: 'calc(100% - 260px)' },
   },
   sideMenu: {
     bgcolor: '#ffffff',
@@ -49,7 +50,7 @@ const styles = {
     pl: { xs: 20 },
     py: { xs: 30 },
     display: 'block',
-    height: '100%',
+    height: { xs: '100%', tablet: 'auto' },
     position: 'relative',
   },
   listItem: {
@@ -96,6 +97,7 @@ const styles = {
     bottom: 15,
     textDecoration: 'underline',
     color: 'text.primary',
+    display: { xs: 'block', tablet: 'none' },
   },
 } as Record<string, SxProps<Theme>>;
 

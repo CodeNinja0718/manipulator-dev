@@ -1,4 +1,5 @@
 import { ArrowUpward } from '@mui/icons-material';
+import type { SxProps, Theme } from '@mui/material';
 import { Box, Card, IconButton } from '@mui/material';
 import { useScroll } from 'framer-motion';
 import dynamic from 'next/dynamic';
@@ -13,9 +14,15 @@ const Footer = dynamic(() => import('./Footer'));
 export default function Layout({
   children,
   isCard = false,
+  mainStyle,
+  cardStyle,
+  header = <Header />,
 }: {
   children: ReactNode;
   isCard?: boolean;
+  mainStyle?: SxProps<Theme> | undefined;
+  cardStyle?: SxProps<Theme> | undefined;
+  header?: ReactNode;
 }) {
   const pageHeight =
     typeof document !== 'undefined' ? document.body.scrollHeight : 0;
@@ -36,28 +43,15 @@ export default function Layout({
 
   const renderMainLayout = (content: ReactNode) => {
     if (isCard) {
-      return <Card sx={styles.cardLayout}>{content}</Card>;
+      return <Card sx={cardStyle || styles.cardLayout}>{content}</Card>;
     }
     return content;
   };
 
   return (
     <Box sx={styles.layoutContainer}>
-      <Header />
-      <Box
-        component="main"
-        sx={[
-          ...(Array.isArray(styles.mainContent)
-            ? styles.mainContent
-            : [styles.mainContent]),
-          () => ({
-            minHeight: {
-              xs: `calc(100vh - 322px)`,
-              mobile: `calc(100vh - 293px)`,
-            },
-          }),
-        ]}
-      >
+      {header}
+      <Box component="main" sx={mainStyle || styles.main}>
         {renderMainLayout(children)}
       </Box>
 

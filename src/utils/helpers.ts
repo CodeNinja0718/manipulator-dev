@@ -8,6 +8,8 @@ import process from 'process';
 import type { ToastContent, ToastOptions } from 'react-toastify';
 import { toast } from 'react-toastify';
 
+import { RESERVATION_STATUS } from './const';
+
 const Helper = {
   getWebCookie: (
     req?: NextApiRequest,
@@ -113,6 +115,9 @@ const Helper = {
   },
   addComma: (value: string | number) =>
     value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+
+  convertStatus: (value: string) =>
+    RESERVATION_STATUS.find((item) => item.value === value)?.label || '',
 };
 
 export default Helper;

@@ -10,9 +10,16 @@ import {
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
-import type { SideMenuItem } from '.';
 import styles from './styles';
 
+export interface SideMenuItem {
+  href: string;
+  label: string;
+  // icon: React.ReactNode;
+  icon: any;
+  viewBox?: string;
+  children?: SideMenuItem[];
+}
 interface SideMenuProps {
   menus: SideMenuItem[];
   isMobile?: boolean;
