@@ -3,17 +3,15 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   logoContainer: {
     position: 'absolute',
-    top: { xs: 65, normalTablet: 135 },
-    left: { xs: 30, normalTablet: 375 },
     display: 'flex',
-    width: { xs: 141, normalTablet: 213 },
-    height: { xs: 141, normalTablet: 213 },
+    width: { xs: 141, md: 213 },
+    height: { xs: 141, md: 213 },
     backgroundColor: (theme: Theme) => theme.palette.orangeBold,
     justifyContent: 'center',
     alignItems: 'center',
   },
   svgIconStyle: {
-    fontSize: { xs: '6rem', normalTablet: '8.5rem' },
+    fontSize: { xs: '6rem', md: '8.5rem' },
     color: 'white',
   },
   borderElement: {

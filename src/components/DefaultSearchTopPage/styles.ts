@@ -3,12 +3,16 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   searchContainer: {
     gap: { xs: 15, tablet: 22 },
+    // pt: 34,
+    // pb: 34,
+    // pl: 10,
+    // pr: 10
     p: '34px 10px 34px',
   },
   button: {
     width: 375,
-    background: 'white',
     fontWeight: 600,
+    background: 'white',
     fontSize: { xs: 15, tablet: 16 },
     padding: { xs: '8px 12px 8px 20px', tablet: '8px 24px' },
 
@@ -17,9 +21,6 @@ const styles = {
     },
     '& .MuiButton-startIcon': {
       left: { xs: 12, tablet: 17 },
-      '& svg': {
-        width: { xs: 16, tablet: 39 },
-      },
     },
     color: (theme: Theme) => theme.palette.text.primary,
     '&:hover, &:active, &:focus': {
