@@ -1,7 +1,7 @@
 import type { SxProps } from '@mui/material';
 
 const styles: Record<string, SxProps> = {
-  registerPageWrapper: {
+  registerFormWrapper: {
     maxWidth: 570,
     margin: '59px auto 64px',
   },
