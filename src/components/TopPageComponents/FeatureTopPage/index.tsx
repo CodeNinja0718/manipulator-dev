@@ -1,67 +1,52 @@
-import FeatureSuitableIcon from '@icons/feature_suitable.svg';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import RadiusCard from 'components/RadiusCard';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import CardItem from './CardItem';
 import styles from './styles';
+
+const FeatureTitle = dynamic(() => import('./FeatureTitle'));
 
 const FEATURE_ITEMS = [
   {
     parentTitle: '簡単に',
-    titleIcon: FeatureSuitableIcon,
+    title: '自分に合った整体師',
     description: 'が見つかる！',
-    svgProps: {
-      viewBox: '0 0 250 29',
-    },
-    svgStyle: {
-      width: '226px',
+    imageUrl: '/images/feature_suitable.png',
+    imageStyle: {
+      width: '148px',
+      height: '125px',
+      transform: 'translateY(-11px)',
     },
   },
   {
-    titleIcon: FeatureSuitableIcon,
+    title: '経験豊富な整体師',
     description: 'が登録！だから安心！',
-    svgProps: {
-      viewBox: '0 0 250 29',
-    },
-    svgStyle: {
-      width: '226px',
+    imageUrl: '/images/feature_experinced.png',
+    imageStyle: {
+      width: '115px',
+      height: '110px',
+      transform: 'translateY(-26px)',
     },
   },
   {
-    titleIcon: FeatureSuitableIcon,
+    title: '料金がいくらか',
     description: '分かりやすい！',
-    svgProps: {
-      viewBox: '0 0 250 29',
-    },
-    svgStyle: {
-      width: '226px',
+    imageUrl: '/images/feature_fee.png',
+    imageStyle: {
+      width: '112px',
+      height: '110px',
+      transform: 'translateY(-21px)',
     },
   },
 ];
 
 const FeatureTopPage = () => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        background: 'white',
-      }}
-    >
-      <Box
-        position="relative"
-        width="100%"
-        height={{ xs: '100%', tablet: 656 }}
-        overflow="hidden"
-        sx={{
-          display: 'flex',
-          pt: { xs: 64, tablet: 258 },
-          pb: 64,
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-        }}
-      >
+    <Box sx={styles.wrapper}>
+      <FeatureTitle />
+      <Box sx={styles.featureContainer}>
         <Image
           style={{
             top: '-6px',
@@ -69,6 +54,7 @@ const FeatureTopPage = () => {
           src="/images/feature-background.png"
           alt="feature-background-image"
           fill
+          priority
           sizes="(max-width: 3840px) 100vw,
                   (max-width: 2048px) 75vw,
                   (max-width: 1440px) 50vw"
@@ -76,38 +62,22 @@ const FeatureTopPage = () => {
         <Box
           sx={{ position: 'relative', display: 'block', textAlign: 'center' }}
         >
-          <Typography
-            sx={{
-              fontSize: 37.55,
-              color: 'white',
-              fontWeight: 500,
-            }}
-            variant="titleWhite"
-          >
+          <Typography sx={styles.featureListTitle} variant="titleWhite">
             「整体なび」の特徴
           </Typography>
         </Box>
-        <Box
-          sx={{
-            position: 'relative',
-            display: 'flex',
-            mt: 53,
-            flexWrap: 'wrap',
-            gap: 50,
-            justifyContent: 'center',
-          }}
-        >
+        <Box sx={styles.featureListBox}>
           {FEATURE_ITEMS.map((item, index) => (
-            <CardItem
+            <RadiusCard
               key={index}
               parentTitle={item.parentTitle}
-              titleIcon={item.titleIcon}
+              title={item.title}
               description={item.description}
-              svgProps={item.svgProps}
-              svgStyle={item.svgStyle}
+              imageUrl={item.imageUrl}
               customStyle={{
-                ...styles.cardItemStyle,
+                ...styles.featureItemStyle,
               }}
+              imageStyle={{ ...item.imageStyle }}
             />
           ))}
         </Box>
