@@ -7,7 +7,7 @@ import { Box, IconButton, Stack } from '@mui/material';
 import useGlobalState from 'hooks/useGlobalState';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import CommonDrawer from '../CommonDrawer';
 import Navbar from '../Navbar';
@@ -49,9 +49,24 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
   const { pathname } = router;
   const isGradient = pathname.indexOf('reservation-history');
   const { openDrawer, setOpenDrawer } = useGlobalState();
+  const [isScrollDown, setIsScrollDown] = useState(false);
   const handleCloseSidebar = () => {
     setOpenDrawer(false);
   };
+
+  // navbar scroll changeBackground function
+  const changeBackground = () => {
+    if (window.scrollY >= 66) {
+      setIsScrollDown(true);
+    } else {
+      setIsScrollDown(false);
+    }
+  };
+  useEffect(() => {
+    changeBackground();
+    // adding the event when scroll change background
+    window.addEventListener('scroll', changeBackground);
+  });
 
   return (
     <>
@@ -93,19 +108,33 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
       </DesktopNavbar>
 
       {/* Mobile - Reponsive */}
-      <Box color="white" position="fixed" zIndex={1} right={0}>
+      <Box
+        color="white"
+        width="100%"
+        position="fixed"
+        zIndex={1}
+        paddingRight="5px"
+        paddingTop="10px"
+        textAlign="end"
+        sx={{
+          display: { xs: 'inline-block', tablet: 'none' },
+          background: isScrollDown
+            ? (theme: Theme) => theme.palette.orangeGradient
+            : 'transparent',
+        }}
+      >
         <IconButton
           edge="start"
           color="inherit"
           aria-label="menu"
           sx={{
-            display: { xs: 'block', tablet: 'none' },
             width: '40px',
             height: '40px',
+            p: 0,
           }}
           onClick={() => setOpenDrawer(true)}
         >
-          <MenuIcon />
+          <MenuIcon fontSize="large" />
         </IconButton>
 
         {/* Drawer In Mobile */}

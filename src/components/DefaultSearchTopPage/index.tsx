@@ -12,10 +12,8 @@ const DefaultSearchTopPage = () => {
     <>
       <Box
         display="flex"
-        gap="20px"
         justifyContent="center"
         alignItems="center"
-        padding="20px 10px"
         sx={styles.searchContainer}
       >
         <Button

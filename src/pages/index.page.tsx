@@ -19,6 +19,7 @@ const HomePage = () => {
       <Box
         sx={{
           background: (theme: Theme) => theme.palette.orangeGradient,
+          paddingTop: { xs: '10px', tablet: 0 },
         }}
       >
         <Banner />

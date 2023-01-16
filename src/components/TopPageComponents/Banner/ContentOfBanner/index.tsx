@@ -1,15 +1,11 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import styles from '../styles';
+
 const ContentOfBanner = () => {
   return (
-    <Box
-      sx={{
-        position: 'absolute',
-        top: { xs: 81, normalTablet: 185 },
-        left: { xs: 159, normalTablet: 576 },
-      }}
-    >
+    <Box sx={styles.contentOfBanner}>
       <Box
         sx={{
           padding: '0 21px 0 12px',
@@ -19,22 +15,24 @@ const ContentOfBanner = () => {
         }}
       >
         <Typography
-          fontSize={26}
           fontWeight={600}
           lineHeight={1}
           sx={{
             display: 'flex',
             alignItems: 'center',
-            minHeight: 66,
+            minHeight: { xs: 40, md: 66 },
+            fontSize: { xs: 18, md: 26 },
           }}
         >
           あなたに
           <Typography
             color="orangeText"
             variant="body2"
-            fontSize={42}
             lineHeight={1}
             fontWeight={600}
+            sx={{
+              fontSize: { xs: 18, md: 42 },
+            }}
           >
             ピッタリ
           </Typography>
@@ -50,13 +48,13 @@ const ContentOfBanner = () => {
         }}
       >
         <Typography
-          fontSize={28}
           fontWeight={600}
           lineHeight={1}
           sx={{
             display: 'flex',
             alignItems: 'center',
-            minHeight: 66,
+            minHeight: { xs: 40, md: 66 },
+            fontSize: { xs: 18, md: 28 },
           }}
         >
           整体師が見つかる！

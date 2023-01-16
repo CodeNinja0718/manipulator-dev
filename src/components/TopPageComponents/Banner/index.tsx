@@ -2,6 +2,8 @@ import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import styles from './styles';
+
 const LogoOfBanner = dynamic(() => import('./LogoOfBanner'));
 const ContentOfBanner = dynamic(() => import('./ContentOfBanner'));
 
@@ -47,8 +49,13 @@ const Banner = () => {
       </Box>
 
       {/*  */}
-      <LogoOfBanner />
-      <ContentOfBanner />
+
+      <Box sx={styles.boxBannerPosition}>
+        <Box sx={styles.boxBanner}>
+          <LogoOfBanner />
+          <ContentOfBanner />
+        </Box>
+      </Box>
     </Box>
   );
 };
