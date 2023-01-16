@@ -38,6 +38,27 @@ const MuiTypography = {
     },
     {
       props: {
+        variant: 'titleWhite',
+      },
+      style: {
+        position: 'relative',
+        color: 'white',
+        fontSize: 24,
+        '&::after': {
+          content: '""',
+          background: 'white',
+          position: 'absolute',
+          bottom: -9,
+          left: 0,
+          height: 6,
+          width: '100%',
+          borderRadius: 3,
+          transform: 'translateY(50%)',
+        },
+      },
+    },
+    {
+      props: {
         variant: 'subtitle1',
       },
       style: {
