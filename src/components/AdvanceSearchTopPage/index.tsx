@@ -13,8 +13,8 @@ const AdvanceSearchTopPage = () => {
     <>
       <Box position="relative" height={340} pt={39} pb={32}>
         <Image
-          src="/images/search_bg.webp"
-          alt="search-image"
+          src="/images/wood_bg.webp"
+          alt="wood-image"
           fill
           sizes="(max-width: 3840px) 100vw,
                   (max-width: 2048px) 75vw,
