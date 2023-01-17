@@ -17,7 +17,6 @@ const ProblemsTopPage = () => {
           src="/images/problem.webp"
           alt="problem-image"
           fill
-          priority
           sizes="(max-width: 3840px) 100vw,
                   (max-width: 2048px) 75vw,
                   (max-width: 1440px) 50vw"
