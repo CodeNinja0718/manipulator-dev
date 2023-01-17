@@ -17,6 +17,7 @@ declare module '@mui/material/styles' {
     orangeGradient: string;
     greenGradient: string;
     gray: string;
+    cream: string;
     placeholder: string;
     grayText: string;
   }
@@ -33,6 +34,7 @@ declare module '@mui/material/styles' {
     orangeGradient?: string;
     greenGradient?: string;
     gray?: string;
+    cream?: string;
     placeholder?: string;
     grayText?: string;
   }
@@ -104,6 +106,7 @@ const palette: MuiPaletteOptions = {
     main: '#ea6500',
     contrastText: '#fff',
   },
+  cream: '#fcf7f4',
   orangeText: '#ea6500',
   orangeBold: '#eb6600',
   gray: '#707070',
