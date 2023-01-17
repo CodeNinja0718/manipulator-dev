@@ -17,6 +17,9 @@ const ProblemsTopPage = dynamic(
 const FeatureTopPage = dynamic(
   () => import('../components/TopPageComponents/FeatureTopPage'),
 );
+const FlowTopPage = dynamic(
+  () => import('../components/TopPageComponents/FlowTopPage'),
+);
 
 const HomePage = () => {
   return (
@@ -38,6 +41,8 @@ const HomePage = () => {
       <ProblemsTopPage />
       {/* Features */}
       <FeatureTopPage />
+      {/* Flow */}
+      <FlowTopPage />
     </Box>
   );
 };
