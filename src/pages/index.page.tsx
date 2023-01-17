@@ -20,6 +20,9 @@ const FeatureTopPage = dynamic(
 const FlowTopPage = dynamic(
   () => import('../components/TopPageComponents/FlowTopPage'),
 );
+const CustomerReviewTopPage = dynamic(
+  () => import('../components/TopPageComponents/CustomerReviewTopPage'),
+);
 
 const HomePage = () => {
   return (
@@ -43,6 +46,8 @@ const HomePage = () => {
       <FeatureTopPage />
       {/* Flow */}
       <FlowTopPage />
+      {/* Customer Review */}
+      <CustomerReviewTopPage />
     </Box>
   );
 };
