@@ -5,10 +5,10 @@ import Image from 'next/image';
 import styles from './styles';
 
 const VOICE_LIST = [
-  { title: 'voice 1', url: '/images/voice_1.webp' },
-  { title: 'voice 2', url: '/images/voice_2.webp' },
-  { title: 'voice 3', url: '/images/voice_3.webp' },
-  { title: 'voice 4', url: '/images/voice_4.webp' },
+  { title: 'voice_1', url: '/images/voice_1.webp' },
+  { title: 'voice_2', url: '/images/voice_2.webp' },
+  { title: 'voice_3', url: '/images/voice_3.webp' },
+  { title: 'voice_4', url: '/images/voice_4.webp' },
 ];
 
 const CustomerReviewTopPage = () => {
@@ -33,10 +33,7 @@ const CustomerReviewTopPage = () => {
         </Typography>
         <Box sx={styles.reviewerContainer}>
           {VOICE_LIST.map((item) => (
-            <Box
-              key={item.title}
-              sx={styles.reviewerItem}
-            >
+            <Box key={item.title} sx={styles.reviewerItem}>
               <Image
                 src={item.url}
                 alt={item.title}
