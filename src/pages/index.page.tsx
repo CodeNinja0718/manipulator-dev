@@ -27,8 +27,6 @@ const FAQTopPage = dynamic(
   () => import('../components/TopPageComponents/FAQTopPage'),
 );
 
-const CommonCollapse = dynamic(() => import('../components/CommonCollapse'));
-
 const HomePage = () => {
   return (
     <Box>
@@ -55,14 +53,6 @@ const HomePage = () => {
       <CustomerReviewTopPage />
       {/* FAQ */}
       <FAQTopPage />
-      {/* <CommonCollapse
-        title="テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト"
-        content="テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト"
-      />
-      <CommonCollapse
-        title="テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト"
-        content="テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト"
-      /> */}
     </Box>
   );
 };
