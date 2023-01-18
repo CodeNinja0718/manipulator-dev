@@ -1,28 +1,12 @@
-import FacebookIcon from '@icons/facebook_icon.svg';
-import InstagramIcon from '@icons/instagram_icon.svg';
-import TwitterIcon from '@icons/twitter_icon.svg';
 import { Box, Container, Link, Stack, Typography } from '@mui/material';
-import SvgIcon from '@mui/material/SvgIcon';
+import dynamic from 'next/dynamic';
 import theme from 'theme';
 import { COMMON_FOOTER, FOOTER_ITEMS } from 'utils/const';
 
 import styles from './styles';
 
+const SocialItem = dynamic(() => import('./SocialItem'));
 const navbar = FOOTER_ITEMS;
-const socialItems = [
-  {
-    href: 'instagram',
-    icon: InstagramIcon,
-  },
-  {
-    href: 'twitter',
-    icon: TwitterIcon,
-  },
-  {
-    href: 'facebook',
-    icon: FacebookIcon,
-  },
-];
 
 const Footer = () => {
   return (
@@ -55,19 +39,7 @@ const Footer = () => {
           ))}
         </Stack>
 
-        <Stack
-          direction="row"
-          flexWrap="wrap"
-          justifyContent="center"
-          gap={20}
-          mt={39}
-        >
-          {socialItems.map((item) => (
-            <Link key={item.href} href={`/${item.href}`} sx={{ height: 16.6 }}>
-              <SvgIcon component={item.icon} sx={{ color: 'white' }} />
-            </Link>
-          ))}
-        </Stack>
+        <SocialItem style={styles.socical} />
 
         <Typography textAlign="center" mt={56}>
           © {COMMON_FOOTER.MANIPULATIVE_NAVIGATION} {new Date().getFullYear()}

@@ -11,6 +11,10 @@ const styles = {
     width: '100%',
     minHeight: '210px',
   },
+  socical: {
+    marginTop: 39,
+    justifyContent: 'center',
+  },
 } as Record<string, SxProps<Theme>>;
 
 export default styles;

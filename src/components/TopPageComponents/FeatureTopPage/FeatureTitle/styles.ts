@@ -3,8 +3,8 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   topTitle: {
     position: 'absolute',
-    top: '-27px',
-    width: { sx: '100%', normalTablet: 1000 },
+    top: { xs: '-115px', tablet: '-27px' },
+    width: { xs: `calc(100% - 30px)`, normalTablet: 1000 },
     minHeight: 245,
     border: (theme: Theme) => `solid 3px ${theme.palette.orangeText}`,
     borderRadius: '30px 0 10px 0',

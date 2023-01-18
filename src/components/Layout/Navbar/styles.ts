@@ -29,8 +29,13 @@ const styles = {
     cursor: 'pointer',
   },
   menuMobileBox: {
-    height: 'calc(100vh - 65px)',
-    overflowY: 'scroll',
+    height: 'calc(100vh - 138px)',
+    overflowY: 'auto',
+  },
+  socicalMobile: {
+    marginTop: 30,
+    marginRight: 10,
+    justifyContent: 'end',
   },
 } as Record<string, SxProps<Theme>>;
 

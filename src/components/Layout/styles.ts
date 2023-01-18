@@ -14,7 +14,7 @@ const styles: Record<string, SxProps<Theme>> = {
     flexDirection: 'column',
     mt: {
       xs: 0,
-      normalTablet: 55.6,
+      normalTablet: 53.5,
     },
   },
   fabButton: (theme: Theme) => ({

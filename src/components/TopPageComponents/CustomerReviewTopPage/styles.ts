@@ -7,7 +7,7 @@ const styles = {
   },
   customerReivewTitle: {
     width: 'fit-content',
-    fontSize: 37.55,
+    fontSize: { xs: 32, tablet: 37.55 },
     fontWeight: 500,
     m: 'auto',
   },
@@ -17,8 +17,8 @@ const styles = {
       xs: 'auto',
       normalTablet: '600px',
     },
-    pt: 60,
-    pb: 68,
+    pt: { xs: 40, tablet: 60 },
+    pb: { xs: 40, tablet: 68 },
     mt: 52,
   },
   reviewerContainer: {
@@ -42,11 +42,21 @@ const styles = {
     position: 'relative',
     width: {
       xs: '320px',
-      md: 'calc(50% - 60px)',
+      normalTablet: 'calc(50% - 60px)',
     },
     height: {
-      xs: '131px',
-      md: '154px',
+      xs: '170px',
+      normalTablet: '154px',
+    },
+    '& img': {
+      objectFit: {
+        xs: 'contain',
+        normalTablet: 'initial',
+      },
+      objectPosition: {
+        xs: 'top center',
+        normalTablet: 'initial',
+      },
     },
   },
 } as Record<string, SxProps<Theme>>;

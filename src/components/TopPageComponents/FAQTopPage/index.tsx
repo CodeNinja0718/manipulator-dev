@@ -1,3 +1,5 @@
+import ArrowIcon from '@icons/arrow.svg';
+import { Button, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import dynamic from 'next/dynamic';
@@ -42,12 +44,12 @@ const FAQTopPage = () => {
     >
       <Box>
         <Typography sx={styles.customerReivewTitle} variant="title">
-          お客様の声
+          よくあるご質問
         </Typography>
       </Box>
       <Box
         sx={{
-          mt: 84,
+          mt: { xs: 40, tablet: 84 },
         }}
       >
         {FAQ_LIST.map((item, index) => (
@@ -58,6 +60,16 @@ const FAQTopPage = () => {
           />
         ))}
       </Box>
+      {/* Mobile Button */}
+      <Button
+        variant="contained"
+        sx={{ ...styles.button, ...{ marginTop: 40 } }}
+        endIcon={
+          <SvgIcon component={ArrowIcon} viewBox="0 0 14 30" color="inherit" />
+        }
+      >
+        まずは整体師を検索！
+      </Button>
     </Box>
   );
 };

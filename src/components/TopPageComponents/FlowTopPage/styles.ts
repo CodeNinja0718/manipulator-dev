@@ -3,12 +3,12 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   wrapper: {
     pt: 37,
-    pb: 74,
+    pb: { xs: 10, tablet: 74 },
     background: 'white',
   },
   flowTitle: {
     width: 'fit-content',
-    fontSize: 37.55,
+    fontSize: { xs: 32, tablet: 37.55 },
     fontWeight: 500,
     m: 'auto',
   },
@@ -24,6 +24,16 @@ const styles = {
     height: '311px',
     width: '335px',
     mt: 52,
+  },
+  button: {
+    width: '100%',
+    display: { xs: 'flex', normalTablet: 'none' },
+
+    '& .MuiButton-startIcon': {
+      '& svg': {
+        width: 39,
+      },
+    },
   },
 } as Record<string, SxProps<Theme>>;
 

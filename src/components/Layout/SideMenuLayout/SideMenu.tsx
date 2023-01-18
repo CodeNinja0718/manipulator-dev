@@ -4,6 +4,7 @@ import {
   List,
   ListItemButton,
   ListItemText,
+  SvgIcon,
   Typography,
 } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -29,23 +30,39 @@ const SideMenu = ({ menus, isMobile }: SideMenuProps) => {
         )}
         <List component="nav" aria-label="side-menu" sx={styles.listItem}>
           {menus.map((menu) => (
-            <Box key={menu.path}>
-              <Link href={menu.path} sx={styles.link}>
+            <Box key={menu.href}>
+              <Link
+                href={menu.href}
+                sx={{ ...styles.link, ...{ marginBottom: 15 } }}
+              >
                 <ListItemButton
                   sx={styles.listItemButton}
-                  selected={route.startsWith(menu.path)}
+                  selected={route.startsWith(menu.href)}
                 >
-                  {menu.icon}
+                  {menu.viewBox ? (
+                    <Box height={20}>
+                      <SvgIcon
+                        component={menu.icon}
+                        sx={{
+                          width: 'auto',
+                          height: 'inherit',
+                        }}
+                        viewBox={menu.viewBox}
+                      />
+                    </Box>
+                  ) : (
+                    menu.icon
+                  )}
                   <ListItemText sx={styles.listItemText} primary={menu.label} />
                 </ListItemButton>
               </Link>
               {menu.children &&
                 menu.children.map((child) => (
-                  <Link href={child.path} key={child.path} sx={styles.link}>
+                  <Link href={child.href} key={child.href} sx={styles.link}>
                     <Box sx={{ pl: '30px' }}>
                       <ListItemButton
                         sx={styles.listItemButton}
-                        selected={route.startsWith(child.path)}
+                        selected={route.startsWith(child.href)}
                       >
                         {child.icon}
                         <ListItemText
@@ -59,6 +76,9 @@ const SideMenu = ({ menus, isMobile }: SideMenuProps) => {
             </Box>
           ))}
         </List>
+        <Link sx={styles.sideMenuText}>
+          <Typography>整体院の方はこちら</Typography>
+        </Link>
       </Box>
     </Box>
   );

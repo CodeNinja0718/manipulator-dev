@@ -19,49 +19,51 @@ import SideMenu from './SideMenu';
 import styles from './styles';
 
 export interface SideMenuItem {
-  path: string;
+  href: string;
   label: string;
-  icon: React.ReactNode;
+  // icon: React.ReactNode;
+  icon: any;
+  viewBox?: string;
   children?: SideMenuItem[];
 }
 const customerMenus: SideMenuItem[] = [
   {
-    path: '/',
+    href: '/',
     label: '予約履歴',
     icon: <LocalOfferOutlined />,
   },
   {
-    path: '/1',
+    href: '/1',
     label: '回数券',
     icon: <MapOutlined />,
   },
   {
-    path: '/2',
+    href: '/2',
     label: 'クーポン',
     icon: <DiscountOutlined />,
   },
   {
-    path: '/3',
+    href: '/3',
     label: 'お気に入り',
     icon: <FavoriteRounded />,
   },
   {
-    path: '/4',
+    href: '/4',
     label: '会員情報',
     icon: <AccountCircleOutlined />,
   },
   {
-    path: '/5',
+    href: '/5',
     label: 'クレジットカード情報',
     icon: <CreditCardOutlined />,
   },
   {
-    path: '/6',
+    href: '/6',
     label: 'ご利用ガイド',
     icon: <AutoStoriesOutlined />,
   },
   {
-    path: '/7',
+    href: '/7',
     label: 'その他',
     icon: <ListOutlined />,
   },

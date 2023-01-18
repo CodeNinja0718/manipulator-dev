@@ -32,6 +32,7 @@ const styles = {
     py: { xs: 0, tablet: 30 },
     width: { xs: '100%', tablet: '260px' },
     background: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+    height: '100%',
   },
   sideMenuTitleBox: {
     pb: '10px',
@@ -48,13 +49,16 @@ const styles = {
     pl: { xs: 20 },
     py: { xs: 30 },
     display: 'block',
+    height: '100%',
+    position: 'relative',
   },
   listItem: {
     // p: 2,
   },
   link: {
     textDecoration: 'unset',
-    background: '#000000',
+    display: 'block',
+    // background: '#000000',
   },
   listItemButton: {
     color: (theme: Theme) => theme.palette.orangeText,
@@ -85,6 +89,13 @@ const styles = {
     color: 'white',
     fontSize: 18,
     lineHeight: '27px',
+  },
+  sideMenuText: {
+    position: 'absolute',
+    right: 15,
+    bottom: 15,
+    textDecoration: 'underline',
+    color: 'text.primary',
   },
 } as Record<string, SxProps<Theme>>;
 

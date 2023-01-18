@@ -10,20 +10,25 @@ const styles = {
   featureListBox: {
     position: 'relative',
     display: 'flex',
-    mt: 73,
+    mt: { xs: 90, tablet: 73 },
     flexWrap: 'wrap',
     gap: 50,
     justifyContent: 'center',
   },
   featureListTitle: {
-    fontSize: 37.55,
+    fontSize: { xs: '24px', tablet: 37.55 },
     color: 'white',
     fontWeight: 500,
+
+    '&::after': {
+      width: { xs: 'calc(100% - 14px)', tablet: 'calc(100% - 20px)' },
+      left: { xs: '14px', tablet: '20px' },
+    },
   },
   featureContainer: {
     position: 'relative',
     display: 'flex',
-    pt: 258,
+    pt: { xs: '170px', tablet: 258 },
     pb: 64,
     width: '100%',
     height: { xs: '100%', normalTablet: 656 },
