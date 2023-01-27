@@ -4,13 +4,17 @@ import React from 'react';
 
 import CommonCollapse from '../components/CommonCollapse';
 
-export interface CollapseProps {
+export interface CollapseElementProps {
   title?: string;
   content?: string;
   label?: string;
 }
 
-export const Collapse = ({ title, content, label }: CollapseProps) => {
+export const CollapseElement = ({
+  title,
+  content,
+  label,
+}: CollapseElementProps) => {
   return (
     <CommonCollapse
       title={title}

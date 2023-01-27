@@ -12,12 +12,16 @@ type MuiAppBarBaseProps = Pick<MuiAppBarProps, 'color' | 'position' | 'sx'>;
 // Use all except disableRipple
 // type ButtonBaseProps = Omit<MuiButtonProps, "disableRipple">;
 
-export interface AppBarProps extends MuiAppBarBaseProps {
+export interface AppBarElementProps extends MuiAppBarBaseProps {
   children?: ReactNode;
   gradient?: string;
 }
 
-export const AppBar = ({ children, gradient, ...rest }: AppBarProps) => {
+export const AppBarElement = ({
+  children,
+  gradient,
+  ...rest
+}: AppBarElementProps) => {
   return (
     <DesktopNavbar {...rest} gradient={gradient}>
       {children}

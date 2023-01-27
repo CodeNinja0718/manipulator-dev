@@ -1,12 +1,12 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
-import { Typography } from './CommonTypography';
+import { TypographyElement } from './TypographyElement';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Components/Typography',
-  component: Typography,
+  component: TypographyElement,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     variant: {
@@ -38,10 +38,13 @@ export default {
     gutterBottom: false,
     display: 'block',
   },
-} as ComponentMeta<typeof Typography>;
+} as ComponentMeta<typeof TypographyElement>;
 
+const Typography: ComponentStory<typeof TypographyElement> = (args) => {
+  return <TypographyElement {...args} />;
+};
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Typography> = (args) => (
+const Template: ComponentStory<typeof TypographyElement> = (args) => (
   <Typography {...args} />
 );
 

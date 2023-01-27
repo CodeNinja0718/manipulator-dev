@@ -7,10 +7,11 @@ import React from 'react';
 // Use all except disableRipple
 type TypographyBaseProps = Pick<MuiTypographyProps, 'sx' | 'align'>;
 
-export interface TypographyProps extends TypographyBaseProps {
+export interface TypographyElementProps extends TypographyBaseProps {
   label: string;
 }
 
-export const Typography = ({ label, ...rest }: TypographyProps) => (
-  <MuiTypography {...rest}>{label}</MuiTypography>
-);
+export const TypographyElement = ({
+  label,
+  ...rest
+}: TypographyElementProps) => <MuiTypography {...rest}>{label}</MuiTypography>;

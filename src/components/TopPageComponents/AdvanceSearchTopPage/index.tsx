@@ -10,10 +10,16 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
-import CirleBox from 'components/CirleBox';
+import CircleBox from 'components/CircleBox';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import React, { useState } from 'react';
 
 import styles from './styles';
+
+const SearchModalTopPage = dynamic(
+  () => import('components/TopPageComponents/SearchModalTopPage'),
+);
 
 const FILTER_ITEMS = [
   {
@@ -55,6 +61,10 @@ const FILTER_ITEMS = [
 ];
 
 const AdvanceSearchTopPage = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       <Box position="relative" minHeight={340} pt={39} pb={32}>
@@ -85,7 +95,7 @@ const AdvanceSearchTopPage = () => {
           sx={styles.filterArea}
         >
           {FILTER_ITEMS.map((item) => (
-            <CirleBox
+            <CircleBox
               key={item.url}
               icon={item.icon}
               label={item.label}
@@ -112,11 +122,14 @@ const AdvanceSearchTopPage = () => {
                 color="orange"
               />
             }
+            onClick={handleOpen}
           >
             整体師一覧を見る
           </Button>
         </Box>
       </Box>
+
+      <SearchModalTopPage open={open} onClose={handleClose} />
     </>
   );
 };

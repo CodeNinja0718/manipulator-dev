@@ -2,12 +2,12 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
-import { Button } from './CommonButton';
+import { ButtonElement } from './ButtonElement';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Components/Button',
-  component: Button,
+  component: ButtonElement,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     size: { control: 'select', options: ['xs', 'small', 'medium', 'large'] },
@@ -21,10 +21,16 @@ export default {
     variant: 'contained',
     disabled: false,
   },
-} as ComponentMeta<typeof Button>;
+} as ComponentMeta<typeof ButtonElement>;
+
+const Button: ComponentStory<typeof ButtonElement> = (args) => {
+  return <ButtonElement {...args} />;
+};
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof ButtonElement> = (args) => (
+  <Button {...args} />
+);
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
