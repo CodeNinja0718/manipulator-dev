@@ -13,10 +13,10 @@ type ButtonBaseProps = Pick<
 // Use all except disableRipple
 // type ButtonBaseProps = Omit<MuiButtonProps, "disableRipple">;
 
-export interface ButtonProps extends ButtonBaseProps {
+export interface ButtonElementProps extends ButtonBaseProps {
   label: string;
 }
 
-export const Button = ({ label, ...rest }: ButtonProps) => (
+export const ButtonElement = ({ label, ...rest }: ButtonElementProps) => (
   <MuiButton {...rest}>{label}</MuiButton>
 );

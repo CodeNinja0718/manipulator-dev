@@ -5,14 +5,14 @@ import Typography from '@mui/material/Typography';
 
 import styles from './styles';
 
-interface CirleBoxProps {
+interface CircleBoxProps {
   icon: React.ElementType;
   iconProps?: object;
   label: string | React.ReactElement;
   active?: boolean;
 }
 
-const CirleBox = ({ icon, iconProps, label, active }: CirleBoxProps) => {
+const CircleBox = ({ icon, iconProps, label, active }: CircleBoxProps) => {
   return (
     <Box
       display="flex"
@@ -28,7 +28,7 @@ const CirleBox = ({ icon, iconProps, label, active }: CirleBoxProps) => {
         width={90}
         height={90}
         sx={{
-          ...styles.cirleBox,
+          ...styles.CircleBox,
           background: (theme: Theme) =>
             active ? theme.palette.orangeBold : 'white',
           borderRadius: '50%',
@@ -60,4 +60,4 @@ const CirleBox = ({ icon, iconProps, label, active }: CirleBoxProps) => {
     </Box>
   );
 };
-export default CirleBox;
+export default CircleBox;

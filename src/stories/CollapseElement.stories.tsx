@@ -1,20 +1,23 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
-import { Collapse } from './Collapse';
+import { CollapseElement } from './CollapseElement';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Components/Collapse',
-  component: Collapse,
+  component: CollapseElement,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
   args: {},
-} as ComponentMeta<typeof Collapse>;
+} as ComponentMeta<typeof CollapseElement>;
 
+const CommonCollapse: ComponentStory<typeof CollapseElement> = (args) => {
+  return <CollapseElement {...args} />;
+};
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Collapse> = (args) => (
-  <Collapse {...args} />
+const Template: ComponentStory<typeof CollapseElement> = (args) => (
+  <CommonCollapse {...args} />
 );
 
 export const Default = Template.bind({});
