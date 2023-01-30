@@ -1,17 +1,19 @@
 import CloseIcon from '@icons/close-icon.svg';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import dynamic from 'next/dynamic';
 
 const CommonModal = dynamic(() => import('components/CommonModal'));
+const CommonTabs = dynamic(() => import('components/CommonTabs'));
 
 interface SearchModalTopPageProps {
   open?: boolean;
+  tabs: { label: React.ReactNode; component?: React.ReactNode }[];
   onClose?: () => void;
 }
 
 const SearchModalTopPage = ({
   open = false,
+  tabs = [],
   onClose,
 }: SearchModalTopPageProps) => {
   return (
@@ -31,12 +33,7 @@ const SearchModalTopPage = ({
       }
     >
       <>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
+        <CommonTabs tabs={tabs} />
       </>
     </CommonModal>
   );

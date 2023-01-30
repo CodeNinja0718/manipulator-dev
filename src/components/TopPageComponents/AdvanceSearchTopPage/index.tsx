@@ -1,6 +1,8 @@
 import ArrowIcon from '@icons/arrow.svg';
 import AutonomicNervesIcon from '@icons/autonomic_nerves.svg';
 import HipJoinKneeFootIcon from '@icons/hip_join_knee_foot.svg';
+import LocationIcon from '@icons/icon_area_on.svg';
+import StationIcon from '@icons/icon_station_on.svg';
 import NeckShoulderIcon from '@icons/neck_shoulder.svg';
 import OtherSymptomsIcon from '@icons/other_symptoms.svg';
 import SearchIcon from '@icons/search.svg';
@@ -20,6 +22,25 @@ import styles from './styles';
 const SearchModalTopPage = dynamic(
   () => import('components/TopPageComponents/SearchModalTopPage'),
 );
+
+const TabLabel = ({
+  label,
+  style = {},
+  icon,
+}: {
+  label: string;
+  style?: object;
+  icon: React.ElementType;
+}) => {
+  return (
+    <Box display="flex" alignItems="center">
+      <SvgIcon component={icon} viewBox="0 0 29 35" sx={style} />
+      <Typography pl={7.5} fontWeight={600}>
+        {label}
+      </Typography>
+    </Box>
+  );
+};
 
 const FILTER_ITEMS = [
   {
@@ -57,6 +78,35 @@ const FILTER_ITEMS = [
     label: `腰`,
     viewBox: '0 0 53.297 55.182',
     url: '/icons/other_symptoms.svg',
+  },
+];
+
+const TABS = [
+  {
+    label: (
+      <TabLabel
+        label="エリアから探す"
+        icon={LocationIcon}
+        style={{
+          width: 16,
+          height: 19,
+        }}
+      />
+    ),
+    component: <Box>This is text of item one</Box>,
+  },
+  {
+    label: (
+      <TabLabel
+        label="駅から探す"
+        icon={StationIcon}
+        style={{
+          width: 16,
+          height: 23,
+        }}
+      />
+    ),
+    component: <Box>This is text of item two</Box>,
   },
 ];
 
@@ -129,7 +179,7 @@ const AdvanceSearchTopPage = () => {
         </Box>
       </Box>
 
-      <SearchModalTopPage open={open} onClose={handleClose} />
+      <SearchModalTopPage open={open} tabs={TABS} onClose={handleClose} />
     </>
   );
 };
