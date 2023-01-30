@@ -100,7 +100,12 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
               </Link>
             </Box>
 
-            <Box display="flex" pt={{ tablet: 15 }} pb={{ tablet: 15 }}>
+            <Box
+              display="flex"
+              pt={{ tablet: 15 }}
+              pb={{ tablet: 15 }}
+              paddingX="20px"
+            >
               <Navbar navbar={navbar} color={textColor} iconColor={iconColor} />
             </Box>
           </Stack>
@@ -112,12 +117,11 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
         color="white"
         width="100%"
         position="fixed"
-        zIndex={1}
-        paddingRight="5px"
-        paddingTop="10px"
+        zIndex={2}
         textAlign="end"
         sx={{
           display: { xs: 'inline-block', tablet: 'none' },
+          p: { xs: '5px 15px 5px 27px', tablet: '10px 5px 0 0' },
           background: isScrollDown
             ? (theme: Theme) => theme.palette.orangeGradient
             : 'transparent',
@@ -139,7 +143,7 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
 
         {/* Drawer In Mobile */}
         <CommonDrawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
-          <MobileNavbar onCloseSidebar={handleCloseSidebar} />
+          <MobileNavbar menus={navbar} onCloseSidebar={handleCloseSidebar} />
         </CommonDrawer>
       </Box>
     </>

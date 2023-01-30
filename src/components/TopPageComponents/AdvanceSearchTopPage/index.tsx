@@ -104,7 +104,7 @@ const AdvanceSearchTopPage = () => {
           ))}
         </Box>
 
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifyContent="center" paddingX="15px">
           <Button
             variant="contained"
             sx={styles.button}

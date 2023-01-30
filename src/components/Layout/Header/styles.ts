@@ -2,7 +2,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
   appBarBox: {
-    maxWidth: 950,
+    // maxWidth: 950,
     margin: '0 auto',
   },
   navbarItem: {
