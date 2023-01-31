@@ -11,12 +11,14 @@ declare module '@mui/material/styles' {
     backgroundColor: string;
     heading: string;
     grown: string;
+    grownText: string;
     orange: object;
     orangeText: string;
     orangeBold: string;
     orangeGradient: string;
     greenGradient: string;
     gray: string;
+    pink: string;
     cream: string;
     placeholder: string;
     grayText: string;
@@ -25,6 +27,7 @@ declare module '@mui/material/styles' {
   interface PaletteOptions {
     white?: string;
     grown?: string;
+    grownText?: string;
     button?: string;
     backgroundColor: string;
     heading: string;
@@ -34,6 +37,7 @@ declare module '@mui/material/styles' {
     orangeGradient?: string;
     greenGradient?: string;
     gray?: string;
+    pink?: string;
     cream?: string;
     placeholder?: string;
     grayText?: string;
@@ -111,11 +115,13 @@ const palette: MuiPaletteOptions = {
   orangeBold: '#eb6600',
   gray: '#707070',
   grayText: '#6b6b6b',
+  pink: '#efe6df',
   text: {
     primary: '#333333',
   },
   heading: '#5a524f',
   grown: '#413732',
+  grownText: '#63564d',
   placeholder: '#999999',
   white: '#fff',
   backgroundColor: '#f4f2f1',
