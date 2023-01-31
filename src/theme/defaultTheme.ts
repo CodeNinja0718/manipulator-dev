@@ -128,7 +128,7 @@ const palette: MuiPaletteOptions = {
   orangeGradient: 'linear-gradient(295deg, #ff872b, #ec6702 53%, #eb6600)',
   greenGradient: 'linear-gradient(to bottom, #a3cc30, #5e983c)',
   action: {
-    hoverOpacity: 0.4,
+    hoverOpacity: 0.04,
     disabledBackground: '#cccccc',
   },
 };

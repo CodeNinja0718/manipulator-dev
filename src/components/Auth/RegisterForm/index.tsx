@@ -4,6 +4,7 @@ import { LoadingButton } from '@mui/lab';
 import { Stack, Typography } from '@mui/material';
 import { TextField } from 'components/Form';
 import Link from 'components/Link';
+import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import type { RegisterFormValues } from './schema';
@@ -13,7 +14,7 @@ import styles from './styles';
 const AuthForm = ({
   onSubmit,
 }: {
-  onSubmit: (values: RegisterFormValues) => void;
+  onSubmit: SubmitHandler<RegisterFormValues>;
 }) => {
   const { control, handleSubmit } = useForm<RegisterFormValues>({
     resolver: yupResolver(schema),
@@ -35,7 +36,6 @@ const AuthForm = ({
         name="phone"
         control={control}
         placeholder="09012345678"
-        notched
       />
       <Typography fontSize={16} mt={26} mb={32}>
         会員登録することで、整体なびの<Link href="/">利用規約</Link>

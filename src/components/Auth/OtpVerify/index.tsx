@@ -17,6 +17,23 @@ const OTPVerify = ({
   isLoading: boolean;
 }) => {
   const [code, setCode] = useState<string>('');
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Countdown per request OTP
+    if (timeLeft === 0) {
+      setTimeLeft(null);
+    }
+    let intervalId: NodeJS.Timer;
+    if (timeLeft) {
+      intervalId = setInterval(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+    }
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [timeLeft]);
 
   useEffect(() => {
     if (code.length === 6) {
@@ -24,6 +41,13 @@ const OTPVerify = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
+
+  const handleResendOtp = () => {
+    if (!timeLeft) {
+      onResendOtp();
+      setTimeLeft(30);
+    }
+  };
 
   return (
     <Stack alignItems="center" sx={styles.otpVerifyWrapper}>
@@ -62,7 +86,7 @@ const OTPVerify = ({
         mt={48}
         mb={30}
         color="primary"
-        onClick={onResendOtp}
+        onClick={handleResendOtp}
         sx={{
           cursor: 'pointer',
           textDecoration: 'underline',
@@ -72,7 +96,7 @@ const OTPVerify = ({
         }}
       >
         <IconReload />
-        コードを再送する
+        コードを再送する {timeLeft && timeLeft > 0 ? `(${timeLeft})` : ''}
       </Typography>
       <Typography
         fontSize={16}

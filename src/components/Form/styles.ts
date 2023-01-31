@@ -2,20 +2,16 @@ import type { SxProps } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 
 const styles: Record<string, SxProps<Theme>> = {
-  required: (theme: Theme) => ({
-    border: `solid 1px ${theme.palette.error.main}`,
-    p: { xs: '0px 3px', tablet: '1px 7px 2px' },
-    width: 'fit-content',
-    minWidth: { xs: 30, tablet: 38 },
-    borderRadius: '4px',
-    color: 'error.main',
-    ml: 1,
+  required: {
+    backgroundColor: 'primary.main',
+    color: 'white',
+    padding: '1px 6px 2px',
+    fontSize: 14,
     fontWeight: 500,
-    fontSize: '10px',
-    [theme.breakpoints.down('tablet')]: {
-      p: '0px 4px 1px',
-    },
-  }),
+    width: 'fit-content',
+    borderRadius: '5px',
+    ml: 8,
+  },
 
   placeholder: {
     color: 'placeholder',
@@ -38,10 +34,7 @@ const styles: Record<string, SxProps<Theme>> = {
   datepicker: {
     '& .MuiInputBase-root': {
       '& .MuiInputAdornment-root': {
-        pr: '12px',
-        '& .MuiButtonBase-root': {
-          p: '12px',
-        },
+        // pr: 6,
       },
     },
   },
@@ -148,8 +141,8 @@ const styles: Record<string, SxProps<Theme>> = {
   clearButton: {
     position: 'absolute',
     transform: 'translate(0%, 0%)',
-    right: 0,
-    p: { xs: '10px', tablet: '12px' },
+    right: 4,
+    p: 8,
     svg: {
       color: 'primary.main',
       width: { xs: 20, tablet: 24 },

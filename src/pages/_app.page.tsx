@@ -1,5 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 import 'utils/yup.config';
+import 'dayjs/locale/ja';
 
 import type { EmotionCache } from '@emotion/react';
 import { CacheProvider } from '@emotion/react';
@@ -17,8 +18,6 @@ import jaLocale from 'locales/ja/index.json';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import type { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import { NextIntlProvider } from 'next-intl';
 import type { ReactElement, ReactNode } from 'react';
 import { useState } from 'react';
@@ -45,7 +44,6 @@ const clientSideEmotionCache = createEmotionCache();
 function MyApp(
   props: AppPropsWithLayout<{
     dehydratedState: DehydratedState;
-    session: Session;
   }>,
 ) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
@@ -64,7 +62,7 @@ function MyApp(
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <ToastContainer
-              position="top-right"
+              position="bottom-right"
               autoClose={3000}
               hideProgressBar
               theme="colored"
@@ -73,10 +71,11 @@ function MyApp(
             <DataProvider />
             <NextNProgress />
             <NextIntlProvider messages={jaLocale}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <SessionProvider session={pageProps.session}>
-                  {getLayout(<Component {...pageProps} />)}
-                </SessionProvider>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="ja"
+              >
+                {getLayout(<Component {...pageProps} />)}
                 <ConfirmModal />
               </LocalizationProvider>
             </NextIntlProvider>

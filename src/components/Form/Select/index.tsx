@@ -5,23 +5,17 @@ import type { SelectProps } from '@mui/material/Select';
 import MuiSelect from '@mui/material/Select';
 import { isEmpty } from 'lodash';
 import type { ReactNode } from 'react';
-import type {
-  Control,
-  FieldValues,
-  Path,
-  UnPackAsyncDefaultValues,
-} from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
 import HelperText from '../HelperText';
 import Label from '../Label';
 import styles from '../styles';
 
-interface SelectFieldProps<TFormValues extends FieldValues>
-  extends SelectProps {
+interface SelectFieldProps<TFormValues extends FieldValues> {
   label?: string;
   required?: boolean;
-  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
+  name: Path<TFormValues>;
   control: Control<TFormValues>;
   maxLength?: number;
   data: { id: string | number; name: string | number }[];
@@ -44,7 +38,7 @@ const Select = <TFormValues extends FieldValues>({
   extraLabel,
   fixedHelperText,
   ...props
-}: SelectFieldProps<TFormValues>) => {
+}: SelectFieldProps<TFormValues> & SelectProps) => {
   const {
     field: { value = multiple ? [] : '', ...otherField },
     fieldState: { error },
@@ -61,12 +55,14 @@ const Select = <TFormValues extends FieldValues>({
           required={required}
           extraLabel={extraLabel}
           className="selectLabel"
+          htmlFor={name}
         />
       )}
 
       <MuiSelect
         className="tabletStyle"
         sx={styles.input}
+        id={name}
         {...props}
         {...otherField}
         value={value}

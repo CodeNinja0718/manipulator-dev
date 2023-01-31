@@ -18,6 +18,10 @@ const authQuery = {
     apiUrl: '/account/customer/register/verify-otp',
     method: 'post',
   },
+  customerRegister: {
+    apiUrl: '/account/customer/register',
+    method: 'post',
+  },
 };
 
 export default authQuery;

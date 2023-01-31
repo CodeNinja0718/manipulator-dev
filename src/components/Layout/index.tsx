@@ -1,5 +1,5 @@
 import { ArrowUpward } from '@mui/icons-material';
-import { Box, Container, IconButton } from '@mui/material';
+import { Box, Card, IconButton } from '@mui/material';
 import { useScroll } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
@@ -34,62 +34,55 @@ export default function Layout({
     });
   }, [scrollY]);
 
-  return (
-    <div style={{ position: 'relative' }}>
-      <Container sx={styles.mainBox} maxWidth={false}>
-        <Header />
-        <Box
-          component="main"
-          sx={[
-            ...(Array.isArray(styles.main) ? styles.main : [styles.main]),
-            () => ({
-              minHeight: {
-                xs: `calc(100vh - 322px)`,
-                mobile: `calc(100vh - 293px)`,
-              },
-            }),
-          ]}
-        >
-          <Box
-            sx={
-              isCard
-                ? {
-                    maxWidth: 950,
-                    bgcolor: 'white',
-                    boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
-                  }
-                : {}
-            }
-            width="100%"
-            margin="0 auto"
-          >
-            {children}
-          </Box>
-        </Box>
+  const renderMainLayout = (content: ReactNode) => {
+    if (isCard) {
+      return <Card sx={styles.cardLayout}>{content}</Card>;
+    }
+    return content;
+  };
 
-        <IconButton
-          sx={[
-            ...(Array.isArray(styles.fabButton)
-              ? styles.fabButton
-              : [styles.fabButton]),
-            {
-              opacity,
-              pointerEvents: opacity === 1 ? 'normal' : 'none',
-              bottom,
-              transform: `scale(${opacity ? 1 : 0})`,
+  return (
+    <Box sx={styles.layoutContainer}>
+      <Header />
+      <Box
+        component="main"
+        sx={[
+          ...(Array.isArray(styles.mainContent)
+            ? styles.mainContent
+            : [styles.mainContent]),
+          () => ({
+            minHeight: {
+              xs: `calc(100vh - 322px)`,
+              mobile: `calc(100vh - 293px)`,
             },
-          ]}
-          onClick={() =>
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth',
-            })
-          }
-        >
-          <ArrowUpward />
-        </IconButton>
-        <Footer />
-      </Container>
-    </div>
+          }),
+        ]}
+      >
+        {renderMainLayout(children)}
+      </Box>
+
+      <Footer />
+      <IconButton
+        sx={[
+          ...(Array.isArray(styles.fabButton)
+            ? styles.fabButton
+            : [styles.fabButton]),
+          {
+            opacity,
+            pointerEvents: opacity === 1 ? 'normal' : 'none',
+            bottom,
+            transform: `scale(${opacity ? 1 : 0})`,
+          },
+        ]}
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          })
+        }
+      >
+        <ArrowUpward />
+      </IconButton>
+    </Box>
   );
 }

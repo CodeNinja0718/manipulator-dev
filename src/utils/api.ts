@@ -1,3 +1,4 @@
+import type { AxiosHeaders } from 'axios';
 import axios from 'axios';
 import { get } from 'lodash';
 
@@ -9,18 +10,21 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const requestConfig = {
-    ...config,
-  };
   const webCookie = Helper.getWebCookie();
-  requestConfig.headers = requestConfig.headers ?? {};
-  requestConfig.headers['Accept-Timezone'] =
-    Intl.DateTimeFormat().resolvedOptions().timeZone;
-  if (webCookie?.token) {
-    requestConfig.headers.Authorization = `Bearer ${webCookie?.token}`;
+  if (config.headers) {
+    if (webCookie?.token) {
+      (config.headers as AxiosHeaders).set(
+        'Authorization',
+        `Bearer ${webCookie?.token}`,
+      );
+    }
+    (config.headers as AxiosHeaders).set(
+      'Accept-Timezone',
+      Intl.DateTimeFormat().resolvedOptions().timeZone,
+    );
   }
 
-  return requestConfig;
+  return config;
 });
 
 api.interceptors.response.use(

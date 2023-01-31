@@ -39,6 +39,18 @@ export const GENDER_TEXT = {
   UNANSWERED: '未回答',
 };
 
+export const GENDER_OPTIONS = [
+  {
+    id: 0,
+    name: '未回答',
+  },
+  {
+    id: 1,
+    name: '女性',
+  },
+  { id: 2, name: '男性' },
+];
+
 export const FOOTER_ITEMS = [
   {
     label: '利用規約',

@@ -1,14 +1,14 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles: Record<string, SxProps<Theme>> = {
-  mainBox: {
+  layoutContainer: {
     backgroundColor: 'white',
     backgroundImage: 'url(/images/main_bg.webp)',
     backgroundSize: 'contain',
     backgroundPosition: 'top center',
     p: { xs: '0px', tablet: '0px' },
   },
-  main: {
+  mainContent: {
     minHeight: 'calc(100vh - 163px)',
     display: 'flex',
     flexDirection: 'column',
@@ -16,6 +16,13 @@ const styles: Record<string, SxProps<Theme>> = {
       xs: 0,
       normalTablet: 53.5,
     },
+  },
+  cardLayout: {
+    maxWidth: 950,
+    width: '100%',
+    bgcolor: 'white',
+    margin: '100px auto',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
   },
   fabButton: (theme: Theme) => ({
     width: { xs: 24, tablet: 40 },
