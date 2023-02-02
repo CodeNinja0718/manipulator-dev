@@ -18,6 +18,9 @@ const Banner = () => {
             alt="banner-image"
             fill
             priority
+            style={{
+              objectFit: 'cover',
+            }}
             sizes="(max-width: 3840px) 100vw,
                   (max-width: 2048px) 75vw,
                   (max-width: 1440px) 50vw"

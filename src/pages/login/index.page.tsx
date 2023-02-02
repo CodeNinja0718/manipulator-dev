@@ -6,13 +6,15 @@ import { useMutate, useUser } from 'hooks';
 import type { SendOtpPayload, VerifyOtpPayload } from 'models/auth/interface';
 import authQuery from 'models/auth/query';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import Helper from 'utils/helpers';
 
 const LoginPage = () => {
   const router = useRouter();
   const [phone, setPhone] = useState<string>('');
+  const [remember, setRemember] = useState<boolean>(false);
+  const [phoneRemeber, setPhoneRemeber] = useState<string>('');
   const { refetch: refetchUser } = useUser({ enabled: false });
   const { mutateAsync: handleSendOtp } = useMutate<SendOtpPayload>(
     authQuery.loginSendOtp,
@@ -24,6 +26,14 @@ const LoginPage = () => {
       refreshToken: string;
     }
   >(authQuery.loginVerifyOtp);
+
+  useEffect(() => {
+    const phoneRemember = localStorage.getItem('remember');
+    if (phoneRemember) {
+      setRemember(!!phoneRemember);
+      setPhoneRemeber(phoneRemember);
+    }
+  }, []);
 
   const handleLogin: SubmitHandler<LoginFormValues> = (values) => {
     handleSendOtp(
@@ -50,6 +60,11 @@ const LoginPage = () => {
       },
       {
         onSuccess: (data) => {
+          if (remember) {
+            localStorage.setItem('remember', phone);
+          } else {
+            localStorage.removeItem('remember');
+          }
           Helper.setToken({
             token: data?.accessToken || data?.refreshToken,
           });
@@ -70,7 +85,14 @@ const LoginPage = () => {
       />
     );
   }
-  return <LoginForm onSubmit={handleLogin} />;
+  return (
+    <LoginForm
+      initialValues={{ phone: phoneRemeber }}
+      onSubmit={handleLogin}
+      remember={remember}
+      handleToggleRemember={(e) => setRemember(e.target.checked)}
+    />
+  );
 };
 
 LoginPage.getLayout = (page: React.ReactNode) => {

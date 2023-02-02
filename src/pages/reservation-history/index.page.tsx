@@ -10,8 +10,6 @@ import {
 } from '@mui/icons-material';
 import { Box, Pagination, Typography, useMediaQuery } from '@mui/material';
 import Layout from 'components/Layout';
-import Header from 'components/Layout/Header';
-import Logo from 'components/Layout/Navbar/Logo';
 import type { SideMenuItem } from 'components/Layout/SideMenu/SideMenu';
 import SideMenu from 'components/Layout/SideMenu/SideMenu';
 import styles from 'components/Layout/SideMenu/styles';
@@ -182,32 +180,7 @@ const ReservationHistory = () => {
 
 ReservationHistory.getLayout = function getLayout(page: ReactElement) {
   return (
-    <Layout
-      isCard={true}
-      cardStyle={{
-        maxWidth: 950,
-        margin: { xs: '50px auto', tablet: '100px auto' },
-        boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
-      }}
-      mainStyle={{
-        minHeight: 'calc(100vh - 163px)',
-        display: 'flex',
-        flexDirection: 'column',
-        marginTop: {
-          xs: 0,
-          normalTablet: 0,
-        },
-      }}
-      header={
-        <Header
-          color="transparent"
-          textColor="text.primary"
-          iconColor="orangeText"
-          sx={styles.appBar}
-          logo={<Logo />}
-        />
-      }
-    >
+    <Layout isCardLayout>
       <Box display={{ xs: 'flex' }}>
         {gradientComponent(
           <Box

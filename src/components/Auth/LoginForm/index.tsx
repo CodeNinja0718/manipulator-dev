@@ -3,7 +3,7 @@ import ArrowRight from '@icons/arrow-right.svg';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 import { TextField } from 'components/Form';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -12,15 +12,25 @@ import schema from './schema';
 import styles from './styles';
 
 const AuthForm = ({
+  initialValues,
   onSubmit,
+  remember = false,
+  handleToggleRemember,
 }: {
+  initialValues: LoginFormValues;
   onSubmit: SubmitHandler<LoginFormValues>;
+  remember: boolean;
+  handleToggleRemember: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
-  const [memorized, setMemorized] = useState<boolean>(false);
-  const { control, handleSubmit } = useForm<LoginFormValues>({
+  const { control, handleSubmit, reset } = useForm<LoginFormValues>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
+    defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    reset(initialValues);
+  }, [initialValues, reset]);
 
   return (
     <Stack
@@ -42,8 +52,8 @@ const AuthForm = ({
         sx={styles.checkboxControlWrapper}
         control={
           <Checkbox
-            checked={memorized}
-            onChange={(e) => setMemorized(e.target.checked)}
+            checked={remember}
+            onChange={handleToggleRemember}
             sx={styles.checkboxSx}
           />
         }

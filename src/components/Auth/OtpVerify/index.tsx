@@ -51,16 +51,21 @@ const OTPVerify = ({
 
   return (
     <Stack alignItems="center" sx={styles.otpVerifyWrapper}>
-      <Typography variant="title" fontSize={24} mt={26} mb={53}>
+      <Typography variant="title" fontSize={24} mb={53}>
         認証コードの入力
       </Typography>
-      <Typography fontSize={18} mb={10}>
+      <Typography fontSize={18} fontWeight="bold" mb={10}>
         SMSで受信した認証番号を入力してください
       </Typography>
-      <Typography fontSize={16} mb={32}>
-        ※認証コードが届かない場合は、番号が正しいことを確認し、
-        <br />
-        コードの再送をお試しください。
+      <Typography
+        fontSize={16}
+        mb={32}
+        whiteSpace={{ xs: 'normal', tablet: 'pre-line' }}
+        textAlign={{ xs: 'left', tablet: 'center' }}
+      >
+        {
+          '※認証コードが届かない場合は、番号が正しいことを確認し、\nコードの再送をお試しください。'
+        }
       </Typography>
       <OtpInput
         numInputs={6}
@@ -83,7 +88,7 @@ const OTPVerify = ({
       />
       <Typography
         fontSize={16}
-        mt={48}
+        mt={{ xs: 38, tablet: 48 }}
         mb={30}
         color="primary"
         onClick={handleResendOtp}

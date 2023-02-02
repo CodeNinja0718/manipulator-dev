@@ -28,7 +28,7 @@ const AuthForm = ({
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Typography variant="title" fontSize={24} mt={26} mb={32}>
+      <Typography variant="title" fontSize={24} mb={{ xs: 54, tablet: 32 }}>
         会員登録
       </Typography>
       <TextField
@@ -37,7 +37,11 @@ const AuthForm = ({
         control={control}
         placeholder="09012345678"
       />
-      <Typography fontSize={16} mt={26} mb={32}>
+      <Typography
+        fontSize={16}
+        mt={{ xs: 24, tablet: 26 }}
+        mb={{ xs: 24, tablet: 32 }}
+      >
         会員登録することで、整体なびの<Link href="/">利用規約</Link>
         および<Link href="/">プライバシーポリシー</Link>に同意するものとします。
       </Typography>
