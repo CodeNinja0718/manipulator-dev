@@ -9,18 +9,10 @@ const ContentOfBanner = dynamic(() => import('./ContentOfBanner'));
 
 const Banner = () => {
   return (
-    <Box
-      position="relative"
-      sx={{
-        height: { xs: 320, normalMobile: 362, tablet: 448 },
-      }}
-    >
-      <Box
-        sx={{
-          display: { xs: 'none', tablet: 'block' },
-        }}
-      >
-        <Box position="relative" height={448}>
+    <Box position="relative">
+      {/* Banner - Desktop */}
+      <Box sx={styles.desktopBox}>
+        <Box position="relative" sx={styles.desktopBannerElement}>
           <Image
             src="/images/banner.webp"
             alt="banner-image"
@@ -33,22 +25,20 @@ const Banner = () => {
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          display: { xs: 'block', tablet: 'none' },
-        }}
-      >
-        <Box>
+      {/* Banner - Tablet, Mobile */}
+      <Box sx={styles.mobileBox}>
+        <Box position="relative" sx={styles.mobileBannerElement}>
           <Image
             src="/images/banner_mobile.webp"
             alt="banner-image"
             fill
             priority
+            style={{
+              objectFit: 'contain',
+            }}
           />
         </Box>
       </Box>
-
-      {/*  */}
 
       <Box sx={styles.boxBannerPosition}>
         <Box sx={styles.boxBanner}>

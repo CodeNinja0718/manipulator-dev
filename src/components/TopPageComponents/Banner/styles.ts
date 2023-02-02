@@ -21,6 +21,28 @@ const styles = {
     transform: 'translateY(-50%)',
     right: { xs: '-4px', md: '-34px' },
   },
+  desktopBox: {
+    display: { xs: 'none', sm: 'block' },
+    height: { xs: 320, normalMobile: 362, tablet: 448 },
+  },
+  desktopBannerElement: {
+    height: {
+      xs: 363,
+      tablet: 448,
+    },
+    '& img': {
+      objectFit: { xs: 'cover', normalTablet: 'initial' },
+      objectPosition: { xs: 'top left', normalTablet: 'initial' },
+    },
+  },
+  mobileBox: {
+    display: { xs: 'block', sm: 'none' },
+  },
+  mobileBannerElement: {
+    width: '100%',
+    height: '100%',
+    pt: 'calc(100% - 13px)',
+  },
 } as Record<string, SxProps<Theme>>;
 
 export default styles;
