@@ -94,7 +94,7 @@ const list: ReservationItemModel[] = [
     firstVisitPrice: '6,000円',
     couponA: '1回使用',
     couponB: '- 1,000円',
-    expectedPayment: '5,000円',
+    expectedPayment: '5,000',
     amountPayment: '5,000円',
     cancellationDate: new Date('11/11/2022'),
   },
@@ -151,7 +151,7 @@ const list: ReservationItemModel[] = [
 const ReservationHistory = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('normalTablet'));
   return (
-    <Box padding={60} bgcolor="white">
+    <Box bgcolor="white" sx={{ padding: { xs: '60px 20px', tablet: '60px' } }}>
       <Box
         component={'div'}
         style={{ marginBottom: '60px', textAlign: 'center' }}

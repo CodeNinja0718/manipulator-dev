@@ -27,10 +27,7 @@ const ReservationCard = ({ data }: ReservationItemProps) => {
       <Box sx={styles.reservationContent}>
         <Grid container spacing={20}>
           <Grid item xs={12} tablet={8}>
-            <Box
-              borderBottom={'1px solid  #ccc'}
-              sx={{ padding: { xs: '0px 0px 13px', tablet: '13px 0px' } }}
-            >
+            <Box borderBottom={'1px solid  #ccc'} padding="0px 0px 13px">
               <Typography component="label" fontWeight={'600'}>
                 ご予約日
               </Typography>
