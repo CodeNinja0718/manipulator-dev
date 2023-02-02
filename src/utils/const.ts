@@ -73,3 +73,26 @@ export const FOOTER_ITEMS = [
 export const COMMON_FOOTER = {
   MANIPULATIVE_NAVIGATION: '整体なび',
 };
+
+export const RESERVATION_STATUS_VALUE = {
+  confirmed: 'confirmed',
+  visitedHospital: 'visitedHospital',
+  cancel: 'cancel',
+};
+
+export const RESERVATION_STATUS = [
+  {
+    label: '予約確定',
+    value: RESERVATION_STATUS_VALUE.confirmed,
+  },
+  {
+    label: '来院済',
+    value: RESERVATION_STATUS_VALUE.visitedHospital,
+  },
+  {
+    label: 'キャンセル',
+    value: RESERVATION_STATUS_VALUE.cancel,
+  },
+];
+
+export const DATE_FORMAT = 'yyyy/MM/dd (E)';

@@ -75,7 +75,7 @@ const FILTER_ITEMS = [
   },
   {
     icon: OtherSymptomsIcon,
-    label: `腰`,
+    label: `その他`,
     viewBox: '0 0 53.297 55.182',
     url: '/icons/other_symptoms.svg',
   },

@@ -73,7 +73,19 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
       <DesktopNavbar
         position="fixed"
         color={color ?? 'secondary'}
-        sx={sx}
+        sx={{
+          ...sx,
+          ...(color === 'transparent'
+            ? {
+                background: isScrollDown
+                  ? (theme: Theme) =>
+                      `${theme.palette.orangeGradient}!important`
+                  : 'transparent',
+                height: isScrollDown ? 53.2 : 106,
+                padding: isScrollDown ? '0 25px' : 25,
+              }
+            : {}),
+        }}
         gradient={isGradient === -1 ? 'orange' : ''}
       >
         <Box
@@ -106,7 +118,19 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
               pb={{ tablet: 15 }}
               paddingX="20px"
             >
-              <Navbar navbar={navbar} color={textColor} iconColor={iconColor} />
+              {color === 'transparent' ? (
+                <Navbar
+                  navbar={navbar}
+                  color={isScrollDown ? '#fff' : textColor}
+                  iconColor={isScrollDown ? '#fff' : iconColor}
+                />
+              ) : (
+                <Navbar
+                  navbar={navbar}
+                  color={textColor}
+                  iconColor={iconColor}
+                />
+              )}
             </Box>
           </Stack>
         </Box>
@@ -122,9 +146,16 @@ const Header = ({ logo, color, textColor, iconColor, sx }: HeaderProps) => {
         sx={{
           display: { xs: 'inline-block', tablet: 'none' },
           p: { xs: '5px 15px 5px 27px', tablet: '10px 5px 0 0' },
-          background: isScrollDown
-            ? (theme: Theme) => theme.palette.orangeGradient
-            : 'transparent',
+          ...(color === 'transparent'
+            ? {
+                background: (theme: Theme) =>
+                  `${theme.palette.orangeGradient}!important`,
+              }
+            : {
+                background: isScrollDown
+                  ? (theme: Theme) => theme.palette.orangeGradient
+                  : 'transparent',
+              }),
         }}
       >
         <IconButton

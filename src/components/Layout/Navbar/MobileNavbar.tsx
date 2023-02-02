@@ -3,8 +3,8 @@ import { Box, Link } from '@mui/material';
 import { gradientComponent } from 'hoc/GrandientComponent';
 import dynamic from 'next/dynamic';
 
-import type { SideMenuItem } from '../SideMenuLayout';
-import SideMenu from '../SideMenuLayout/SideMenu';
+import type { SideMenuItem } from '../SideMenu/SideMenu';
+import SideMenu from '../SideMenu/SideMenu';
 import Logo from './Logo';
 import styles from './styles';
 
