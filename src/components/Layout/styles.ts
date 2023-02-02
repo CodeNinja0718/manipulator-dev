@@ -6,23 +6,51 @@ const styles: Record<string, SxProps<Theme>> = {
     backgroundImage: 'url(/images/main_bg.webp)',
     backgroundSize: 'contain',
     backgroundPosition: 'top center',
-    p: { xs: '0px', tablet: '0px' },
+    position: 'relative',
   },
   mainContent: {
-    minHeight: 'calc(100vh - 163px)',
     display: 'flex',
     flexDirection: 'column',
-    mt: {
-      xs: 0,
-      normalTablet: 53.5,
+    minHeight: {
+      xs: 'calc(100vh - 234px)',
+      tablet: 'calc(100vh - 57px - 234px)',
+    },
+    '&[data-card=true]': {
+      marginTop: {
+        xs: 67,
+        tablet: 0,
+      },
+      minHeight: {
+        xs: 'calc(100vh - 67px - 234px)',
+        tablet: 'calc(100vh - 106px - 234px)',
+      },
     },
   },
   cardLayout: {
+    padding: '0 20px',
     maxWidth: 950,
     width: '100%',
     bgcolor: 'white',
-    margin: '100px auto',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
+    flexGrow: {
+      xs: 1,
+      tablet: 0,
+    },
+    margin: {
+      xs: 0,
+      tablet: '0 auto 90px',
+    },
+    boxShadow: {
+      xs: 'none',
+      tablet: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
+    },
+  },
+  logo: {
+    fontSize: 32,
+    wordBreak: 'keep-all',
+    color: {
+      xs: 'white',
+      tablet: 'secondary.main',
+    },
   },
   fabButton: (theme: Theme) => ({
     width: { xs: 24, tablet: 40 },

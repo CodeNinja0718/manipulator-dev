@@ -7,17 +7,17 @@ import components from './components';
 declare module '@mui/material/styles' {
   interface Palette {
     white: string;
+    black: string;
     button: string;
     backgroundColor: string;
     heading: string;
     grown: string;
     grownText: string;
-    orange: object;
     orangeText: string;
     orangeBold: string;
     orangeGradient: string;
-    greenGradient: string;
     gray: string;
+    graySolid: string;
     pink: string;
     cream: string;
     placeholder: string;
@@ -26,17 +26,17 @@ declare module '@mui/material/styles' {
 
   interface PaletteOptions {
     white?: string;
+    black?: string;
     grown?: string;
     grownText?: string;
     button?: string;
     backgroundColor: string;
     heading: string;
-    orange: object;
     orangeText: string;
     orangeBold: string;
     orangeGradient?: string;
-    greenGradient?: string;
     gray?: string;
+    graySolid?: string;
     pink?: string;
     cream?: string;
     placeholder?: string;
@@ -104,7 +104,8 @@ const palette: MuiPaletteOptions = {
     contrastText: '#fff',
   },
   secondary: {
-    main: '#659d3b',
+    main: '#ea6500',
+    contrastText: '#fff',
   },
   error: {
     main: '#d42828',
@@ -112,27 +113,21 @@ const palette: MuiPaletteOptions = {
   success: {
     main: '#51b873',
   },
-  orange: {
-    main: '#ea6500',
-    contrastText: '#fff',
-  },
   cream: '#fcf7f4',
   orangeText: '#ea6500',
   orangeBold: '#eb6600',
   gray: '#707070',
+  graySolid: '#666666',
   grayText: '#6b6b6b',
   pink: '#efe6df',
-  text: {
-    primary: '#333333',
-  },
   heading: '#5a524f',
   grown: '#413732',
   grownText: '#63564d',
   placeholder: '#999999',
   white: '#fff',
+  black: '#333333',
   backgroundColor: '#f4f2f1',
   orangeGradient: 'linear-gradient(295deg, #ff872b, #ec6702 53%, #eb6600)',
-  greenGradient: 'linear-gradient(to bottom, #a3cc30, #5e983c)',
   action: {
     hoverOpacity: 0.04,
     disabledBackground: '#cccccc',

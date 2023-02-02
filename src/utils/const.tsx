@@ -1,3 +1,19 @@
+import FacebookIcon from '@icons/facebook_icon.svg';
+import InstagramIcon from '@icons/instagram_icon.svg';
+import TwitterIcon from '@icons/twitter_icon.svg';
+import {
+  AccountCircleOutlined,
+  AutoStoriesOutlined,
+  CreditCardOutlined,
+  DiscountOutlined,
+  FavoriteRounded,
+  ListOutlined,
+  LocalOfferOutlined,
+  MapOutlined,
+} from '@mui/icons-material';
+
+import type { INavigation } from './type';
+
 export const Regex = {
   PASSWORD_POLICY:
     // eslint-disable-next-line no-useless-escape
@@ -96,3 +112,69 @@ export const RESERVATION_STATUS = [
 ];
 
 export const DATE_FORMAT = 'yyyy/MM/dd (E)';
+
+export const SOCIAL_MEDIA: {
+  href: string;
+  icon: React.ReactNode;
+}[] = [
+  {
+    href: '/instagram',
+    icon: <InstagramIcon />,
+  },
+  {
+    href: '/twitter',
+    icon: <TwitterIcon />,
+  },
+  {
+    href: '/facebook',
+    icon: <FacebookIcon />,
+  },
+];
+
+export const CUSTOMER_NAVIGATION: {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+  children?: INavigation[];
+}[] = [
+  {
+    href: '/',
+    label: '予約履歴',
+    icon: <LocalOfferOutlined />,
+  },
+  {
+    href: '/1',
+    label: '回数券',
+    icon: <MapOutlined />,
+  },
+  {
+    href: '/2',
+    label: 'クーポン',
+    icon: <DiscountOutlined />,
+  },
+  {
+    href: '/3',
+    label: 'お気に入り',
+    icon: <FavoriteRounded />,
+  },
+  {
+    href: '/4',
+    label: '会員情報',
+    icon: <AccountCircleOutlined />,
+  },
+  {
+    href: '/5',
+    label: 'クレジットカード情報',
+    icon: <CreditCardOutlined />,
+  },
+  {
+    href: '/6',
+    label: 'ご利用ガイド',
+    icon: <AutoStoriesOutlined />,
+  },
+  {
+    href: '/7',
+    label: 'その他',
+    icon: <ListOutlined />,
+  },
+];

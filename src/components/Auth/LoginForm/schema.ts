@@ -3,8 +3,7 @@ import type { InferType } from 'yup';
 import { object, string } from 'yup';
 
 const schema = object({
-  email: string().required().trim().matches(Regex.EMAIL, 'Invalid'),
-  password: string().required(),
+  phone: string().required().matches(Regex.PHONE, 'Phone number is not valid'),
 });
 
 export default schema;

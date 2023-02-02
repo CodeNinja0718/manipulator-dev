@@ -1,10 +1,7 @@
 const authQuery = {
-  login: {
-    apiUrl: '/account/provider/login',
-  },
   currentUser: {
     queryKey: ['currentUser'],
-    apiUrl: '/account/consumer/me',
+    apiUrl: '/account/customer/profile',
   },
   logout: {
     apiUrl: `/account/consumter/logout`,
@@ -21,6 +18,14 @@ const authQuery = {
   customerRegister: {
     apiUrl: '/account/customer/register',
     method: 'post',
+  },
+  loginSendOtp: {
+    apiUrl: '/auth/customer/login/send-otp',
+    metod: 'post',
+  },
+  loginVerifyOtp: {
+    apiUrl: '/auth/customer/login',
+    metod: 'post',
   },
 };
 

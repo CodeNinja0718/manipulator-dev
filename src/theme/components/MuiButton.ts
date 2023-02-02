@@ -1,10 +1,11 @@
-const MuiAppBar = {
+const MuiButton = {
   styleOverrides: {
     root: {
-      minWidth: '100px',
       lineHeight: 1.2,
       padding: '8px 24px',
-      boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.16)',
+      '&.MuiButton-contained, &.MuiButton-outlined': {
+        boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.16)',
+      },
     },
     endIcon: {
       position: 'absolute',
@@ -78,4 +79,4 @@ const MuiAppBar = {
   ],
 };
 
-export default MuiAppBar;
+export default MuiButton;

@@ -1,5 +1,4 @@
 import { ArrowUpward } from '@mui/icons-material';
-import type { SxProps, Theme } from '@mui/material';
 import { Box, Card, IconButton } from '@mui/material';
 import { useScroll } from 'framer-motion';
 import dynamic from 'next/dynamic';
@@ -10,19 +9,14 @@ import styles from './styles';
 
 const Header = dynamic(() => import('./Header'));
 const Footer = dynamic(() => import('./Footer'));
+const Drawer = dynamic(() => import('./CommonDrawer'));
 
 export default function Layout({
   children,
-  isCard = false,
-  mainStyle,
-  cardStyle,
-  header = <Header />,
+  isCardLayout = false,
 }: {
   children: ReactNode;
-  isCard?: boolean;
-  mainStyle?: SxProps<Theme> | undefined;
-  cardStyle?: SxProps<Theme> | undefined;
-  header?: ReactNode;
+  isCardLayout?: boolean;
 }) {
   const pageHeight =
     typeof document !== 'undefined' ? document.body.scrollHeight : 0;
@@ -42,20 +36,20 @@ export default function Layout({
   }, [scrollY]);
 
   const renderMainLayout = (content: ReactNode) => {
-    if (isCard) {
-      return <Card sx={cardStyle || styles.cardLayout}>{content}</Card>;
+    if (isCardLayout) {
+      return <Card sx={styles.cardLayout}>{content}</Card>;
     }
     return content;
   };
 
   return (
     <Box sx={styles.layoutContainer}>
-      {header}
-      <Box component="main" sx={mainStyle || styles.main}>
+      <Header isCardLayout={isCardLayout} />
+      <Box component="main" sx={styles.mainContent} data-card={isCardLayout}>
         {renderMainLayout(children)}
       </Box>
-
       <Footer />
+      <Drawer />
       <IconButton
         sx={[
           ...(Array.isArray(styles.fabButton)

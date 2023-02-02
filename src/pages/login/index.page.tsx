@@ -1,71 +1,80 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { LoadingButton } from '@mui/lab';
-import { Box, Container } from '@mui/material';
-import { TextField } from 'components/Form';
+import LoginForm from 'components/Auth/LoginForm';
+import type { LoginFormValues } from 'components/Auth/LoginForm/schema';
+import OtpVerify from 'components/Auth/OtpVerify';
+import Layout from 'components/Layout';
 import { useMutate, useUser } from 'hooks';
-import type { LoginResponse } from 'models/auth/interface';
+import type { SendOtpPayload, VerifyOtpPayload } from 'models/auth/interface';
 import authQuery from 'models/auth/query';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
 import Helper from 'utils/helpers';
 
-import type { LoginFormValues } from './schema';
-import schema from './schema';
-
 const LoginPage = () => {
-  const { control, handleSubmit } = useForm<LoginFormValues>({
-    resolver: yupResolver(schema),
-    mode: 'onTouched',
-  });
-  const { replace } = useRouter();
+  const router = useRouter();
+  const [phone, setPhone] = useState<string>('');
   const { refetch: refetchUser } = useUser({ enabled: false });
-  const { mutateAsync: login, isLoading } = useMutate<
-    LoginFormValues,
-    LoginResponse
-  >(authQuery.login);
+  const { mutateAsync: handleSendOtp } = useMutate<SendOtpPayload>(
+    authQuery.loginSendOtp,
+  );
+  const { mutateAsync: handleVerifyOtp, isLoading } = useMutate<
+    VerifyOtpPayload,
+    {
+      accessToken: string;
+      refreshToken: string;
+    }
+  >(authQuery.loginVerifyOtp);
 
-  const handleLogin = (values: LoginFormValues) => {
-    login(
-      { ...values, email: values.email.toLowerCase() },
+  const handleLogin: SubmitHandler<LoginFormValues> = (values) => {
+    handleSendOtp(
+      { phoneNumber: values.phone },
       {
-        onSuccess: (data) => {
-          Helper.setToken(data.token);
-          refetchUser();
-          replace('/');
+        onSuccess: () => {
+          setPhone(values.phone);
         },
       },
     );
   };
 
-  return (
-    <Box component="form" onSubmit={handleSubmit(handleLogin)}>
-      <Container maxWidth="lg">
-        <TextField
-          size="large"
-          label="メールアドレス"
-          name="email"
-          control={control}
-        />
-        <TextField
-          size="large"
-          label="パスワード"
-          name="password"
-          control={control}
-          type="password"
-        />
-        <LoadingButton
-          size="large"
-          loading={isLoading}
-          color="primary"
-          variant="contained"
-          type="submit"
-          sx={{ borderRadius: '35px', pt: '1.185rem', pb: '1.185rem', mt: 2 }}
-        >
-          パスワードをリセットする
-        </LoadingButton>
-      </Container>
-    </Box>
-  );
+  const handleResendOtp = () => {
+    handleSendOtp({
+      phoneNumber: phone,
+    });
+  };
+
+  const handleVerify = (code: string) => {
+    handleVerifyOtp(
+      {
+        identity: phone,
+        password: code,
+      },
+      {
+        onSuccess: (data) => {
+          Helper.setToken({
+            token: data?.accessToken || data?.refreshToken,
+          });
+          refetchUser();
+          router.replace('/');
+        },
+      },
+    );
+  };
+
+  if (phone) {
+    return (
+      <OtpVerify
+        onSubmit={handleVerify}
+        onResendOtp={handleResendOtp}
+        onBack={() => setPhone('')}
+        isLoading={isLoading}
+      />
+    );
+  }
+  return <LoginForm onSubmit={handleLogin} />;
+};
+
+LoginPage.getLayout = (page: React.ReactNode) => {
+  return <Layout isCardLayout>{page}</Layout>;
 };
 
 export default LoginPage;

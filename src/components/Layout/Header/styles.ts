@@ -1,115 +1,110 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-const styles = {
-  appBarBox: {
-    // maxWidth: 950,
+const styles: Record<string, SxProps<Theme>> = {
+  layoutHeader: (theme) => ({
+    flexDirection: 'row',
+    padding: '0 20px',
+    boxShadow: 'none',
+    alignItems: 'center',
+    background: theme.palette.orangeGradient,
+    position: 'fixed',
+    top: 0,
+    transition: 'transform 0.5s ease',
+    justifyContent: {
+      xs: 'space-between',
+      tablet: 'end',
+    },
+    height: {
+      xs: 67,
+      tablet: 57,
+    },
+    transform: {
+      xs: 'translateY(-67px)',
+      tablet: 'translateY(0)',
+    },
+    '&[data-scroll=true]': {
+      transform: 'translateY(0)',
+    },
+  }),
+
+  cardLayoutHeader: {
+    top: 0,
+    boxShadow: 'none',
+    padding: '0 15px 0 24px',
+    zIndex: 1,
+    justifyContent: {
+      xs: 'center',
+      tablet: 'flex-end',
+    },
+    pb: {
+      xs: 0,
+      tablet: 22,
+    },
+    height: {
+      xs: 67,
+      tablet: 106,
+    },
+    position: {
+      xs: 'fixed',
+      tablet: 'relative',
+    },
+    background: {
+      xs: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
+      tablet: 'transparent',
+    },
+  },
+  cardHeaderContent: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 950,
     margin: '0 auto',
   },
-  navbarItem: {
-    ml: 12,
-    textDecorationLine: 'none',
-    fontSize: {
-      xs: 12,
-      lg: 16,
-      tablet: 16,
-    },
-  },
-  navbarHref: {
-    textDecorationLine: 'none',
-  },
-  whiteButton: {
-    fontSize: 24,
+  logo: {
+    fontSize: 32,
     fontWeight: 'bold',
-    borderRadius: 0,
-    minWidth: 165,
-    py: '17.5px',
+    wordBreak: 'keep-all',
+    textDecoration: 'none',
+    color: {
+      xs: 'white',
+      tablet: 'secondary.main',
+    },
   },
-  blueButton: {
-    borderRadius: 0,
-    fontSize: 24,
-    fontWeight: 'bold',
-    minWidth: 165,
-    py: '17.5px',
+  navBarMenus: {
+    gap: 40,
   },
-  navbarMobileContainer: {
+  navBarMenuItem: {
+    display: 'flex',
     alignItems: 'center',
-    spacing: '38px',
-    justifyContent: { xs: 'flex-start', mw: 'center' },
-    display: {
-      xs: 'flex',
-      lg: 'none',
-    },
-    p: 2,
-    overflowX: 'scroll',
-    '& a': {
-      flexShrink: 0,
-    },
-  },
-  navbarTabletContainer: {
-    alignItems: 'center',
-    spacing: '38px',
-    mr: 5,
-    justifyContent: 'center',
-    display: {
-      xs: 'none',
-      lg: 'flex',
-    },
-    '& a': {
-      textDecoration: 'none',
-      '&:hover, &:active, &:focus': {
-        opacity: 0.75,
-        transition: '0.5s',
-      },
-    },
-  },
-  userName: {
+    gap: 16,
+    textDecoration: 'none',
+    fontSize: 16,
     color: 'white',
-    fontSize: 25,
-    lineHeight: '1.75',
+    fontWeight: 'bold',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+    svg: {
+      fontSize: '16px !important',
+      color: 'white',
+    },
+    '&[data-card=true]': {
+      color: 'black',
+      svg: {
+        color: 'secondary.main',
+      },
+    },
   },
-  listSidebar: {
+  hamburgerBtn: {
     p: 0,
-    a: {
-      '> div': {
-        borderTop: '1px solid white',
-      },
-      '&:last-child': {
-        '> div': {
-          borderBottom: '1px solid white',
-        },
-      },
+    margin: 0,
+    color: 'white',
+    width: 50,
+    height: 50,
+    svg: {
+      fontSize: 40,
     },
   },
-  listItemButton: {
-    px: 5.4,
-    py: 2.5,
-    '& svg': {
-      color: 'white',
-      mr: 1.4,
-    },
-    '&.MuiListItemButton-root': {
-      color: 'white',
-    },
-    '&.Mui-selected': {
-      backgroundColor: 'secondary.main',
-      color: 'heading',
-      '& svg': {
-        color: 'heading',
-      },
-      '&:hover': {
-        bgcolor: 'secondary.main',
-      },
-    },
-    '& .MuiListItemText-root': {
-      '& .MuiListItemText-primary': {
-        fontSize: 20,
-        fontWeight: 400,
-      },
-    },
-    logoContainer: {
-      display: 'flex',
-    },
-  },
-} as Record<string, SxProps<Theme>>;
+};
 
 export default styles;

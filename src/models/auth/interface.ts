@@ -12,11 +12,6 @@ export interface ICustomer {
   gender?: Gender;
 }
 
-export interface LoginPayload {
-  email: string;
-  password: string;
-}
-
 export interface LoginResponse {
   token: {
     token: string;
@@ -27,10 +22,9 @@ export interface SendOtpPayload {
   phoneNumber: string;
 }
 
-export interface VerifyOtpPayload {
-  phoneNumber: string;
-  code: string;
-}
+export type VerifyOtpPayload =
+  | { phoneNumber: string; code: string }
+  | { identity: string; password: string };
 
 export interface CustomerRegisterPayload
   extends Pick<ICustomer, 'name' | 'nameKana' | 'phone' | 'email' | 'gender'> {

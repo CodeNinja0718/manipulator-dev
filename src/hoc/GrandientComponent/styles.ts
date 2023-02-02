@@ -9,9 +9,6 @@ const styles = {
   },
   green: {
     backgroundColor: 'initial',
-    '& > *': {
-      background: (theme: Theme) => theme.palette.greenGradient,
-    },
   },
 } as Record<string, SxProps<Theme>>;
 

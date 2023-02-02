@@ -4,7 +4,7 @@ import OtpVerify from 'components/Auth/OtpVerify';
 import RegisterForm from 'components/Auth/RegisterForm';
 import type { RegisterFormValues } from 'components/Auth/RegisterForm/schema';
 import Layout from 'components/Layout';
-import useMutate from 'hooks/useMutate';
+import { useMutate, useUser } from 'hooks';
 import type {
   CustomerRegisterPayload,
   SendOtpPayload,
@@ -20,6 +20,7 @@ const RegisterPage = () => {
   const router = useRouter();
   const [phone, setPhone] = useState<string>('');
   const [token, setToken] = useState<string>('');
+  const { refetch: refetchUser } = useUser({ enabled: false });
 
   const { mutateAsync: handleSendOtp } = useMutate<SendOtpPayload>(
     authQuery.registerSendOtp,
@@ -82,6 +83,7 @@ const RegisterPage = () => {
           Helper.setToken({
             token,
           });
+          refetchUser();
           router.replace('/');
         },
       },
@@ -121,7 +123,7 @@ const RegisterPage = () => {
 };
 
 RegisterPage.getLayout = (page: React.ReactNode) => {
-  return <Layout isCard>{page}</Layout>;
+  return <Layout isCardLayout>{page}</Layout>;
 };
 
 export default RegisterPage;

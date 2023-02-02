@@ -3,12 +3,7 @@ import type { RadioGroupProps } from '@mui/material/RadioGroup';
 import type { IListItem } from 'hooks/types';
 import { isEmpty } from 'lodash';
 import type { ReactNode } from 'react';
-import type {
-  Control,
-  FieldValues,
-  Path,
-  UnPackAsyncDefaultValues,
-} from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import t from 'utils/translator';
 
@@ -20,7 +15,7 @@ interface CheckBoxFieldProps<TFormValues extends FieldValues>
   extends RadioGroupProps {
   label?: string;
   required?: boolean;
-  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
+  name: Path<TFormValues>;
   control: Control<TFormValues>;
   data: IListItem[];
   labelCol?: number;
