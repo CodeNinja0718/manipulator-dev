@@ -29,14 +29,14 @@ const ReservationItemLineText = ({
       sx={styles.reservationLine}
       alignItems={'center'}
     >
-      <Grid item xs={8}>
+      <Grid item xs={7}>
         <Box>
           <Typography component="label" fontWeight={'600'}>
             {label}
           </Typography>
         </Box>
       </Grid>
-      <Grid item xs={4} textAlign={'right'} sx={sxText}>
+      <Grid item xs={5} textAlign={'right'} sx={sxText}>
         {isText ? <Typography component="p">{value}</Typography> : ''}
         {isDateText ? <FormatDate dateString={value} /> : ''}
         {isElement ? value : ''}
