@@ -14,11 +14,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ConfirmModal from 'components/ConfirmModal';
 import DataProvider from 'components/DataProvider';
 import NextNProgress from 'components/ProgressBar';
-import jaLocale from 'locales/ja/index.json';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { NextIntlProvider } from 'next-intl';
 import type { ReactElement, ReactNode } from 'react';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -70,15 +68,10 @@ function MyApp(
             />
             <DataProvider />
             <NextNProgress />
-            <NextIntlProvider messages={jaLocale}>
-              <LocalizationProvider
-                dateAdapter={AdapterDayjs}
-                adapterLocale="ja"
-              >
-                {getLayout(<Component {...pageProps} />)}
-                <ConfirmModal />
-              </LocalizationProvider>
-            </NextIntlProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
+              {getLayout(<Component {...pageProps} />)}
+              <ConfirmModal />
+            </LocalizationProvider>
           </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

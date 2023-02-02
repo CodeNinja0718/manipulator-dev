@@ -5,16 +5,14 @@ import {
 } from '@mui/icons-material';
 import { Box, Grid, Typography } from '@mui/material';
 import FormatDate from 'components/FormatDate';
-import dynamic from 'next/dynamic';
 import * as React from 'react';
 import { RESERVATION_STATUS_VALUE } from 'utils/const';
 
+import ReservationItemIconText from './IconText';
+import ReservationItemHeader from './ItemHeader';
+import ReservationItemLineText from './Line';
 import type { ReservationCardModel } from './model';
 import styles from './styles';
-
-const ReservationItemHeader = dynamic(() => import('./ItemHeader'));
-const ReservationItemLineText = dynamic(() => import('./Line'));
-const ReservationItemIconText = dynamic(() => import('./IconText'));
 
 interface ReservationItemProps {
   data: ReservationCardModel;

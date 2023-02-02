@@ -18,15 +18,9 @@ import dayjs from 'dayjs';
 import useBreakpoint from 'hooks/useBreakpoint';
 import { omit } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
-import type {
-  Control,
-  FieldValues,
-  Path,
-  UnPackAsyncDefaultValues,
-} from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import { DateFormat } from 'utils/const';
-import t from 'utils/translator';
 
 import HelperText from '../HelperText';
 import Label from '../Label';
@@ -37,7 +31,7 @@ interface DateTimePickerProps<TFormValues extends FieldValues>
     MuiDateTimePickerProps<Date | Dayjs, Date | Dayjs>,
     'onChange' | 'renderInput' | 'value'
   > {
-  name: Path<UnPackAsyncDefaultValues<TFormValues>>;
+  name: Path<TFormValues>;
   control: Control<TFormValues>;
   label?: string;
   required?: boolean;
@@ -163,7 +157,7 @@ const DatePicker = <TFormValues extends FieldValues>({
         open={open}
         aria-labelledby="timepicker-modal-title"
         aria-describedby="timepicker-modal-description"
-        maxWidth="card"
+        // maxWidth="card"
       >
         <DialogContent sx={{ p: 2 }}>
           <Box>
@@ -223,7 +217,7 @@ const DatePicker = <TFormValues extends FieldValues>({
               onClick={() => setOpen(false)}
               sx={{ width: 112 }}
             >
-              {t('global.cancel')}
+              Cancel
             </Button>
             <Button
               variant="contained"
@@ -234,7 +228,7 @@ const DatePicker = <TFormValues extends FieldValues>({
               disabled={!time?.isValid() || !dateValue?.isValid()}
               sx={{ width: 112, svg: { color: 'white' } }}
             >
-              {t('global.settle')}
+              OK
             </Button>
           </Stack>
         </DialogActions>

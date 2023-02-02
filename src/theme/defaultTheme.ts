@@ -13,6 +13,7 @@ declare module '@mui/material/styles' {
     heading: string;
     grown: string;
     grownText: string;
+    orange: object;
     orangeText: string;
     orangeBold: string;
     orangeGradient: string;
@@ -32,6 +33,7 @@ declare module '@mui/material/styles' {
     button?: string;
     backgroundColor: string;
     heading: string;
+    orange: object;
     orangeText: string;
     orangeBold: string;
     orangeGradient?: string;
@@ -112,6 +114,10 @@ const palette: MuiPaletteOptions = {
   },
   success: {
     main: '#51b873',
+  },
+  orange: {
+    main: '#ea6500',
+    contrastText: '#fff',
   },
   cream: '#fcf7f4',
   orangeText: '#ea6500',
