@@ -6,7 +6,7 @@ import { useMutate, useUser } from 'hooks';
 import type { SendOtpPayload, VerifyOtpPayload } from 'models/auth/interface';
 import authQuery from 'models/auth/query';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import Helper from 'utils/helpers';
 
@@ -26,6 +26,12 @@ const LoginPage = () => {
       refreshToken: string;
     }
   >(authQuery.loginVerifyOtp);
+  const initialValues = useMemo(
+    () => ({
+      phone: phoneRemeber,
+    }),
+    [phoneRemeber],
+  );
 
   useEffect(() => {
     const phoneRemember = localStorage.getItem('remember');
@@ -87,7 +93,7 @@ const LoginPage = () => {
   }
   return (
     <LoginForm
-      initialValues={{ phone: phoneRemeber }}
+      initialValues={initialValues}
       onSubmit={handleLogin}
       remember={remember}
       handleToggleRemember={(e) => setRemember(e.target.checked)}

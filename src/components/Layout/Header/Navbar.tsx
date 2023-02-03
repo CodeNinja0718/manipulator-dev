@@ -1,7 +1,8 @@
 import HomeSvg from '@icons/icon_home.svg';
-import LoginSvg from '@icons/icon_logout.svg';
+import LoginSvg from '@icons/icon_login.svg';
+import LogoutSvg from '@icons/icon_logout.svg';
 import RegisterSvg from '@icons/icon_profile.svg';
-import { Stack, SvgIcon } from '@mui/material';
+import { Stack, SvgIcon, Typography } from '@mui/material';
 import Link from 'components/Link';
 import { useUser } from 'hooks';
 import React from 'react';
@@ -31,14 +32,10 @@ const Navbar: React.FC<NavbarProps> = ({ isCardLayout }) => {
             <SvgIcon component={RegisterSvg} inheritViewBox />
             マイページ
           </Link>
-          <Link
-            href="/logout"
-            sx={styles.navBarMenuItem}
-            data-card={isCardLayout}
-          >
-            <SvgIcon component={LoginSvg} inheritViewBox />
+          <Typography sx={styles.navBarMenuItem} data-card={isCardLayout}>
+            <SvgIcon component={LogoutSvg} inheritViewBox />
             ログアウト
-          </Link>
+          </Typography>
         </>
       ) : (
         <>

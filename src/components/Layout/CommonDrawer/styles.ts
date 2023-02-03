@@ -12,10 +12,11 @@ const styles: Record<string, SxProps<Theme>> = {
     justifyContent: 'space-between',
     alignItems: 'center',
     '& .logo': {
-      lineHeight: 1,
-      fontSize: 32,
       color: 'white',
-      textDecoration: 'none',
+      svg: {
+        width: 115,
+        height: 25,
+      },
     },
   },
   closeButton: {
