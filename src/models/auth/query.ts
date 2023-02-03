@@ -4,7 +4,7 @@ const authQuery = {
     apiUrl: '/account/customer/profile',
   },
   logout: {
-    apiUrl: `/account/consumter/logout`,
+    apiUrl: '/auth/logout',
     method: 'delete',
   },
   registerSendOtp: {

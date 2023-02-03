@@ -30,7 +30,7 @@ const useMutate = <TData = unknown, TVariables = unknown>(
           return data;
         }
         case 'delete': {
-          const { data } = await api.delete(url);
+          const { data } = await api.delete(url, { data: params });
           return data;
         }
         case 'patch': {

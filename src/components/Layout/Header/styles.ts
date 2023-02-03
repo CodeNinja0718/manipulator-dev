@@ -80,6 +80,7 @@ const styles: Record<string, SxProps<Theme>> = {
     gap: 40,
   },
   navBarMenuItem: {
+    cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
     gap: 16,
