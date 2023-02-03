@@ -1,14 +1,12 @@
-import {
-  AccountCircleOutlined,
-  AutoStoriesOutlined,
-  CreditCardOutlined,
-  DiscountOutlined,
-  FavoriteRounded,
-  ListOutlined,
-  LocalOfferOutlined,
-  MapOutlined,
-} from '@mui/icons-material';
-import { Box, Pagination, Typography, useMediaQuery } from '@mui/material';
+import ReservationSvg from '@icons/icon_reservation.svg';
+import TicketSvg from '@icons/icon_ticket.svg';
+import CouponSvg from '@icons/icon_coupon.svg';
+import FavSvg from '@icons/icon_fav.svg';
+import MembershipSvg from '@icons/icon_membership.svg';
+import PaymentSvg from '@icons/icon_payment.svg';
+import GuideSvg from '@icons/icon_guide.svg';
+import ListSvg from '@icons/icon_list.svg';
+import { Box, Pagination, SvgIcon, Typography, useMediaQuery } from '@mui/material';
 import Layout from 'components/Layout';
 import type { SideMenuItem } from 'components/Layout/SideMenu/SideMenu';
 import SideMenu from 'components/Layout/SideMenu/SideMenu';
@@ -41,42 +39,42 @@ const customerMenus: SideMenuItem[] = [
   {
     href: '/',
     label: '予約履歴',
-    icon: <LocalOfferOutlined />,
+    icon: ReservationSvg,
   },
   {
     href: '/1',
     label: '回数券',
-    icon: <MapOutlined />,
+    icon: TicketSvg,
   },
   {
     href: '/2',
     label: 'クーポン',
-    icon: <DiscountOutlined />,
+    icon: CouponSvg,
   },
   {
     href: '/3',
     label: 'お気に入り',
-    icon: <FavoriteRounded />,
+    icon: FavSvg,
   },
   {
     href: '/4',
     label: '会員情報',
-    icon: <AccountCircleOutlined />,
+    icon: MembershipSvg,
   },
   {
     href: '/5',
     label: 'クレジットカード情報',
-    icon: <CreditCardOutlined />,
+    icon: PaymentSvg,
   },
   {
     href: '/6',
     label: 'ご利用ガイド',
-    icon: <AutoStoriesOutlined />,
+    icon: GuideSvg,
   },
   {
     href: '/7',
     label: 'その他',
-    icon: <ListOutlined />,
+    icon: ListSvg,
   },
 ];
 const list: ReservationItemModel[] = [
@@ -160,7 +158,15 @@ const ReservationHistory = () => {
             display: 'inline-block',
           }}
         >
-          <LocalOfferOutlined /> 予約履歴
+          <SvgIcon
+            component={ReservationSvg}
+            sx={{
+              width: 24,
+              height: 22,
+            }}
+            inheritViewBox
+          /> 予約履歴
+
         </Typography>
       </Box>
       {list.map((item: ReservationItemModel) => (

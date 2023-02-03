@@ -69,6 +69,7 @@ const styles = {
   buttonIconText: {
     display: 'flex',
     marginBottom: '20px',
+    cursor: 'pointer',
     flexDirection: {
       xs: 'column',
       tablet: 'row',
