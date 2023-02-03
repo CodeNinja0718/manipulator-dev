@@ -5,12 +5,10 @@ import dynamic from 'next/dynamic';
 import type { ReactElement } from 'react';
 
 const Banner = dynamic(() => import('../components/TopPageComponents/Banner'));
-const DefaultSearchTopPage = dynamic(
-  () => import('../components/TopPageComponents/DefaultSearchTopPage'),
+const SearchTopPage = dynamic(
+  () => import('../components/TopPageComponents/SearchTopPage'),
 );
-const AdvanceSearchTopPage = dynamic(
-  () => import('../components/TopPageComponents/AdvanceSearchTopPage'),
-);
+
 const ProblemsTopPage = dynamic(
   () => import('../components/TopPageComponents/ProblemsTopPage'),
 );
@@ -37,12 +35,9 @@ const HomePage = () => {
         }}
       >
         <Banner />
-
-        {/* Default Search */}
-        <DefaultSearchTopPage />
       </Box>
-      {/* Advance Search - Filter */}
-      <AdvanceSearchTopPage />
+      {/* Searching */}
+      <SearchTopPage />
       {/* Problems */}
       <ProblemsTopPage />
       {/* Features */}

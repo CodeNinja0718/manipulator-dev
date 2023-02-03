@@ -1,8 +1,6 @@
 import ArrowIcon from '@icons/arrow.svg';
 import AutonomicNervesIcon from '@icons/autonomic_nerves.svg';
 import HipJoinKneeFootIcon from '@icons/hip_join_knee_foot.svg';
-import LocationIcon from '@icons/icon_area_on.svg';
-import StationIcon from '@icons/icon_station_on.svg';
 import NeckShoulderIcon from '@icons/neck_shoulder.svg';
 import OtherSymptomsIcon from '@icons/other_symptoms.svg';
 import SearchIcon from '@icons/search.svg';
@@ -13,34 +11,10 @@ import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import CircleBox from 'components/CircleBox';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './styles';
-
-const SearchModalTopPage = dynamic(
-  () => import('components/TopPageComponents/SearchModalTopPage'),
-);
-
-const TabLabel = ({
-  label,
-  style = {},
-  icon,
-}: {
-  label: string;
-  style?: object;
-  icon: React.ElementType;
-}) => {
-  return (
-    <Box display="flex" alignItems="center">
-      <SvgIcon component={icon} viewBox="0 0 29 35" sx={style} />
-      <Typography pl={7.5} fontWeight={600}>
-        {label}
-      </Typography>
-    </Box>
-  );
-};
 
 const FILTER_ITEMS = [
   {
@@ -81,39 +55,19 @@ const FILTER_ITEMS = [
   },
 ];
 
-const TABS = [
-  {
-    label: (
-      <TabLabel
-        label="エリアから探す"
-        icon={LocationIcon}
-        style={{
-          width: 16,
-          height: 19,
-        }}
-      />
-    ),
-    component: <Box>This is text of item one</Box>,
-  },
-  {
-    label: (
-      <TabLabel
-        label="駅から探す"
-        icon={StationIcon}
-        style={{
-          width: 16,
-          height: 23,
-        }}
-      />
-    ),
-    component: <Box>This is text of item two</Box>,
-  },
-];
+interface AdvanceSearchProps {
+  onOpenSearch: () => void;
+  onSetActiveTab: (value: number) => void;
+}
 
-const AdvanceSearchTopPage = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+const AdvanceSearch = ({
+  onOpenSearch,
+  onSetActiveTab,
+}: AdvanceSearchProps) => {
+  const handleOpenSearch = () => {
+    onOpenSearch();
+    onSetActiveTab(0);
+  };
 
   return (
     <>
@@ -172,15 +126,13 @@ const AdvanceSearchTopPage = () => {
                 color="orange"
               />
             }
-            onClick={handleOpen}
+            onClick={handleOpenSearch}
           >
             整体師一覧を見る
           </Button>
         </Box>
       </Box>
-
-      <SearchModalTopPage open={open} tabs={TABS} onClose={handleClose} />
     </>
   );
 };
-export default AdvanceSearchTopPage;
+export default AdvanceSearch;

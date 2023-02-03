@@ -5,17 +5,19 @@ import dynamic from 'next/dynamic';
 const CommonModal = dynamic(() => import('components/CommonModal'));
 const CommonTabs = dynamic(() => import('components/CommonTabs'));
 
-interface SearchModalTopPageProps {
+interface SearchModalProps {
   open?: boolean;
   tabs: { label: React.ReactNode; component?: React.ReactNode }[];
   onClose?: () => void;
+  activeTab?: number;
 }
 
-const SearchModalTopPage = ({
+const SearchModal = ({
   open = false,
   tabs = [],
   onClose,
-}: SearchModalTopPageProps) => {
+  activeTab = 0,
+}: SearchModalProps) => {
   return (
     <CommonModal
       open={open}
@@ -33,10 +35,10 @@ const SearchModalTopPage = ({
       }
     >
       <>
-        <CommonTabs tabs={tabs} />
+        <CommonTabs tabs={tabs} active={activeTab} />
       </>
     </CommonModal>
   );
 };
 
-export default SearchModalTopPage;
+export default SearchModal;

@@ -1,14 +1,19 @@
 import { Box, Tab, Tabs } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import styles from './styles';
 
 interface CommonTabsProps {
   tabs?: { label: React.ReactNode; component?: React.ReactNode }[];
+  active?: number;
 }
 
-const CommonTabs = ({ tabs = [] }: CommonTabsProps) => {
+const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    setValue(active);
+  }, [active]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
