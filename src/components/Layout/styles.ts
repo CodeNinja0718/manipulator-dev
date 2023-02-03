@@ -27,7 +27,7 @@ const styles: Record<string, SxProps<Theme>> = {
     },
   },
   cardLayout: {
-    padding: '0 20px',
+    padding: 0,
     maxWidth: 950,
     width: '100%',
     bgcolor: 'white',
