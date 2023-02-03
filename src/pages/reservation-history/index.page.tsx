@@ -1,12 +1,18 @@
-import ReservationSvg from '@icons/icon_reservation.svg';
-import TicketSvg from '@icons/icon_ticket.svg';
 import CouponSvg from '@icons/icon_coupon.svg';
 import FavSvg from '@icons/icon_fav.svg';
-import MembershipSvg from '@icons/icon_membership.svg';
-import PaymentSvg from '@icons/icon_payment.svg';
 import GuideSvg from '@icons/icon_guide.svg';
 import ListSvg from '@icons/icon_list.svg';
-import { Box, Pagination, SvgIcon, Typography, useMediaQuery } from '@mui/material';
+import MembershipSvg from '@icons/icon_membership.svg';
+import PaymentSvg from '@icons/icon_payment.svg';
+import ReservationSvg from '@icons/icon_reservation.svg';
+import TicketSvg from '@icons/icon_ticket.svg';
+import {
+  Box,
+  Pagination,
+  SvgIcon,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import Layout from 'components/Layout';
 import type { SideMenuItem } from 'components/Layout/SideMenu/SideMenu';
 import SideMenu from 'components/Layout/SideMenu/SideMenu';
@@ -165,8 +171,8 @@ const ReservationHistory = () => {
               height: 22,
             }}
             inheritViewBox
-          /> 予約履歴
-
+          />{' '}
+          予約履歴
         </Typography>
       </Box>
       {list.map((item: ReservationItemModel) => (
