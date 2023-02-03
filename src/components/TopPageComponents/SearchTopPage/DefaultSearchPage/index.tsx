@@ -7,7 +7,20 @@ import SvgIcon from '@mui/material/SvgIcon';
 
 import styles from './styles';
 
-const DefaultSearchTopPage = () => {
+interface DefaultSearchProps {
+  onOpenSearch: () => void;
+  onSetActiveTab: (value: number) => void;
+}
+
+const DefaultSearchPage = ({
+  onOpenSearch,
+  onSetActiveTab,
+}: DefaultSearchProps) => {
+  const handleOpenSearch = (value: number) => {
+    onOpenSearch();
+    onSetActiveTab(value);
+  };
+
   return (
     <>
       <Box
@@ -31,6 +44,7 @@ const DefaultSearchTopPage = () => {
           endIcon={
             <SvgIcon component={ArrowIcon} viewBox="0 0 14 30" color="orange" />
           }
+          onClick={() => handleOpenSearch(0)}
         >
           エリアから探す
         </Button>
@@ -47,6 +61,7 @@ const DefaultSearchTopPage = () => {
           endIcon={
             <SvgIcon component={ArrowIcon} viewBox="0 0 14 30" color="orange" />
           }
+          onClick={() => handleOpenSearch(1)}
         >
           駅から探す
         </Button>
@@ -54,4 +69,4 @@ const DefaultSearchTopPage = () => {
     </>
   );
 };
-export default DefaultSearchTopPage;
+export default DefaultSearchPage;

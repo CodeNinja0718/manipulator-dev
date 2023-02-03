@@ -1,4 +1,4 @@
-import LogoSVG from '@images/logo_vertical.svg';
+import LogoSVG from '@icons/logo_vertical.svg';
 import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 
