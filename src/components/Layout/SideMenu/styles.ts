@@ -63,6 +63,7 @@ const styles = {
   },
   listItemButton: {
     color: (theme: Theme) => theme.palette.orangeText,
+    padding: '8px 10px',
   },
   listItemText: {
     color: (theme: Theme) => theme.palette.text.primary,

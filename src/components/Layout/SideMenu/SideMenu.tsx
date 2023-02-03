@@ -40,26 +40,22 @@ const SideMenu = ({ menus, isMobile }: SideMenuProps) => {
             <Box key={menu.href}>
               <Link
                 href={menu.href}
-                sx={{ ...styles.link, ...{ marginBottom: 15 } }}
+                sx={{ ...styles.link, ...{ marginBottom: 10 } }}
               >
                 <ListItemButton
                   sx={styles.listItemButton}
                   selected={route.startsWith(menu.href)}
                 >
-                  {menu.viewBox ? (
-                    <Box height={20}>
-                      <SvgIcon
-                        component={menu.icon}
-                        sx={{
-                          width: 'auto',
-                          height: 'inherit',
-                        }}
-                        viewBox={menu.viewBox}
-                      />
-                    </Box>
-                  ) : (
-                    menu.icon
-                  )}
+                  <Box width={20} height={18}>
+                    <SvgIcon
+                      component={menu.icon}
+                      sx={{
+                        width: 'inherit',
+                        height: 'inherit',
+                      }}
+                      inheritViewBox
+                    />
+                  </Box>
                   <ListItemText sx={styles.listItemText} primary={menu.label} />
                 </ListItemButton>
               </Link>
