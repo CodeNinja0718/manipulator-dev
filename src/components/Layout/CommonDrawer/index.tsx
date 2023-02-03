@@ -2,6 +2,7 @@ import CloseIcon from '@icons/close.svg';
 import HomeSvg from '@icons/icon_home.svg';
 import LogoutSvg from '@icons/icon_logout.svg';
 import ProfileSvg from '@icons/icon_profile.svg';
+import LogoSvg from '@icons/logo.svg';
 import {
   Box,
   Drawer,
@@ -105,7 +106,7 @@ const CommonDrawer: React.FC = () => {
     >
       <Stack direction="row" sx={styles.drawerHeader}>
         <Link href="/" className="logo">
-          整体なび
+          <LogoSvg />
         </Link>
         <Box sx={styles.closeButton} onClick={() => setOpenDrawer(false)}>
           <CloseIcon width="30px" height="30px" color="white" />

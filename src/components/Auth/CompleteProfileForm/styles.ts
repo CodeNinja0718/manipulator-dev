@@ -2,12 +2,13 @@ import type { SxProps } from '@mui/material';
 
 const styles: Record<string, SxProps> = {
   completeProfileFormWrapper: {
-    maxWidth: 570,
+    maxWidth: 610,
     margin: {
       xs: '45px auto',
       tablet: '59px auto 64px',
     },
     gap: 8,
+    padding: '0 20px',
   },
   submitBtn: {
     maxWidth: 323,

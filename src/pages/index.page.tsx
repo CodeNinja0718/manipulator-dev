@@ -1,13 +1,10 @@
 import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
 import Layout from 'components/Layout';
+import Banner from 'components/TopPageComponents/Banner';
+import SearchTopPage from 'components/TopPageComponents/SearchTopPage';
 import dynamic from 'next/dynamic';
 import type { ReactElement } from 'react';
-
-const Banner = dynamic(() => import('../components/TopPageComponents/Banner'));
-const SearchTopPage = dynamic(
-  () => import('../components/TopPageComponents/SearchTopPage'),
-);
 
 const ProblemsTopPage = dynamic(
   () => import('../components/TopPageComponents/ProblemsTopPage'),

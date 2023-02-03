@@ -61,13 +61,19 @@ const styles: Record<string, SxProps<Theme>> = {
     margin: '0 auto',
   },
   logo: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    wordBreak: 'keep-all',
-    textDecoration: 'none',
     color: {
       xs: 'white',
       tablet: 'secondary.main',
+    },
+    svg: {
+      width: {
+        xs: 115,
+        tablet: 159,
+      },
+      height: {
+        xs: 25,
+        tablet: 34,
+      },
     },
   },
   navBarMenus: {
@@ -85,7 +91,7 @@ const styles: Record<string, SxProps<Theme>> = {
       textDecoration: 'underline',
     },
     svg: {
-      fontSize: '16px !important',
+      fontSize: '20px !important',
       color: 'white',
     },
     '&[data-card=true]': {

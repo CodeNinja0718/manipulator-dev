@@ -1,3 +1,4 @@
+import LogoSvg from '@icons/logo.svg';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, IconButton, Stack } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -35,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ isCardLayout }) => {
       >
         <Stack sx={styles.cardHeaderContent} direction="row">
           <Link href="/" sx={styles.logo}>
-            整体なび
+            <LogoSvg />
           </Link>
           {isBreakpoint ? (
             <IconButton
@@ -74,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ isCardLayout }) => {
         {isBreakpoint ? (
           <>
             <Link href="/" sx={styles.logo}>
-              整体なび
+              <LogoSvg />
             </Link>
             <IconButton
               aria-label="menu"
