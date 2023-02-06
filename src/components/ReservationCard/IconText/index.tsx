@@ -1,11 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box, SvgIcon, Typography } from '@mui/material';
 import * as React from 'react';
 
 import styles from '../styles';
 
 interface ReservationItemIconTextProps {
   label: string;
-  icon?: React.ReactNode;
+  icon?: any;
   bgColor: string;
 }
 const ReservationItemIconText = ({
@@ -16,7 +16,16 @@ const ReservationItemIconText = ({
   return (
     <Box sx={styles.buttonIconText}>
       <Box component={'div'} sx={styles.buttonIcon} bgcolor={bgColor}>
-        {icon}
+        <Box width={20} height={18}>
+          <SvgIcon
+            component={icon}
+            sx={{
+              width: 'inherit',
+              height: 'inherit',
+            }}
+            inheritViewBox
+          />
+        </Box>
       </Box>
       <Box component={'div'} sx={styles.buttonText}>
         <Typography component="p" fontWeight={400}>

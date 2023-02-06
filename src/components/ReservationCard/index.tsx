@@ -1,8 +1,7 @@
-import {
-  DescriptionOutlined,
-  EventBusyOutlined,
-  QuestionAnswerOutlined,
-} from '@mui/icons-material';
+import IconCancelSvg from '@icons/icon_cancel_white.svg';
+import IconChatSvg from '@icons/icon_chat_white.svg';
+import IconDetailSvg from '@icons/icon_detail_white.svg';
+import IconEditSvg from '@icons/icon_edit_white.svg';
 import { Box, Grid, Typography } from '@mui/material';
 import FormatDate from 'components/FormatDate';
 import * as React from 'react';
@@ -83,19 +82,30 @@ const ReservationCard = ({ data }: ReservationItemProps) => {
                   <ReservationItemIconText
                     bgColor="primary.main"
                     label="整体師詳細を見る"
-                    icon={<DescriptionOutlined />}
+                    icon={IconDetailSvg}
                   />
-                  <ReservationItemIconText
-                    bgColor="#63564d"
-                    label="予約を
-              キャンセル"
-                    icon={<EventBusyOutlined />}
-                  />
-                  <ReservationItemIconText
-                    bgColor="#377ed1"
-                    label="整体師詳細を見る"
-                    icon={<QuestionAnswerOutlined />}
-                  />
+                  {data.status !== RESERVATION_STATUS_VALUE.confirmed ? (
+                    <>
+                      <ReservationItemIconText
+                        bgColor="orange.main"
+                        label="予約をキャンセル"
+                        icon={IconEditSvg}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <ReservationItemIconText
+                        bgColor="#63564d"
+                        label="予約をキャンセル"
+                        icon={IconCancelSvg}
+                      />
+                      <ReservationItemIconText
+                        bgColor="#377ed1"
+                        label="整体師詳細を見る"
+                        icon={IconChatSvg}
+                      />
+                    </>
+                  )}
                 </>
               ) : (
                 <Typography component="p" fontWeight={600} color={'#d82c2c'}>
