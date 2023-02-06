@@ -15,6 +15,7 @@ import {
 import Link from 'components/Link';
 import { useUser } from 'hooks';
 import useGlobalState from 'hooks/useGlobalState';
+import useLogout from 'models/auth/useLogout';
 import { CUSTOMER_NAVIGATION, SOCIAL_MEDIA } from 'utils/const';
 
 import styles from './styles';
@@ -22,6 +23,7 @@ import styles from './styles';
 const CommonDrawer: React.FC = () => {
   const { openDrawer, setOpenDrawer } = useGlobalState();
   const { data } = useUser();
+  const { logout } = useLogout();
 
   const renderMenuList = () => {
     if (data) {
@@ -55,7 +57,11 @@ const CommonDrawer: React.FC = () => {
               );
             })}
           </List>
-          <ListItemButton sx={styles.menuBtn} className="logout">
+          <ListItemButton
+            sx={styles.menuBtn}
+            className="logout"
+            onClick={logout}
+          >
             <ListItemIcon>
               <LogoutSvg />
             </ListItemIcon>

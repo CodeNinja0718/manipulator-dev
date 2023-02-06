@@ -5,6 +5,7 @@ import RegisterSvg from '@icons/icon_profile.svg';
 import { Stack, SvgIcon, Typography } from '@mui/material';
 import Link from 'components/Link';
 import { useUser } from 'hooks';
+import useLogout from 'models/auth/useLogout';
 import React from 'react';
 
 import styles from './styles';
@@ -15,6 +16,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ isCardLayout }) => {
   const { data } = useUser();
+  const { logout } = useLogout();
 
   return (
     <Stack direction="row" sx={styles.navBarMenus}>
@@ -32,7 +34,11 @@ const Navbar: React.FC<NavbarProps> = ({ isCardLayout }) => {
             <SvgIcon component={RegisterSvg} inheritViewBox />
             マイページ
           </Link>
-          <Typography sx={styles.navBarMenuItem} data-card={isCardLayout}>
+          <Typography
+            sx={styles.navBarMenuItem}
+            data-card={isCardLayout}
+            onClick={logout}
+          >
             <SvgIcon component={LogoutSvg} inheritViewBox />
             ログアウト
           </Typography>
