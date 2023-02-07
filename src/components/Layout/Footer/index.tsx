@@ -1,6 +1,7 @@
-import { Box, Container, Link, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
+import Link from 'components/Link';
 import theme from 'theme';
-import { COMMON_FOOTER, FOOTER_ITEMS } from 'utils/const';
+import { FOOTER_ITEMS } from 'utils/const';
 
 import SocialItem from './SocialItem';
 import styles from './styles';
@@ -9,42 +10,50 @@ const navbar = FOOTER_ITEMS;
 
 const Footer = () => {
   return (
-    <Box sx={styles.footerBox}>
-      <Container maxWidth="xl">
-        <Stack
-          direction="row"
-          flexWrap="wrap"
-          justifyContent="center"
-          gap={30}
-          pt={33}
-          sx={{
-            [theme.breakpoints.down('mobile')]: {
-              justifyContent: 'flex-start',
-              rowGap: 16,
+    <Stack
+      sx={styles.footerLayoutWrapper}
+      justifyContent="end"
+      alignItems="center"
+      component="footer"
+    >
+      <Stack
+        direction="row"
+        flexWrap="wrap"
+        justifyContent="center"
+        gap={30}
+        sx={{
+          width: '100%',
+          [theme.breakpoints.down('tablet')]: {
+            justifyContent: 'flex-start',
+            gap: '8px 0',
+            '& > *': {
+              flex: '0 1 50%',
             },
-          }}
-        >
-          {navbar.map((section, index) => (
-            <Box key={index}>
-              <Link
-                color="primary.contrastText"
-                key={section.href}
-                href={`/${section.href}`}
-                underline="hover"
-              >
-                <Typography>{section.label}</Typography>
-              </Link>
-            </Box>
-          ))}
-        </Stack>
+          },
+        }}
+      >
+        {navbar.map((section, index) => (
+          <Box key={index}>
+            <Link
+              color="primary.contrastText"
+              key={section.href}
+              href={`/${section.href}`}
+              underline="hover"
+              display="inline-flex"
+              fontSize={14}
+            >
+              {section.label}
+            </Link>
+          </Box>
+        ))}
+      </Stack>
 
-        <SocialItem style={styles.socical} />
+      <SocialItem style={styles.social} />
 
-        <Typography textAlign="center" mt={56}>
-          © {COMMON_FOOTER.MANIPULATIVE_NAVIGATION} {new Date().getFullYear()}
-        </Typography>
-      </Container>
-    </Box>
+      <Typography textAlign="center" fontSize={14}>
+        © 整体なび {new Date().getFullYear()}
+      </Typography>
+    </Stack>
   );
 };
 

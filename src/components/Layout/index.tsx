@@ -1,15 +1,13 @@
 import { ArrowUpward } from '@mui/icons-material';
 import { Box, Card, IconButton } from '@mui/material';
 import { useScroll } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 
+import Drawer from './CommonDrawer';
+import Footer from './Footer';
+import Header from './Header';
 import styles from './styles';
-
-const Header = dynamic(() => import('./Header'));
-const Footer = dynamic(() => import('./Footer'));
-const Drawer = dynamic(() => import('./CommonDrawer'));
 
 export default function Layout({
   children,
@@ -22,7 +20,6 @@ export default function Layout({
     typeof document !== 'undefined' ? document.body.scrollHeight : 0;
 
   const [opacity, setOpacity] = useState(0);
-  const [bottom] = useState(24);
   const { scrollY } = useScroll({
     offset: ['0px start', `${pageHeight - 67}px end`],
   });
@@ -58,7 +55,6 @@ export default function Layout({
           {
             opacity,
             pointerEvents: opacity === 1 ? 'normal' : 'none',
-            bottom,
             transform: `scale(${opacity ? 1 : 0})`,
           },
         ]}

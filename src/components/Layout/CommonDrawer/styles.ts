@@ -43,7 +43,7 @@ const styles: Record<string, SxProps<Theme>> = {
   },
   menuBtn: {
     fontSize: 16,
-    padding: '8px 40px',
+    padding: '8px 8px 8px 40px',
     color: 'black',
     '& .MuiListItemIcon-root': {
       minWidth: 'unset',

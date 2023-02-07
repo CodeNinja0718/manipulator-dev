@@ -86,10 +86,6 @@ export const FOOTER_ITEMS = [
   },
 ];
 
-export const COMMON_FOOTER = {
-  MANIPULATIVE_NAVIGATION: '整体なび',
-};
-
 export const RESERVATION_STATUS_VALUE = {
   confirmed: 'confirmed',
   visitedHospital: 'visitedHospital',

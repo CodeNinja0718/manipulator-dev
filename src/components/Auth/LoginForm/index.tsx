@@ -3,7 +3,6 @@ import ArrowRight from '@icons/arrow-right.svg';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 import { TextField } from 'components/Form';
-import { useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -22,15 +21,11 @@ const AuthForm = ({
   remember: boolean;
   handleToggleRemember: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
-  const { control, handleSubmit, reset } = useForm<LoginFormValues>({
+  const { control, handleSubmit } = useForm<LoginFormValues>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
     defaultValues: initialValues,
   });
-
-  useEffect(() => {
-    reset(initialValues);
-  }, [initialValues, reset]);
 
   return (
     <Stack

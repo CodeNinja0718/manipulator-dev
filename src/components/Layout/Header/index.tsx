@@ -5,10 +5,12 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Link from 'components/Link';
 import useBreakpoint from 'hooks/useBreakpoint';
 import useGlobalState from 'hooks/useGlobalState';
+import dynamic from 'next/dynamic';
 import React from 'react';
 
-import Navbar from './Navbar';
 import styles from './styles';
+
+const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 
 interface HeaderProps {
   isCardLayout?: boolean;

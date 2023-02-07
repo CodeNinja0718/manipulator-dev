@@ -4,7 +4,7 @@ import OtpVerify from 'components/Auth/OtpVerify';
 import RegisterForm from 'components/Auth/RegisterForm';
 import type { RegisterFormValues } from 'components/Auth/RegisterForm/schema';
 import Layout from 'components/Layout';
-import { useMutate, useUser } from 'hooks';
+import { useMutate } from 'hooks';
 import type {
   CustomerRegisterPayload,
   SendOtpPayload,
@@ -14,13 +14,11 @@ import authQuery from 'models/auth/query';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
-import Helper from 'utils/helpers';
 
 const RegisterPage = () => {
   const router = useRouter();
   const [phone, setPhone] = useState<string>('');
   const [token, setToken] = useState<string>('');
-  const { refetch: refetchUser } = useUser({ enabled: false });
 
   const { mutateAsync: handleSendOtp } = useMutate<SendOtpPayload>(
     authQuery.registerSendOtp,
@@ -80,11 +78,7 @@ const RegisterPage = () => {
       },
       {
         onSuccess: () => {
-          Helper.setToken({
-            token,
-          });
-          refetchUser();
-          router.replace('/');
+          router.push('/login');
         },
       },
     );

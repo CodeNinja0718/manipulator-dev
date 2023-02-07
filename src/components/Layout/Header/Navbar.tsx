@@ -4,9 +4,9 @@ import LogoutSvg from '@icons/icon_logout.svg';
 import RegisterSvg from '@icons/icon_profile.svg';
 import { Stack, SvgIcon, Typography } from '@mui/material';
 import Link from 'components/Link';
-import { useUser } from 'hooks';
 import useLogout from 'models/auth/useLogout';
 import React from 'react';
+import Helper from 'utils/helpers';
 
 import styles from './styles';
 
@@ -15,8 +15,10 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isCardLayout }) => {
-  const { data } = useUser();
   const { logout } = useLogout();
+  const webCookie = Helper.getWebCookie();
+
+  const token = webCookie?.accessToken;
 
   return (
     <Stack direction="row" sx={styles.navBarMenus}>
@@ -24,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ isCardLayout }) => {
         <SvgIcon component={HomeSvg} inheritViewBox />
         ホーム
       </Link>
-      {data ? (
+      {token ? (
         <>
           <Link
             href="/profile"

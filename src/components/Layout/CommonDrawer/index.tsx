@@ -13,20 +13,22 @@ import {
   Stack,
 } from '@mui/material';
 import Link from 'components/Link';
-import { useUser } from 'hooks';
 import useGlobalState from 'hooks/useGlobalState';
 import useLogout from 'models/auth/useLogout';
 import { CUSTOMER_NAVIGATION, SOCIAL_MEDIA } from 'utils/const';
+import Helper from 'utils/helpers';
 
 import styles from './styles';
 
 const CommonDrawer: React.FC = () => {
   const { openDrawer, setOpenDrawer } = useGlobalState();
-  const { data } = useUser();
   const { logout } = useLogout();
+  const webCookie = Helper.getWebCookie();
+
+  const token = webCookie?.accessToken;
 
   const renderMenuList = () => {
-    if (data) {
+    if (token) {
       return (
         <List disablePadding onClick={() => setOpenDrawer(false)}>
           <Link href="/">

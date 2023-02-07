@@ -1,20 +1,21 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-const styles = {
-  footerBox: {
+const styles: Record<string, SxProps<Theme>> = {
+  footerLayoutWrapper: {
     color: 'white',
     bgcolor: 'grown',
     padding: 16,
-    pb: { xs: 24.7, tablet: 25.7 },
-    pl: { xs: 28, tablet: 16 },
-    pr: { xs: 28, tablet: 16 },
+    p: '0 28px 26px',
     width: '100%',
     minHeight: '210px',
   },
-  socical: {
-    marginTop: 39,
+  social: {
+    margin: {
+      xs: '29px 0 40px',
+      tablet: '37px 0 48px',
+    },
     justifyContent: 'center',
   },
-} as Record<string, SxProps<Theme>>;
+};
 
 export default styles;

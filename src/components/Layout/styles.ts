@@ -12,8 +12,8 @@ const styles: Record<string, SxProps<Theme>> = {
     display: 'flex',
     flexDirection: 'column',
     minHeight: {
-      xs: 'calc(100vh - 234px)',
-      tablet: 'calc(100vh - 57px - 234px)',
+      xs: 'calc(100vh - 210px)',
+      tablet: 'calc(100vh - 57px - 210px)',
     },
     '&[data-card=true]': {
       marginTop: {
@@ -21,8 +21,8 @@ const styles: Record<string, SxProps<Theme>> = {
         tablet: 0,
       },
       minHeight: {
-        xs: 'calc(100vh - 67px - 234px)',
-        tablet: 'calc(100vh - 106px - 234px)',
+        xs: 'calc(100vh - 67px - 210px)',
+        tablet: 'calc(100vh - 106px - 210px)',
       },
     },
   },
@@ -53,10 +53,11 @@ const styles: Record<string, SxProps<Theme>> = {
     },
   },
   fabButton: (theme: Theme) => ({
-    width: { xs: 24, tablet: 40 },
-    height: { xs: 24, tablet: 40 },
+    width: 40,
+    height: 40,
     position: 'fixed',
-    right: 24,
+    right: { xs: 19, tablet: 34 },
+    bottom: { xs: 15, tablet: 26 },
     zIndex: 2,
     transition: 'all 0.6s cubic-bezier(0.33, 1, 0.68, 1)',
     color: theme.palette.gray,

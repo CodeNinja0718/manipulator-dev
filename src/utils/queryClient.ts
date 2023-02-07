@@ -9,19 +9,25 @@ import Helper from './helpers';
 import type { FetchDetailOptions, FetchListOptions } from './type';
 
 const handleError = (error: unknown, _: unknown, context?: unknown) => {
+  const webCookie = Helper.getWebCookie();
+  const rememberLogin = webCookie?.rememberLogin === 'true';
+
   let errorMessage: string = get(error, 'error.message', '');
-  const errorCode = get(error, 'error.code');
+  const errorCode = get(error, 'code');
   if (context && get(context, 'action')) {
     errorMessage = errors[`${get(context, 'action')}_${errorCode}` as never];
   }
   if (errorMessage === 'Network Error') {
-    // errorMessage = t('global.networkError');
+    errorMessage = 'Network error';
   }
-  if (errorCode === 'UNAUTHORIZED') {
+  if (errorCode === 401) {
+    if (rememberLogin) {
+      return;
+    }
     const queryClient = new QueryClient();
     queryClient.removeQueries(['currentUser']);
     Helper.removeWebCookie();
-    Router.push('/');
+    Router.replace('/');
   }
   Helper.toast(errorMessage, { type: 'error', toastId: errorMessage });
 };

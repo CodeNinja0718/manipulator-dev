@@ -6,7 +6,7 @@ import { useMutate, useUser } from 'hooks';
 import type { SendOtpPayload, VerifyOtpPayload } from 'models/auth/interface';
 import authQuery from 'models/auth/query';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import Helper from 'utils/helpers';
 
@@ -14,7 +14,6 @@ const LoginPage = () => {
   const router = useRouter();
   const [phone, setPhone] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
-  const [phoneRemeber, setPhoneRemeber] = useState<string>('');
   const { refetch: refetchUser } = useUser({ enabled: false });
   const { mutateAsync: handleSendOtp } = useMutate<SendOtpPayload>(
     authQuery.loginSendOtp,
@@ -26,20 +25,6 @@ const LoginPage = () => {
       refreshToken: string;
     }
   >(authQuery.loginVerifyOtp);
-  const initialValues = useMemo(
-    () => ({
-      phone: phoneRemeber,
-    }),
-    [phoneRemeber],
-  );
-
-  useEffect(() => {
-    const phoneRemember = localStorage.getItem('remember');
-    if (phoneRemember) {
-      setRemember(!!phoneRemember);
-      setPhoneRemeber(phoneRemember);
-    }
-  }, []);
 
   const handleLogin: SubmitHandler<LoginFormValues> = (values) => {
     handleSendOtp(
@@ -66,14 +51,13 @@ const LoginPage = () => {
       },
       {
         onSuccess: (data) => {
-          if (remember) {
-            localStorage.setItem('remember', phone);
-          } else {
-            localStorage.removeItem('remember');
-          }
-          Helper.setToken({
-            token: data?.accessToken || data?.refreshToken,
-          });
+          Helper.setToken(
+            {
+              ...data,
+              rememberLogin: remember ? 'true' : 'false',
+            },
+            remember,
+          );
           refetchUser();
           router.replace('/');
         },
@@ -93,7 +77,9 @@ const LoginPage = () => {
   }
   return (
     <LoginForm
-      initialValues={initialValues}
+      initialValues={{
+        phone: '',
+      }}
       onSubmit={handleLogin}
       remember={remember}
       handleToggleRemember={(e) => setRemember(e.target.checked)}

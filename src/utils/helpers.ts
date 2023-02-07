@@ -29,15 +29,16 @@ const Helper = {
   },
 
   setToken: (data: Record<string, string>, remember?: boolean): void =>
+    // Save cookie for 3 months if remembered, if not only held for 1 day
     setCookie(`${process.env.PROJECT_NAME}-web-cookie`, data, {
       path: '/',
       ...(remember
         ? {
-            maxAge: process.env.SESSION_TIME
-              ? Number(process.env.SESSION_TIME)
-              : 7776000,
+            maxAge: 7776000,
           }
-        : {}),
+        : {
+            maxAge: 86400,
+          }),
     }),
   removeWebCookie: (): void =>
     deleteCookie(`${process.env.PROJECT_NAME}-web-cookie`, { path: '/' }),
