@@ -10,16 +10,28 @@ interface CircleBoxProps {
   iconProps?: object;
   label: string | React.ReactElement;
   active?: boolean;
+  sxCustom?: object;
+  onClick?: () => void;
 }
 
-const CircleBox = ({ icon, iconProps, label, active }: CircleBoxProps) => {
+const CircleBox = ({
+  icon,
+  iconProps,
+  label,
+  active,
+  sxCustom = {},
+  onClick,
+}: CircleBoxProps) => {
   return (
     <Box
       display="flex"
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
-      sx={styles.boxContainer}
+      sx={{
+        ...styles.boxContainer,
+        ...sxCustom,
+      }}
     >
       <Box
         display="flex"
@@ -27,6 +39,7 @@ const CircleBox = ({ icon, iconProps, label, active }: CircleBoxProps) => {
         justifyContent="center"
         width={90}
         height={90}
+        className="customCircleBoxStyle"
         sx={{
           ...styles.CircleBox,
           background: (theme: Theme) =>
@@ -43,6 +56,7 @@ const CircleBox = ({ icon, iconProps, label, active }: CircleBoxProps) => {
             },
           },
         }}
+        onClick={onClick}
       >
         <SvgIcon
           component={icon}

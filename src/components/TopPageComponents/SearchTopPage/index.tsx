@@ -2,57 +2,68 @@ import LocationIcon from '@icons/icon_area_on.svg';
 import StationIcon from '@icons/icon_station_on.svg';
 import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
-import dynamic from 'next/dynamic';
+import TabLabelItem from 'components/CommonTabs/TabLabelItem';
+import AdvanceSearch from 'components/TopPageComponents/SearchTopPage/AdvanceSearch';
+import DefaultSearch from 'components/TopPageComponents/SearchTopPage/DefaultSearchPage';
+import SearchModal from 'components/TopPageComponents/SearchTopPage/SearchModal';
 import React, { useState } from 'react';
 
-const DefaultSearch = dynamic(
-  () => import('components/TopPageComponents/SearchTopPage/DefaultSearchPage'),
-);
-const AdvanceSearch = dynamic(
-  () => import('components/TopPageComponents/SearchTopPage/AdvanceSearch'),
-);
-const SearchModal = dynamic(
-  () => import('components/TopPageComponents/SearchTopPage/SearchModal'),
-);
-const TabLabelItem = dynamic(
-  () => import('components/CommonTabs/TabLabelItem'),
-);
+import LocationTabItem from './Tabs/TabItem/LocationTabItem';
+import StationTabItem from './Tabs/TabItem/StationTabItem';
 
-const TABS = [
-  {
-    label: (
-      <TabLabelItem
-        label="エリアから探す"
-        icon={LocationIcon}
-        style={{
-          width: 16,
-          height: 19,
-        }}
-      />
-    ),
-    component: <Box>This is text of item one</Box>,
-  },
-  {
-    label: (
-      <TabLabelItem
-        label="駅から探す"
-        icon={StationIcon}
-        style={{
-          width: 16,
-          height: 23,
-        }}
-      />
-    ),
-    component: <Box>This is text of item two</Box>,
-  },
-];
+const renderTabList = (
+  selectedSymptom: number,
+  onSetSelectedSymptom: (value: number) => void,
+) => {
+  const list = [
+    {
+      label: (
+        <TabLabelItem
+          label="エリアから探す"
+          icon={LocationIcon}
+          style={{
+            width: 16,
+            height: 19,
+          }}
+        />
+      ),
+      component: (
+        <LocationTabItem
+          selectedSymptom={selectedSymptom}
+          onSetSelectedSymptom={onSetSelectedSymptom}
+        />
+      ),
+    },
+    {
+      label: (
+        <TabLabelItem
+          label="駅から探す"
+          icon={StationIcon}
+          style={{
+            width: 16,
+            height: 23,
+          }}
+        />
+      ),
+      component: (
+        <StationTabItem
+          selectedSymptom={selectedSymptom}
+          onSetSelectedSymptom={onSetSelectedSymptom}
+        />
+      ),
+    },
+  ];
+  return list;
+};
 
 const SearchTopPage = () => {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+  const [selectedSymptom, setSelectedSymptom] = useState(0);
   const handleOpenSearch = () => setOpen(true);
   const handleCloseSearch = () => setOpen(false);
   const handleSetActiveTab = (value: number) => setActiveTab(value);
+  const handleSetSelectedSymptom = (value: number) => setSelectedSymptom(value);
 
   return (
     <Box>
@@ -68,13 +79,15 @@ const SearchTopPage = () => {
       <AdvanceSearch
         onOpenSearch={handleOpenSearch}
         onSetActiveTab={handleSetActiveTab}
+        onSetSelectedSymptom={handleSetSelectedSymptom}
       />
 
       <SearchModal
         open={open}
-        tabs={TABS}
+        tabs={renderTabList(selectedSymptom, handleSetSelectedSymptom)}
         activeTab={activeTab}
         onClose={handleCloseSearch}
+        onSetSelectedSymptom={handleSetSelectedSymptom}
       />
     </Box>
   );
