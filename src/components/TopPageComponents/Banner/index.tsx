@@ -1,11 +1,9 @@
 import Box from '@mui/material/Box';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+import ContentOfBanner from './ContentOfBanner';
+import LogoOfBanner from './LogoOfBanner';
 import styles from './styles';
-
-const LogoOfBanner = dynamic(() => import('./LogoOfBanner'));
-const ContentOfBanner = dynamic(() => import('./ContentOfBanner'));
 
 const Banner = () => {
   return (

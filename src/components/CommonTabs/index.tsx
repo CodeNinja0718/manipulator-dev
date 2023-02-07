@@ -10,7 +10,6 @@ interface CommonTabsProps {
 
 const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
   const [value, setValue] = useState(0);
-
   useEffect(() => {
     setValue(active);
   }, [active]);
@@ -40,7 +39,9 @@ const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
 
       {/* Current Component */}
       {currentContent && (
-        <Box mt={28}>{currentContent.map((item) => item.component)}</Box>
+        <Box sx={styles.contentContainer}>
+          {currentContent.map((item) => item.component)}
+        </Box>
       )}
     </Box>
   );

@@ -1,15 +1,14 @@
 import CloseIcon from '@icons/close-icon.svg';
 import Button from '@mui/material/Button';
-import dynamic from 'next/dynamic';
-
-const CommonModal = dynamic(() => import('components/CommonModal'));
-const CommonTabs = dynamic(() => import('components/CommonTabs'));
+import CommonModal from 'components/CommonModal';
+import CommonTabs from 'components/CommonTabs';
 
 interface SearchModalProps {
   open?: boolean;
   tabs: { label: React.ReactNode; component?: React.ReactNode }[];
   onClose?: () => void;
   activeTab?: number;
+  onSetSelectedSymptom: (value: number) => void;
 }
 
 const SearchModal = ({
@@ -17,11 +16,24 @@ const SearchModal = ({
   tabs = [],
   onClose,
   activeTab = 0,
+  onSetSelectedSymptom,
 }: SearchModalProps) => {
+  const handleClose = () => {
+    const searchModal: SearchModalProps = {
+      open: false,
+      tabs: [],
+      onClose,
+      activeTab: 0,
+      onSetSelectedSymptom,
+    };
+    searchModal.onClose?.();
+    searchModal.onSetSelectedSymptom(0);
+  };
+
   return (
     <CommonModal
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       iconClose={CloseIcon}
       title="整体師検索"
       buttonElement={

@@ -1,11 +1,10 @@
 import { Box, Container, Link, Stack, Typography } from '@mui/material';
-import dynamic from 'next/dynamic';
 import theme from 'theme';
 import { COMMON_FOOTER, FOOTER_ITEMS } from 'utils/const';
 
+import SocialItem from './SocialItem';
 import styles from './styles';
 
-const SocialItem = dynamic(() => import('./SocialItem'));
 const navbar = FOOTER_ITEMS;
 
 const Footer = () => {

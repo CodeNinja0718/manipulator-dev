@@ -28,6 +28,7 @@ const styles = {
     backgroundColor: (theme: Theme) => `${theme.palette.pink}`,
     borderRadius: '5px 5px 0 0',
     transform: 'translateY(1px)',
+    px: 'inherit',
 
     '&.Mui-selected': {
       position: 'relative',
@@ -45,9 +46,14 @@ const styles = {
   },
   underline: {
     width: '100%',
-    height: '1px',
+    height: { xs: '0.5px', mobile: '1px' },
     background: (theme: Theme) => `${theme.palette.gray}`,
-    transform: 'translateY(-1.2px)',
+    transform: 'translateY(-1.5px)',
+  },
+  contentContainer: {
+    overflow: 'auto',
+    maxHeight: '55vh',
+    mt: 28,
   },
 } as Record<string, SxProps<Theme>>;
 
