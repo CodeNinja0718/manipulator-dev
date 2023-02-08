@@ -5,15 +5,15 @@ import { FILTER_ITEMS } from 'components/TopPageComponents/SearchTopPage/const';
 
 import styles from './styles';
 
-interface SymptomListProps {
+interface SymptomTypeProps {
   selectedSymptom: number;
   onSetSelectedSymptom: (value: number) => void;
 }
 
-const SymptomList = ({
+const SymptomType = ({
   selectedSymptom = 0,
   onSetSelectedSymptom,
-}: SymptomListProps) => {
+}: SymptomTypeProps) => {
   const handleSelected = (value: number) => {
     onSetSelectedSymptom(value);
   };
@@ -47,4 +47,4 @@ const SymptomList = ({
   );
 };
 
-export default SymptomList;
+export default SymptomType;

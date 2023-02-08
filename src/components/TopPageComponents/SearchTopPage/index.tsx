@@ -5,15 +5,16 @@ import type { Theme } from '@mui/material/styles';
 import TabLabelItem from 'components/CommonTabs/TabLabelItem';
 import AdvanceSearch from 'components/TopPageComponents/SearchTopPage/AdvanceSearch';
 import DefaultSearch from 'components/TopPageComponents/SearchTopPage/DefaultSearchPage';
+import LocationTabItem from 'components/TopPageComponents/SearchTopPage/LocationTabItem';
 import SearchModal from 'components/TopPageComponents/SearchTopPage/SearchModal';
+import StationTabItem from 'components/TopPageComponents/SearchTopPage/StationTabItem';
 import React, { useState } from 'react';
-
-import LocationTabItem from './Tabs/TabItem/LocationTabItem';
-import StationTabItem from './Tabs/TabItem/StationTabItem';
 
 const renderTabList = (
   selectedSymptom: number,
   onSetSelectedSymptom: (value: number) => void,
+  currentDate: Date | string,
+  onSetCurrentDate: (value: Date | string) => void,
 ) => {
   const list = [
     {
@@ -31,6 +32,8 @@ const renderTabList = (
         <LocationTabItem
           selectedSymptom={selectedSymptom}
           onSetSelectedSymptom={onSetSelectedSymptom}
+          currentDate={currentDate}
+          onSetCurrentDate={onSetCurrentDate}
         />
       ),
     },
@@ -49,6 +52,8 @@ const renderTabList = (
         <StationTabItem
           selectedSymptom={selectedSymptom}
           onSetSelectedSymptom={onSetSelectedSymptom}
+          currentDate={currentDate}
+          onSetCurrentDate={onSetCurrentDate}
         />
       ),
     },
@@ -60,6 +65,7 @@ const SearchTopPage = () => {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [selectedSymptom, setSelectedSymptom] = useState(0);
+  const [currentDate, setCurrentDate] = useState<Date | string>('');
   const handleOpenSearch = () => setOpen(true);
   const handleCloseSearch = () => setOpen(false);
   const handleSetActiveTab = (value: number) => setActiveTab(value);
@@ -84,7 +90,12 @@ const SearchTopPage = () => {
 
       <SearchModal
         open={open}
-        tabs={renderTabList(selectedSymptom, handleSetSelectedSymptom)}
+        tabs={renderTabList(
+          selectedSymptom,
+          handleSetSelectedSymptom,
+          currentDate,
+          setCurrentDate,
+        )}
         activeTab={activeTab}
         onClose={handleCloseSearch}
         onSetSelectedSymptom={handleSetSelectedSymptom}

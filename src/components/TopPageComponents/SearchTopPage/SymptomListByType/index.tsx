@@ -1,4 +1,6 @@
+import ListSvg from '@icons/icon_list.svg';
 import Box from '@mui/material/Box';
+import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import CommonTags from 'components/CommonTags';
 import React, { useEffect, useState } from 'react';
@@ -26,7 +28,7 @@ interface CommonTagsProps {
   active?: boolean;
 }
 
-const SymptomItem = () => {
+const SymptomListByType = () => {
   const [list, setList] = useState<CommonTagsProps[]>([]);
   const [actives, setActives] = useState<number[]>([]);
 
@@ -44,11 +46,23 @@ const SymptomItem = () => {
 
   return (
     <Box pl={{ xs: 0, tablet: 10 }}>
-      <Typography color="orangeBold" sx={{ fontSize: '1.13rem' }}>
-        自律神経の症状一覧
-      </Typography>
-      <Box display="flex" rowGap={10} columnGap={6}>
-        <Box display="inherit" gap="inherit" mt={20} flexWrap="wrap">
+      <Box display="flex" alignItems="center">
+        <Box width={20} height={18} color="orangeBold" mr={12}>
+          <SvgIcon
+            component={ListSvg}
+            sx={{
+              width: 'inherit',
+              height: 'inherit',
+            }}
+            inheritViewBox
+          />
+        </Box>
+        <Typography color="orangeBold" sx={{ fontSize: '1.13rem' }}>
+          自律神経の症状一覧
+        </Typography>
+      </Box>
+      <Box display="flex" rowGap={10} mt={20} columnGap={6}>
+        <Box display="inherit" gap="inherit" flexWrap="wrap">
           {list.map((item, index) => (
             <CommonTags
               key={item.id}
@@ -64,4 +78,4 @@ const SymptomItem = () => {
   );
 };
 
-export default SymptomItem;
+export default SymptomListByType;

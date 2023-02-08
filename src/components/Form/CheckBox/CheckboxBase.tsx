@@ -11,12 +11,20 @@ const CheckboxBase = ({ iconClassName, fontSize, ...props }: ICheckboxBase) => {
   return (
     <Checkbox
       icon={
-        <SvgIcon className={iconClassName} fontSize={fontSize}>
+        <SvgIcon
+          viewBox="0 0 18 18"
+          className={iconClassName}
+          fontSize={fontSize}
+        >
           <UnCheckedIcon />
         </SvgIcon>
       }
       checkedIcon={
-        <SvgIcon className={iconClassName} fontSize={fontSize}>
+        <SvgIcon
+          viewBox="0 0 18 18"
+          className={iconClassName}
+          fontSize={fontSize}
+        >
           <CheckedIcon />
         </SvgIcon>
       }
