@@ -40,7 +40,9 @@ const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
       {/* Current Component */}
       {currentContent && (
         <Box sx={styles.contentContainer}>
-          {currentContent.map((item) => item.component)}
+          {currentContent.map((item, index) => (
+            <Box key={`component-tabs-${index}`}>{item.component}</Box>
+          ))}
         </Box>
       )}
     </Box>

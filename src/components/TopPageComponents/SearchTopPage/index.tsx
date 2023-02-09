@@ -1,76 +1,66 @@
-import LocationIcon from '@icons/icon_area_on.svg';
-import StationIcon from '@icons/icon_station_on.svg';
 import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
-import TabLabelItem from 'components/CommonTabs/TabLabelItem';
+import SearchModal from 'components/SearchModal';
 import AdvanceSearch from 'components/TopPageComponents/SearchTopPage/AdvanceSearch';
 import DefaultSearch from 'components/TopPageComponents/SearchTopPage/DefaultSearchPage';
-import LocationTabItem from 'components/TopPageComponents/SearchTopPage/LocationTabItem';
-import SearchModal from 'components/TopPageComponents/SearchTopPage/SearchModal';
-import StationTabItem from 'components/TopPageComponents/SearchTopPage/StationTabItem';
+import dayjs from 'dayjs';
+import useDetail from 'hooks/useDetail';
+import get from 'lodash/get';
+import type {
+  ICommonDataSalon,
+  ICommonLineList,
+  ILocationList,
+} from 'models/common/interface';
+import commonQuery from 'models/common/query';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { DateFormat } from 'utils/const';
+import Helper from 'utils/helpers';
 
-const renderTabList = (
-  selectedSymptom: number,
-  onSetSelectedSymptom: (value: number) => void,
-  currentDate: Date | string,
-  onSetCurrentDate: (value: Date | string) => void,
-) => {
-  const list = [
-    {
-      label: (
-        <TabLabelItem
-          label="エリアから探す"
-          icon={LocationIcon}
-          style={{
-            width: 16,
-            height: 19,
-          }}
-        />
-      ),
-      component: (
-        <LocationTabItem
-          selectedSymptom={selectedSymptom}
-          onSetSelectedSymptom={onSetSelectedSymptom}
-          currentDate={currentDate}
-          onSetCurrentDate={onSetCurrentDate}
-        />
-      ),
-    },
-    {
-      label: (
-        <TabLabelItem
-          label="駅から探す"
-          icon={StationIcon}
-          style={{
-            width: 16,
-            height: 23,
-          }}
-        />
-      ),
-      component: (
-        <StationTabItem
-          selectedSymptom={selectedSymptom}
-          onSetSelectedSymptom={onSetSelectedSymptom}
-          currentDate={currentDate}
-          onSetCurrentDate={onSetCurrentDate}
-        />
-      ),
-    },
-  ];
-  return list;
-};
+import { renderTabList } from './RenderTabList';
 
 const SearchTopPage = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedSymptom, setSelectedSymptom] = useState(0);
-  const [currentDate, setCurrentDate] = useState<Date | string>('');
+  const [selectedSymptomType, setSelectedSymptomType] = useState(1);
+  const [selectedSymptom, setSelectedSymptom] = useState<number[]>([]);
+  const [currentDate, setCurrentDate] = useState<Date | string>(
+    dayjs(new Date()).format(DateFormat.YEAR_MONTH_DATE),
+  );
+  const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
+  const [selectedStation, setSelectedStation] = useState<string[]>([]);
+
   const handleOpenSearch = () => setOpen(true);
   const handleCloseSearch = () => setOpen(false);
   const handleSetActiveTab = (value: number) => setActiveTab(value);
-  const handleSetSelectedSymptom = (value: number) => setSelectedSymptom(value);
+  const handleSetSelectedSymptomType = (value: number) =>
+    setSelectedSymptomType(value);
+  const handleSetSelectedSymptom = (value: number[]) =>
+    setSelectedSymptom(value);
+  const handleSetSelectedLocation = (value: string[]) =>
+    setSelectedLocation(value);
+  const handleSetSelectedStation = (value: string[]) =>
+    setSelectedStation(value);
 
+  const { data: response } = useDetail<ICommonDataSalon>(
+    commonQuery.salonCommonData(),
+  );
+  const { data: locations } = useDetail<ILocationList>(
+    commonQuery.locationList('1'),
+  );
+  const { data: lines } = useDetail<ICommonLineList>(
+    commonQuery.stationLineList(),
+  );
+  const handleSubmit = () => {
+    const data = {
+      symptoms: selectedSymptom.join(),
+      date: currentDate,
+      areas: selectedLocation.join(),
+      stations: selectedStation.join(),
+    };
+    router.push(`${Helper.parseURLByParams(data, '/manipulator')}`);
+  };
   return (
     <Box>
       {/* Default Search */}
@@ -85,21 +75,30 @@ const SearchTopPage = () => {
       <AdvanceSearch
         onOpenSearch={handleOpenSearch}
         onSetActiveTab={handleSetActiveTab}
-        onSetSelectedSymptom={handleSetSelectedSymptom}
+        onSetSelectedSymptomType={handleSetSelectedSymptomType}
       />
 
-      <SearchModal
-        open={open}
-        tabs={renderTabList(
-          selectedSymptom,
-          handleSetSelectedSymptom,
-          currentDate,
-          setCurrentDate,
-        )}
-        activeTab={activeTab}
-        onClose={handleCloseSearch}
-        onSetSelectedSymptom={handleSetSelectedSymptom}
-      />
+      {open && (
+        <SearchModal
+          open={open}
+          tabs={renderTabList(
+            selectedSymptomType,
+            handleSetSelectedSymptomType,
+            currentDate,
+            setCurrentDate,
+            get(locations, 'result', []),
+            get(response, 'symptoms', []),
+            get(lines, 'result', []),
+            handleSetSelectedSymptom,
+            handleSetSelectedLocation,
+            handleSetSelectedStation,
+          )}
+          activeTab={activeTab}
+          onClose={handleCloseSearch}
+          onSetSelectedSymptomType={handleSetSelectedSymptomType}
+          onSubmit={handleSubmit}
+        />
+      )}
     </Box>
   );
 };

@@ -29,6 +29,7 @@ declare module '@mui/material/styles' {
     cream: string;
     placeholder: string;
     grayText: string;
+    grullo: string;
   }
 
   interface PaletteOptions {
@@ -49,6 +50,7 @@ declare module '@mui/material/styles' {
     cream?: string;
     placeholder?: string;
     grayText?: string;
+    grullo?: string;
   }
 
   interface TypographyVariants {
@@ -139,6 +141,7 @@ const palette: MuiPaletteOptions = {
   white: '#fff',
   black: '#333333',
   backgroundColor: '#f4f2f1',
+  grullo: '#ac9b93',
   orangeGradient: 'linear-gradient(295deg, #ff872b, #ec6702 53%, #eb6600)',
   action: {
     hoverOpacity: 0.04,

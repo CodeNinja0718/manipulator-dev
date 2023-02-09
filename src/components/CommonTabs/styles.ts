@@ -52,7 +52,7 @@ const styles = {
   },
   contentContainer: {
     overflow: 'auto',
-    maxHeight: '55vh',
+    maxHeight: { xs: '55vh', tablet: '51vh' },
     mt: 28,
   },
 } as Record<string, SxProps<Theme>>;
