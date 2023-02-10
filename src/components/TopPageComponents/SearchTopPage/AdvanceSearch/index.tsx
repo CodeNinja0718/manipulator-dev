@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import CircleBox from 'components/CircleBox';
-import { FILTER_ITEMS } from 'components/TopPageComponents/SearchTopPage/const';
+import { FILTER_ITEMS } from 'components/SearchManipulator/SymptomType/const';
 import Image from 'next/image';
 import React from 'react';
 
@@ -14,13 +14,13 @@ import styles from './styles';
 interface AdvanceSearchProps {
   onOpenSearch: () => void;
   onSetActiveTab: (value: number) => void;
-  onSetSelectedSymptom: (value: number) => void;
+  onSetSelectedSymptomType: (value: number) => void;
 }
 
 const AdvanceSearch = ({
   onOpenSearch,
   onSetActiveTab,
-  onSetSelectedSymptom,
+  onSetSelectedSymptomType,
 }: AdvanceSearchProps) => {
   const handleOpenSearch = () => {
     onOpenSearch();
@@ -29,7 +29,7 @@ const AdvanceSearch = ({
 
   const handleClickSymptom = (value: number) => {
     handleOpenSearch();
-    onSetSelectedSymptom(value);
+    onSetSelectedSymptomType(value);
   };
 
   return (

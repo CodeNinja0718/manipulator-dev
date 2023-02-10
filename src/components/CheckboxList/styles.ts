@@ -6,7 +6,7 @@ const styles = {
     width: '100%',
     border: (theme: Theme) => `1px solid ${theme.palette.grullo}`,
     minHeight: 28,
-    maxHeight: 248,
+    maxHeight: 216,
     maxWidth: 334,
     borderRadius: 5,
   },
