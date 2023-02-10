@@ -54,7 +54,9 @@ const nextConfig = {
     DEPLOY_ENV: process.env.DEPLOY_ENV,
     DOMAIN: process.env.DOMAIN,
     IMAGE_DOMAIN: process.env.IMAGE_DOMAIN,
-    PROJECT_NAME: process.env.PROJECT_NAME
+    PROJECT_NAME: process.env.PROJECT_NAME,
+    VERITRANS_API_KEY: process.env.VERITRANS_API_KEY,
+    VERITRANS_API_URL: process.env.VERITRANS_API_URL
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find(

@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ isCardLayout }) => {
       {token ? (
         <>
           <Link
-            href="/profile"
+            href="/my-page/profile"
             sx={styles.navBarMenuItem}
             data-card={isCardLayout}
           >

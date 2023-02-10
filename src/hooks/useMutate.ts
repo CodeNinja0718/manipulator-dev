@@ -1,5 +1,6 @@
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
+import type { AxiosRequestConfig } from 'axios';
 import api from 'utils/api';
 import Helper from 'utils/helpers';
 
@@ -9,6 +10,7 @@ interface Options<TData, TVariables>
   method?: string;
   defaultToast?: boolean;
   successMessage?: string;
+  axiosConfig?: AxiosRequestConfig;
 }
 
 const useMutate = <TData = unknown, TVariables = unknown>(
@@ -19,6 +21,7 @@ const useMutate = <TData = unknown, TVariables = unknown>(
     defaultToast,
     method = 'post',
     successMessage,
+    axiosConfig,
     ...otherOptions
   } = options;
   return useMutation(
@@ -26,19 +29,22 @@ const useMutate = <TData = unknown, TVariables = unknown>(
       const url = typeof apiUrl === 'string' ? apiUrl : apiUrl(params);
       switch (method) {
         case 'put': {
-          const { data } = await api.put(url, params);
+          const { data } = await api.put(url, params, axiosConfig);
           return data;
         }
         case 'delete': {
-          const { data } = await api.delete(url, { data: params });
+          const { data } = await api.delete(url, {
+            data: params,
+            ...axiosConfig,
+          });
           return data;
         }
         case 'patch': {
-          const { data } = await api.patch(url, params);
+          const { data } = await api.patch(url, params, axiosConfig);
           return data;
         }
         default: {
-          const { data } = await api.post(url, params);
+          const { data } = await api.post(url, params, axiosConfig);
           return data;
         }
       }

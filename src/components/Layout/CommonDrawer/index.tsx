@@ -15,12 +15,14 @@ import {
 import Link from 'components/Link';
 import useGlobalState from 'hooks/useGlobalState';
 import useLogout from 'models/auth/useLogout';
+import { useRouter } from 'next/router';
 import { CUSTOMER_NAVIGATION, SOCIAL_MEDIA } from 'utils/const';
 import Helper from 'utils/helpers';
 
 import styles from './styles';
 
 const CommonDrawer: React.FC = () => {
+  const router = useRouter();
   const { openDrawer, setOpenDrawer } = useGlobalState();
   const { logout } = useLogout();
   const webCookie = Helper.getWebCookie();
@@ -40,7 +42,7 @@ const CommonDrawer: React.FC = () => {
             </ListItemButton>
           </Link>
           <List disablePadding>
-            <Link href="/profile">
+            <Link href="/my-page/profile">
               <ListItemButton sx={styles.menuBtn}>
                 <ListItemIcon>
                   <ProfileSvg />
@@ -51,7 +53,10 @@ const CommonDrawer: React.FC = () => {
             {CUSTOMER_NAVIGATION.map((nav) => {
               return (
                 <Link key={nav.href} href={nav.href}>
-                  <ListItemButton sx={{ ...styles.menuBtn, paddingLeft: 80 }}>
+                  <ListItemButton
+                    sx={{ ...styles.menuBtn, paddingLeft: 80 }}
+                    selected={router.pathname.startsWith(nav.href)}
+                  >
                     <ListItemIcon>{nav.icon}</ListItemIcon>
                     <ListItemText>{nav.label}</ListItemText>
                   </ListItemButton>

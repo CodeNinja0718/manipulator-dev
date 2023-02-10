@@ -1,20 +1,25 @@
 import { ArrowUpward } from '@mui/icons-material';
-import { Box, Card, IconButton } from '@mui/material';
+import { Box, Card, IconButton, Stack } from '@mui/material';
 import { useScroll } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 
-import Drawer from './CommonDrawer';
-import Footer from './Footer';
 import Header from './Header';
 import styles from './styles';
+
+const Footer = dynamic(() => import('./Footer'));
+const SideMenu = dynamic(() => import('./SideMenu'));
+const Drawer = dynamic(() => import('./CommonDrawer'));
 
 export default function Layout({
   children,
   isCardLayout = false,
+  withSideMenu = false,
 }: {
   children: ReactNode;
   isCardLayout?: boolean;
+  withSideMenu?: boolean;
 }) {
   const pageHeight =
     typeof document !== 'undefined' ? document.body.scrollHeight : 0;
@@ -33,6 +38,16 @@ export default function Layout({
   }, [scrollY]);
 
   const renderMainLayout = (content: ReactNode) => {
+    if (isCardLayout && withSideMenu) {
+      return (
+        <Card sx={styles.cardLayout}>
+          <Stack direction="row" sx={styles.sideMenuLayoutWrapper}>
+            <SideMenu />
+            {content}
+          </Stack>
+        </Card>
+      );
+    }
     if (isCardLayout) {
       return <Card sx={styles.cardLayout}>{content}</Card>;
     }

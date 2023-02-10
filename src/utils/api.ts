@@ -97,8 +97,11 @@ api.interceptors.response.use(
 
     // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject({
-      data: get(response, 'data.data'),
-      error: get(response, 'data.error', message),
+      data: get(response, 'data.data') || get(response, 'data'),
+      error:
+        get(response, 'data.error.message') ||
+        get(response, 'data.message') ||
+        message,
       code: get(response, 'data.code', response?.status || -1),
     });
   },

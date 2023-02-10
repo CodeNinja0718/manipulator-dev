@@ -44,12 +44,17 @@ const styles: Record<string, SxProps<Theme>> = {
       tablet: '0 0 10px 0 rgba(0, 0, 0, 0.16)',
     },
   },
-  logo: {
-    fontSize: 32,
-    wordBreak: 'keep-all',
-    color: {
-      xs: 'white',
-      tablet: 'secondary.main',
+  sideMenuLayoutWrapper: {
+    '& > *': {
+      flex: '1 1 100%',
+    },
+    '& > *:first-of-type': {
+      flex: '0 0 260px',
+      height: 'auto',
+      display: {
+        xs: 'none',
+        tablet: 'block',
+      },
     },
   },
   fabButton: (theme: Theme) => ({
