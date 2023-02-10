@@ -2,6 +2,21 @@ import type { SxProps } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 
 const styles: Record<string, SxProps<Theme>> = {
+  formControlWrapper: {
+    '.form-label': {
+      position: 'relative',
+      fontSize: 16,
+      color: 'black',
+      fontWeight: 'bold',
+      transform: 'translate(0, 0) scale(1)',
+    },
+    '.form-error': {
+      fontSize: 14,
+      minHeight: 20,
+      margin: 0,
+    },
+  },
+
   required: {
     backgroundColor: 'primary.main',
     color: 'white',

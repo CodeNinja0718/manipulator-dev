@@ -1,16 +1,14 @@
 import FacebookIcon from '@icons/facebook_icon.svg';
+import CouponSvg from '@icons/icon_coupon.svg';
+import FavSvg from '@icons/icon_fav.svg';
+import GuideSvg from '@icons/icon_guide.svg';
+import ListSvg from '@icons/icon_list.svg';
+import MembershipSvg from '@icons/icon_membership.svg';
+import PaymentSvg from '@icons/icon_payment.svg';
+import ReservationSvg from '@icons/icon_reservation.svg';
+import TicketSvg from '@icons/icon_ticket.svg';
 import InstagramIcon from '@icons/instagram_icon.svg';
 import TwitterIcon from '@icons/twitter_icon.svg';
-import {
-  AccountCircleOutlined,
-  AutoStoriesOutlined,
-  CreditCardOutlined,
-  DiscountOutlined,
-  FavoriteRounded,
-  ListOutlined,
-  LocalOfferOutlined,
-  MapOutlined,
-} from '@mui/icons-material';
 
 import type { INavigation } from './type';
 
@@ -134,44 +132,44 @@ export const CUSTOMER_NAVIGATION: {
   children?: INavigation[];
 }[] = [
   {
-    href: '/',
+    href: '/my-page/reservation-history',
     label: '予約履歴',
-    icon: <LocalOfferOutlined />,
+    icon: <ReservationSvg />,
   },
   {
-    href: '/1',
+    href: '/my-page/ticket',
     label: '回数券',
-    icon: <MapOutlined />,
+    icon: <TicketSvg />,
   },
   {
-    href: '/2',
+    href: '/my-page/discount',
     label: 'クーポン',
-    icon: <DiscountOutlined />,
+    icon: <CouponSvg />,
   },
   {
-    href: '/3',
+    href: '/my-page/favorite',
     label: 'お気に入り',
-    icon: <FavoriteRounded />,
+    icon: <FavSvg />,
   },
   {
-    href: '/4',
+    href: '/my-page/member',
     label: '会員情報',
-    icon: <AccountCircleOutlined />,
+    icon: <MembershipSvg />,
   },
   {
-    href: '/5',
+    href: '/my-page/cards',
     label: 'クレジットカード情報',
-    icon: <CreditCardOutlined />,
+    icon: <PaymentSvg />,
   },
   {
-    href: '/6',
+    href: '/my-page/guide',
     label: 'ご利用ガイド',
-    icon: <AutoStoriesOutlined />,
+    icon: <GuideSvg />,
   },
   {
-    href: '/7',
+    href: '/my-page/list',
     label: 'その他',
-    icon: <ListOutlined />,
+    icon: <ListSvg />,
   },
 ];
 

@@ -1,105 +1,51 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-const styles = {
-  appBar: {
-    boxShadow: 'none',
-    padding: { xs: '10px 15px', tablet: '25px' },
-    height: { xs: '65px', tablet: '106px' },
-    backgroundImage: {
-      xs: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
-      tablet: 'none',
-    },
-    color: 'white',
-    display: { xs: 'none', tablet: 'block' },
-  },
-  mainBox: {
-    backgroundColor: 'white',
-    backgroundImage: 'url(/images/main_bg.webp)',
-    backgroundSize: 'contain',
-    backgroundPosition: 'top center',
-    p: { xs: '0px', tablet: '0px' },
-  },
-  main: {
-    minHeight: {
-      xs: `calc(100vh - 322px)`,
-      mobile: `calc(100vh - 293px)`,
-    },
-    display: 'flex',
-    flexDirection: 'column',
-    mb: '110px',
-  },
-  sideMenuBox: {
-    pl: { xs: 20 },
-    py: { xs: 0, tablet: 30 },
+const styles: Record<string, SxProps<Theme>> = {
+  sideMenuContainer: {
+    padding: '30px 0 30px 20px',
     width: { xs: '100%', tablet: '260px' },
     background: 'linear-gradient(to bottom, #ff9a4d, #eb6600)',
     height: '100%',
   },
-  sideMenuTitleBox: {
-    pb: '10px',
-    borderBottom: `3px solid `,
-    borderBottomColor: 'orangeBold',
-    display: 'block',
-  },
-  contentBox: {
-    width: { xs: '100%', tablet: 'calc(100% - 260px)' },
-  },
-  sideMenu: {
-    bgcolor: '#ffffff',
+  sideMenuWrapper: {
+    backgroundColor: '#ffffff',
     borderTopLeftRadius: 30,
-    pl: { xs: 20 },
-    py: { xs: 30 },
-    display: 'block',
-    height: { xs: '100%', tablet: 'auto' },
-    position: 'relative',
+    padding: '30px 0',
   },
-  listItem: {
-    // p: 2,
+  title: (theme) => ({
+    color: 'secondary.main',
+    fontSize: 18,
+    borderBottom: `3px solid ${theme.palette.secondary.main}`,
+    ml: 20,
+    pb: 10,
+  }),
+  menuList: {
+    mt: 10,
+    a: {
+      textDecoration: 'none',
+    },
   },
-  link: {
-    textDecoration: 'unset',
-    display: 'block',
-    // background: '#000000',
-  },
-  listItemButton: {
-    color: (theme: Theme) => theme.palette.orangeText,
-    padding: '8px 10px',
-  },
-  listItemText: {
-    color: (theme: Theme) => theme.palette.text.primary,
-    ml: '10px',
-    '& svg': {
-      fontSize: '20px',
+  menuBtn: {
+    fontSize: 16,
+    padding: '6px 0 6px 25px',
+    color: 'black',
+    background: 'white !important',
+    '&:hover': {
+      background: 'rgba(0, 0, 0, 0.04) !important',
     },
     '&.Mui-selected': {
-      backgroundColor: '#ffffff',
-
-      '& .MuiListItemText-root': {
-        '& .MuiListItemText-primary': {
-          color: 'tertiary.main',
-        },
-      },
-      '&:hover': {
-        backgroundColor: 'rgb(234 101 0 / 20%)',
-      },
+      color: 'secondary.main',
     },
-    '&.MuiButtonBase-root': {
-      pl: '5px',
+    '& .MuiListItemIcon-root': {
+      minWidth: 'unset',
+      marginRight: 20,
+    },
+    svg: {
+      color: 'secondary.main',
+      width: 20,
+      height: 20,
     },
   },
-  userName: {
-    color: 'white',
-    fontSize: 18,
-    lineHeight: '27px',
-  },
-  sideMenuText: {
-    position: 'absolute',
-    right: 15,
-    bottom: 15,
-    textDecoration: 'underline',
-    color: 'text.primary',
-    display: { xs: 'block', tablet: 'none' },
-  },
-} as Record<string, SxProps<Theme>>;
+};
 
 export default styles;

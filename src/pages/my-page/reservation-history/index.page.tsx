@@ -1,11 +1,4 @@
-import CouponSvg from '@icons/icon_coupon.svg';
-import FavSvg from '@icons/icon_fav.svg';
-import GuideSvg from '@icons/icon_guide.svg';
-import ListSvg from '@icons/icon_list.svg';
-import MembershipSvg from '@icons/icon_membership.svg';
-import PaymentSvg from '@icons/icon_payment.svg';
 import ReservationSvg from '@icons/icon_reservation.svg';
-import TicketSvg from '@icons/icon_ticket.svg';
 import {
   Box,
   Pagination,
@@ -14,12 +7,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import Layout from 'components/Layout';
-import type { SideMenuItem } from 'components/Layout/SideMenu/SideMenu';
-import SideMenu from 'components/Layout/SideMenu/SideMenu';
-import styles from 'components/Layout/SideMenu/styles';
-import { gradientComponent } from 'hoc/GrandientComponent';
 import dynamic from 'next/dynamic';
-import type { ReactElement } from 'react';
 import theme from 'theme';
 import { RESERVATION_STATUS_VALUE } from 'utils/const';
 
@@ -41,48 +29,6 @@ interface ReservationItemModel {
   cancellationDate: Date;
 }
 
-const customerMenus: SideMenuItem[] = [
-  {
-    href: '/',
-    label: '予約履歴',
-    icon: ReservationSvg,
-  },
-  {
-    href: '/1',
-    label: '回数券',
-    icon: TicketSvg,
-  },
-  {
-    href: '/2',
-    label: 'クーポン',
-    icon: CouponSvg,
-  },
-  {
-    href: '/3',
-    label: 'お気に入り',
-    icon: FavSvg,
-  },
-  {
-    href: '/4',
-    label: '会員情報',
-    icon: MembershipSvg,
-  },
-  {
-    href: '/5',
-    label: 'クレジットカード情報',
-    icon: PaymentSvg,
-  },
-  {
-    href: '/6',
-    label: 'ご利用ガイド',
-    icon: GuideSvg,
-  },
-  {
-    href: '/7',
-    label: 'その他',
-    icon: ListSvg,
-  },
-];
 const list: ReservationItemModel[] = [
   {
     id: '1',
@@ -190,26 +136,10 @@ const ReservationHistory = () => {
   );
 };
 
-ReservationHistory.getLayout = function getLayout(page: ReactElement) {
+ReservationHistory.getLayout = (page: React.ReactNode) => {
   return (
-    <Layout isCardLayout>
-      <Box display={{ xs: 'flex' }}>
-        {gradientComponent(
-          <Box
-            sx={{
-              display: { xs: 'none', tablet: 'block' },
-              height: '100%',
-            }}
-          >
-            <SideMenu menus={customerMenus} />
-          </Box>,
-          'linear-gradient(to bottom, #ff9a4d, #eb6600)',
-        )}
-
-        <Box sx={styles.contentBox} overflow="hidden">
-          {page}
-        </Box>
-      </Box>
+    <Layout isCardLayout withSideMenu>
+      {page}
     </Layout>
   );
 };

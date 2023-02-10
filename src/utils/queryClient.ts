@@ -12,7 +12,7 @@ const handleError = (error: unknown, _: unknown, context?: unknown) => {
   const webCookie = Helper.getWebCookie();
   const rememberLogin = webCookie?.rememberLogin === 'true';
 
-  let errorMessage: string = get(error, 'error.message', '');
+  let errorMessage: string = get(error, 'error', '');
   const errorCode = get(error, 'code');
   if (context && get(context, 'action')) {
     errorMessage = errors[`${get(context, 'action')}_${errorCode}` as never];
