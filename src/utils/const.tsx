@@ -174,3 +174,26 @@ export const CUSTOMER_NAVIGATION: {
     icon: <ListOutlined />,
   },
 ];
+
+export const SORT_TYPE_VALUE = {
+  standard: 'standard',
+  ranking: 'ranking',
+};
+
+export const SORT_TYPE = [
+  {
+    label: '標準',
+    value: SORT_TYPE_VALUE.standard,
+  },
+  {
+    label: 'ランキング',
+    value: SORT_TYPE_VALUE.ranking,
+  },
+];
+
+export const NATIONAL_LICENSES = [
+  '柔道整復師',
+  '鍼灸師',
+  '作業療法士',
+  '理学療法士',
+];
