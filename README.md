@@ -6,20 +6,20 @@ Because this source is using [React Query](https://tanstack.com/query/v4/?from=r
 
 Using in a component
 ```
-import { useDetail } from 'hooks';
+import { useFetch } from 'hooks';
 import exampleQuery from 'models/example/query';
 import type { IExample } from 'models/example/interface';
 ...
-const { data } = useDetail<IExample>(exampleQuery.exampleDetail)
+const { data } = useFetch<IExample>(exampleQuery.exampleFetch)
 // OR
 const { exampleId } = query; 
-const { data } = useDetail<IExample>(exampleQuery.exampleDetail(exampleId as string))
+const { data } = useFetch<IExample>(exampleQuery.exampleFetch(exampleId as string))
 ```
 
 **models/example/query.ts**
 ```
 const exampleQuery = {
-  exampleDetail: (id: string) => ({
+  exampleFetch: (id: string) => ({
     queryKey: ['public', 'articleDetail', id],
     apiUrl: `/exmaples/${id}`,
   }),
@@ -27,7 +27,7 @@ const exampleQuery = {
 };
 // OR
 const exampleQuery = {
-  exampleDetail: {
+  exampleFetch: {
     queryKey: ['public', 'articleDetail', detail],
     apiUrl: `/exmaples/detail`,
   },

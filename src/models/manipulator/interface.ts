@@ -1,26 +1,36 @@
-export interface ILocationList {
-  result: {
-    _id: number;
-    name: string;
-    provinceId: number;
-    provinceName: string;
-  }[];
+interface Photo {
+  type: string;
+  url: string;
 }
-
-export interface ICommonDataSalon {
-  provinces: {
-    _id: number;
-    provinceId: number;
-    provinceName: string;
-  }[];
-  symptoms: {
-    _id: number;
-    symptomName: string;
-    typeId: number;
-    typeName: string;
-  }[];
-  features: {
-    _id: number;
-    name: string;
-  }[];
+interface Salon {
+  _id: string;
+  name: string;
+  nameKana: string;
+}
+interface Symptom {
+  id: string;
+  name: string;
+}
+interface ReviewRating {
+  total: number;
+  averageRating: number;
+}
+export interface IManipulator {
+  id?: string;
+  isFavorite: boolean;
+  distance: string;
+  yearsOfExperience: string;
+  treatmentMenu: any;
+  name: string;
+  nameKana: string;
+  avatar: string;
+  pr: string;
+  profile: string;
+  careerStart: string;
+  photo: Photo[];
+  fetures: Photo[];
+  nationalLicenses: string[];
+  salons: Salon[];
+  symptoms: Symptom[];
+  reviewRating: ReviewRating;
 }

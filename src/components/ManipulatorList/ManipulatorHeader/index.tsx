@@ -4,13 +4,17 @@ import { SORT_TYPE, SORT_TYPE_VALUE } from 'utils/const';
 
 import styles from './styles';
 
-const ManipulatorHeader = () => {
+interface ManipulatorHeaderProps {
+  resultTotal: number;
+}
+
+const ManipulatorHeader = ({ resultTotal = 0 }: ManipulatorHeaderProps) => {
   const [sortType, setSortType] = React.useState(SORT_TYPE_VALUE.standard);
 
   return (
     <Grid container spacing={2} marginBottom="30px" alignItems="center">
       <Grid item xs={5}>
-        <Typography sx={styles.resultTotal}>999</Typography>
+        <Typography sx={styles.resultTotal}>{resultTotal}</Typography>
         <span>件</span>
       </Grid>
       <Grid item xs={7} textAlign="right">

@@ -78,7 +78,6 @@ const useList = <TQueryFnData = unknown>(
       ...otherOptions,
     },
   );
-
   return {
     list: data?.docs || [],
     total: data?.totalDocs || 0,

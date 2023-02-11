@@ -1,10 +1,11 @@
 import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
+import LoadingOverlay from 'components/LoadingOverlay';
 import SearchModal from 'components/SearchModal';
 import AdvanceSearch from 'components/TopPageComponents/SearchTopPage/AdvanceSearch';
 import DefaultSearch from 'components/TopPageComponents/SearchTopPage/DefaultSearchPage';
 import dayjs from 'dayjs';
-import useDetail from 'hooks/useDetail';
+import useFetch from 'hooks/useFetch';
 import get from 'lodash/get';
 import type {
   ICommonDataSalon,
@@ -26,13 +27,13 @@ const SearchTopPage = () => {
   const [selectedSymptomType, setSelectedSymptomType] = useState(1);
   const [selectedSymptom, setSelectedSymptom] = useState<number[]>([]);
   const [currentDate, setCurrentDate] = useState<Date | string>(
-    dayjs(new Date()).format(DateFormat.YEAR_MONTH_DATE),
+    dayjs(new Date()).format(DateFormat.YEAR_MONTH_DATE_DASH),
   );
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
   const [selectedStation, setSelectedStation] = useState<string[]>([]);
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
+  const [loadingShowModal, setLoadingShowModal] = useState(false);
 
-  const handleOpenSearch = () => setOpen(true);
-  const handleCloseSearch = () => setOpen(false);
   const handleSetActiveTab = (value: number) => setActiveTab(value);
   const handleSetSelectedSymptomType = (value: number) =>
     setSelectedSymptomType(value);
@@ -42,14 +43,25 @@ const SearchTopPage = () => {
     setSelectedLocation(value);
   const handleSetSelectedStation = (value: string[]) =>
     setSelectedStation(value);
+  const handleOpenSearch = () => {
+    setLoadingShowModal(true);
+    setTimeout(() => {
+      setOpen(true);
+    }, 100);
+  };
+  const handleCloseSearch = () => {
+    setOpen(false);
+    handleSetSelectedSymptomType(1);
+    setCurrentDate(dayjs(new Date()).format(DateFormat.YEAR_MONTH_DATE_DASH));
+  };
 
-  const { data: response } = useDetail<ICommonDataSalon>(
+  const { data: response } = useFetch<ICommonDataSalon>(
     commonQuery.salonCommonData(),
   );
-  const { data: locations } = useDetail<ILocationList>(
+  const { data: locations } = useFetch<ILocationList>(
     commonQuery.locationList('1'),
   );
-  const { data: lines } = useDetail<ICommonLineList>(
+  const { data: lines } = useFetch<ICommonLineList>(
     commonQuery.stationLineList(),
   );
   const handleSubmit = () => {
@@ -58,9 +70,18 @@ const SearchTopPage = () => {
       date: currentDate,
       areas: selectedLocation.join(),
       stations: selectedStation.join(),
+      limit: 10,
+      page: 1,
     };
+
+    // Disable Button
+    setDisabledSubmit(true);
+
     router.push(`${Helper.parseURLByParams(data, '/manipulator')}`);
   };
+
+  const handleLoadedModal = () => setLoadingShowModal(false);
+
   return (
     <Box>
       {/* Default Search */}
@@ -78,6 +99,8 @@ const SearchTopPage = () => {
         onSetSelectedSymptomType={handleSetSelectedSymptomType}
       />
 
+      <LoadingOverlay visible={loadingShowModal} />
+
       {open && (
         <SearchModal
           open={open}
@@ -93,10 +116,11 @@ const SearchTopPage = () => {
             handleSetSelectedLocation,
             handleSetSelectedStation,
           )}
+          disabled={disabledSubmit}
           activeTab={activeTab}
           onClose={handleCloseSearch}
-          onSetSelectedSymptomType={handleSetSelectedSymptomType}
           onSubmit={handleSubmit}
+          onLoaded={handleLoadedModal}
         />
       )}
     </Box>

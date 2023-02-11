@@ -40,22 +40,7 @@ const CircleBox = ({
         width={90}
         height={90}
         className="customCircleBoxStyle"
-        sx={{
-          ...styles.CircleBox,
-          background: (theme: Theme) =>
-            active ? theme.palette.orangeBold : 'white',
-          borderRadius: '50%',
-
-          '&:hover, &:active, &:focus': {
-            transition: '.5s',
-            background: (theme: Theme) =>
-              active ? 'white' : theme.palette.orangeBold,
-            '& svg': {
-              color: (theme: Theme) =>
-                active ? theme.palette.grayText : 'white',
-            },
-          },
-        }}
+        sx={active ? styles.circleBoxActive : styles.circleBox}
         onClick={onClick}
       >
         <SvgIcon
