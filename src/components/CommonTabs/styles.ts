@@ -11,6 +11,7 @@ const styles = {
   },
   tabList: {
     border: 'none',
+    position: 'relative',
     '& .MuiTabs-flexContainer': {
       display: 'flex',
       justifyContent: 'center',
@@ -19,24 +20,42 @@ const styles = {
         minWidth: 'initial',
       },
     },
+    '&::after': {
+      content: '""',
+      background: (theme: Theme) => `${theme.palette.grownText}`,
+      position: 'absolute',
+      width: '100%',
+      height: '1px',
+      display: 'block',
+      bottom: '1px',
+    },
   },
   tabItem: {
     width: 'calc(50% - 5px)',
     minHeight: 50,
-    border: 'none',
     color: (theme: Theme) => `${theme.palette.grownText}`,
     backgroundColor: (theme: Theme) => `${theme.palette.pink}`,
-    borderRadius: '5px 5px 0 0',
-    transform: 'translateY(1px)',
+    borderRadius: '7px 7px 0 0',
     px: 'inherit',
+    border: 'none',
 
     '&.Mui-selected': {
       position: 'relative',
       color: (theme: Theme) => `${theme.palette.orangeBold}`,
       backgroundColor: 'white',
       border: (theme: Theme) => `1px solid ${theme.palette.gray}`,
-      borderBottomColor: 'white',
+      borderBottom: 'none',
       zIndex: 1,
+
+      '&::after': {
+        content: '""',
+        background: 'white',
+        position: 'absolute',
+        width: '100%',
+        height: '1px',
+        display: 'block',
+        bottom: 0,
+      },
     },
 
     '&:last-child': {
@@ -44,12 +63,12 @@ const styles = {
       mr: 0,
     },
   },
-  underline: {
-    width: '100%',
-    height: { xs: '0.5px', mobile: '1px' },
-    background: (theme: Theme) => `${theme.palette.gray}`,
-    transform: 'translateY(-1.5px)',
-  },
+  // underline: {
+  //   width: '100%',
+  //   height: { xs: '0.5px', mobile: '1px' },
+  //   background: (theme: Theme) => `${theme.palette.gray}`,
+  //   transform: 'translateY(-1.5px)',
+  // },
   contentContainer: {
     overflow: 'auto',
     maxHeight: { xs: '55vh', tablet: '51vh' },

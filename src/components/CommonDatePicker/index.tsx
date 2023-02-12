@@ -19,7 +19,7 @@ interface CommonDatePickerProps {
 
 const CommonDatePicker = ({
   value,
-  inputFormat = DateFormat.YEAR_MONTH_DATE,
+  inputFormat = DateFormat.YEAR_MONTH_DATE_DASH,
   placeholder,
   onChange,
   componentStyle,

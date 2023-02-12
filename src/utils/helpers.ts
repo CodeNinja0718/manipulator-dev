@@ -132,6 +132,16 @@ const Helper = {
     const newURL = `${url}?${convertParamsToString.join('&')}`;
     return newURL;
   },
+  encodeParams: (params: object) => {
+    const currentParams = {};
+    map(params, (_value, key) => {
+      return Object.assign(currentParams, {
+        [key]: encodeURIComponent(_value as string),
+      });
+    });
+
+    return currentParams;
+  },
 };
 
 export default Helper;

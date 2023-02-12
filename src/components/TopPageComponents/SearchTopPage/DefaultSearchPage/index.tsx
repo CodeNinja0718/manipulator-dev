@@ -28,7 +28,6 @@ const DefaultSearchPage = ({
         gap="20px"
         justifyContent="center"
         alignItems="center"
-        padding="20px 10px"
         sx={styles.searchContainer}
       >
         <Button

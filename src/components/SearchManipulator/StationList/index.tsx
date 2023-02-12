@@ -1,11 +1,12 @@
 import LocationIcon from '@icons/arrow.svg';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import CheckboxList from 'components/CheckboxList';
 import CheckboxBase from 'components/Form/CheckBox/CheckboxBase';
-import useDetail from 'hooks/useDetail';
+import useFetch from 'hooks/useFetch';
 import get from 'lodash/get';
 import type { ICommonStation } from 'models/common/interface';
 import commonQuery from 'models/common/query';
@@ -27,7 +28,7 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
   const handleSelectedLine = (value: number) => {
     setSelectedLine(value);
   };
-  const { data: stations } = useDetail<ICommonStation>(
+  const { data: stations } = useFetch<ICommonStation>(
     commonQuery.stationListByLine(selectedLine),
   );
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -76,13 +77,7 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
               <SvgIcon
                 component={LocationIcon}
                 viewBox="0 0 14 30"
-                sx={{
-                  width: 5,
-                  transform: 'rotateY(180deg)',
-                  mt: 7,
-                  ml: 17,
-                  cursor: 'pointer',
-                }}
+                sx={styles.backButton}
                 onClick={handleBackLineList}
               />
             ) : (
@@ -92,24 +87,30 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
         }
         rightComponent={
           <>
-            {list.map((item) => (
-              <FormControlLabel
-                key={item._id}
-                control={
-                  selectedLine ? (
-                    <CheckboxBase iconClassName="customCheckbox" />
-                  ) : (
-                    <Typography />
-                  )
-                }
-                label={item.name}
-                sx={styles.checkboxItem}
-                labelPlacement="start"
-                value={item._id}
-                onClick={() => !selectedLine && handleSelectedLine(item._id)}
-                onChange={(event: any) => selectedLine && handleChange(event)}
-              />
-            ))}
+            {typeof stations === 'undefined' ? (
+              <Box sx={styles.loadingBox}>
+                <CircularProgress size="small" sx={styles.loading} />
+              </Box>
+            ) : (
+              list.map((item) => (
+                <FormControlLabel
+                  key={item._id}
+                  control={
+                    selectedLine ? (
+                      <CheckboxBase iconClassName="customCheckbox" />
+                    ) : (
+                      <Typography />
+                    )
+                  }
+                  label={item.name}
+                  sx={styles.checkboxItem}
+                  labelPlacement="start"
+                  value={item._id}
+                  onClick={() => !selectedLine && handleSelectedLine(item._id)}
+                  onChange={(event: any) => selectedLine && handleChange(event)}
+                />
+              ))
+            )}
           </>
         }
       />

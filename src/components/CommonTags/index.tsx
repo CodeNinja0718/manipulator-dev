@@ -15,7 +15,6 @@ const CommonTags = ({
   active = false,
   onClick,
 }: CommonTagsProps) => {
-  const itemStyle = { ...styles.item, ...styles.itemActive };
   const handleClick = () => {
     const tagElement: CommonTagsProps = {
       index,
@@ -28,7 +27,7 @@ const CommonTags = ({
   };
 
   return (
-    <Box sx={active ? itemStyle : styles.item} onClick={handleClick}>
+    <Box sx={active ? styles.itemActive : styles.item} onClick={handleClick}>
       {label}
     </Box>
   );

@@ -9,6 +9,16 @@ const styles = {
     display: { xs: 'none', tablet: 'block' },
     height: '100%',
   },
+  loadingBox: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+  },
+  loading: {
+    width: 50,
+    height: 50,
+    color: (theme: Theme) => theme.palette.orangeBold,
+  },
 } as Record<string, SxProps<Theme>>;
 
 export default styles;
