@@ -84,22 +84,25 @@ const SearchTopPage = () => {
 
   return (
     <Box>
-      {/* Default Search */}
-      <Box sx={{ background: (theme: Theme) => theme.palette.orangeGradient }}>
-        <DefaultSearch
+      <Box position="relative">
+        {/* Default Search */}
+        <Box
+          sx={{ background: (theme: Theme) => theme.palette.orangeGradient }}
+        >
+          <DefaultSearch
+            onOpenSearch={handleOpenSearch}
+            onSetActiveTab={handleSetActiveTab}
+          />
+        </Box>
+
+        {/* Advance Search - Filter */}
+        <AdvanceSearch
           onOpenSearch={handleOpenSearch}
           onSetActiveTab={handleSetActiveTab}
+          onSetSelectedSymptomType={handleSetSelectedSymptomType}
         />
+        <LoadingOverlay visible={loadingShowModal} />
       </Box>
-
-      {/* Advance Search - Filter */}
-      <AdvanceSearch
-        onOpenSearch={handleOpenSearch}
-        onSetActiveTab={handleSetActiveTab}
-        onSetSelectedSymptomType={handleSetSelectedSymptomType}
-      />
-
-      <LoadingOverlay visible={loadingShowModal} />
 
       {open && (
         <SearchModal
