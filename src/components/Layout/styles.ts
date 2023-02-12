@@ -25,6 +25,10 @@ const styles: Record<string, SxProps<Theme>> = {
         tablet: 'calc(100vh - 106px - 210px)',
       },
     },
+    '&.loading': {
+      height: 'calc(100vh - 210px)',
+      overflow: 'hidden',
+    },
   },
   cardLayout: {
     padding: 0,
