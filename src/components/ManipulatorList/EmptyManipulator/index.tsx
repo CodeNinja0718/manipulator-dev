@@ -6,7 +6,8 @@ const EmptyManipulator = () => {
       fontSize={24}
       variant="subtitle1"
       textAlign="center"
-      color="heading"
+      color="gray"
+      mb={30}
     >
       空のリスト
     </Typography>

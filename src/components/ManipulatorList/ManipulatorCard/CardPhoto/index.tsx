@@ -1,4 +1,5 @@
 import { Box, Fade, Modal } from '@mui/material';
+import get from 'lodash/get';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
@@ -23,7 +24,7 @@ const ManipulatorCardPhoto = ({ data }: ManipulatorCardPhotoProps) => {
   return (
     <Box>
       <Box sx={styles.photoWrap}>
-        {data.photo.map((item, index) => (
+        {get(data, 'photo', []).map((item, index) => (
           <Box
             key={`photo-${index}`}
             height={80}

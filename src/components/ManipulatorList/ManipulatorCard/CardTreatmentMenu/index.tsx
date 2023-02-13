@@ -1,5 +1,6 @@
 import ListSvg from '@icons/icon_list.svg';
 import { Box, Button, Grid, Stack, SvgIcon, Typography } from '@mui/material';
+import get from 'lodash/get';
 import * as React from 'react';
 
 import type { ManipulatorCardModel } from '../model';
@@ -39,7 +40,7 @@ const ManipulatorCardTreatmentMenu = ({
           施術メニュー
         </Typography>
       </Stack>
-      {data.treatmentMenu.menu.map((item: any, index: number) => (
+      {get(data, 'treatmentMenu.menu', []).map((item: any, index: number) => (
         <Grid container spacing={10} key={`menu-${index}`} marginBottom="5px">
           <Grid item xs={5}>
             <Typography component="p" sx={styles.textStyle}>
@@ -58,7 +59,7 @@ const ManipulatorCardTreatmentMenu = ({
           11/10(月)の予約可能時間
         </Typography>
         <Box sx={styles.reservableTimeWrap}>
-          {data.treatmentMenu.reservableTime.map(
+          {get(data, 'treatmentMenu.reservableTime', []).map(
             (item: string, index: number) => (
               <Button
                 sx={styles.labelItem}

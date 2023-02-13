@@ -32,7 +32,7 @@ const ManipulatorList = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const isMobile = useMediaQuery(theme.breakpoints.down('normalTablet'));
-  const { isLoading, list, total } = useList<IManipulator>(
+  const { isLoading, list, total, totalPages } = useList<IManipulator>(
     manipulatorQuery.searchManiplator(Helper.encodeParams(router.query)),
   );
 
@@ -69,14 +69,19 @@ const ManipulatorList = () => {
         ) : (
           <>
             <ManipulatorHeader resultTotal={total} />
-            {manipulators.map((item: ManipulatorCardModel) => (
-              <ManipulatorCard key={item.id} data={item} />
-            ))}
+            {total === 0 ? (
+              // Empty List
+              <EmptyManipulator />
+            ) : (
+              manipulators.map((item: ManipulatorCardModel) => (
+                <ManipulatorCard key={item.id} data={item} />
+              ))
+            )}
             {currentPage && total > 0 && (
               <Box display="flex" justifyContent="center">
                 <Pagination
                   color="orange"
-                  count={10}
+                  count={totalPages}
                   siblingCount={isMobile ? 0 : 1}
                   shape="rounded"
                   page={currentPage}
@@ -84,8 +89,6 @@ const ManipulatorList = () => {
                 />
               </Box>
             )}
-            {/* Empty List */}
-            {total === 0 && <EmptyManipulator />}
           </>
         )}
       </>

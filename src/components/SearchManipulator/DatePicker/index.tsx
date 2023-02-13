@@ -27,6 +27,7 @@ const DatePicker = ({
           onSetCurrentDate(value);
         }}
         componentStyle={styles.calendar}
+        disablePast
       />
     </Box>
   );

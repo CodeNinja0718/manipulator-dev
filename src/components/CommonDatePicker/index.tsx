@@ -15,6 +15,7 @@ interface CommonDatePickerProps {
   placeholder?: string;
   onChange: (value: Date | string) => void;
   componentStyle?: SxProps | object;
+  disablePast?: boolean;
 }
 
 const CommonDatePicker = ({
@@ -23,12 +24,14 @@ const CommonDatePicker = ({
   placeholder,
   onChange,
   componentStyle,
+  disablePast,
   ...props
 }: CommonDatePickerProps) => {
   return (
     <DesktopDatePicker
       {...props}
       value={value}
+      disablePast={disablePast}
       onChange={(dateValue) => {
         let currentValue: Date | string = new Date();
         if (dayjs.isDayjs(dateValue) && dateValue.isValid()) {

@@ -72,6 +72,7 @@ const SearchTopPage = () => {
       stations: selectedStation.join(),
       limit: 10,
       page: 1,
+      sort: 'createdDate.desc',
     };
 
     // Disable Button

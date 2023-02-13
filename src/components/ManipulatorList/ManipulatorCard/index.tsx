@@ -1,5 +1,8 @@
 import ArrowIcon from '@icons/arrow.svg';
 import { Box, Button, SvgIcon, Typography } from '@mui/material';
+import filter from 'lodash/filter';
+import get from 'lodash/get';
+import map from 'lodash/map';
 import Image from 'next/image';
 import * as React from 'react';
 
@@ -16,6 +19,9 @@ interface ManipulatorCardProps {
 }
 
 const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
+  const salonInfo = get(data, 'salon', [])
+    ? filter(get(data, 'salon', []), (_item, index) => index === 0)
+    : [];
   return (
     <Box sx={styles.manipulatorCard}>
       <ManipulatorCardHeader data={data} />
@@ -23,12 +29,14 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
         <ManipulatorCardLeft data={data} />
         <Box sx={styles.colRight}>
           <Typography component="h3" fontWeight={'600'}>
-            {data.salons[0]?.name}
+            {map(salonInfo, (item) => get(item, 'name', ''))}
           </Typography>
           <Typography component="p" fontSize="12px" color="graySolid">
             {data.distance}
           </Typography>
-          {data.photo.length > 0 && <ManipulatorCardPhoto data={data} />}
+          {get(data, 'photos', []).length > 0 && (
+            <ManipulatorCardPhoto data={data} />
+          )}
           {data.yearsOfExperience && (
             <Box display="flex" marginTop="5px" alignItems="center">
               <Box flex="0 0 75px">
@@ -58,9 +66,9 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
               </Typography>
             </Box>
           </Box>
-          {data.fetures.length > 0 && (
+          {get(data, 'fetures', []).length > 0 && (
             <Box display="flex" flexWrap="wrap" gap="5px" margin="20px 0px">
-              {data.fetures.map((item, index) => (
+              {get(data, 'fetures', []).map((item, index) => (
                 <Image
                   key={`feat-${index}`}
                   src={`/${item.url}`}
