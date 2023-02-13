@@ -8,7 +8,7 @@ import process from 'process';
 import type { ToastContent, ToastOptions } from 'react-toastify';
 import { toast } from 'react-toastify';
 
-import { RESERVATION_STATUS } from './const';
+import { FEATURES, RESERVATION_STATUS } from './const';
 
 const Helper = {
   getWebCookie: (
@@ -148,6 +148,12 @@ const Helper = {
       return numberMatch.join(' ');
     }
     return '';
+  },
+  getExpYear: (careerStart: string): number => {
+    return new Date().getFullYear() - +careerStart;
+  },
+  getFeatueImage: (id: string): string => {
+    return FEATURES.find((item) => item.value === id)?.img || '';
   },
 };
 

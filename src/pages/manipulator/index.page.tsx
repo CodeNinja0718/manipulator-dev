@@ -5,7 +5,6 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import Layout from 'components/Layout';
-import type { ManipulatorCardModel } from 'components/ManipulatorList/ManipulatorCard/model';
 import ManipulatorHeader from 'components/ManipulatorList/ManipulatorHeader';
 import SearchColumn from 'components/ManipulatorList/SearchColumn';
 import useList from 'hooks/useList';
@@ -73,8 +72,8 @@ const ManipulatorList = () => {
               // Empty List
               <EmptyManipulator />
             ) : (
-              manipulators.map((item: ManipulatorCardModel) => (
-                <ManipulatorCard key={item.id} data={item} />
+              manipulators.map((item: IManipulator) => (
+                <ManipulatorCard key={item._id} data={item} />
               ))
             )}
             {currentPage && total > 0 && (
@@ -99,7 +98,7 @@ const ManipulatorList = () => {
 ManipulatorList.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout isCardLayout>
-      <Box display={{ xs: 'flex' }}>
+      <Box sx={styles.manipulatorContainer}>
         <Box sx={styles.leftContainer}>
           <SearchColumn />
         </Box>

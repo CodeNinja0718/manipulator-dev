@@ -3,7 +3,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   treatmentBox: {
     padding: '20px',
-    margin: '20px 0px',
+    margin: '20px 0px 0px',
     backgroundColor: 'cream',
   },
   reservableTimeBox: {

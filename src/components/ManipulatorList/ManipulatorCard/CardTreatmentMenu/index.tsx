@@ -1,13 +1,13 @@
 import ListSvg from '@icons/icon_list.svg';
 import { Box, Button, Grid, Stack, SvgIcon, Typography } from '@mui/material';
-import get from 'lodash/get';
+import FormatDate from 'components/FormatDate';
+import type { IManipulator, Menu } from 'models/manipulator/interface';
 import * as React from 'react';
 
-import type { ManipulatorCardModel } from '../model';
 import styles from './styles';
 
 interface ManipulatorCardTreatmentMenuProps {
-  data: ManipulatorCardModel;
+  data: IManipulator;
 }
 const ManipulatorCardTreatmentMenu = ({
   data,
@@ -40,38 +40,39 @@ const ManipulatorCardTreatmentMenu = ({
           施術メニュー
         </Typography>
       </Stack>
-      {get(data, 'treatmentMenu.menu', []).map((item: any, index: number) => (
+      {data.menus?.map((item: Menu, index: number) => (
         <Grid container spacing={10} key={`menu-${index}`} marginBottom="5px">
           <Grid item xs={5}>
             <Typography component="p" sx={styles.textStyle}>
-              {item.title}
+              {item.name}
             </Typography>
           </Grid>
           <Grid item xs={7}>
             <Typography component="p" sx={styles.textStyle}>
-              {item.price}
+              {item.price}円
             </Typography>
           </Grid>
         </Grid>
       ))}
       <Box sx={styles.reservableTimeBox}>
         <Typography component="p" sx={styles.textStyle} marginBottom="10px">
-          11/10(月)の予約可能時間
+          {<FormatDate dateString={new Date().toString()} />}(月)の予約可能時間
         </Typography>
         <Box sx={styles.reservableTimeWrap}>
-          {get(data, 'treatmentMenu.reservableTime', []).map(
-            (item: string, index: number) => (
-              <Button
-                sx={styles.labelItem}
-                color={'inherit'}
-                variant={'outlined'}
-                key={index}
-                size="small"
-              >
-                {item}
-              </Button>
-            ),
-          )}
+          {data.treatmentMenu?.length &&
+            data.treatmentMenu.reservableTime.map(
+              (item: string, index: number) => (
+                <Button
+                  sx={styles.labelItem}
+                  color={'inherit'}
+                  variant={'outlined'}
+                  key={index}
+                  size="small"
+                >
+                  {item}
+                </Button>
+              ),
+            )}
         </Box>
       </Box>
     </Box>

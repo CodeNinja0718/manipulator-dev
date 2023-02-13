@@ -1,13 +1,21 @@
 interface Photo {
   type: string;
   url: string;
+  objectKey: string;
 }
 interface Salon {
   _id: string;
   name: string;
   nameKana: string;
+  access: string[];
+  photos: Photo[];
+  features: Feature[];
 }
 interface Symptom {
+  id: string;
+  name: string;
+}
+interface Feature {
   id: string;
   name: string;
 }
@@ -15,11 +23,19 @@ interface ReviewRating {
   total: number;
   averageRating: number;
 }
+
+export interface Menu {
+  menuId: string;
+  name: string;
+  estimatedTime: number;
+  order: number;
+  price: number;
+  currency: string;
+}
 export interface IManipulator {
-  id?: string;
+  _id?: string;
   isFavorite: boolean;
   distance: string;
-  yearsOfExperience: string;
   treatmentMenu: any;
   name: string;
   nameKana: string;
@@ -27,10 +43,11 @@ export interface IManipulator {
   pr: string;
   profile: string;
   careerStart: string;
-  photo: Photo[];
+  photos: Photo[];
   fetures: Photo[];
   nationalLicenses: string[];
-  salons: Salon[];
+  salon: Salon[];
   symptoms: Symptom[];
   reviewRating: ReviewRating;
+  menus: Menu[];
 }

@@ -3,6 +3,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   searchColumn: {
     pl: { xs: 20 },
+    pr: { xs: 20, tablet: 0 },
     py: { xs: 0, tablet: 30 },
     width: { xs: '100%', tablet: '260px' },
     height: '100%',
@@ -16,7 +17,7 @@ const styles = {
   searchColumnBox: {
     bgcolor: 'cream',
     borderRadius: '5px',
-    padding: '15px 15px 30px',
+    padding: { xs: '15px 15px 0px', tablet: '15px 15px 30px' },
     display: 'block',
     height: { xs: '100%', tablet: 'auto' },
     position: 'relative',
@@ -27,6 +28,10 @@ const styles = {
     borderRadius: '5px',
   },
   listItemText: {
+    display: { xs: 'flex', tablet: 'block' },
+    flexDirection: { xs: 'row', tablet: 'column' },
+    alignItems: 'center',
+
     color: (theme: Theme) => theme.palette.text.primary,
     '& svg': {
       fontSize: '20px',
@@ -45,6 +50,15 @@ const styles = {
     },
     '&.MuiButtonBase-root': {
       pl: '5px',
+    },
+    '& .MuiListItemText-primary': {
+      flex: '0 0 84px',
+    },
+    '& .MuiListItemText-secondary': {
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      whiteSpace: 'pre',
+      fontSize: '14px',
     },
   },
   button: {

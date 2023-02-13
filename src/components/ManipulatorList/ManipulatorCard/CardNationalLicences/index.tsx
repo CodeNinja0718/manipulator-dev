@@ -1,12 +1,12 @@
 import { Box, Button, Typography } from '@mui/material';
+import type { IManipulator } from 'models/manipulator/interface';
 import * as React from 'react';
 import { NATIONAL_LICENSES } from 'utils/const';
 
-import type { ManipulatorCardModel } from '../model';
 import styles from './styles';
 
 interface ManipulatorCardLicencesProps {
-  data: ManipulatorCardModel;
+  data: IManipulator;
 }
 const ManipulatorCardLicences = ({ data }: ManipulatorCardLicencesProps) => {
   return (

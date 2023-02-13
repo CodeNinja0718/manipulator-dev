@@ -1,27 +1,24 @@
 import ArrowIcon from '@icons/arrow.svg';
 import { Box, Button, SvgIcon, Typography } from '@mui/material';
-import filter from 'lodash/filter';
-import get from 'lodash/get';
-import map from 'lodash/map';
+import type { IManipulator } from 'models/manipulator/interface';
 import Image from 'next/image';
 import * as React from 'react';
+import Helper from 'utils/helpers';
 
 import ManipulatorCardHeader from './CardHeader';
 import ManipulatorCardLeft from './CardLeft';
 import ManipulatorCardLicences from './CardNationalLicences';
 import ManipulatorCardPhoto from './CardPhoto';
 import ManipulatorCardTreatmentMenu from './CardTreatmentMenu';
-import type { ManipulatorCardModel } from './model';
 import styles from './styles';
 
 interface ManipulatorCardProps {
-  data: ManipulatorCardModel;
+  data: IManipulator;
 }
 
 const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
-  const salonInfo = get(data, 'salon', [])
-    ? filter(get(data, 'salon', []), (_item, index) => index === 0)
-    : [];
+  const salonInfo = data.salon?.[0];
+
   return (
     <Box sx={styles.manipulatorCard}>
       <ManipulatorCardHeader data={data} />
@@ -29,15 +26,15 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
         <ManipulatorCardLeft data={data} />
         <Box sx={styles.colRight}>
           <Typography component="h3" fontWeight={'600'}>
-            {map(salonInfo, (item) => get(item, 'name', ''))}
+            {salonInfo?.name}
           </Typography>
           <Typography component="p" fontSize="12px" color="graySolid">
-            {data.distance}
+            {salonInfo?.access?.length && salonInfo?.access[0]}
           </Typography>
-          {get(data, 'photos', []).length > 0 && (
+          {salonInfo && salonInfo.photos?.length > 0 && (
             <ManipulatorCardPhoto data={data} />
           )}
-          {data.yearsOfExperience && (
+          {data.careerStart && (
             <Box display="flex" marginTop="5px" alignItems="center">
               <Box flex="0 0 75px">
                 <Typography component="label" sx={styles.labelStyle}>
@@ -46,7 +43,7 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
               </Box>
               <Box flex="1 1 auto">
                 <Typography component="p" fontSize="14px">
-                  {data.yearsOfExperience}
+                  {Helper.getExpYear(data.careerStart)}年
                 </Typography>
               </Box>
             </Box>
@@ -66,12 +63,12 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
               </Typography>
             </Box>
           </Box>
-          {get(data, 'fetures', []).length > 0 && (
+          {salonInfo && salonInfo.features?.length > 0 && (
             <Box display="flex" flexWrap="wrap" gap="5px" margin="20px 0px">
-              {get(data, 'fetures', []).map((item, index) => (
+              {salonInfo.features.map((item, index) => (
                 <Image
                   key={`feat-${index}`}
-                  src={`/${item.url}`}
+                  src={Helper.getFeatueImage(item.id)}
                   alt="feat-image"
                   height={55}
                   priority
@@ -80,8 +77,10 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
               ))}
             </Box>
           )}
-          <ManipulatorCardTreatmentMenu data={data} />
-          <Box textAlign="center">
+          {data.menus?.length > 0 && (
+            <ManipulatorCardTreatmentMenu data={data} />
+          )}
+          <Box textAlign="center" marginTop="20px">
             <Button
               variant="contained"
               sx={styles.button}

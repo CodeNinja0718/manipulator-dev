@@ -204,3 +204,49 @@ export enum ValidCardNiceType {
   'Diners Club' = 'Diners Club',
   'American Express' = 'American Express',
 }
+export const PHOTO_TYPE_VALUE = {
+  avatar: 'avatar',
+};
+
+export const FEATURES = [
+  {
+    label: '駅チカ',
+    value: '1',
+    img: '/images/feature1.webp',
+  },
+  {
+    label: '駐車場あり',
+    value: '2',
+    img: '/images/feature2.webp',
+  },
+  {
+    label: 'コロナ対策',
+    value: '3',
+    img: '/images/feature3.webp',
+  },
+  {
+    label: 'キッズスペースあり',
+    value: '4',
+    img: '/images/feature4.webp',
+  },
+  {
+    label: '子連れOK',
+    value: '5',
+    img: '/images/feature5.webp',
+  },
+  {
+    label: 'バリアフリー',
+    value: '6',
+    img: '/images/feature6.webp',
+  },
+  {
+    label: '女性専用',
+    value: '7',
+    img: '/images/feature7.webp',
+  },
+  {
+    label: '英語対応',
+    value: '8',
+    img: '/images/feature8.webp',
+  },
+];

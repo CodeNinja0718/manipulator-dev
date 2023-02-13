@@ -40,14 +40,14 @@ const SearchColumn = () => {
             <ListItemText
               sx={styles.listItemText}
               primary={'日付'}
-              secondary={'2022/11/10（月）'}
+              secondary={'指定なし'}
             />
           </ListItemButton>
           <ListItemButton sx={styles.listItemButton}>
             <ListItemText
               sx={styles.listItemText}
               primary={'症状'}
-              secondary={'慢性疲労症候群'}
+              secondary={'指定なし'}
             />
           </ListItemButton>
         </List>

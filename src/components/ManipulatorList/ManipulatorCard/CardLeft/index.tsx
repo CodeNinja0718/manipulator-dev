@@ -2,13 +2,13 @@ import IconFavoriteOff from '@icons/icon_favorite_off.svg';
 import IconFavoriteOn from '@icons/icon_favorite_on.svg';
 import IconReview from '@icons/icon_review.svg';
 import { Box, Stack, Typography } from '@mui/material';
+import type { IManipulator } from 'models/manipulator/interface';
 import * as React from 'react';
 
-import type { ManipulatorCardModel } from '../model';
 import styles from './styles';
 
 interface ManipulatorCardLeftProps {
-  data: ManipulatorCardModel;
+  data: IManipulator;
 }
 const ManipulatorCardLeft = ({ data }: ManipulatorCardLeftProps) => {
   return (
@@ -44,7 +44,7 @@ const ManipulatorCardLeft = ({ data }: ManipulatorCardLeftProps) => {
             component="label"
             fontSize="12px"
           >
-            999件
+            {data.reviewRating.total}件
           </Typography>
         </Box>
       </Stack>

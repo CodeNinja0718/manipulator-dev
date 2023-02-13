@@ -1,14 +1,18 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
+import type { IManipulator } from 'models/manipulator/interface';
 import * as React from 'react';
+import { PHOTO_TYPE_VALUE } from 'utils/const';
 
-import type { ManipulatorCardModel } from '../model';
 import styles from './styles';
 
 interface ManipulatorCardHeaderProps {
-  data: ManipulatorCardModel;
+  data: IManipulator;
 }
 const ManipulatorCardHeader = ({ data }: ManipulatorCardHeaderProps) => {
+  const avatar = data.photos?.find(
+    (item) => item.type === PHOTO_TYPE_VALUE.avatar,
+  )?.url;
   return (
     <Box sx={styles.header}>
       <Box sx={styles.headerAbove} bgcolor="orange.main">
@@ -20,7 +24,7 @@ const ManipulatorCardHeader = ({ data }: ManipulatorCardHeaderProps) => {
         </IconButton>
       </Box>
       {/* <Box sx={styles.headerBellow} fontWeight={'600'}></Box> */}
-      <Avatar alt={data.name} src={data.avatar} sx={styles.avatar} />
+      <Avatar alt={data.name} src={avatar || ''} sx={styles.avatar} />
     </Box>
   );
 };
