@@ -195,3 +195,12 @@ export const NATIONAL_LICENSES = [
   '作業療法士',
   '理学療法士',
 ];
+
+export enum ValidCardNiceType {
+  'Visa' = 'Visa',
+  'MasterCard' = 'MasterCard',
+  'Mastercard' = 'Mastercard',
+  'JCB' = 'JCB',
+  'Diners Club' = 'Diners Club',
+  'American Express' = 'American Express',
+}
