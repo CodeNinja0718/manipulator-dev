@@ -15,12 +15,14 @@ interface AdvanceSearchProps {
   onOpenSearch: () => void;
   onSetActiveTab: (value: number) => void;
   onSetSelectedSymptomType: (value: number) => void;
+  disabled?: boolean;
 }
 
 const AdvanceSearch = ({
   onOpenSearch,
   onSetActiveTab,
   onSetSelectedSymptomType,
+  disabled = false,
 }: AdvanceSearchProps) => {
   const handleOpenSearch = () => {
     onOpenSearch();
@@ -67,7 +69,8 @@ const AdvanceSearch = ({
               icon={item.icon}
               label={item.label}
               iconProps={{ viewBox: item.viewBox }}
-              onClick={() => handleClickSymptom(index)}
+              onClick={() => handleClickSymptom(index + 1)}
+              disabled={disabled}
             />
           ))}
         </Box>
@@ -76,18 +79,19 @@ const AdvanceSearch = ({
           <Button
             variant="contained"
             sx={styles.button}
+            disabled={disabled}
             startIcon={
               <SvgIcon
                 component={SearchIcon}
                 viewBox="0 0 39 42"
-                color="orange"
+                color={disabled ? 'inherit' : 'orange'}
               />
             }
             endIcon={
               <SvgIcon
                 component={ArrowIcon}
                 viewBox="0 0 14 30"
-                color="orange"
+                color={disabled ? 'inherit' : 'orange'}
               />
             }
             onClick={handleOpenSearch}
