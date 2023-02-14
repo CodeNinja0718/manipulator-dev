@@ -142,6 +142,13 @@ const Helper = {
 
     return currentParams;
   },
+  formatCardNumberText: (number: string) => {
+    const numberMatch = number.match(/.{4}/g);
+    if (number && numberMatch) {
+      return numberMatch.join(' ');
+    }
+    return '';
+  },
 };
 
 export default Helper;
