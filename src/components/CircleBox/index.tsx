@@ -12,6 +12,7 @@ interface CircleBoxProps {
   active?: boolean;
   sxCustom?: object;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const CircleBox = ({
@@ -21,7 +22,9 @@ const CircleBox = ({
   active,
   sxCustom = {},
   onClick,
+  disabled = false,
 }: CircleBoxProps) => {
+  const containerBoxStyle = active ? styles.circleBoxActive : styles.circleBox;
   return (
     <Box
       display="flex"
@@ -40,8 +43,8 @@ const CircleBox = ({
         width={90}
         height={90}
         className="customCircleBoxStyle"
-        sx={active ? styles.circleBoxActive : styles.circleBox}
-        onClick={onClick}
+        sx={disabled ? styles.circleBoxDisable : containerBoxStyle}
+        onClick={disabled ? () => {} : onClick}
       >
         <SvgIcon
           component={icon}
@@ -53,7 +56,10 @@ const CircleBox = ({
           }}
         />
       </Box>
-      <Typography variant="body1" sx={styles.labelText}>
+      <Typography
+        variant="body1"
+        sx={disabled ? styles.labelTextDisable : styles.labelText}
+      >
         {label}
       </Typography>
     </Box>

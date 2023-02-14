@@ -2,7 +2,6 @@ import CloseIcon from '@icons/close-icon.svg';
 import Button from '@mui/material/Button';
 import CommonModal from 'components/CommonModal';
 import CommonTabs from 'components/CommonTabs';
-import { useEffect } from 'react';
 
 interface SearchModalProps {
   open?: boolean;
@@ -11,7 +10,6 @@ interface SearchModalProps {
   activeTab?: number;
   onSubmit: () => void;
   disabled: boolean;
-  onLoaded?: () => void;
 }
 
 const SearchModal = ({
@@ -21,12 +19,7 @@ const SearchModal = ({
   activeTab = 0,
   onSubmit,
   disabled = false,
-  onLoaded = () => {},
 }: SearchModalProps) => {
-  useEffect(() => {
-    onLoaded();
-  }, [onLoaded]);
-
   return (
     <CommonModal
       open={open}

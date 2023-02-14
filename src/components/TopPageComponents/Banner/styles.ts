@@ -43,6 +43,10 @@ const styles = {
     height: '100%',
     pt: 'calc(100% - 13px)',
   },
+  wrapper: {
+    background: (theme: Theme) => theme.palette.orangeGradient,
+    paddingTop: { xs: '10px', tablet: 0 },
+  },
 } as Record<string, SxProps<Theme>>;
 
 export default styles;

@@ -1,11 +1,14 @@
 import Box from '@mui/material/Box';
-import type { Theme } from '@mui/material/styles';
 import Layout from 'components/Layout';
-import Banner from 'components/TopPageComponents/Banner';
-import SearchTopPage from 'components/TopPageComponents/SearchTopPage';
 import dynamic from 'next/dynamic';
 import type { ReactElement } from 'react';
 
+const BannerTopPage = dynamic(
+  () => import('../components/TopPageComponents/Banner'),
+);
+const SearchTopPage = dynamic(
+  () => import('../components/TopPageComponents/SearchTopPage'),
+);
 const ProblemsTopPage = dynamic(
   () => import('../components/TopPageComponents/ProblemsTopPage'),
 );
@@ -25,14 +28,8 @@ const FAQTopPage = dynamic(
 const HomePage = () => {
   return (
     <Box>
-      <Box
-        sx={{
-          background: (theme: Theme) => theme.palette.orangeGradient,
-          paddingTop: { xs: '10px', tablet: 0 },
-        }}
-      >
-        <Banner />
-      </Box>
+      {/* Banner */}
+      <BannerTopPage />
       {/* Searching */}
       <SearchTopPage />
       {/* Problems */}

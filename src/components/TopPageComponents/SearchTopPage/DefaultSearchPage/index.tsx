@@ -10,11 +10,13 @@ import styles from './styles';
 interface DefaultSearchProps {
   onOpenSearch: () => void;
   onSetActiveTab: (value: number) => void;
+  disabled?: boolean;
 }
 
 const DefaultSearchPage = ({
   onOpenSearch,
   onSetActiveTab,
+  disabled = false,
 }: DefaultSearchProps) => {
   const handleOpenSearch = (value: number) => {
     onOpenSearch();
@@ -37,13 +39,18 @@ const DefaultSearchPage = ({
             <SvgIcon
               component={LocationIcon}
               viewBox="0 0 29 35"
-              color="orange"
+              color={disabled ? 'inherit' : 'orange'}
             />
           }
           endIcon={
-            <SvgIcon component={ArrowIcon} viewBox="0 0 14 30" color="orange" />
+            <SvgIcon
+              component={ArrowIcon}
+              viewBox="0 0 14 30"
+              color={disabled ? 'inherit' : 'orange'}
+            />
           }
           onClick={() => handleOpenSearch(0)}
+          disabled={disabled}
         >
           エリアから探す
         </Button>
@@ -54,12 +61,17 @@ const DefaultSearchPage = ({
             <SvgIcon
               component={StationIcon}
               viewBox="0 0 29 35"
-              color="orange"
+              color={disabled ? 'inherit' : 'orange'}
             />
           }
           endIcon={
-            <SvgIcon component={ArrowIcon} viewBox="0 0 14 30" color="orange" />
+            <SvgIcon
+              component={ArrowIcon}
+              viewBox="0 0 14 30"
+              color={disabled ? 'inherit' : 'orange'}
+            />
           }
+          disabled={disabled}
           onClick={() => handleOpenSearch(1)}
         >
           駅から探す

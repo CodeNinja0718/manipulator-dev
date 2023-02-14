@@ -23,12 +23,23 @@ const styles = {
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.16)',
     borderRadius: '50%',
   }),
+  circleBoxDisable: (theme: Theme) => ({
+    background: theme.palette.action.disabledBackground,
+    boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.16)',
+    borderRadius: '50%',
+    cursor: 'initial',
+  }),
   icon: {
     fontSize: '1rem',
     width: 53,
     height: 57,
   },
   labelText: {
+    mt: 10,
+    textAlign: 'center',
+  },
+  labelTextDisable: {
+    color: (theme: Theme) => theme.palette.action.disabledBackground,
     mt: 10,
     textAlign: 'center',
   },

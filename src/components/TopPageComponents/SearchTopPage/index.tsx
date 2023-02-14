@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
-import LoadingOverlay from 'components/LoadingOverlay';
 import SearchModal from 'components/SearchModal';
 import AdvanceSearch from 'components/TopPageComponents/SearchTopPage/AdvanceSearch';
 import DefaultSearch from 'components/TopPageComponents/SearchTopPage/DefaultSearchPage';
@@ -32,7 +31,6 @@ const SearchTopPage = () => {
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
   const [selectedStation, setSelectedStation] = useState<string[]>([]);
   const [disabledSubmit, setDisabledSubmit] = useState(false);
-  const [loadingShowModal, setLoadingShowModal] = useState(false);
 
   const handleSetActiveTab = (value: number) => setActiveTab(value);
   const handleSetSelectedSymptomType = (value: number) =>
@@ -43,12 +41,7 @@ const SearchTopPage = () => {
     setSelectedLocation(value);
   const handleSetSelectedStation = (value: string[]) =>
     setSelectedStation(value);
-  const handleOpenSearch = () => {
-    setLoadingShowModal(true);
-    setTimeout(() => {
-      setOpen(true);
-    }, 100);
-  };
+  const handleOpenSearch = () => setOpen(true);
   const handleCloseSearch = () => {
     setOpen(false);
     handleSetSelectedSymptomType(1);
@@ -81,8 +74,6 @@ const SearchTopPage = () => {
     router.push(`${Helper.parseURLByParams(data, '/manipulator')}`);
   };
 
-  const handleLoadedModal = () => setLoadingShowModal(false);
-
   return (
     <Box>
       <Box position="relative">
@@ -91,6 +82,7 @@ const SearchTopPage = () => {
           sx={{ background: (theme: Theme) => theme.palette.orangeGradient }}
         >
           <DefaultSearch
+            disabled={open}
             onOpenSearch={handleOpenSearch}
             onSetActiveTab={handleSetActiveTab}
           />
@@ -98,11 +90,11 @@ const SearchTopPage = () => {
 
         {/* Advance Search - Filter */}
         <AdvanceSearch
+          disabled={open}
           onOpenSearch={handleOpenSearch}
           onSetActiveTab={handleSetActiveTab}
           onSetSelectedSymptomType={handleSetSelectedSymptomType}
         />
-        <LoadingOverlay visible={loadingShowModal} />
       </Box>
 
       {open && (
@@ -124,7 +116,6 @@ const SearchTopPage = () => {
           activeTab={activeTab}
           onClose={handleCloseSearch}
           onSubmit={handleSubmit}
-          onLoaded={handleLoadedModal}
         />
       )}
     </Box>
