@@ -1,8 +1,32 @@
 import LocationIcon from '@icons/icon_area_on.svg';
 import StationIcon from '@icons/icon_station_on.svg';
+import { Box, CircularProgress } from '@mui/material';
 import TabLabelItem from 'components/CommonTabs/TabLabelItem';
-import LocationTabItem from 'components/SearchManipulator/LocationTabItem';
-import StationTabItem from 'components/SearchManipulator/StationTabItem';
+import dynamic from 'next/dynamic';
+
+import styles from './styles';
+
+const RenderLoading = () => {
+  return (
+    <Box sx={styles.loadingBox}>
+      <CircularProgress size="small" sx={styles.loading} />
+    </Box>
+  );
+};
+
+const LocationTabItem = dynamic(
+  () => import('components/SearchManipulator/LocationTabItem'),
+  {
+    loading: () => <RenderLoading />,
+  },
+);
+
+const StationTabItem = dynamic(
+  () => import('components/SearchManipulator/StationTabItem'),
+  {
+    loading: () => <RenderLoading />,
+  },
+);
 
 export const renderTabList = (
   selectedSymptomType: number,

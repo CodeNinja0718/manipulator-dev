@@ -63,15 +63,9 @@ const styles = {
       mr: 0,
     },
   },
-  // underline: {
-  //   width: '100%',
-  //   height: { xs: '0.5px', mobile: '1px' },
-  //   background: (theme: Theme) => `${theme.palette.gray}`,
-  //   transform: 'translateY(-1.5px)',
-  // },
   contentContainer: {
     overflow: 'auto',
-    maxHeight: { xs: '55vh', tablet: '51vh' },
+    maxHeight: { xs: '44vh', tablet: '51vh' },
     mt: 28,
   },
 } as Record<string, SxProps<Theme>>;

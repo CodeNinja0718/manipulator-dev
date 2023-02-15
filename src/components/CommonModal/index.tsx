@@ -64,12 +64,7 @@ const CommonModal = ({
 }: CommonModalProps) => {
   return (
     <>
-      <Modal
-        open={open}
-        onClose={onClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={onClose}>
         <Box sx={styles.modalContainer}>
           <Box display="flex" justifyContent="center" sx={styles.titleModal}>
             {titleElement || <Typography variant="title">{title}</Typography>}

@@ -28,7 +28,7 @@ const ManipulatorCardPhoto = ({ data }: ManipulatorCardPhotoProps) => {
             key={`photo-${index}`}
             src={`${item.url}`}
             alt="image-title"
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             height={80}
             width={120}
             style={{
