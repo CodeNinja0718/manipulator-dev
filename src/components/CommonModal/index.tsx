@@ -64,7 +64,7 @@ const CommonModal = ({
 }: CommonModalProps) => {
   return (
     <>
-      <Modal open={open} onClose={onClose}>
+      <Modal open={open} onClose={onClose} keepMounted>
         <Box sx={styles.modalContainer}>
           <Box display="flex" justifyContent="center" sx={styles.titleModal}>
             {titleElement || <Typography variant="title">{title}</Typography>}

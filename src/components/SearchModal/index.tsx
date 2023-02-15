@@ -1,9 +1,22 @@
 import CloseIcon from '@icons/close-icon.svg';
-import Button from '@mui/material/Button';
+import { Box, Button, CircularProgress } from '@mui/material';
 import CommonModal from 'components/CommonModal';
-import CommonTabs from 'components/CommonTabs';
+import dynamic from 'next/dynamic';
 import React, { useMemo } from 'react';
 
+import styles from './styles';
+
+const RenderLoading = () => {
+  return (
+    <Box sx={styles.loadingBox}>
+      <CircularProgress size="small" sx={styles.loading} />
+    </Box>
+  );
+};
+
+const CommonTabs = dynamic(() => import('components/CommonTabs'), {
+  loading: () => <RenderLoading />,
+});
 interface SearchModalProps {
   open?: boolean;
   title?: string;

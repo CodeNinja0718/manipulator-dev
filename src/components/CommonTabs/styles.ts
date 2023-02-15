@@ -63,6 +63,14 @@ const styles = {
       mr: 0,
     },
   },
+  underline: {
+    position: 'relative',
+    width: '100%',
+    height: 1.2,
+    background: 'white',
+    transform: 'translateY(-1px)',
+    zIndex: 1,
+  },
   contentContainer: {
     overflow: 'auto',
     maxHeight: { xs: '44vh', tablet: '51vh' },
