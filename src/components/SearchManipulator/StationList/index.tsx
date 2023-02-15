@@ -12,15 +12,8 @@ import type { ICommonStation } from 'models/common/interface';
 import commonQuery from 'models/common/query';
 import React, { useMemo, useState } from 'react';
 
+import type { LinesProps, StationListProps } from './model';
 import styles from './styles';
-
-interface StationListProps {
-  lines: {
-    _id: number;
-    name: string;
-  }[];
-  onSetSelectedStation: (value: string[]) => void;
-}
 
 const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
   const [selected, setSelected] = useState<string[]>([]);
@@ -48,17 +41,11 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
     setSelected([]);
   };
 
-  const line: {
-    _id: number;
-    name: string;
-  }[] = useMemo(() => {
+  const line: LinesProps[] = useMemo(() => {
     return lines || [];
   }, [lines]);
 
-  const stationsList: {
-    _id: number;
-    name: string;
-  }[] = useMemo(() => {
+  const stationsList: LinesProps[] = useMemo(() => {
     const value = stations || [];
     return get(value, 'result', []);
   }, [stations]);

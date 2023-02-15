@@ -40,9 +40,7 @@ const SearchTopPage = () => {
     setSelectedLocation(value);
   const handleSetSelectedStation = (value: string[]) =>
     setSelectedStation(value);
-  const handleOpenSearch = () => {
-    setOpen(true);
-  };
+  const handleOpenSearch = () => setOpen(true);
   const handleCloseSearch = () => {
     setOpen(false);
     handleSetSelectedSymptomType(1);
