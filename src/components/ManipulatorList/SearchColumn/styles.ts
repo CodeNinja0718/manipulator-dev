@@ -2,8 +2,8 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
   searchColumn: {
-    pl: { xs: 20 },
-    pr: { xs: 20, tablet: 0 },
+    pl: { xs: 10, tablet: 20 },
+    pr: { xs: 10, tablet: 0 },
     py: { xs: 0, tablet: 30 },
     width: { xs: '100%', tablet: '260px' },
     height: '100%',
@@ -24,7 +24,7 @@ const styles = {
   },
   listItemButton: {
     color: (theme: Theme) => theme.palette.orangeText,
-    padding: '8px 5px',
+    padding: { xs: '2px 5px', tablet: '8px 5px' },
     borderRadius: '5px',
   },
   listItemText: {
@@ -62,8 +62,8 @@ const styles = {
     },
   },
   button: {
-    marginTop: 30,
-    width: 160,
+    width: '100%',
+    maxWidth: 160,
     minHeight: 30,
     fontSize: 14,
 

@@ -6,7 +6,7 @@ const styles = {
     padding: '10px',
     fontSize: '16px',
     color: 'white',
-    pl: '104px',
+    pl: { xs: '84px', tablet: '104px' },
     position: 'relative',
   },
   headerAboveBtn: {
@@ -17,7 +17,7 @@ const styles = {
   },
   headerBellow: {
     pl: '70px',
-    height: 15,
+    height: { xs: 5, tablet: 15 },
   },
   header: {
     position: 'relative',
@@ -26,7 +26,7 @@ const styles = {
   avatar: {
     position: 'absolute',
     top: '15px',
-    left: '20px',
+    left: { xs: '12px', tablet: '20px' },
     width: 60,
     height: 60,
   },

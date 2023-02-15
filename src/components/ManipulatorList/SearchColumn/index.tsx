@@ -2,6 +2,7 @@ import IconReloadSvg from '@icons/icon_sync.svg';
 import {
   Box,
   Button,
+  Grid,
   List,
   ListItemButton,
   ListItemText,
@@ -26,7 +27,25 @@ const SearchColumn = () => {
     <Box sx={styles.searchColumn}>
       <Box sx={styles.searchColumnBox}>
         <Box sx={styles.searchColumnTitleBox}>
-          <Typography variant="subtitle1">検索結果</Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1">検索結果</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Box display={{ xs: 'block', tablet: 'none' }} textAlign="center">
+                <Button
+                  size="small"
+                  variant="contained"
+                  sx={styles.button}
+                  startIcon={
+                    <SvgIcon component={IconReloadSvg} inheritViewBox />
+                  }
+                >
+                  条件を変更する
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
         <List component="nav" aria-label="side-menu" sx={styles.listItem}>
           <ListItemButton sx={styles.listItemButton}>
@@ -51,7 +70,12 @@ const SearchColumn = () => {
             />
           </ListItemButton>
         </List>
-        <Box display="block" textAlign="center">
+
+        <Box
+          display={{ xs: 'none', tablet: 'block' }}
+          textAlign="center"
+          marginTop="30"
+        >
           <Button
             size="small"
             variant="contained"

@@ -36,7 +36,7 @@ export interface IManipulator {
   _id?: string;
   isFavorite: boolean;
   distance: string;
-  treatmentMenu: any;
+  timeSlots: string[];
   name: string;
   nameKana: string;
   avatar: string;
@@ -44,7 +44,6 @@ export interface IManipulator {
   profile: string;
   careerStart: string;
   photos: Photo[];
-  fetures: Photo[];
   nationalLicenses: string[];
   salon: Salon[];
   symptoms: Symptom[];
