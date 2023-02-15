@@ -16,7 +16,7 @@ const DatePicker = ({
   placeholder,
 }: DatePickerProps) => {
   return (
-    <Box>
+    <Box sx={{ maxWidth: { xs: '100%', mobile: 338 } }}>
       <Typography color="orangeBold" sx={{ fontSize: '1.13rem' }}>
         日付・時間
       </Typography>
