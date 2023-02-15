@@ -23,6 +23,7 @@ COPY package.json ./
 COPY --from=builder /src/public ./public
 COPY --from=builder --chown=nextjs:nodejs /src/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /src/.next/static ./.next/static
+COPY --from=builder /src/next.config.js ./next.config.js
 
 USER nextjs
 
