@@ -33,10 +33,19 @@ const SymptomListByType = ({
     if (actives.indexOf(value) > -1) {
       selected = actives.filter((item) => item !== value);
     } else selected = [...actives, value];
+
+    // Set active tag
+    selected =
+      selected.filter((ele) => {
+        return !!ele;
+      }) || [];
     setActives(selected);
 
     // Handle selected tags
-    onSelectedSymptoms(selected);
+    const selectedValue = list
+      .filter((_item, index) => selected.includes(index))
+      .map((item) => item._id);
+    onSelectedSymptoms(selectedValue);
   };
 
   return isEmpty(list) ? (
