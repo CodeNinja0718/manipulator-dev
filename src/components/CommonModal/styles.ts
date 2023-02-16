@@ -11,6 +11,7 @@ const styles = {
     transform: { xs: 'initial', md: 'translate(-50%, -50%)' },
     background: 'white',
     boxShadow: 24,
+    borderRadius: { xs: 0, md: '10px' },
     p: { xs: '23px 15px', normalMobile: 23, md: '30px 50px 54px' },
     '&:focus-visible': {
       outline: 'none',

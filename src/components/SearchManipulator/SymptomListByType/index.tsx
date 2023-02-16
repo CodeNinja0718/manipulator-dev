@@ -25,6 +25,10 @@ const SymptomListByType = ({
   const [actives, setActives] = useState<number[]>([]);
   const list = useMemo(() => {
     const newValue = symptoms || [];
+
+    // Clear selected tag when changed symptom type
+    setActives([]);
+    onSelectedSymptoms([]);
     return newValue.filter((item) => item.typeId === selectedSymptomType);
   }, [symptoms, selectedSymptomType]);
 
@@ -34,11 +38,6 @@ const SymptomListByType = ({
       selected = actives.filter((item) => item !== value);
     } else selected = [...actives, value];
 
-    // Set active tag
-    selected =
-      selected.filter((ele) => {
-        return !!ele;
-      }) || [];
     setActives(selected);
 
     // Handle selected tags

@@ -17,6 +17,7 @@ const RenderLoading = () => {
 const CommonTabs = dynamic(() => import('components/CommonTabs'), {
   loading: () => <RenderLoading />,
 });
+
 interface SearchModalProps {
   open?: boolean;
   title?: string;
@@ -60,9 +61,9 @@ const SearchModal = ({
         </Button>
       }
     >
-      <>
+      <Box sx={styles.contentContainer}>
         <CommonTabs tabs={tabs} active={activeTab} />
-      </>
+      </Box>
     </CommonModal>
   );
 };

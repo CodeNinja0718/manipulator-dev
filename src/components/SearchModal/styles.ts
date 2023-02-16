@@ -12,6 +12,9 @@ const styles = {
     height: 25,
     color: (theme: Theme) => theme.palette.orangeBold,
   },
+  contentContainer: {
+    minHeight: { xs: '44vh', tablet: '51vh' },
+  },
 } as Record<string, SxProps<Theme>>;
 
 export default styles;

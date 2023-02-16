@@ -3,7 +3,6 @@ import type { SxProps, Theme } from '@mui/material/styles';
 const styles = {
   boxContainer: {
     width: 97,
-    cursor: 'pointer',
   },
   circleBox: (theme: Theme) => ({
     background: 'white',
@@ -17,11 +16,13 @@ const styles = {
         color: 'white',
       },
     },
+    cursor: 'pointer',
   }),
   circleBoxActive: (theme: Theme) => ({
     background: theme.palette.orangeBold,
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.16)',
     borderRadius: '50%',
+    cursor: 'pointer',
   }),
   circleBoxDisable: (theme: Theme) => ({
     background: theme.palette.action.disabledBackground,
