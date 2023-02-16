@@ -13,11 +13,11 @@ const ManipulatorHeader = ({ resultTotal = 0 }: ManipulatorHeaderProps) => {
 
   return (
     <Grid container spacing={2} marginBottom="30px" alignItems="center">
-      <Grid item xs={5}>
+      <Grid item xs={3} tablet={5} display="flex" alignItems="center">
         <Typography sx={styles.resultTotal}>{resultTotal}</Typography>
         <span>件</span>
       </Grid>
-      <Grid item xs={7} textAlign="right">
+      <Grid item xs={9} tablet={7} textAlign="right">
         <Typography component="span" sx={styles.sortTitle}>
           並び替え
         </Typography>

@@ -16,6 +16,8 @@ const styles = {
     minHeight: '30px',
     boxShadow: 'none !important',
     border: '1px solid #999999',
+    padding: '8px 10px',
+    minWidth: '90px !important',
   },
 } as Record<string, SxProps<Theme>>;
 

@@ -6,7 +6,7 @@ const styles = {
     flexDirection: { xs: 'column', tablet: 'row' },
   },
   rightContainer: {
-    padding: { xs: '60px 20px', tablet: '40px' },
+    padding: { xs: '15px', tablet: '40px' },
     backgroundColor: 'white',
   },
   leftContainer: {
@@ -17,7 +17,9 @@ const styles = {
   loadingBox: {
     display: 'flex',
     width: '100%',
+    height: '100vh',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   loading: {
     width: 50,

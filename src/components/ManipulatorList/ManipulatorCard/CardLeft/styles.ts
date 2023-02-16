@@ -4,7 +4,7 @@ const styles = {
   colLeft: {
     flex: { xs: '0 0 85px', tablet: '0 0 105px' },
     alignItems: 'center',
-    marginTop: 25,
+    marginTop: { xs: 30, tablet: 25 },
     display: 'flex',
     flexDirection: 'column',
   },

@@ -1,5 +1,4 @@
-import ArrowIcon from '@icons/arrow.svg';
-import { Box, Button, SvgIcon, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import type { IManipulator } from 'models/manipulator/interface';
 import Image from 'next/image';
 import * as React from 'react';
@@ -7,9 +6,9 @@ import Helper from 'utils/helpers';
 
 import ManipulatorCardHeader from './CardHeader';
 import ManipulatorCardLeft from './CardLeft';
+import CardMenuAndFooter from './CardMenuAndFooter';
 import ManipulatorCardLicences from './CardNationalLicences';
 import ManipulatorCardPhoto from './CardPhoto';
-import ManipulatorCardTreatmentMenu from './CardTreatmentMenu';
 import styles from './styles';
 
 interface ManipulatorCardProps {
@@ -18,7 +17,6 @@ interface ManipulatorCardProps {
 
 const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
   const salonInfo = data.salon?.[0];
-
   return (
     <Box sx={styles.manipulatorCard}>
       <ManipulatorCardHeader data={data} />
@@ -48,11 +46,15 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
               </Box>
             </Box>
           )}
-          {data.nationalLicenses.length > 0 && (
+          {data.nationalLicenses?.length > 0 && (
             <ManipulatorCardLicences data={data} />
           )}
-          <Box display="flex" marginTop="15px">
-            <Box flex="0 0 75px">
+          <Box
+            display="flex"
+            marginTop="15px"
+            sx={{ flexDirection: { xs: 'column', tablet: 'row' } }}
+          >
+            <Box flex={{ xs: '1 1 auto', tablet: '0 0 75px' }}>
               <Typography component="label" sx={styles.labelStyle}>
                 PR
               </Typography>
@@ -77,24 +79,16 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
               ))}
             </Box>
           )}
-          {data.menus?.length > 0 && (
-            <ManipulatorCardTreatmentMenu data={data} />
-          )}
-          <Box textAlign="center" marginTop="20px">
-            <Button
-              variant="contained"
-              sx={styles.button}
-              endIcon={
-                <SvgIcon
-                  component={ArrowIcon}
-                  viewBox="0 0 14 30"
-                  color="inherit"
-                />
-              }
-            >
-              詳細を見る
-            </Button>
+          <Box display={{ xs: 'none', tablet: 'block' }}>
+            <CardMenuAndFooter data={data} />
           </Box>
+        </Box>
+        <Box
+          display={{ xs: 'block', tablet: 'none' }}
+          flex="0 0 100%"
+          max-width="100%"
+        >
+          <CardMenuAndFooter data={data} />
         </Box>
       </Box>
     </Box>

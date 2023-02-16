@@ -35,6 +35,18 @@ const styles = {
     fontWeight: '500',
     color: 'black',
   },
+  button: {
+    marginTop: 10,
+    width: '226px',
+    minHeight: '40px',
+    fontSize: '16px',
+
+    '& .MuiButton-endIcon': {
+      '& svg': {
+        height: 12,
+      },
+    },
+  },
 } as Record<string, SxProps<Theme>>;
 
 export default styles;

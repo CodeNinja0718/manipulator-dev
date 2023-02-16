@@ -10,14 +10,15 @@ const styles = {
   manipulatorCardContent: {
     display: 'flex',
     paddingBottom: 30,
-    paddingTop: 15,
+    paddingTop: { xs: 6, tablet: 15 },
     border: '1px solid #ac9b93',
     borderBottomRightRadius: 10,
     borderTop: '0px',
+    flexWrap: 'wrap',
   },
   colRight: {
-    flex: '1 1 auto',
-    paddingRight: 38,
+    flex: { xs: '1 1 calc(100% - 85px)', tablet: '1 1 calc(100% - 105px)' },
+    paddingRight: { xs: 10, tablet: 25 },
   },
   buttonItemGroup: {
     borderRadius: '5px',
@@ -26,18 +27,6 @@ const styles = {
     padding: '2px 10px',
     minWidth: '85px',
     cursor: 'default',
-  },
-  button: {
-    marginTop: 10,
-    width: '226px',
-    minHeight: '40px',
-    fontSize: '16px',
-
-    '& .MuiButton-endIcon': {
-      '& svg': {
-        height: 12,
-      },
-    },
   },
   labelStyle: {
     color: 'orangeText',
