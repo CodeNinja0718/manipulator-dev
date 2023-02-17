@@ -66,7 +66,12 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
             </Box>
           </Box>
           {salonInfo && salonInfo.features?.length > 0 && (
-            <Box display="flex" flexWrap="wrap" gap="5px" margin="20px 0px">
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              gap={{ xs: '4px', tablet: '5px' }}
+              margin="20px 0px"
+            >
               {salonInfo.features.map((item, index) => (
                 <Image
                   key={`feat-${index}`}

@@ -51,12 +51,17 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
               key={`menu-${index}`}
               marginBottom="5px"
             >
-              <Grid item xs={5}>
+              <Grid item xs={7} md={5}>
                 <Typography component="p" sx={styles.textStyle}>
                   {item.name}
                 </Typography>
               </Grid>
-              <Grid item xs={7} textAlign={{ xs: 'right', tablet: 'left' }}>
+              <Grid
+                item
+                xs={5}
+                md={7}
+                textAlign={{ xs: 'right', tablet: 'left' }}
+              >
                 <Typography component="p" sx={styles.textStyle}>
                   {item.price}円
                 </Typography>
