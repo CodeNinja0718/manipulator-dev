@@ -93,6 +93,7 @@ const SearchTopPage = () => {
           onOpenSearch={handleOpenSearch}
           onSetActiveTab={handleSetActiveTab}
           onSetSelectedSymptomType={handleSetSelectedSymptomType}
+          onSubmit={handleSubmit}
         />
       </Box>
 
