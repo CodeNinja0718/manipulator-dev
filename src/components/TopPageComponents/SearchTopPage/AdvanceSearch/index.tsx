@@ -13,6 +13,7 @@ import styles from './styles';
 
 interface AdvanceSearchProps {
   onOpenSearch: () => void;
+  onSubmit: () => void;
   onSetActiveTab: (value: number) => void;
   onSetSelectedSymptomType: (value: number) => void;
   disabled?: boolean;
@@ -20,6 +21,7 @@ interface AdvanceSearchProps {
 
 const AdvanceSearch = ({
   onOpenSearch,
+  onSubmit,
   onSetActiveTab,
   onSetSelectedSymptomType,
   disabled = false,
@@ -94,7 +96,7 @@ const AdvanceSearch = ({
                 color={disabled ? 'inherit' : 'orange'}
               />
             }
-            onClick={handleOpenSearch}
+            onClick={onSubmit}
           >
             整体師一覧を見る
           </Button>
