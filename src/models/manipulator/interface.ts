@@ -10,11 +10,12 @@ interface Salon {
   access: string[];
   photos: Photo[];
   features: Feature[];
+  addresses?: Address[];
 }
-interface Symptom {
-  id: string;
-  name: string;
-}
+// interface Symptom {
+//   id: string;
+//   name: string;
+// }
 interface Feature {
   id: string;
   name: string;
@@ -32,21 +33,33 @@ export interface Menu {
   price: number;
   currency: string;
 }
+
+export interface Station {
+  id: number;
+  name: string;
+}
+
+export interface Address {
+  provinceId: number;
+  province: string;
+  stationIds: number[];
+  areaId: number;
+  area: string;
+  address: string;
+  stations: Station[];
+}
 export interface IManipulator {
   _id?: string;
-  isFavorite: boolean;
-  distance: string;
+  isFavorite?: boolean;
   timeSlots: string[];
   name: string;
   nameKana: string;
-  avatar: string;
   pr: string;
   profile: string;
   careerStart: string;
   photos: Photo[];
   nationalLicenses: string[];
   salon: Salon[];
-  symptoms: Symptom[];
   reviewRating: ReviewRating;
   menus: Menu[];
 }

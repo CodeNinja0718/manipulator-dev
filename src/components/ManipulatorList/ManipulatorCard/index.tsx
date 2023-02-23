@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import type { IManipulator } from 'models/manipulator/interface';
-import Image from 'next/image';
 import * as React from 'react';
 import Helper from 'utils/helpers';
 
+import ManipulatorCardFeature from './CardFeature';
 import ManipulatorCardHeader from './CardHeader';
 import ManipulatorCardLeft from './CardLeft';
 import CardMenuAndFooter from './CardMenuAndFooter';
@@ -30,7 +30,7 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
             {salonInfo?.access?.length && salonInfo?.access[0]}
           </Typography>
           {salonInfo && salonInfo.photos?.length > 0 && (
-            <ManipulatorCardPhoto data={data} />
+            <ManipulatorCardPhoto data={data} width={120} height={80} />
           )}
           {data.careerStart && (
             <Box display="flex" marginTop="5px" alignItems="center">
@@ -66,23 +66,7 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
             </Box>
           </Box>
           {salonInfo && salonInfo.features?.length > 0 && (
-            <Box
-              display="flex"
-              flexWrap="wrap"
-              gap={{ xs: '4px', tablet: '5px' }}
-              margin="20px 0px"
-            >
-              {salonInfo.features.map((item, index) => (
-                <Image
-                  key={`feat-${index}`}
-                  src={Helper.getFeatueImage(item.id)}
-                  alt="feat-image"
-                  height={55}
-                  priority
-                  width={80}
-                />
-              ))}
-            </Box>
+            <ManipulatorCardFeature data={data} />
           )}
           <Box display={{ xs: 'none', tablet: 'block' }}>
             <CardMenuAndFooter data={data} />

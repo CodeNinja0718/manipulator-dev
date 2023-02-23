@@ -35,7 +35,7 @@ const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
           ))}
         </Tabs>
       </Box>
-      <Box sx={styles.underline}></Box>
+      <Box sx={styles.underline} className="underlineCustom"></Box>
       {/* Current Component */}
       {currentContent && (
         <Box sx={styles.contentContainer}>

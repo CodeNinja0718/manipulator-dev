@@ -98,6 +98,11 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
       )}
       <Box textAlign="center" marginTop="20px">
         <Button
+          onClick={() =>
+            router.push({
+              pathname: `/manipulator/${data._id}`,
+            })
+          }
           variant="contained"
           sx={styles.button}
           endIcon={

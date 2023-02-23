@@ -8,8 +8,14 @@ import styles from './styles';
 
 interface ManipulatorCardPhotoProps {
   data: IManipulator;
+  width: number;
+  height: number;
 }
-const ManipulatorCardPhoto = ({ data }: ManipulatorCardPhotoProps) => {
+const ManipulatorCardPhoto = ({
+  data,
+  width,
+  height,
+}: ManipulatorCardPhotoProps) => {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState('');
 
@@ -29,12 +35,13 @@ const ManipulatorCardPhoto = ({ data }: ManipulatorCardPhotoProps) => {
             src={`${item.url}`}
             alt="image-title"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            height={80}
-            width={120}
+            height={height}
+            width={width}
             style={{
               objectFit: 'cover',
               cursor: 'pointer',
               objectPosition: 'top center',
+              marginRight: 10,
             }}
             onClick={() => handleViewImage(item.url)}
           />
