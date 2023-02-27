@@ -1,8 +1,9 @@
-import { Box, Fade, Modal } from '@mui/material';
+import { Box, Fade, Modal, useMediaQuery } from '@mui/material';
 import type { IManipulator } from 'models/manipulator/interface';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
+import theme from 'theme';
 
 import styles from './styles';
 
@@ -10,12 +11,17 @@ interface ManipulatorCardPhotoProps {
   data: IManipulator;
   width: number;
   height: number;
+  isInDetail?: boolean;
 }
 const ManipulatorCardPhoto = ({
   data,
   width,
   height,
+  isInDetail,
 }: ManipulatorCardPhotoProps) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('normalTablet'), {
+    noSsr: true,
+  });
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState('');
 
@@ -35,8 +41,8 @@ const ManipulatorCardPhoto = ({
             src={`${item.url}`}
             alt="image-title"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            height={height}
-            width={width}
+            height={isInDetail && isMobile ? 110 : height}
+            width={isInDetail && isMobile ? 160 : width}
             style={{
               objectFit: 'cover',
               cursor: 'pointer',

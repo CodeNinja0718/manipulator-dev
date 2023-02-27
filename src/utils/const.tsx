@@ -9,6 +9,7 @@ import ReservationSvg from '@icons/icon_reservation.svg';
 import TicketSvg from '@icons/icon_ticket.svg';
 import InstagramIcon from '@icons/instagram_icon.svg';
 import TwitterIcon from '@icons/twitter_icon.svg';
+import type { MenuHeadItem } from 'components/ManipulatorDetail/HeadMenu';
 
 import type { INavigation } from './type';
 
@@ -249,4 +250,11 @@ export const FEATURES = [
     value: '8',
     img: '/images/feature8.webp',
   },
+];
+
+export const MENU_MANIPULATOR_DETAIL: MenuHeadItem[] = [
+  { title: 'プロフィール ', link: 'id_1' },
+  { title: 'メニュー', link: 'id_2' },
+  { title: ' 整体院情報', link: 'id_3' },
+  { title: 'レビュー', link: 'id_4' },
 ];

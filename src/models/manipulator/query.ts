@@ -8,6 +8,11 @@ const manipulatorQuery = {
       ...params,
     },
   }),
+  detailManiplator: (maniplatorId: string) => ({
+    apiUrl: `/reservation/manipulators/${maniplatorId}`,
+    queryKey: [maniplatorId],
+    staleTime: Infinity,
+  }),
 };
 
 export default manipulatorQuery;

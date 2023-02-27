@@ -10,11 +10,15 @@ import {
   SvgIcon,
   Typography,
 } from '@mui/material';
+import type { IManipulator } from 'models/manipulator/interface';
 import * as React from 'react';
 
 import styles from './styles';
 
-const LeftInfo = () => {
+interface LeftInfoProps {
+  data?: IManipulator;
+}
+const LeftManipulatorProfile = ({ data }: LeftInfoProps) => {
   return (
     <Box sx={styles.leftInfo}>
       <Grid container spacing={20}>
@@ -31,7 +35,7 @@ const LeftInfo = () => {
             fontSize="18px"
             marginBottom={2}
           >
-            整体師太郎
+            {data?.salon[0]?.name}
           </Typography>
           <Typography
             component="label"
@@ -39,7 +43,7 @@ const LeftInfo = () => {
             fontSize="14px"
             marginBottom={2}
           >
-            快適整体院
+            {data?.salon[0]?.name}
           </Typography>
           <Typography
             component="p"
@@ -47,11 +51,11 @@ const LeftInfo = () => {
             color="graySolid"
             marginBottom={5}
           >
-            東急東横線 渋谷駅 徒歩10分
+            {data?.salon[0]?.access}
           </Typography>
           <Stack direction={'row'} alignItems="center" spacing={8}>
             <Typography sx={styles.averageRating} component="label">
-              ★ 4.5
+              ★ 0
             </Typography>
             <Box
               sx={{
@@ -76,7 +80,7 @@ const LeftInfo = () => {
               component="label"
               fontSize="12px"
             >
-              999件
+              0件
             </Typography>
           </Stack>
         </Grid>
@@ -101,4 +105,4 @@ const LeftInfo = () => {
   );
 };
 
-export default LeftInfo;
+export default LeftManipulatorProfile;
