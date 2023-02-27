@@ -100,7 +100,10 @@ const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
                 <Button
                   onClick={() => {}}
                   variant="contained"
-                  sx={styles.button}
+                  sx={{
+                    ...styles.button,
+                    ...{ display: { xs: 'flex', tablet: 'none' } },
+                  }}
                   endIcon={
                     <SvgIcon
                       component={ArrowIcon}
