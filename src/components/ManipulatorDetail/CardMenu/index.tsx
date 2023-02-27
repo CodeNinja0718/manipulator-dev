@@ -3,6 +3,7 @@ import ListSvg from '@icons/icon_list.svg';
 import { Box, Button, Grid, Stack, SvgIcon, Typography } from '@mui/material';
 import type { IManipulator, Menu } from 'models/manipulator/interface';
 import * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import styles from './styles';
 
@@ -10,9 +11,30 @@ interface CardMenuProps {
   data: IManipulator;
 }
 const CardMenu = ({ data }: CardMenuProps) => {
+  const [list, setList] = useState<Menu[]>([]);
+  const [totalGet, setTotalGet] = useState(0);
+  const [page, setPage] = useState(1);
+
+  const spaceGet = 5;
+  const getList = useCallback(() => {
+    setTotalGet(spaceGet * page);
+    setList(data.menus.slice(0, totalGet));
+  }, [page, data.menus, totalGet]);
+
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+    getList();
+  };
+
+  useEffect(() => {
+    if (data?.menus?.length) {
+      getList();
+    }
+  }, [data?.menus?.length, getList]);
+
   return (
     <Box>
-      {data.menus?.length > 0 && (
+      {data?.menus?.length > 0 && (
         <Box sx={styles.treatmentBox}>
           <Stack
             direction="row"
@@ -40,7 +62,7 @@ const CardMenu = ({ data }: CardMenuProps) => {
               施術メニュー
             </Typography>
           </Stack>
-          {data.menus?.map((item: Menu, index: number) => (
+          {list.map((item: Menu, index: number) => (
             <Grid
               container
               key={`menu-${index}`}
@@ -61,22 +83,24 @@ const CardMenu = ({ data }: CardMenuProps) => {
               </Grid>
             </Grid>
           ))}
-          <Box textAlign="center" margin="20px 0px">
-            <Button
-              onClick={() => {}}
-              variant="outlined"
-              sx={styles.button}
-              endIcon={
-                <SvgIcon
-                  component={ArrowIcon}
-                  viewBox="0 0 14 30"
-                  color="inherit"
-                />
-              }
-            >
-              メニューをさらに表示
-            </Button>
-          </Box>
+          {totalGet < data.menus.length && (
+            <Box textAlign="center" margin="20px 0px">
+              <Button
+                onClick={loadMore}
+                variant="outlined"
+                sx={styles.button}
+                endIcon={
+                  <SvgIcon
+                    component={ArrowIcon}
+                    viewBox="0 0 14 30"
+                    color="inherit"
+                  />
+                }
+              >
+                メニューをさらに表示
+              </Button>
+            </Box>
+          )}
         </Box>
       )}
     </Box>

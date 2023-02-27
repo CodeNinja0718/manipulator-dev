@@ -1,16 +1,13 @@
-import ArrowIcon from '@icons/arrow.svg';
-import { Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import * as React from 'react';
 
-import ReviewItem from '../ReviewItem';
 import Stars from '../Stars';
-import styles from '../styles';
 
 const ManiTab = () => {
   return (
     <Box>
       <Stack spacing={15} direction="row" alignItems={'center'}>
-        <Stars star={4.5} />{' '}
+        <Stars star={0} />{' '}
         <Typography
           color="grayText"
           fontWeight="600"
@@ -18,14 +15,23 @@ const ManiTab = () => {
           fontSize="12px"
           paddingTop={2}
         >
-          999件
+          0件
         </Typography>
       </Stack>
       <Box marginTop={25} paddingRight={20}>
-        <ReviewItem />
-        <ReviewItem />
+        {/* <ReviewItem />
+        <ReviewItem /> */}
+        <Typography
+          fontSize={24}
+          variant="subtitle1"
+          textAlign="center"
+          color="gray"
+          mb={30}
+        >
+          空のリスト
+        </Typography>
       </Box>
-      <Box textAlign="center" margin="20px 0px">
+      {/* <Box textAlign="center" margin="20px 0px">
         <Button
           onClick={() => {}}
           variant="outlined"
@@ -40,7 +46,7 @@ const ManiTab = () => {
         >
           レビューをさらに表示
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

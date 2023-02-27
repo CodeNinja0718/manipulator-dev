@@ -5,7 +5,7 @@ import styles from '../styles';
 
 interface LineInfoProps {
   title: string;
-  text: string;
+  text?: string;
 }
 const LineInfo = ({ title, text }: LineInfoProps) => {
   return (

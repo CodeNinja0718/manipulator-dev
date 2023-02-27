@@ -47,6 +47,8 @@ export interface Address {
   area: string;
   address: string;
   stations: Station[];
+  city: string;
+  prefectureName: string;
 }
 export interface IManipulator {
   _id?: string;

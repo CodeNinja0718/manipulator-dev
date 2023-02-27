@@ -54,7 +54,6 @@ const ManipulatorList = () => {
   }, [router]);
 
   const manipulators = useMemo(() => {
-    // return mockupList;
     return list || [];
   }, [list]);
 

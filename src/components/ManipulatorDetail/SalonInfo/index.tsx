@@ -42,7 +42,7 @@ const SalonInfo = ({ data }: SalonInfoProps) => {
             fontWeight="600"
             fontSize="16px"
           >
-            ★ 4.5
+            ★ 0
           </Typography>
           <Box
             sx={{
@@ -68,7 +68,7 @@ const SalonInfo = ({ data }: SalonInfoProps) => {
             component="label"
             fontSize="10px"
           >
-            999件
+            0件
           </Typography>
         </Stack>
       </Box>
@@ -84,9 +84,20 @@ const SalonInfo = ({ data }: SalonInfoProps) => {
         />
       </Box>
       <Stack spacing={10} divider={<Divider flexItem />} marginTop={20}>
-        <LineInfo title="整体院名" text="整体院名" />
-        <LineInfo title="住所" text="東京都渋谷区渋谷1-1-1" />
-        <LineInfo title="最寄り駅" text="渋谷駅から徒歩10分<" />
+        <LineInfo title="整体院名" text={salonInfo?.name} />
+        <LineInfo
+          title="住所"
+          text={
+            salonInfo?.addresses &&
+            `${salonInfo.addresses[0]?.address}, ${salonInfo?.addresses[0]?.prefectureName}, ${salonInfo?.addresses[0]?.city}`
+          }
+        />
+        <LineInfo
+          title="最寄り駅"
+          text={
+            salonInfo?.addresses && salonInfo?.addresses[0]?.stations[0]?.name
+          }
+        />
       </Stack>
       <Divider sx={{ marginY: 15 }} />
       <Typography
@@ -110,7 +121,7 @@ const SalonInfo = ({ data }: SalonInfoProps) => {
       </Typography>
       <Box>
         <Typography component={'p'} marginTop={10} maxWidth={335} fontSize={14}>
-          テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+          {data.profile}
         </Typography>
       </Box>
     </Box>
