@@ -42,7 +42,9 @@ const CircleBox = ({
         justifyContent="center"
         width={90}
         height={90}
-        className="customCircleBoxStyle"
+        className={
+          active ? 'customCircleBoxStyle active' : 'customCircleBoxStyle'
+        }
         sx={disabled ? styles.circleBoxDisable : containerBoxStyle}
         onClick={disabled ? () => {} : onClick}
       >

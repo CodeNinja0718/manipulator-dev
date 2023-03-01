@@ -19,10 +19,13 @@ const styles = {
     cursor: 'pointer',
   }),
   circleBoxActive: (theme: Theme) => ({
-    background: theme.palette.orangeBold,
+    background: `${theme.palette.orangeBold}`,
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.16)',
     borderRadius: '50%',
     cursor: 'pointer',
+    svg: {
+      color: 'white',
+    },
   }),
   circleBoxDisable: (theme: Theme) => ({
     background: theme.palette.action.disabledBackground,
