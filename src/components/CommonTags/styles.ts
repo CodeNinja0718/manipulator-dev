@@ -33,14 +33,6 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     background: theme.palette.secondary.main,
-    '&:hover, &:active, &:focus': {
-      [theme.breakpoints.up('lg')]: {
-        color: theme.palette.black,
-        borderColor: theme.palette.black,
-        background: 'transparent',
-        transition: '0.5s',
-      },
-    },
   }),
 } as Record<string, SxProps<Theme>>;
 

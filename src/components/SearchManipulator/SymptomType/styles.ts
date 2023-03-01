@@ -32,6 +32,24 @@ const styles = {
       width: { xs: 90, tablet: 52 },
       height: { xs: 90, tablet: 52 },
       boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.16)',
+
+      '&:hover': {
+        backgroundColor: 'transparent',
+        svg: {
+          color: 'initial',
+        },
+      },
+    },
+
+    '& .active': {
+      '&:hover, &:active, &:focus': {
+        transition: '.5s',
+        background: (theme: Theme) => theme.palette.orangeBold,
+
+        '& svg': {
+          color: 'white',
+        },
+      },
     },
   },
 } as Record<string, SxProps<Theme>>;
