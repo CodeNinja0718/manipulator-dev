@@ -24,6 +24,9 @@ const CardListPage = () => {
   const { mutateAsync: handleDeleteCard, isLoading: deleting } = useMutate(
     cardQuery.deleteCard,
   );
+  const { mutateAsync: handlSetDefaultCard, isLoading: changing } = useMutate(
+    cardQuery.setDefaultCard,
+  );
 
   const handleRemoveCard = (id: string) => {
     setConfirmModal({
@@ -43,6 +46,23 @@ const CardListPage = () => {
       },
       content: 'このクレジットカード情報を削除しますか？',
     });
+  };
+
+  const handlSetCard = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handlSetDefaultCard(
+      {
+        id: e?.target?.value,
+        type: 'CARD',
+        details: {
+          defaultCard: true,
+        },
+      },
+      {
+        onSuccess: () => {
+          refetch();
+        },
+      },
+    );
   };
 
   const renderCardList = () => {
@@ -75,7 +95,13 @@ const CardListPage = () => {
               className="card-info"
               data-selected={item?.details?.default}
             >
-              <Radio checked={item?.details?.default} sx={styles.radioBtn} />
+              <Radio
+                value={item?.id}
+                checked={item?.details?.default}
+                sx={styles.radioBtn}
+                onChange={handlSetCard}
+                disabled={changing}
+              />
               <Stack
                 ml={8}
                 sx={{ width: '100%' }}

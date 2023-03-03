@@ -3,6 +3,7 @@ import ArrowRight from '@icons/arrow-right.svg';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 import { TextField } from 'components/Form';
+import Link from 'components/Link';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -65,6 +66,7 @@ const AuthForm = ({
       >
         次へ
       </LoadingButton>
+      <Link href="/register">新規登録はこちら</Link>
     </Stack>
   );
 };

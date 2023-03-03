@@ -6,7 +6,7 @@ const styles: Record<string, SxProps> = {
     padding: '0 20px',
     margin: {
       xs: '45px auto',
-      margin: '56px auto',
+      tablet: '59px auto 64px',
     },
   },
   checkboxControlWrapper: {
@@ -23,6 +23,10 @@ const styles: Record<string, SxProps> = {
   submitBtn: {
     maxWidth: 323,
     width: '100%',
+    marginBottom: {
+      xs: 40,
+      tablet: 20,
+    },
   },
 };
 

@@ -10,6 +10,7 @@ interface Options<TData, TVariables>
   method?: string;
   defaultToast?: boolean;
   successMessage?: string;
+  omitKeys?: string[];
   axiosConfig?: AxiosRequestConfig;
 }
 
@@ -22,29 +23,38 @@ const useMutate = <TData = unknown, TVariables = unknown>(
     method = 'post',
     successMessage,
     axiosConfig,
+    omitKeys,
     ...otherOptions
   } = options;
   return useMutation(
     async (params: TData) => {
+      const formattedParams: any = { ...params };
       const url = typeof apiUrl === 'string' ? apiUrl : apiUrl(params);
+      if (omitKeys) {
+        omitKeys.forEach((key) => {
+          if (formattedParams[key]) {
+            delete formattedParams[key];
+          }
+        });
+      }
       switch (method) {
         case 'put': {
-          const { data } = await api.put(url, params, axiosConfig);
+          const { data } = await api.put(url, formattedParams, axiosConfig);
           return data;
         }
         case 'delete': {
           const { data } = await api.delete(url, {
-            data: params,
+            data: formattedParams,
             ...axiosConfig,
           });
           return data;
         }
         case 'patch': {
-          const { data } = await api.patch(url, params, axiosConfig);
+          const { data } = await api.patch(url, formattedParams, axiosConfig);
           return data;
         }
         default: {
-          const { data } = await api.post(url, params, axiosConfig);
+          const { data } = await api.post(url, formattedParams, axiosConfig);
           return data;
         }
       }
