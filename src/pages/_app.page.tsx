@@ -14,6 +14,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ConfirmModal from 'components/ConfirmModal';
 import DataProvider from 'components/DataProvider';
 import NextNProgress from 'components/ProgressBar';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -23,6 +26,10 @@ import { ToastContainer } from 'react-toastify';
 import theme from 'theme';
 import createEmotionCache from 'theme/createEmotionCache';
 import queryClient from 'utils/queryClient';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Tokyo');
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
