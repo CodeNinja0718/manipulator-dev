@@ -258,3 +258,21 @@ export const MENU_MANIPULATOR_DETAIL: MenuHeadItem[] = [
   { title: ' 整体院情報', link: 'id_3' },
   { title: 'レビュー', link: 'id_4' },
 ];
+
+export const STEPPER_CONTENT: {
+  label: string;
+  value: string;
+}[] = [
+  {
+    label: 'メニュー',
+    value: 'step-1',
+  },
+  {
+    label: '日時選択',
+    value: 'step-2',
+  },
+  {
+    label: '予約内容確認',
+    value: 'step-3',
+  },
+];
