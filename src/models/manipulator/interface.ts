@@ -34,6 +34,14 @@ export interface Menu {
   currency: string;
 }
 
+export interface IReservationMenu extends Omit<Menu, 'menuId' | 'order'> {
+  _id: string;
+  salonId: string;
+  menuTypes: string[];
+  createdById: string;
+  timeDisplay: boolean;
+}
+
 export interface Station {
   id: number;
   name: string;

@@ -10,8 +10,11 @@ const manipulatorQuery = {
   }),
   detailManiplator: (maniplatorId: string) => ({
     apiUrl: `/reservation/manipulators/${maniplatorId}`,
-    queryKey: [maniplatorId],
-    staleTime: Infinity,
+    queryKey: ['manipulator-detail', maniplatorId],
+  }),
+  manipulatorMenus: (maniplatorId: string) => ({
+    apiUrl: `/reservation/manipulators/${maniplatorId}/menus`,
+    queryKey: ['manipulator-menus', maniplatorId],
   }),
 };
 

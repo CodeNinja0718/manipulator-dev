@@ -53,7 +53,7 @@ const queryClient = new QueryClient({
   }),
 });
 
-export const fetchDetail = ({
+export const fetchData = ({
   queryKey,
   apiUrl,
   customParams,
