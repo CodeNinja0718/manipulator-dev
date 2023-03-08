@@ -2,6 +2,7 @@ import ArrowIcon from '@icons/arrow.svg';
 import ListSvg from '@icons/icon_list.svg';
 import { Box, Button, Grid, Stack, SvgIcon, Typography } from '@mui/material';
 import FormatDate from 'components/FormatDate';
+import dayjs from 'dayjs';
 import type { IManipulator, Menu } from 'models/manipulator/interface';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -88,7 +89,12 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
                       key={index}
                       size="small"
                     >
-                      {<FormatDate dateString={item} formatValue="hh:mm" />}
+                      {
+                        <FormatDate
+                          dateString={dayjs.utc(item).tz()}
+                          formatValue="hh:mm"
+                        />
+                      }
                     </Button>
                   ))}
               </Box>
