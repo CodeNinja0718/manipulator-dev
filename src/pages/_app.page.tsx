@@ -27,6 +27,7 @@ import theme from 'theme';
 import createEmotionCache from 'theme/createEmotionCache';
 import queryClient from 'utils/queryClient';
 
+dayjs.locale('ja');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Asia/Tokyo');
