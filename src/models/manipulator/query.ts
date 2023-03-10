@@ -12,9 +12,17 @@ const manipulatorQuery = {
     apiUrl: `/reservation/manipulators/${maniplatorId}`,
     queryKey: ['manipulator-detail', maniplatorId],
   }),
-  manipulatorMenus: (maniplatorId: string) => ({
-    apiUrl: `/reservation/manipulators/${maniplatorId}/menus`,
-    queryKey: ['manipulator-menus', maniplatorId],
+  manipulatorMenus: (manipulatorId: string) => ({
+    apiUrl: `/reservation/manipulators/${manipulatorId}/menus`,
+    queryKey: ['manipulator-menus', manipulatorId],
+  }),
+  manipulatorTimeSlots: ({
+    manipulatorId,
+    ...params
+  }: Record<string, unknown>) => ({
+    apiUrl: `/reservation/manipulators/${manipulatorId}/get-available-timeslots`,
+    customParams: params,
+    queryKey: ['manipulator-time-slots', { ...params, manipulatorId }],
   }),
 };
 

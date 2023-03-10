@@ -1,7 +1,6 @@
 import ArrowLeftIcon from '@icons/arrow-left.svg';
 import { Box, Stack } from '@mui/material';
 import { dehydrate } from '@tanstack/react-query';
-import BookingMenuSelection from 'components/Booking/MenuSelection';
 import Stepper from 'components/Booking/Stepper';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
@@ -13,6 +12,7 @@ import type {
 } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
 import type { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 import { STEPPER_CONTENT } from 'utils/const';
@@ -20,11 +20,18 @@ import queryClient, { fetchData } from 'utils/queryClient';
 
 import styles from './styles';
 
+const BookingSlotSelection = dynamic(
+  () => import('components/Booking/SlotSelection'),
+);
+const BookingMenuSelection = dynamic(
+  () => import('components/Booking/MenuSelection'),
+);
+
 const BookingPage = () => {
   const router = useRouter();
   const { slug } = router.query;
   const manipulatorId = slug![0] || '';
-  const step = slug![1] || 'step-1';
+  const step = slug![1] || STEPPER_CONTENT[0]?.value || 'menu';
 
   const { data: manipulatorDetail } = useFetch<IManipulator>({
     ...manipulatorQuery.detailManiplator(manipulatorId),
@@ -45,26 +52,26 @@ const BookingPage = () => {
       content: string;
     }
   > = {
-    'step-1': {
+    menu: {
       href: `/manipulator/${manipulatorId}`,
       shallow: false,
       content: '整体師詳細に戻る',
     },
-    'step-2': {
+    slot: {
       href: {
         pathname: router.pathname,
         query: {
-          slug: [manipulatorId, 'step-1'],
+          slug: [manipulatorId, STEPPER_CONTENT[0]?.value || 'menu'],
         },
       },
       shallow: true,
       content: 'メニュー選択に戻る',
     },
-    'step-3': {
+    overview: {
       href: {
         pathname: router.pathname,
         query: {
-          slug: [manipulatorId, 'step-2'],
+          slug: [manipulatorId, STEPPER_CONTENT[1]?.value || 'slot'],
         },
       },
       shallow: true,
@@ -82,6 +89,9 @@ const BookingPage = () => {
   };
 
   const renderStepContent = () => {
+    if (step === STEPPER_CONTENT[1]?.value) {
+      return <BookingSlotSelection handleChangeStep={handleChangeStep} />;
+    }
     return <BookingMenuSelection menus={manipulatorMenus?.docs || []} />;
   };
 
@@ -112,7 +122,6 @@ const BookingPage = () => {
     </Box>
   );
 };
-
 BookingPage.getLayout = (page: React.ReactNode) => {
   return <Layout isCardLayout>{page}</Layout>;
 };
@@ -122,7 +131,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   try {
     const { slug } = query;
     const manipulatorId = slug![0] || '';
-    const step = slug![1] || 'step-1';
+    const step = slug![1] || STEPPER_CONTENT[0]?.value || 'menu';
     if (!STEPPER_VALUES.includes(step)) {
       return {
         notFound: true,
