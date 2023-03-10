@@ -2,7 +2,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
   mainContainer: {
-    padding: { xs: '15px', tablet: '40px' },
+    padding: { xs: '0px', tablet: '40px' },
   },
   rightContainer: {
     paddingLeft: { xs: '0px', tablet: '30px' },

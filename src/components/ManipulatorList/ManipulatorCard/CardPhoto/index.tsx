@@ -38,7 +38,7 @@ const ManipulatorCardPhoto = ({
         {data.salon[0]?.photos?.map((item, index) => (
           <Image
             key={`photo-${index}`}
-            src={`${item.url}`}
+            src={`${item.url || ''}`}
             alt="image-title"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             height={isInDetail && isMobile ? 110 : height}
@@ -61,7 +61,7 @@ const ManipulatorCardPhoto = ({
       >
         <Fade in={open} timeout={500}>
           <img
-            src={image}
+            src={image || ''}
             alt="image-title"
             style={{
               maxHeight: '90%',

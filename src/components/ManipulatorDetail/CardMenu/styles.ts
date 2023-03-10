@@ -2,7 +2,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
   treatmentBox: {
-    padding: { xs: '15px 12px', tablet: '20px' },
+    padding: { xs: '15px 20px', tablet: '20px' },
     margin: '20px 0px 0px',
     backgroundColor: 'cream',
   },
