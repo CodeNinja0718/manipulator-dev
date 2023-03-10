@@ -10,7 +10,7 @@ const styles = {
       color: 'graySolid',
       transform: 'rotate(180deg)',
     },
-    display: { xs: 'none', tablet: 'flex' },
+    padding: { xs: 20, tablet: 0 },
   },
 } as Record<string, SxProps<Theme>>;
 

@@ -5,6 +5,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import Layout from 'components/Layout';
+import ManipulatorCard from 'components/ManipulatorList/ManipulatorCard';
 import ManipulatorHeader from 'components/ManipulatorList/ManipulatorHeader';
 import SearchColumn from 'components/ManipulatorList/SearchColumn';
 import useList from 'hooks/useList';
@@ -20,9 +21,6 @@ import Helper from 'utils/helpers';
 
 import styles from './styles';
 
-const ManipulatorCard = dynamic(
-  () => import('components/ManipulatorList/ManipulatorCard'),
-);
 const EmptyManipulator = dynamic(
   () => import('components/ManipulatorList/EmptyManipulator'),
 );

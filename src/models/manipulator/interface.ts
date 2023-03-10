@@ -32,6 +32,7 @@ export interface Menu {
   order: number;
   price: number;
   currency: string;
+  timeDisplay: boolean;
 }
 
 export interface IReservationMenu extends Omit<Menu, 'menuId' | 'order'> {

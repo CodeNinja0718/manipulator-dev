@@ -9,6 +9,7 @@ const styles: Record<string, SxProps<Theme>> = {
     background: theme.palette.orangeGradient,
     position: 'fixed',
     top: 0,
+    zIndex: 2,
     transition: 'transform 0.5s ease',
     justifyContent: {
       xs: 'space-between',

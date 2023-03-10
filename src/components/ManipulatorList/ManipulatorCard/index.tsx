@@ -1,15 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import type { IManipulator } from 'models/manipulator/interface';
+import dynamic from 'next/dynamic';
 import * as React from 'react';
 import Helper from 'utils/helpers';
 
 import ManipulatorCardFeature from './CardFeature';
 import ManipulatorCardHeader from './CardHeader';
 import ManipulatorCardLeft from './CardLeft';
-import CardMenuAndFooter from './CardMenuAndFooter';
 import ManipulatorCardLicences from './CardNationalLicences';
 import ManipulatorCardPhoto from './CardPhoto';
 import styles from './styles';
+
+const CardMenuAndFooter = dynamic(() => import('./CardMenuAndFooter'));
 
 interface ManipulatorCardProps {
   data: IManipulator;

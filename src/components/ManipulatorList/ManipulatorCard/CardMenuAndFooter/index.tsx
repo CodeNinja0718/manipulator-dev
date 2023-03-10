@@ -53,9 +53,14 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
               marginBottom="5px"
             >
               <Grid item xs={7} md={5}>
-                <Typography component="p" sx={styles.textStyle}>
-                  {item.name}
-                </Typography>
+                <Stack direction={'row'} spacing={8}>
+                  <Typography sx={styles.textStyle}>{item.name}</Typography>
+                  {item.timeDisplay && (
+                    <Typography sx={styles.textStyle}>
+                      {item.estimatedTime}分
+                    </Typography>
+                  )}
+                </Stack>
               </Grid>
               <Grid
                 item

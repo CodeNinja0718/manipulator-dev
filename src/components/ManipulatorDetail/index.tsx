@@ -27,14 +27,15 @@ const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
 
   return (
     <Grid container direction="row">
-      <Grid item xs="auto" sx={{ display: { xs: 'none', tablet: 'block' } }}>
-        <LeftManipulatorProfile data={data} />
+      <Grid item xs={12} tablet="auto" marginBottom={20}>
+        <Box padding={{ xs: '20px 20px 10px', tablet: 0 }}>
+          <LeftManipulatorProfile data={data} />
+        </Box>
       </Grid>
       <Grid item xs>
         <Box overflow="hidden" width="100%">
           <Box sx={styles.rightContainer}>
             <Box
-              display={{ xs: 'none', tablet: 'block' }}
               height={6}
               width="100%"
               bgcolor={'orange.main'}
@@ -47,7 +48,7 @@ const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
                 marginTop: '20px',
               }}
             />
-            <Box id="id_1">
+            <Box id="id_1" padding={{ xs: '10px 20px', tablet: 0 }}>
               <Box sx={styles.title}>
                 <Typography
                   style={{
@@ -61,7 +62,9 @@ const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
                   プロフィール
                 </Typography>
               </Box>
-              <Typography component={'p'}>{data?.profile}</Typography>
+              {data?.profile && (
+                <Typography component={'p'}>{data?.profile}</Typography>
+              )}
               {data?.careerStart && (
                 <Box display="flex" margin="8px 0px" alignItems="center">
                   <Box flex="0 0 75px">
@@ -90,37 +93,38 @@ const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
                 </Box>
               )}
             </Box>
-            <Box id="id_2">
-              {data && <CardMenu data={data} />}
-              <Box
-                textAlign="center"
-                marginTop="20px"
-                display={{ xs: 'block', talet: 'none' }}
-              >
-                <Button
-                  onClick={() => {}}
-                  variant="contained"
-                  sx={{
-                    ...styles.button,
-                    ...{ display: { xs: 'flex', tablet: 'none' } },
-                  }}
-                  endIcon={
-                    <SvgIcon
-                      component={ArrowIcon}
-                      viewBox="0 0 14 30"
-                      color="inherit"
-                    />
-                  }
-                >
-                  今すぐ予約
-                </Button>
-              </Box>
+            <Box id="id_2">{data && <CardMenu data={data} />}</Box>
+            <Box id="id_3" padding={{ xs: '0px 20px', tablet: 0 }}>
+              {data && <SalonInfo data={data} />}
             </Box>
-            <Box id="id_3">{data && <SalonInfo data={data} />}</Box>
             <Box id="id_4">
               <Review />
             </Box>
-            <Box display={'flex'} justifyContent={'center'} marginTop={30}>
+            <Box
+              textAlign="center"
+              marginTop="20px"
+              display={{ xs: 'block', talet: 'none' }}
+              padding={{ xs: '10px 20px', tablet: 0 }}
+            >
+              <Button
+                onClick={() => {}}
+                variant="contained"
+                sx={{
+                  ...styles.button,
+                  ...{ display: { xs: 'flex', tablet: 'none' } },
+                }}
+                endIcon={
+                  <SvgIcon
+                    component={ArrowIcon}
+                    viewBox="0 0 14 30"
+                    color="inherit"
+                  />
+                }
+              >
+                今すぐ予約
+              </Button>
+            </Box>
+            <Box display={'flex'} justifyContent={'center'} marginY={30}>
               <BackButton />
             </Box>
           </Box>
