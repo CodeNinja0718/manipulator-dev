@@ -2,26 +2,39 @@ import IconSlotAvailable from '@icons/icon_slot_available.svg';
 import IconSlotUnavailable from '@icons/icon_slot_unavailable.svg';
 import { IconButton, Stack } from '@mui/material';
 import dayjs from 'dayjs';
+import difference from 'lodash/difference';
+import times from 'lodash/times';
+import type { IReservationMenu } from 'models/manipulator/interface';
 import { WORK_TIMES } from 'utils/const';
 
 import styles from './styles';
 
 interface SlotColumnProps {
+  selectedMenu?: IReservationMenu;
   date: dayjs.Dayjs;
   availableSlots: string[];
+  handleSelectSlot: (date: dayjs.Dayjs) => void;
 }
 
-const SlotColumn: React.FC<SlotColumnProps> = ({ date, availableSlots }) => {
+const SlotColumn: React.FC<SlotColumnProps> = ({
+  selectedMenu,
+  date,
+  availableSlots,
+  handleSelectSlot,
+}) => {
   const currentDate = dayjs().tz().startOf('day');
 
   return (
-    <Stack flex="0 0 70px">
+    <Stack flex="auto">
       <Stack
         sx={styles.slotHeader}
         alignItems="center"
         justifyContent="center"
-        direction="row"
-        gap={4}
+        direction={{
+          xs: 'column',
+          tablet: 'row',
+        }}
+        gap="0 4px"
         data-current={date.isSame(currentDate, 'day')}
       >
         {date.format('DD')}
@@ -32,9 +45,12 @@ const SlotColumn: React.FC<SlotColumnProps> = ({ date, availableSlots }) => {
         const slotDateTime = date
           .add(Number(timeSplit[0]) || 0, 'h')
           .add(Number(timeSplit[1]) || 0, 'm');
-        const slotAvailable = availableSlots.includes(
-          slotDateTime.toISOString(),
-        );
+        const menuSlots = times(
+          selectedMenu?.estimatedTime ? selectedMenu.estimatedTime / 30 + 1 : 0,
+        ).map((i) => slotDateTime.add(i ? i * 30 : 0, 'minute').toISOString());
+        const slotAvailable =
+          availableSlots.includes(slotDateTime.toISOString()) &&
+          difference(menuSlots, availableSlots).length === 0;
 
         return (
           <Stack
@@ -44,7 +60,15 @@ const SlotColumn: React.FC<SlotColumnProps> = ({ date, availableSlots }) => {
             sx={styles.slotCell}
             data-current={date.isSame(currentDate, 'day')}
           >
-            <IconButton sx={styles.slotBtn} disabled={!slotAvailable}>
+            <IconButton
+              sx={styles.slotBtn}
+              disabled={!slotAvailable}
+              onClick={() => {
+                if (slotAvailable) {
+                  handleSelectSlot(slotDateTime);
+                }
+              }}
+            >
               {slotAvailable ? <IconSlotAvailable /> : <IconSlotUnavailable />}
             </IconButton>
           </Stack>

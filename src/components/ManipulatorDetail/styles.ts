@@ -25,10 +25,6 @@ const styles = {
     },
   },
 
-  rightContainer: {
-    paddingLeft: { xs: '0px', tablet: '30px' },
-    backgroundColor: 'white',
-  },
   labelStyle: {
     color: 'orangeText',
     fontWeight: '600',

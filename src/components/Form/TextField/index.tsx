@@ -1,6 +1,6 @@
 import VisibleIcon from '@icons/visible.svg';
 import VisibleOffIcon from '@icons/visible-off.svg';
-import type { OutlinedInputProps } from '@mui/material';
+import type { FormControlProps, OutlinedInputProps } from '@mui/material';
 import {
   FormControl,
   IconButton,
@@ -8,7 +8,6 @@ import {
   OutlinedInput,
   SvgIcon,
 } from '@mui/material';
-import type { ReactNode } from 'react';
 import { useState } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
@@ -24,11 +23,10 @@ interface TextInputProps<TFormValues extends FieldValues>
   control: Control<TFormValues>;
   maxLength?: number;
   required?: boolean;
-  labelCol?: number;
-  columns?: number;
   fixedHelperText?: boolean;
-  extraLabel?: string | ReactNode;
   helperText?: string;
+  showError?: boolean;
+  formControlProps?: FormControlProps;
 }
 
 const TextField = <TFormValues extends FieldValues>({
@@ -37,10 +35,10 @@ const TextField = <TFormValues extends FieldValues>({
   required,
   control,
   name,
-  extraLabel,
-  helperText,
-  fixedHelperText,
   type,
+  showError = true,
+  fixedHelperText = true,
+  formControlProps,
   ...props
 }: TextInputProps<TFormValues>) => {
   const {
@@ -82,17 +80,14 @@ const TextField = <TFormValues extends FieldValues>({
     return props.endAdornment;
   };
   return (
-    <FormControl fullWidth>
-      {label && (
-        <Label
-          label={label}
-          required={required}
-          extraLabel={extraLabel}
-          size={props.size}
-          className="textFieldLabel"
-          htmlFor={name}
-        />
-      )}
+    <FormControl
+      fullWidth
+      variant="standard"
+      sx={styles.formControlWrapper}
+      error={!!error}
+      {...formControlProps}
+    >
+      {label && <Label label={label} htmlFor={name} required={required} />}
 
       <OutlinedInput
         className="tabletStyle"
@@ -110,13 +105,9 @@ const TextField = <TFormValues extends FieldValues>({
         endAdornment={renderEndAdornment()}
       />
 
-      <HelperText
-        error={error?.message}
-        value={value}
-        maxLength={maxLength}
-        helperText={helperText}
-        fixedHelperText={fixedHelperText}
-      />
+      {showError && (
+        <HelperText error={error?.message} fixed={fixedHelperText} />
+      )}
     </FormControl>
   );
 };

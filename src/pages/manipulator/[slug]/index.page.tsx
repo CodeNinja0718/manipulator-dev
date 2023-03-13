@@ -1,4 +1,5 @@
 import { Container } from '@mui/material';
+import ManipulatorDetail from 'components/ManipulatorDetail';
 import { useFetch } from 'hooks';
 import type { IManipulator } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
@@ -10,7 +11,6 @@ import React from 'react';
 import styles from './styles';
 
 const Layout = dynamic(() => import('components/Layout'));
-const ManipulatorDetail = dynamic(() => import('components/ManipulatorDetail'));
 const BackButton = dynamic(
   () => import('components/ManipulatorDetail/BackButton'),
 );

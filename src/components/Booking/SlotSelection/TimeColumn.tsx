@@ -5,7 +5,12 @@ import styles from './styles';
 
 const TimeColumn = () => {
   return (
-    <Stack flex="0 0 78px">
+    <Stack
+      flex={{
+        xs: '0 0 58px',
+        tablet: '0 0 78px',
+      }}
+    >
       <Box sx={styles.slotHeader} />
       {WORK_TIMES.map((time) => {
         return (

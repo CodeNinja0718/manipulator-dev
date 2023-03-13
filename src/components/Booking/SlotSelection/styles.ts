@@ -1,7 +1,23 @@
 import type { SxProps } from '@mui/material';
 
 const styles: Record<string, SxProps> = {
-  bookingSlotWrapper: {},
+  bookingSlotWrapper: {
+    mt: {
+      xs: 7,
+      tablet: 11,
+    },
+  },
+  selectedMenu: {
+    color: 'black',
+    backgroundColor: 'cream',
+    borderRadius: '5px',
+    padding: 10,
+    fontSize: 14,
+    mb: {
+      xs: 20,
+      tablet: 38,
+    },
+  },
   dateControl: {
     mb: 8,
     '.control-btn': {

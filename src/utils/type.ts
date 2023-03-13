@@ -8,8 +8,8 @@ export interface INavigation {
 }
 
 export interface FetchDetailOptions
-  extends FetchQueryOptions<any, unknown, any, string[]> {
-  queryKey: string[];
+  extends FetchQueryOptions<any, unknown, any, unknown[]> {
+  queryKey: unknown[];
   apiUrl: string;
   customParams?: Record<string, unknown>;
   axiosConfig?: AxiosRequestConfig;

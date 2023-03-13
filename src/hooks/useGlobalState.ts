@@ -9,6 +9,8 @@ export interface GlobalState {
   confirmModal: ConfirmModalProps | {};
   setConfirmModal: (payload: ConfirmModalProps | {}) => void;
   setOpenDrawer: (payload: boolean) => void;
+  booking: any;
+  setBooking: (payload: any) => void;
 }
 const useGlobalState = create<GlobalState>((set) => ({
   openConfirmModal: false,
@@ -18,6 +20,8 @@ const useGlobalState = create<GlobalState>((set) => ({
   setConfirmModal: (payload) =>
     set({ confirmModal: payload, openConfirmModal: !isEmpty(payload) }),
   setOpenDrawer: (payload = false) => set({ openDrawer: payload }),
+  booking: {},
+  setBooking: (payload) => set({ booking: payload }),
 }));
 
 export default useGlobalState;

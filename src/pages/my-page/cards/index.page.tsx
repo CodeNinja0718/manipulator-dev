@@ -111,7 +111,7 @@ const CardListPage = () => {
                 flexWrap="wrap"
               >
                 <Typography>
-                  {item?.details?.brand}
+                  {item?.details?.brand.toUpperCase()}
                   &nbsp;&nbsp;&nbsp;
                   {Helper.formatCardNumberText(item?.details?.lastNumber)}
                 </Typography>

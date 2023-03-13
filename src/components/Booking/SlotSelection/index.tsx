@@ -3,21 +3,28 @@ import ArrowRight from '@icons/arrow-right.svg';
 import { Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useFetch } from 'hooks';
+import isEmpty from 'lodash/isEmpty';
 import times from 'lodash/times';
+import type { IReservationMenu } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { STEPPER_CONTENT } from 'utils/const';
 
 import SlotColumn from './SlotColumn';
 import styles from './styles';
 import TimeSlot from './TimeColumn';
 
 interface BookingSlotSelectionProps {
+  selectedMenu?: IReservationMenu;
   handleChangeStep: (step: string) => void;
+  onSubmit: (values: Record<string, unknown>) => void;
 }
 
 const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
+  selectedMenu,
   handleChangeStep,
+  onSubmit,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -36,8 +43,30 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
     staleTime: 1000 * 60 * 2,
   });
 
+  useEffect(() => {
+    if (isEmpty(selectedMenu)) {
+      handleChangeStep(STEPPER_CONTENT[0].value);
+    }
+  }, [handleChangeStep, selectedMenu]);
+
+  const handleSelectSlot = (selectedDate: dayjs.Dayjs) => {
+    onSubmit({
+      startTime: selectedDate.toISOString(),
+      endTime: selectedDate
+        .add(selectedMenu?.estimatedTime || 0, 'minute')
+        .toISOString(),
+    });
+  };
+
   return (
     <Stack sx={styles.bookingSlotWrapper}>
+      <Stack direction="row" gap={24} sx={styles.selectedMenu}>
+        <Typography fontWeight="bold">メニュー</Typography>
+        <Typography>
+          {selectedMenu?.name}&nbsp;&nbsp;
+          {selectedMenu?.estimatedTime}分
+        </Typography>
+      </Stack>
       <Typography color="secondary" fontSize={18} fontWeight="bold" mb={18}>
         ご希望の日時を選択してください
       </Typography>
@@ -74,14 +103,19 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
           const slotDate = date.add(index, 'day');
           return (
             <SlotColumn
+              selectedMenu={selectedMenu}
               date={slotDate}
               key={index}
               availableSlots={manipulatorTimeSlots?.availableSlots || []}
+              handleSelectSlot={handleSelectSlot}
             />
           );
         })}
       </Stack>
-      <Typography onClick={() => handleChangeStep('menu')} sx={styles.backStep}>
+      <Typography
+        onClick={() => handleChangeStep(STEPPER_CONTENT[0].value)}
+        sx={styles.backStep}
+      >
         <ArrowLeft />
         メニュー選択に戻る
       </Typography>

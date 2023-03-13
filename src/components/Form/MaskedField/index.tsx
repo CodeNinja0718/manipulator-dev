@@ -1,15 +1,12 @@
 import type { FormControlProps, OutlinedInputProps } from '@mui/material';
-import {
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  OutlinedInput,
-} from '@mui/material';
+import { FormControl, OutlinedInput } from '@mui/material';
 import React from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import { PatternFormat } from 'react-number-format';
 
+import HelperText from '../HelperText';
+import Label from '../Label';
 import styles from '../styles';
 
 interface MaskFieldProps<TFormValues extends FieldValues> {
@@ -20,6 +17,8 @@ interface MaskFieldProps<TFormValues extends FieldValues> {
   format: string;
   formControlProps?: FormControlProps;
   inputProps?: Omit<OutlinedInputProps, 'defaultValue' | 'type'>;
+  fixedHelperText?: boolean;
+  showError?: boolean;
 }
 
 const MaskedField = <TFormValues extends FieldValues>({
@@ -29,6 +28,9 @@ const MaskedField = <TFormValues extends FieldValues>({
   format,
   formControlProps,
   inputProps,
+  required,
+  showError = true,
+  fixedHelperText = true,
 }: MaskFieldProps<TFormValues>) => {
   const {
     field: { value, onChange, onBlur },
@@ -45,16 +47,8 @@ const MaskedField = <TFormValues extends FieldValues>({
       error={!!error}
       {...formControlProps}
     >
-      {label && (
-        <InputLabel
-          className="form-label"
-          htmlFor={name}
-          variant="standard"
-          shrink
-        >
-          {label}
-        </InputLabel>
-      )}
+      {label && <Label label={label} htmlFor={name} required={required} />}
+
       <PatternFormat
         id={name}
         customInput={OutlinedInput}
@@ -64,9 +58,9 @@ const MaskedField = <TFormValues extends FieldValues>({
         onBlur={onBlur}
         {...inputProps}
       />
-      <FormHelperText className="form-error" variant="standard">
-        {error?.message}
-      </FormHelperText>
+      {showError && (
+        <HelperText error={error?.message} fixed={fixedHelperText} />
+      )}
     </FormControl>
   );
 };

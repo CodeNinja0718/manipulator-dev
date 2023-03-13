@@ -7,6 +7,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import isEmpty from 'lodash/isEmpty';
 import type { IReservationMenu } from 'models/manipulator/interface';
 import { useState } from 'react';
 import { NumericFormat } from 'react-number-format';
@@ -14,24 +15,30 @@ import { NumericFormat } from 'react-number-format';
 import styles from './styles';
 
 interface BookingMenuSelectionProps {
+  initialMenu: string;
   menus: IReservationMenu[];
+  onSubmit: (values: Record<string, unknown>) => void;
 }
 
 const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
+  initialMenu,
   menus,
+  onSubmit,
 }) => {
-  const [selectedMenu, setSelectedMenu] = useState('');
+  const [menuId, setMenuId] = useState(initialMenu);
 
   const handleSelectMenu = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedMenu(e.target.value);
+    setMenuId(e.target.value);
   };
+
+  const selectedMenu = menus.filter((menu) => menu._id === menuId);
 
   return (
     <Stack sx={styles.bookingMenuWrapper}>
       <Typography color="secondary" fontSize={18} fontWeight="bold">
         メニューを選択してください
       </Typography>
-      <RadioGroup value={selectedMenu} onChange={handleSelectMenu}>
+      <RadioGroup value={menuId} onChange={handleSelectMenu}>
         {menus.map((menu) => {
           return (
             <Box key={menu._id} sx={styles.menuItemWrapper}>
@@ -75,6 +82,8 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
         variant="contained"
         endIcon={<ArrowRight />}
         sx={styles.submitBtn}
+        onClick={() => onSubmit({ menuId })}
+        disabled={isEmpty(selectedMenu)}
       >
         予約日時を選択する
       </Button>

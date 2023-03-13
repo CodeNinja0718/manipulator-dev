@@ -259,10 +259,7 @@ export const MENU_MANIPULATOR_DETAIL: MenuHeadItem[] = [
   { title: 'レビュー', link: 'id_4' },
 ];
 
-export const STEPPER_CONTENT: {
-  label: string;
-  value: string;
-}[] = [
+export const STEPPER_CONTENT = [
   {
     label: 'メニュー',
     value: 'menu',
@@ -275,7 +272,7 @@ export const STEPPER_CONTENT: {
     label: '予約内容確認',
     value: 'overview',
   },
-];
+] as const;
 
 export const WORK_TIMES: string[] = [
   '09:00',
