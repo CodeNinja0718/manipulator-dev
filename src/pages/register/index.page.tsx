@@ -4,7 +4,7 @@ import OtpVerify from 'components/Auth/OtpVerify';
 import RegisterForm from 'components/Auth/RegisterForm';
 import type { RegisterFormValues } from 'components/Auth/RegisterForm/schema';
 import Layout from 'components/Layout';
-import { useMutate } from 'hooks';
+import { useGlobalState, useMutate, useUser } from 'hooks';
 import type {
   CustomerRegisterPayload,
   SendOtpPayload,
@@ -14,11 +14,14 @@ import authQuery from 'models/auth/query';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
+import Helper from 'utils/helpers';
 
 const RegisterPage = () => {
+  const { redirectLogin } = useGlobalState();
   const router = useRouter();
   const [phone, setPhone] = useState<string>('');
   const [token, setToken] = useState<string>('');
+  const { refetch: refetchUser } = useUser({ enabled: false });
 
   const { mutateAsync: handleSendOtp } = useMutate<SendOtpPayload>(
     authQuery.registerSendOtp,
@@ -29,8 +32,15 @@ const RegisterPage = () => {
       token: string;
     }
   >(authQuery.registerVerifyOtp);
-  const { mutateAsync: handleCustomerRegister } =
-    useMutate<CustomerRegisterPayload>(authQuery.customerRegister);
+  const { mutateAsync: handleCustomerRegister } = useMutate<
+    CustomerRegisterPayload,
+    {
+      authToken: {
+        accessToken: string;
+        refreshToken: string;
+      };
+    }
+  >(authQuery.customerRegister);
 
   const handleRegister: SubmitHandler<RegisterFormValues> = (
     values: RegisterFormValues,
@@ -77,8 +87,13 @@ const RegisterPage = () => {
         token,
       },
       {
-        onSuccess: () => {
-          router.push('/login');
+        onSuccess: (data) => {
+          Helper.setToken({
+            ...data.authToken,
+            rememberLogin: 'false',
+          });
+          refetchUser();
+          router.replace(redirectLogin);
         },
       },
     );

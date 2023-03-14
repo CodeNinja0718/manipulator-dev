@@ -38,7 +38,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   handleChangeStep,
   onSubmit,
 }) => {
-  const { data: currentUser } = useUser();
+  const { data: currentUser, isFetching } = useUser();
   const { data: cardList } = useFetch<{ items: ICardItem[] }>({
     ...cardQuery.cardList,
     enabled: !!currentUser,
@@ -55,11 +55,12 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   const { mutateAsync: addCard, isLoading: isAddingCard } = useMutate<{
     token: string;
     type: string;
-  }>(cardQuery.addCard);
+  }>({ ...cardQuery.addCard, successMessage: undefined });
 
   const {
     control,
     getValues,
+    reset,
     formState: { isValid },
   } = useForm<AddCardFormValues>({
     resolver: yupResolver(schema),
@@ -82,6 +83,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         { token: data.token, type: 'CARD' },
         {
           onSuccess: (response) => {
+            reset();
             onSubmit({
               paymentMethod: get(response, 'items[0].id'),
             });
@@ -98,11 +100,17 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   useEffect(() => {
     if (isEmpty(selectedMenu)) {
       handleChangeStep(STEPPER_CONTENT[0].value);
-    }
-    if (!startTime || !endTime) {
+    } else if (!startTime || !endTime || (!isFetching && !currentUser)) {
       handleChangeStep(STEPPER_CONTENT[1].value);
     }
-  }, [endTime, handleChangeStep, selectedMenu, startTime]);
+  }, [
+    currentUser,
+    endTime,
+    handleChangeStep,
+    isFetching,
+    selectedMenu,
+    startTime,
+  ]);
 
   useEffect(() => {
     if (!isEmpty(cardList?.items)) {
@@ -188,7 +196,11 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
                 key={item.id}
                 component="label"
               >
-                <Radio value={item.id} sx={styles.radioBtn} />
+                <Radio
+                  value={item.id}
+                  checked={item.id === payment}
+                  sx={styles.radioBtn}
+                />
                 <Stack
                   ml={8}
                   sx={{ width: '100%' }}

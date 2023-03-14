@@ -13,7 +13,7 @@ const cardQuery = {
     omitKeys: ['id'],
   },
   addCard: {
-    apiUrl: '/payment/customer/payment-methods',
+    apiUrl: '/payment/customer/payment-methods?returnList=true',
     successMessage: 'お支払い方法を追加しました',
   },
   cardList: {

@@ -7,15 +7,14 @@ import type {
   IManipulator,
   IReservationMenu,
 } from 'models/manipulator/interface';
+import type { CreateReservationPayload } from 'models/reservation/interface';
 import { NumericFormat } from 'react-number-format';
 
 import styles from './styles';
 
 interface BookingOverviewProps {
-  bookingDetail?: {
-    startTime: string;
-    endTime: string;
-    menu: IReservationMenu;
+  bookingDetail?: CreateReservationPayload & {
+    menu?: IReservationMenu;
   };
   manipulatorDetail?: IManipulator;
 }

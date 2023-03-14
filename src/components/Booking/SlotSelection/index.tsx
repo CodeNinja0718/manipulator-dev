@@ -86,8 +86,10 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
         </Typography>
         <Typography fontSize={18} color="black" fontWeight="bold">
           {date.add(7, 'day').isSame(date, 'month')
-            ? `${date.get('month')}月`
-            : `${date.get('month')}/${date.add(7, 'day').get('month')}月`}
+            ? `${date.get('month') + 1}月`
+            : `${date.get('month') + 1}/${
+                date.add(7, 'day').get('month') + 1
+              }月`}
         </Typography>
         <Typography
           onClick={() => setDate(date.add(7, 'day'))}

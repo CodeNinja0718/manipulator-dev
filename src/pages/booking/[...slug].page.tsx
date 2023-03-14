@@ -1,17 +1,19 @@
 import ArrowLeftIcon from '@icons/arrow-left.svg';
 import { Box, Stack } from '@mui/material';
 import { dehydrate } from '@tanstack/react-query';
+import SlotConfirmContent from 'components/Booking/SlotSelection/ConfirmContent';
 import Stepper from 'components/Booking/Stepper';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
 import ManipulatorSummaryInfo from 'components/Manipulator/SummaryInfo';
 import dayjs from 'dayjs';
-import { useFetch, useGlobalState, useMutate } from 'hooks';
+import { useFetch, useGlobalState, useMutate, useUser } from 'hooks';
 import type {
   IManipulator,
   IReservationMenu,
 } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
+import type { CreateReservationPayload } from 'models/reservation/interface';
 import reservationQuery from 'models/reservation/query';
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
@@ -32,6 +34,7 @@ const BookingPayment = dynamic(() => import('components/Booking/Payment'));
 const BookingOverview = dynamic(() => import('components/Booking/Overview'));
 
 const BookingPage = () => {
+  const { data: currentUser } = useUser();
   const router = useRouter();
   const { slug } = router.query;
   const manipulatorId = slug![0] || '';
@@ -59,7 +62,8 @@ const BookingPage = () => {
     staleTime: 1000 * 60 * 2,
   });
 
-  const { booking, setBooking } = useGlobalState();
+  const { booking, setBooking, setConfirmModal, setRedirectLogin } =
+    useGlobalState();
   const selectedMenu = manipulatorMenus?.docs.find(
     (menu) => menu._id === booking.menuId,
   );
@@ -111,20 +115,43 @@ const BookingPage = () => {
     });
   };
 
-  const handleSubmitStep = (value: Record<string, unknown>) => {
-    if (step === STEPPER_CONTENT[2].value) {
+  const handleSubmitStep = (values: CreateReservationPayload) => {
+    if (step === STEPPER_CONTENT[2].value && values.paymentMethod) {
       createReservation({
         ...booking,
-        ...value,
+        ...values,
         manipulatorId,
       });
     }
-    if (step === STEPPER_CONTENT[1].value) {
-      setBooking({ ...booking, ...value });
-      handleChangeStep(STEPPER_CONTENT[2].value);
+    if (
+      step === STEPPER_CONTENT[1].value &&
+      values.startTime &&
+      values.endTime
+    ) {
+      setConfirmModal({
+        title: '予約日時の確認',
+        content: (
+          <SlotConfirmContent
+            isGuest={!currentUser}
+            startTime={values.startTime}
+            endTime={values.endTime}
+            onConfirm={() => {
+              setRedirectLogin(`/booking/${manipulatorId}/confirm`);
+              setBooking({ ...booking, ...values });
+            }}
+          />
+        ),
+        hideActions: !currentUser,
+        onConfirm: () => {
+          if (currentUser) {
+            setBooking({ ...booking, ...values });
+            handleChangeStep(STEPPER_CONTENT[2].value);
+          }
+        },
+      });
     }
-    if (step === STEPPER_CONTENT[0].value) {
-      setBooking({ ...booking, ...value });
+    if (step === STEPPER_CONTENT[0].value && values.menuId) {
+      setBooking({ ...booking, ...values });
       handleChangeStep(STEPPER_CONTENT[1].value);
     }
   };

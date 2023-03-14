@@ -37,11 +37,7 @@ const AuthForm = ({
         control={control}
         placeholder="09012345678"
       />
-      <Typography
-        fontSize={16}
-        mt={{ xs: 24, tablet: 26 }}
-        mb={{ xs: 24, tablet: 32 }}
-      >
+      <Typography fontSize={16} mb={{ xs: 24, tablet: 32 }}>
         会員登録することで、整体なびの<Link href="/">利用規約</Link>
         および<Link href="/">プライバシーポリシー</Link>に同意するものとします。
       </Typography>

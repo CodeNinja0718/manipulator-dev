@@ -27,10 +27,12 @@ const styles: Record<string, SxProps<Theme>> = {
     color: 'white',
   },
   contentWrapper: {
-    padding: '20px !important',
+    padding: 0,
   },
   contentTextOnly: {
+    textAlign: 'center',
     whiteSpace: 'pre-line',
+    padding: 20,
   },
   actionWrapper: {
     padding: 20,

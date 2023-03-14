@@ -1,5 +1,6 @@
 import type { ConfirmModalProps } from 'components/ConfirmModal/modal';
 import { isEmpty } from 'lodash';
+import type { CreateReservationPayload } from 'models/reservation/interface';
 import create from 'zustand';
 
 export interface GlobalState {
@@ -9,8 +10,10 @@ export interface GlobalState {
   confirmModal: ConfirmModalProps | {};
   setConfirmModal: (payload: ConfirmModalProps | {}) => void;
   setOpenDrawer: (payload: boolean) => void;
-  booking: any;
+  booking: CreateReservationPayload;
   setBooking: (payload: any) => void;
+  redirectLogin: string;
+  setRedirectLogin: (payload: string) => void;
 }
 const useGlobalState = create<GlobalState>((set) => ({
   openConfirmModal: false,
@@ -22,6 +25,8 @@ const useGlobalState = create<GlobalState>((set) => ({
   setOpenDrawer: (payload = false) => set({ openDrawer: payload }),
   booking: {},
   setBooking: (payload) => set({ booking: payload }),
+  redirectLogin: '/',
+  setRedirectLogin: (payload) => set({ redirectLogin: payload }),
 }));
 
 export default useGlobalState;

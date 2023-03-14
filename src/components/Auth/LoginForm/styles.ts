@@ -10,7 +10,7 @@ const styles: Record<string, SxProps> = {
     },
   },
   checkboxControlWrapper: {
-    margin: '20px 0 40px',
+    margin: '0 0 40px',
     alignSelf: {
       xs: 'start',
       tablet: 'center',
