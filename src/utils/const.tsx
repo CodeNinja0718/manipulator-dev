@@ -270,7 +270,7 @@ export const STEPPER_CONTENT = [
   },
   {
     label: '予約内容確認',
-    value: 'overview',
+    value: 'confirm',
   },
 ] as const;
 

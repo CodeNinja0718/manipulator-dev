@@ -9,12 +9,16 @@ import styles from './styles';
 
 interface ManipulatorSummaryInfoProps {
   data?: IManipulator;
+  hideFavoriteBtn?: boolean;
+  hideRating?: boolean;
   sx?: SxProps<Theme>;
   className?: string;
 }
 
 const ManipulatorSummaryInfo: React.FC<ManipulatorSummaryInfoProps> = ({
   data,
+  hideFavoriteBtn = false,
+  hideRating = false,
   ...props
 }) => {
   const salonInfo = data?.salon[0];
@@ -27,9 +31,11 @@ const ManipulatorSummaryInfo: React.FC<ManipulatorSummaryInfoProps> = ({
           fill
           sizes="10vw"
         />
-        <IconButton sx={styles.favoriteBtn}>
-          <IconFavoriteOff />
-        </IconButton>
+        {!hideFavoriteBtn && (
+          <IconButton sx={styles.favoriteBtn}>
+            <IconFavoriteOff />
+          </IconButton>
+        )}
       </Box>
       <Stack>
         <Typography
@@ -46,25 +52,27 @@ const ManipulatorSummaryInfo: React.FC<ManipulatorSummaryInfoProps> = ({
         <Typography fontSize={12} color="graySolid">
           {salonInfo?.access.map((text) => `${text}\n`)}
         </Typography>
-        <Stack
-          direction="row"
-          alignItems="center"
-          flexWrap="wrap"
-          gap={8}
-          mt={4}
-          sx={styles.ratingWrapper}
-        >
-          <Typography color="secondary.main" fontWeight="bold">
-            ★ 0
-          </Typography>
-          <Typography fontSize={12} color="secondary.main" fontWeight="bold">
-            <IconReview />
-            レビュー
-          </Typography>
-          <Typography fontSize={12} color="graySolid">
-            <b>0</b>件
-          </Typography>
-        </Stack>
+        {!hideRating && (
+          <Stack
+            direction="row"
+            alignItems="center"
+            flexWrap="wrap"
+            gap={8}
+            mt={4}
+            sx={styles.ratingWrapper}
+          >
+            <Typography color="secondary.main" fontWeight="bold">
+              ★ 0
+            </Typography>
+            <Typography fontSize={12} color="secondary.main" fontWeight="bold">
+              <IconReview />
+              レビュー
+            </Typography>
+            <Typography fontSize={12} color="graySolid">
+              <b>0</b>件
+            </Typography>
+          </Stack>
+        )}
       </Stack>
     </Stack>
   );

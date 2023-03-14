@@ -32,7 +32,7 @@ const styles: Record<string, SxProps<Theme>> = {
       flex: '0 0 260px',
     },
     '.step-content': {
-      flex: '1 1 auto',
+      flex: '1 1 100%',
     },
   },
 };

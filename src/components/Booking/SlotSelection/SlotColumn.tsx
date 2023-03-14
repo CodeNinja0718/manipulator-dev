@@ -22,6 +22,7 @@ const SlotColumn: React.FC<SlotColumnProps> = ({
   availableSlots,
   handleSelectSlot,
 }) => {
+  const currentDateTime = dayjs().tz();
   const currentDate = dayjs().tz().startOf('day');
 
   return (
@@ -49,6 +50,7 @@ const SlotColumn: React.FC<SlotColumnProps> = ({
           selectedMenu?.estimatedTime ? selectedMenu.estimatedTime / 30 + 1 : 0,
         ).map((i) => slotDateTime.add(i ? i * 30 : 0, 'minute').toISOString());
         const slotAvailable =
+          currentDateTime.isBefore(slotDateTime, 'minute') &&
           availableSlots.includes(slotDateTime.toISOString()) &&
           difference(menuSlots, availableSlots).length === 0;
 

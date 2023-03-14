@@ -8,7 +8,7 @@ const styles: Record<string, SxProps<Theme>> = {
     borderRadius: '5px',
   },
   stepBtn: {
-    flex: '1 1 30%',
+    flex: '1 1 100%',
     pointerEvents: 'none',
     borderRadius: 0,
     fontSize: 14,

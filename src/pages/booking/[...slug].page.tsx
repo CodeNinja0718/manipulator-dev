@@ -28,6 +28,7 @@ const BookingSlotSelection = dynamic(
 const BookingMenuSelection = dynamic(
   () => import('components/Booking/MenuSelection'),
 );
+const BookingPayment = dynamic(() => import('components/Booking/Payment'));
 const BookingOverview = dynamic(() => import('components/Booking/Overview'));
 
 const BookingPage = () => {
@@ -36,7 +37,7 @@ const BookingPage = () => {
   const manipulatorId = slug![0] || '';
   const step = slug![1] || STEPPER_CONTENT[0].value;
 
-  const { mutateAsync: createReservation } = useMutate(
+  const { mutateAsync: createReservation, isSuccess } = useMutate(
     reservationQuery.createReservation,
   );
 
@@ -67,7 +68,8 @@ const BookingPage = () => {
     string,
     {
       href: LinkProps['href'];
-      shallow: boolean;
+      shallow?: boolean;
+      replace?: boolean;
       content: string;
     }
   > = {
@@ -83,23 +85,25 @@ const BookingPage = () => {
           slug: [manipulatorId, STEPPER_CONTENT[0].value],
         },
       },
+      replace: true,
       shallow: true,
       content: 'メニュー選択に戻る',
     },
-    overview: {
+    confirm: {
       href: {
         pathname: router.pathname,
         query: {
           slug: [manipulatorId, STEPPER_CONTENT[1].value],
         },
       },
+      replace: true,
       shallow: true,
       content: '日時選択に戻る',
     },
   };
 
   const handleChangeStep = (nextStep: string) => {
-    router.push({
+    router.replace({
       pathname: router.pathname,
       query: {
         slug: [manipulatorId, nextStep],
@@ -128,7 +132,7 @@ const BookingPage = () => {
   const renderStepContent = () => {
     if (step === STEPPER_CONTENT[2].value) {
       return (
-        <BookingOverview
+        <BookingPayment
           selectedMenu={selectedMenu}
           startTime={booking?.startTime}
           endTime={booking?.endTime}
@@ -155,11 +159,24 @@ const BookingPage = () => {
     );
   };
 
+  if (isSuccess) {
+    return (
+      <BookingOverview
+        manipulatorDetail={manipulatorTimeSlots?.manipulator}
+        bookingDetail={{
+          ...booking,
+          menu: selectedMenu,
+        }}
+      />
+    );
+  }
+
   return (
     <Box sx={styles.bookingPageWrapper}>
       <Link
         href={backNavigateContent[step]?.href || ''}
         shallow={backNavigateContent[step]?.shallow}
+        replace={backNavigateContent[step]?.replace}
         sx={styles.backNavigate}
       >
         <ArrowLeftIcon />
