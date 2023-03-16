@@ -116,6 +116,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
         variant="contained"
         endIcon={<ArrowRight />}
         sx={styles.submitBtn}
+        href="/my-page/reservations"
       >
         予約履歴を見る
       </Button>
