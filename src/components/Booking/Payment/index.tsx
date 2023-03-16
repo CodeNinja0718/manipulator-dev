@@ -39,7 +39,9 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   onSubmit,
 }) => {
   const { data: currentUser, isFetching } = useUser();
-  const { data: cardList } = useFetch<{ items: ICardItem[] }>({
+  const { data: cardList, isLoading: isLoadingCard } = useFetch<{
+    items: ICardItem[];
+  }>({
     ...cardQuery.cardList,
     enabled: !!currentUser,
   });
@@ -161,7 +163,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         >
           <PaymentSvg /> 支払い方法
         </Typography>
-        {isEmpty(cardList?.items) ? (
+        {isEmpty(cardList?.items) && !isLoadingCard ? (
           <>
             <Image
               src="/images/card_brand.webp"

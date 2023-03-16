@@ -8,6 +8,7 @@ import type {
   IReservationMenu,
 } from 'models/manipulator/interface';
 import type { CreateReservationPayload } from 'models/reservation/interface';
+import Link from 'next/link';
 import { NumericFormat } from 'react-number-format';
 
 import styles from './styles';
@@ -116,6 +117,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
         variant="contained"
         endIcon={<ArrowRight />}
         sx={styles.submitBtn}
+        component={Link}
         href="/my-page/reservations"
       >
         予約履歴を見る

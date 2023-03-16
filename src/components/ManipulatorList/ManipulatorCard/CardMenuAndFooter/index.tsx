@@ -4,6 +4,7 @@ import { Box, Button, Grid, Stack, SvgIcon, Typography } from '@mui/material';
 import FormatDate from 'components/FormatDate';
 import dayjs from 'dayjs';
 import type { IManipulator, Menu } from 'models/manipulator/interface';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
@@ -109,11 +110,8 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
       )}
       <Box textAlign="center" marginTop="20px">
         <Button
-          onClick={() =>
-            router.push({
-              pathname: `/manipulator/${data._id}`,
-            })
-          }
+          component={Link}
+          href={`/manipulator/${data._id}`}
           variant="contained"
           sx={styles.button}
           endIcon={

@@ -119,16 +119,22 @@ const BookingPage = () => {
 
   const handleSubmitStep = (values: CreateReservationPayload) => {
     if (step === STEPPER_CONTENT[2].value && values.paymentMethod) {
-      createReservation({
-        ...booking,
-        ...values,
-        manipulatorId,
-      });
-      setOverviewBooking({
-        ...booking,
-        menu: selectedMenu,
-      });
-      setBooking({});
+      createReservation(
+        {
+          ...booking,
+          ...values,
+          manipulatorId,
+        },
+        {
+          onSuccess: () => {
+            setOverviewBooking({
+              ...booking,
+              menu: selectedMenu,
+            });
+            setBooking({});
+          },
+        },
+      );
     }
     if (
       step === STEPPER_CONTENT[1].value &&
