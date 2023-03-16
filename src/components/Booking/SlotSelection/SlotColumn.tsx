@@ -14,6 +14,7 @@ interface SlotColumnProps {
   date: dayjs.Dayjs;
   availableSlots: string[];
   handleSelectSlot: (date: dayjs.Dayjs) => void;
+  isLoading?: boolean;
 }
 
 const SlotColumn: React.FC<SlotColumnProps> = ({
@@ -21,6 +22,7 @@ const SlotColumn: React.FC<SlotColumnProps> = ({
   date,
   availableSlots,
   handleSelectSlot,
+  isLoading,
 }) => {
   const currentDateTime = dayjs().tz();
   const currentDate = dayjs().tz().startOf('day');
@@ -62,17 +64,23 @@ const SlotColumn: React.FC<SlotColumnProps> = ({
             sx={styles.slotCell}
             data-current={date.isSame(currentDate, 'day')}
           >
-            <IconButton
-              sx={styles.slotBtn}
-              disabled={!slotAvailable}
-              onClick={() => {
-                if (slotAvailable) {
-                  handleSelectSlot(slotDateTime);
-                }
-              }}
-            >
-              {slotAvailable ? <IconSlotAvailable /> : <IconSlotUnavailable />}
-            </IconButton>
+            {!isLoading && (
+              <IconButton
+                sx={styles.slotBtn}
+                disabled={!slotAvailable}
+                onClick={() => {
+                  if (slotAvailable) {
+                    handleSelectSlot(slotDateTime);
+                  }
+                }}
+              >
+                {slotAvailable ? (
+                  <IconSlotAvailable />
+                ) : (
+                  <IconSlotUnavailable />
+                )}
+              </IconButton>
+            )}
           </Stack>
         );
       })}

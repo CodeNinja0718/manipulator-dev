@@ -101,13 +101,13 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
                 )}
               />
             </Stack>
-            <Divider sx={{ my: 10 }} />
+            {/* <Divider sx={{ my: 10 }} />
             <Typography color="black" fontWeight="bold">
               キャンセル料発生日
             </Typography>
             <Typography>
               {startTimeDay.add(-3, 'day').format('YYYY/MM/DD（ddd）')}
-            </Typography>
+            </Typography> */}
           </Stack>
         </Stack>
       </Stack>

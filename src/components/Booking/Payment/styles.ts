@@ -84,12 +84,12 @@ const styles: Record<string, SxProps> = {
   cancelNote: {
     backgroundColor: '#f5f5f5',
     padding: 16,
-    mb: 40,
   },
   submitBtn: {
     maxWidth: 323,
     width: '100%',
     margin: '0 auto',
+    mt: 40,
   },
 };
 

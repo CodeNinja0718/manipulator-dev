@@ -37,6 +37,13 @@ const styles: Record<string, SxProps> = {
       },
     },
   },
+  slotTableWrapper: {
+    position: 'relative',
+  },
+  loadingBar: {
+    position: 'absolute',
+    width: '100%',
+  },
   slotHeader: {
     height: 51,
     borderWidth: '1px 0',

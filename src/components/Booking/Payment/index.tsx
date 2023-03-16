@@ -224,13 +224,13 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
           </RadioGroup>
         )}
       </Stack>
-      <Typography sx={styles.cancelDate}>
+      {/* <Typography sx={styles.cancelDate}>
         <span>キャンセル料発生日</span>
         {startTimeDayjs.add(-3, 'day').format('YYYY/MM/DD（ddd）')}
       </Typography>
       <Typography sx={styles.cancelNote}>
         ボタンをタップして予約を送信することにより、キャンセルポリシーに同意したものとみなされます
-      </Typography>
+      </Typography> */}
       <LoadingButton
         fullWidth
         variant="contained"

@@ -19,6 +19,7 @@ import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { STEPPER_CONTENT } from 'utils/const';
 import queryClient, { fetchData } from 'utils/queryClient';
 
@@ -62,6 +63,7 @@ const BookingPage = () => {
     staleTime: 1000 * 60 * 2,
   });
 
+  const [overviewBooking, setOverviewBooking] = useState({});
   const { booking, setBooking, setConfirmModal, setRedirectLogin } =
     useGlobalState();
   const selectedMenu = manipulatorMenus?.docs.find(
@@ -122,6 +124,11 @@ const BookingPage = () => {
         ...values,
         manipulatorId,
       });
+      setOverviewBooking({
+        ...booking,
+        menu: selectedMenu,
+      });
+      setBooking({});
     }
     if (
       step === STEPPER_CONTENT[1].value &&
@@ -190,10 +197,7 @@ const BookingPage = () => {
     return (
       <BookingOverview
         manipulatorDetail={manipulatorTimeSlots?.manipulator}
-        bookingDetail={{
-          ...booking,
-          menu: selectedMenu,
-        }}
+        bookingDetail={overviewBooking}
       />
     );
   }

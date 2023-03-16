@@ -1,6 +1,6 @@
 import ArrowLeft from '@icons/arrow-left.svg';
 import ArrowRight from '@icons/arrow-right.svg';
-import { Stack, Typography } from '@mui/material';
+import { Box, LinearProgress, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useFetch } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
@@ -32,7 +32,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
 
   const [date, setDate] = useState(dayjs().tz().startOf('day'));
 
-  const { data: manipulatorTimeSlots } = useFetch<{
+  const { data: manipulatorTimeSlots, isLoading } = useFetch<{
     availableSlots: string[];
   }>({
     ...manipulatorQuery.manipulatorTimeSlots({
@@ -87,7 +87,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
         <Typography fontSize={18} color="black" fontWeight="bold">
           {date.add(7, 'day').isSame(date, 'month')
             ? `${date.get('month') + 1}月`
-            : `${date.get('month') + 1}/${
+            : `${date.get('month') + 1}月/${
                 date.add(7, 'day').get('month') + 1
               }月`}
         </Typography>
@@ -100,6 +100,11 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
         </Typography>
       </Stack>
       <Stack direction="row" alignItems="start" sx={styles.slotTableWrapper}>
+        {isLoading && (
+          <Box sx={styles.loadingBar}>
+            <LinearProgress />
+          </Box>
+        )}
         <TimeSlot />
         {times(7).map((index) => {
           const slotDate = date.add(index, 'day');
@@ -110,6 +115,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
               key={index}
               availableSlots={manipulatorTimeSlots?.availableSlots || []}
               handleSelectSlot={handleSelectSlot}
+              isLoading={isLoading}
             />
           );
         })}
