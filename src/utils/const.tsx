@@ -10,6 +10,7 @@ import TicketSvg from '@icons/icon_ticket.svg';
 import InstagramIcon from '@icons/instagram_icon.svg';
 import TwitterIcon from '@icons/twitter_icon.svg';
 import type { MenuHeadItem } from 'components/ManipulatorDetail/HeadMenu';
+import { ReservationStatus } from 'models/reservation/interface';
 
 import type { INavigation } from './type';
 
@@ -85,26 +86,12 @@ export const FOOTER_ITEMS = [
   },
 ];
 
-export const RESERVATION_STATUS_VALUE = {
-  confirmed: 'confirmed',
-  visitedHospital: 'visitedHospital',
-  cancel: 'cancel',
+export const RESERVATION_STATUS_TEXT = {
+  [ReservationStatus.RESERVED]: '予約確定',
+  [ReservationStatus.FREE_CANCELED]: 'キャンセル',
+  [ReservationStatus.PAID_CANCELED]: 'キャンセル',
+  [ReservationStatus.DONE]: '来院済',
 };
-
-export const RESERVATION_STATUS = [
-  {
-    label: '予約確定',
-    value: RESERVATION_STATUS_VALUE.confirmed,
-  },
-  {
-    label: '来院済',
-    value: RESERVATION_STATUS_VALUE.visitedHospital,
-  },
-  {
-    label: 'キャンセル',
-    value: RESERVATION_STATUS_VALUE.cancel,
-  },
-];
 
 export const DATE_FORMAT = 'yyyy/MM/dd (E)';
 
@@ -133,7 +120,7 @@ export const CUSTOMER_NAVIGATION: {
   children?: INavigation[];
 }[] = [
   {
-    href: '/my-page/reservation-history',
+    href: '/my-page/reservations',
     label: '予約履歴',
     icon: <ReservationSvg />,
   },

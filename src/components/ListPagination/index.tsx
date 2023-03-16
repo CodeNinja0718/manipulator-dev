@@ -43,7 +43,7 @@ const ListPagination = (props: ListPaginationProps) => {
         }
         return <PaginationItem {...item} />;
       }}
-      sx={styles.container}
+      sx={styles.paginationWrapper}
       // onChange={handlePageChange}
       page={Number(page || 1)}
       count={Math.ceil(props.total / Number(props.limit || limit))}
