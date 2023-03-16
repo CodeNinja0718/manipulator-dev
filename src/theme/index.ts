@@ -104,12 +104,6 @@ declare module '@mui/material/SvgIcon' {
   }
 }
 
-declare module '@mui/material/Pagination' {
-  interface PaginationPropsColorOverrides {
-    orange: true;
-  }
-}
-
 const palette: MuiPaletteOptions = {
   primary: {
     main: '#249287',

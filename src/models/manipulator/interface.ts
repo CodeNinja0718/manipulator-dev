@@ -60,7 +60,7 @@ export interface Address {
   prefectureName: string;
 }
 export interface IManipulator {
-  _id?: string;
+  _id: string;
   isFavorite?: boolean;
   timeSlots: string[];
   name: string;

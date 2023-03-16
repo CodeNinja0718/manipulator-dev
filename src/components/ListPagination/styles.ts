@@ -1,30 +1,32 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-const styles = {
-  container: (theme: Theme) => ({
-    '& button': {
-      height: '48px',
-      width: '48px',
-      borderRadius: '50%',
-      mx: '4px',
-      color: 'neutral7',
-      bgcolor: 'white',
-      fontSize: '16px',
-      fontWeight: 500,
-      '&.Mui-disabled': {
-        opacity: 0.38,
-      },
-      '&.MuiPaginationItem-root.Mui-selected': {
-        backgroundColor: 'secondary.main',
-        color: 'white',
-      },
-      [theme.breakpoints.down('tablet')]: {
-        height: '32px',
-        width: '32px',
-        fontSize: '12px',
-      },
+const styles: Record<string, SxProps<Theme>> = {
+  paginationWrapper: {
+    a: {
+      textDecoration: 'none',
     },
-  }),
-} as Record<string, SxProps<Theme>>;
+    '.MuiPagination-ul': {
+      gap: 10,
+    },
+    '.MuiButtonBase-root': {
+      height: 30,
+      width: 30,
+      borderRadius: '5px',
+      margin: 0,
+      border: 0,
+      fontWeight: 'bold',
+      fontSize: 16,
+      color: 'graySolid',
+    },
+    '.MuiPaginationItem-previousNext': {
+      border: '1px solid',
+      borderColor: 'placeholder',
+    },
+    '.MuiPaginationItem-root.Mui-selected': {
+      color: 'white',
+      backgroundColor: 'secondary.main',
+    },
+  },
+};
 
 export default styles;

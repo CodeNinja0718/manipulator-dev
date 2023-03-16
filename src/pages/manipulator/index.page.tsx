@@ -1,10 +1,6 @@
-import {
-  Box,
-  CircularProgress,
-  Pagination,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import Layout from 'components/Layout';
+import ListPagination from 'components/ListPagination';
 import ManipulatorCard from 'components/ManipulatorList/ManipulatorCard';
 import ManipulatorHeader from 'components/ManipulatorList/ManipulatorHeader';
 import SearchColumn from 'components/ManipulatorList/SearchColumn';
@@ -16,7 +12,6 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
-import theme from 'theme';
 import Helper from 'utils/helpers';
 
 import styles from './styles';
@@ -28,24 +23,9 @@ const EmptyManipulator = dynamic(
 const ManipulatorList = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const isMobile = useMediaQuery(theme.breakpoints.down('normalTablet'));
-  const { isLoading, list, total, totalPages } = useList<IManipulator>(
+  const { isLoading, list, total } = useList<IManipulator>(
     manipulatorQuery.searchManiplator(Helper.encodeParams(router.query)),
   );
-
-  const handleChangePage = (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
-    const newQuery = { ...get(router, 'query', {}), page: value };
-    setCurrentPage(value);
-    router.push({
-      pathname: `/manipulator`,
-      query: {
-        ...newQuery,
-      },
-    });
-  };
 
   useEffect(() => {
     setCurrentPage(Number(get(router, 'query.page', 1)));
@@ -75,14 +55,7 @@ const ManipulatorList = () => {
             )}
             {currentPage && total > 0 && (
               <Box display="flex" justifyContent="center">
-                <Pagination
-                  color="orange"
-                  count={totalPages}
-                  siblingCount={isMobile ? 0 : 1}
-                  shape="rounded"
-                  page={currentPage}
-                  onChange={handleChangePage}
-                />
+                <ListPagination total={total} limit={10} />
               </Box>
             )}
           </>
