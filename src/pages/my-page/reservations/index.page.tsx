@@ -20,7 +20,6 @@ const ReservationListPage = () => {
       page: typeof page === 'string' ? Number(page) : 1,
       limit: 4,
     },
-    staleTime: 1000 * 60 * 2,
   });
 
   return (
