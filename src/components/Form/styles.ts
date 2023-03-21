@@ -59,7 +59,7 @@ const styles: Record<string, SxProps<Theme>> = {
   datepicker: {
     '& .MuiInputBase-root': {
       '& .MuiInputAdornment-root': {
-        // pr: 6,
+        pr: 6,
       },
     },
   },

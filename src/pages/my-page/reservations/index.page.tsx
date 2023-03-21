@@ -9,6 +9,9 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 const ReservationCard = dynamic(() => import('components/Reservation/Card'));
+const NavigationMenu = dynamic(
+  () => import('components/Layout/NavigationMenu'),
+);
 
 const ReservationListPage = () => {
   const router = useRouter();
@@ -48,6 +51,7 @@ const ReservationListPage = () => {
         ))}
       </Stack>
       {totalPages !== 1 && <ListPagination total={total} limit={4} />}
+      <NavigationMenu mt={40} />
     </Stack>
   );
 };

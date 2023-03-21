@@ -3,8 +3,8 @@ import type { SxProps } from '@mui/material';
 const styles: Record<string, SxProps> = {
   cardListPageWrapper: {
     padding: {
-      xs: '40px 20px 90px',
-      tablet: '60px 20px 106px',
+      xs: '40px 20px 60px',
+      tablet: '60px 20px',
     },
     maxWidth: 610,
     width: '100%',

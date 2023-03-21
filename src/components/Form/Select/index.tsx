@@ -1,9 +1,10 @@
 import CloseIcon from '@icons/close.svg';
+import type { FormControlProps } from '@mui/material';
 import { Box, FormControl, IconButton } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import type { SelectProps } from '@mui/material/Select';
 import MuiSelect from '@mui/material/Select';
-import { isEmpty } from 'lodash';
+import { isEmpty, isNil } from 'lodash';
 import type { ReactNode } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
@@ -24,6 +25,8 @@ interface SelectFieldProps<TFormValues extends FieldValues> {
   viewMode?: boolean;
   extraLabel?: string | ReactNode;
   fixedHelperText?: boolean;
+  showError?: boolean;
+  formControlProps?: FormControlProps;
 }
 
 const Select = <TFormValues extends FieldValues>({
@@ -35,8 +38,9 @@ const Select = <TFormValues extends FieldValues>({
   name,
   placeholder,
   multiple,
-  extraLabel,
-  fixedHelperText,
+  showError = true,
+  fixedHelperText = true,
+  formControlProps,
   ...props
 }: SelectFieldProps<TFormValues> & SelectProps) => {
   const {
@@ -48,25 +52,23 @@ const Select = <TFormValues extends FieldValues>({
   });
 
   return (
-    <FormControl fullWidth className="selectFieldCustom">
-      {label && (
-        <Label
-          label={label}
-          required={required}
-          extraLabel={extraLabel}
-          className="selectLabel"
-          htmlFor={name}
-        />
-      )}
-
+    <FormControl
+      fullWidth
+      variant="standard"
+      sx={styles.formControlWrapper}
+      error={!!error}
+      {...formControlProps}
+    >
+      {label && <Label label={label} required={required} htmlFor={name} />}
       <MuiSelect
         className="tabletStyle"
         sx={styles.input}
         id={name}
         {...props}
         {...otherField}
-        value={value}
+        value={!isNil(value) ? value : ''}
         error={!!error}
+        variant="outlined"
         displayEmpty
         inputProps={{ maxLength }}
         renderValue={
@@ -110,8 +112,9 @@ const Select = <TFormValues extends FieldValues>({
           </MenuItem>
         ))}
       </MuiSelect>
-
-      <HelperText error={error?.message} fixedHelperText={fixedHelperText} />
+      {showError && (
+        <HelperText error={error?.message} fixed={fixedHelperText} />
+      )}
     </FormControl>
   );
 };

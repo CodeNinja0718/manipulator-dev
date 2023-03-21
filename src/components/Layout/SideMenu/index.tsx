@@ -16,7 +16,7 @@ import styles from './styles';
 const SideMenu: React.FC = () => {
   const router = useRouter();
   return (
-    <Box sx={styles.sideMenuContainer}>
+    <Box sx={styles.sideMenuContainer} className="side-menu-list">
       <Box sx={styles.sideMenuWrapper}>
         <Typography sx={styles.title}>マイページ</Typography>
         <List
