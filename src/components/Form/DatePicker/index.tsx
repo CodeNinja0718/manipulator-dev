@@ -1,11 +1,10 @@
-import CalendarIcon from '@icons/calendar.svg';
+import CalendarIcon from '@icons/icon_datepicker.svg';
 import { FormControl, SvgIcon, TextField } from '@mui/material';
 import type { DesktopDatePickerProps } from '@mui/x-date-pickers/DesktopDatePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { omit } from 'lodash';
-import type { ReactNode } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import { DateFormat } from 'utils/const';
@@ -26,7 +25,6 @@ interface DatePickerProps<TFormValues extends FieldValues>
   columns?: number;
   placeholder?: string;
   label?: string;
-  extraLabel?: string | ReactNode;
 }
 
 const DatePicker = <TFormValues extends FieldValues>({
@@ -36,7 +34,6 @@ const DatePicker = <TFormValues extends FieldValues>({
   name,
   placeholder,
   inputFormat = DateFormat.YEAR_MONTH_DATE,
-  extraLabel,
   ...props
 }: DatePickerProps<TFormValues>) => {
   const {
@@ -49,14 +46,7 @@ const DatePicker = <TFormValues extends FieldValues>({
 
   return (
     <FormControl fullWidth>
-      {label && (
-        <Label
-          label={label}
-          required={required}
-          extraLabel={extraLabel}
-          htmlFor={name}
-        />
-      )}
+      {label && <Label label={label} required={required} htmlFor={name} />}
 
       <DesktopDatePicker
         {...props}
@@ -76,6 +66,11 @@ const DatePicker = <TFormValues extends FieldValues>({
               color="primary"
               component={CalendarIcon}
               className="tabletStyle"
+              inheritViewBox
+              sx={{
+                width: 18,
+                height: 18,
+              }}
             />
           ),
         }}

@@ -83,6 +83,7 @@ const RegisterPage = () => {
     handleCustomerRegister(
       {
         ...values,
+        gender: values.gender || 0,
         phone,
         token,
       },
@@ -106,7 +107,7 @@ const RegisterPage = () => {
           name: '',
           nameKana: '',
           phone,
-          gender: 0,
+          gender: undefined,
           birthday: '',
           email: '',
         }}

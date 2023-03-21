@@ -7,6 +7,7 @@ import { MaskedField } from 'components/Form';
 import Layout from 'components/Layout';
 import useMutate from 'hooks/useMutate';
 import cardQuery from 'models/card/query';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -16,6 +17,10 @@ import { useForm } from 'react-hook-form';
 import type { AddCardFormValues } from './schema';
 import schema from './schema';
 import styles from './styles';
+
+const NavigationMenu = dynamic(
+  () => import('components/Layout/NavigationMenu'),
+);
 
 const AddCardPage = () => {
   const router = useRouter();
@@ -112,6 +117,7 @@ const AddCardPage = () => {
           登録する
         </LoadingButton>
       </Stack>
+      <NavigationMenu mt={60} />
     </Stack>
   );
 };

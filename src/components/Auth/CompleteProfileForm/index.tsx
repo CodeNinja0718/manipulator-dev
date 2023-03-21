@@ -1,9 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowRight from '@icons/arrow-right.svg';
+import MembershipSvg from '@icons/icon_membership.svg';
 import { LoadingButton } from '@mui/lab';
 import { Stack, Typography } from '@mui/material';
 import { DatePicker, Select, TextField } from 'components/Form';
-import React from 'react';
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { GENDER_OPTIONS } from 'utils/const';
@@ -12,20 +14,38 @@ import type { CompleteProfileFormValues } from './schema';
 import schema from './schema';
 import styles from './styles';
 
+const NavigationMenu = dynamic(
+  () => import('components/Layout/NavigationMenu'),
+);
+
 const CompleteProfileForm = ({
   onSubmit,
   onBack,
   initialValues,
+  isUpdateProfile = false,
+  loading = false,
 }: {
   onSubmit: SubmitHandler<CompleteProfileFormValues>;
-  onBack: () => void;
+  onBack?: () => void;
   initialValues: CompleteProfileFormValues;
+  isUpdateProfile?: boolean;
+  loading?: boolean;
 }) => {
-  const { control, handleSubmit } = useForm<CompleteProfileFormValues>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isDirty, isValid },
+  } = useForm<CompleteProfileFormValues>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
     defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    reset(initialValues);
+  }, [initialValues, reset]);
+
   return (
     <Stack
       alignItems="center"
@@ -33,7 +53,8 @@ const CompleteProfileForm = ({
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Typography variant="title" fontSize={24} mt={26} mb={32}>
+      <Typography variant="title" fontSize={24} mb={60} sx={styles.title}>
+        <MembershipSvg />
         会員登録
       </Typography>
       <TextField
@@ -51,7 +72,7 @@ const CompleteProfileForm = ({
         required
       />
       <TextField
-        label="電話番号で登録"
+        label="携帯番号"
         name="phone"
         control={control}
         disabled
@@ -62,12 +83,13 @@ const CompleteProfileForm = ({
         label="メールアドレス"
         name="email"
         control={control}
+        disabled={isUpdateProfile}
         placeholder="メールアドレス"
         type="email"
         required
       />
       <DatePicker
-        label="Birthday"
+        label="生年月日"
         name="birthday"
         control={control}
         required
@@ -77,10 +99,10 @@ const CompleteProfileForm = ({
         }}
       />
       <Select
-        label="Gender"
+        label="性別"
         name="gender"
         control={control}
-        placeholder="Gender"
+        placeholder="性別"
         data={GENDER_OPTIONS}
         required
       />
@@ -92,21 +114,26 @@ const CompleteProfileForm = ({
         endIcon={<ArrowRight />}
         loadingPosition="end"
         sx={styles.submitBtn}
+        loading={loading}
+        disabled={!isDirty || !isValid}
       >
         変更する
       </LoadingButton>
-      <Typography
-        fontSize={16}
-        color="primary"
-        mt={16}
-        onClick={onBack}
-        sx={{
-          cursor: 'pointer',
-          textDecoration: 'underline',
-        }}
-      >
-        {'< 電話番号を再入力する'}
-      </Typography>
+      {onBack && (
+        <Typography
+          fontSize={16}
+          color="primary"
+          mt={16}
+          onClick={onBack}
+          sx={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+          }}
+        >
+          {'< 電話番号を再入力する'}
+        </Typography>
+      )}
+      {isUpdateProfile && <NavigationMenu mt={40} />}
     </Stack>
   );
 };

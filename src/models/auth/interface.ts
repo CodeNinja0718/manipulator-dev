@@ -7,9 +7,10 @@ export interface ICustomer {
   phone: string;
   email: string;
   status: string;
-  createdAt?: string;
-  updatedAt?: string;
-  gender?: Gender;
+  birthday: string;
+  createdAt: string;
+  updatedAt: string;
+  gender: Gender;
 }
 
 export interface LoginResponse {
@@ -27,6 +28,14 @@ export type VerifyOtpPayload =
   | { identity: string; password: string };
 
 export interface CustomerRegisterPayload
-  extends Pick<ICustomer, 'name' | 'nameKana' | 'phone' | 'email' | 'gender'> {
+  extends Pick<
+    ICustomer,
+    'name' | 'nameKana' | 'phone' | 'birthday' | 'email' | 'gender'
+  > {
   token: string;
 }
+
+export type CustomerUpdateProfilePayload = Pick<
+  ICustomer,
+  'name' | 'nameKana' | 'birthday' | 'gender'
+>;

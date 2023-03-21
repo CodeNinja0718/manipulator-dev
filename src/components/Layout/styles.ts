@@ -52,7 +52,7 @@ const styles: Record<string, SxProps<Theme>> = {
     '& > *': {
       flex: '1 1 100%',
     },
-    '& > *:first-of-type': {
+    '& > .side-menu-list': {
       flex: '0 0 260px',
       height: 'auto',
       display: {

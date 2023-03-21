@@ -9,11 +9,16 @@ import useGlobalState from 'hooks/useGlobalState';
 import isEmpty from 'lodash/isEmpty';
 import type { ICardItem } from 'models/card/interface';
 import cardQuery from 'models/card/query';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
 import Helper from 'utils/helpers';
 
 import styles from './styles';
+
+const NavigationMenu = dynamic(
+  () => import('components/Layout/NavigationMenu'),
+);
 
 const CardListPage = () => {
   const { setConfirmModal } = useGlobalState();
@@ -153,6 +158,7 @@ const CardListPage = () => {
       >
         新しくカードを登録する
       </LoadingButton>
+      <NavigationMenu mt={40} />
     </Stack>
   );
 };

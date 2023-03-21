@@ -12,8 +12,6 @@ import TwitterIcon from '@icons/twitter_icon.svg';
 import type { MenuHeadItem } from 'components/ManipulatorDetail/HeadMenu';
 import { ReservationStatus } from 'models/reservation/interface';
 
-import type { INavigation } from './type';
-
 export const Regex = {
   PASSWORD_POLICY:
     // eslint-disable-next-line no-useless-escape
@@ -113,12 +111,7 @@ export const SOCIAL_MEDIA: {
   },
 ];
 
-export const CUSTOMER_NAVIGATION: {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-  children?: INavigation[];
-}[] = [
+export const CUSTOMER_NAVIGATION = [
   {
     href: '/my-page/reservations',
     label: '予約履歴',
@@ -140,7 +133,7 @@ export const CUSTOMER_NAVIGATION: {
     icon: <FavSvg />,
   },
   {
-    href: '/my-page/member',
+    href: '/my-page/profile',
     label: '会員情報',
     icon: <MembershipSvg />,
   },
