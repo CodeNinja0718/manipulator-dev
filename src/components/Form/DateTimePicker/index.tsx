@@ -1,4 +1,4 @@
-import CalendarIcon from '@icons/calendar.svg';
+import CalendarIcon from '@icons/icon_datepicker.svg';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {
   Box,
@@ -121,7 +121,15 @@ const DatePicker = <TFormValues extends FieldValues>({
         disableMaskedInput
         components={{
           OpenPickerIcon: () => (
-            <SvgIcon component={CalendarIcon} className="tabletStyle" />
+            <SvgIcon
+              component={CalendarIcon}
+              className="tabletStyle"
+              inheritViewBox
+              sx={{
+                width: 18,
+                height: 18,
+              }}
+            />
           ),
         }}
         renderInput={(params) => {

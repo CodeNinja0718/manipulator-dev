@@ -31,6 +31,7 @@ declare module '@mui/material/styles' {
     grayText: string;
     grullo: string;
     silver: string;
+    chamoisee: string;
   }
 
   interface PaletteOptions {
@@ -53,6 +54,7 @@ declare module '@mui/material/styles' {
     grayText?: string;
     grullo?: string;
     silver?: string;
+    chamoisee?: string;
   }
 
   interface TypographyVariants {
@@ -138,6 +140,7 @@ const palette: MuiPaletteOptions = {
   black: '#333333',
   backgroundColor: '#f4f2f1',
   grullo: '#ac9b93',
+  chamoisee: '#9c795e',
   silver: '#cccccc',
   orangeGradient: 'linear-gradient(295deg, #ff872b, #ec6702 53%, #eb6600)',
   action: {
@@ -156,7 +159,7 @@ const theme = createTheme({
       wordBreak: 'break-word',
       lineHeight: 'normal',
     },
-    fontFamily: `HiraginoKakuGothicPro,${noto.style.fontFamily}`,
+    fontFamily: `Hiragino Kaku Gothic Pro, ${noto.style.fontFamily}`,
   },
   breakpoints: {
     values: {

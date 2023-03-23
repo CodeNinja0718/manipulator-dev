@@ -21,11 +21,16 @@ const authQuery = {
   },
   loginSendOtp: {
     apiUrl: '/auth/customer/login/send-otp',
-    metod: 'post',
+    method: 'post',
   },
   loginVerifyOtp: {
     apiUrl: '/auth/customer/login',
-    metod: 'post',
+    method: 'post',
+  },
+  updateProfile: {
+    apiUrl: '/account/customer/profile',
+    method: 'patch',
+    successMessage: 'Your profile has been updated',
   },
 };
 
