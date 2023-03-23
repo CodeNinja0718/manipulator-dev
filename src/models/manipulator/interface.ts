@@ -11,11 +11,9 @@ interface Salon {
   photos: Photo[];
   features: Feature[];
   addresses?: Address[];
+  description: string;
 }
-// interface Symptom {
-//   id: string;
-//   name: string;
-// }
+
 interface Feature {
   id: string;
   name: string;

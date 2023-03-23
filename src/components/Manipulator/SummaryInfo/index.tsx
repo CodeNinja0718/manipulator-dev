@@ -37,7 +37,7 @@ const ManipulatorSummaryInfo: React.FC<ManipulatorSummaryInfoProps> = ({
           </IconButton>
         )}
       </Box>
-      <Stack>
+      <Stack flex="1 1 auto">
         <Typography
           fontSize={18}
           fontWeight="bold"

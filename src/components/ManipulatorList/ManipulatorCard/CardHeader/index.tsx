@@ -1,6 +1,7 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import type { IManipulator } from 'models/manipulator/interface';
+import Link from 'next/link';
 import * as React from 'react';
 import { PHOTO_TYPE_VALUE } from 'utils/const';
 
@@ -19,7 +20,11 @@ const ManipulatorCardHeader = ({ data }: ManipulatorCardHeaderProps) => {
         <Typography component="h3" fontWeight={'600'}>
           {data.name}
         </Typography>
-        <IconButton component="label" sx={styles.headerAboveBtn}>
+        <IconButton
+          component={Link}
+          sx={styles.headerAboveBtn}
+          href={`/manipulator/${data._id}`}
+        >
           <ChevronRightIcon color="inherit" />
         </IconButton>
       </Box>

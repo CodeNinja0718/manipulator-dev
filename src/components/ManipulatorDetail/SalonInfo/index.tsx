@@ -135,8 +135,8 @@ const SalonInfo = ({ data }: SalonInfoProps) => {
         整体院について / 注意事項
       </Typography>
       <Box>
-        <Typography component={'p'} marginTop={10} maxWidth={335} fontSize={14}>
-          {data.profile}
+        <Typography component={'p'} marginTop={10} fontSize={14}>
+          {salonInfo?.description}
         </Typography>
       </Box>
     </Box>

@@ -14,6 +14,7 @@ const styles: Record<string, SxProps<Theme>> = {
       borderRadius: '50%',
       objectFit: 'cover',
     },
+    flex: '0 0 80px',
   },
   favoriteBtn: {
     position: 'absolute',
