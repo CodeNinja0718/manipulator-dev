@@ -20,6 +20,7 @@ const ManipulatorCardFeature = ({ data }: ManipulatorCardFeatureProps) => {
           key={`feat-${index}`}
           src={Helper.getFeatueImage(item.id)}
           alt="feat-image"
+          sizes="(max-width: 120px) 100vw, 80px"
           height={55}
           priority
           width={80}

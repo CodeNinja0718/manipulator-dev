@@ -83,7 +83,7 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
                 marginBottom="10px"
               >
                 {<FormatDate dateString={date.toString()} />}
-                (月)の予約可能時間
+                の予約可能時間
               </Typography>
               <Box sx={styles.reservableTimeWrap}>
                 {data.timeSlots?.length &&
@@ -98,7 +98,7 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
                       {
                         <FormatDate
                           dateString={dayjs.utc(item).tz()}
-                          formatValue="hh:mm"
+                          formatValue="HH:mm"
                         />
                       }
                     </Button>

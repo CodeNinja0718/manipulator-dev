@@ -9,7 +9,13 @@ import {
   SvgIcon,
   Typography,
 } from '@mui/material';
+import FormatDate from 'components/FormatDate';
+import { useFetch } from 'hooks';
+import type { ICommonDataSalon, ILocationList } from 'models/common/interface';
+import commonQuery from 'models/common/query';
+import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import styles from './styles';
 
@@ -23,6 +29,39 @@ export interface SearchColumnItem {
 }
 
 const SearchColumn = () => {
+  const router = useRouter();
+  const [areaCondition, setAreaCondition] = useState('');
+  const [dateCondition, setDateCondition] = useState('');
+  const [symptomsCondition, setSymptomsCondition] = useState('');
+  useEffect(() => {
+    const { date, areas, symptoms } = router.query;
+    setDateCondition(date as string);
+    setAreaCondition(areas as string);
+    setSymptomsCondition(symptoms as string);
+  }, [router]);
+
+  const { data: response } = useFetch<ICommonDataSalon>(
+    commonQuery.salonCommonData(),
+  );
+  const { data: locations } = useFetch<ILocationList>(
+    commonQuery.locationList('1'),
+  );
+  const symptomsSelected = useMemo(() => {
+    return response?.symptoms.find(
+      (item) => item._id.toString() === symptomsCondition,
+    )?.symptomName;
+  }, [response, symptomsCondition]);
+
+  const areaSelected = useMemo(() => {
+    return locations?.result.find(
+      (item) => item._id.toString() === areaCondition,
+    )?.name;
+  }, [locations, areaCondition]);
+
+  const dateSelected = useMemo(() => {
+    return dateCondition ? <FormatDate dateString={dateCondition} /> : '';
+  }, [dateCondition]);
+
   return (
     <Box sx={styles.searchColumn}>
       <Box sx={styles.searchColumnBox}>
@@ -52,21 +91,21 @@ const SearchColumn = () => {
             <ListItemText
               sx={styles.listItemText}
               primary={'エリア'}
-              secondary={'渋谷/東京都/関東'}
+              secondary={areaSelected ?? '渋谷/東京都/関東'}
             />
           </ListItemButton>
           <ListItemButton sx={styles.listItemButton}>
             <ListItemText
               sx={styles.listItemText}
               primary={'日付'}
-              secondary={'指定なし'}
+              secondary={dateSelected ?? '指定なし'}
             />
           </ListItemButton>
           <ListItemButton sx={styles.listItemButton}>
             <ListItemText
               sx={styles.listItemText}
               primary={'症状'}
-              secondary={'指定なし'}
+              secondary={symptomsSelected ?? '指定なし'}
             />
           </ListItemButton>
         </List>
