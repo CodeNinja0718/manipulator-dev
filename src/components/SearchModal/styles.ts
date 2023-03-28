@@ -14,6 +14,9 @@ const styles = {
   },
   contentContainer: {
     minHeight: { xs: '44vh', tablet: '51vh' },
+    '& .contentTab': {
+      maxHeight: { xs: '40vh' },
+    },
   },
 } as Record<string, SxProps<Theme>>;
 

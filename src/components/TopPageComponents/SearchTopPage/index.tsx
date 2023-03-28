@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
-import dayjs from 'dayjs';
 import useFetch from 'hooks/useFetch';
 import get from 'lodash/get';
 import type {
@@ -11,7 +10,7 @@ import type {
 import commonQuery from 'models/common/query';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { DateFormat } from 'utils/const';
+import { SearchTopPageType } from 'utils/const';
 import Helper from 'utils/helpers';
 
 import AdvanceSearch from './AdvanceSearch';
@@ -21,12 +20,10 @@ import SearchModalElement from './SearchModalElement';
 const SearchTopPage = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(SearchTopPageType.LOCATION);
   const [selectedSymptomType, setSelectedSymptomType] = useState(1);
   const [selectedSymptom, setSelectedSymptom] = useState<number[]>([]);
-  const [currentDate, setCurrentDate] = useState<Date | string>(
-    dayjs(new Date()).format(DateFormat.YEAR_MONTH_DATE_DASH),
-  );
+  const [currentDate, setCurrentDate] = useState<Date | string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
   const [selectedStation, setSelectedStation] = useState<string[]>([]);
   const [disabledSubmit, setDisabledSubmit] = useState(false);
@@ -44,7 +41,14 @@ const SearchTopPage = () => {
   const handleCloseSearch = () => {
     setOpen(false);
     handleSetSelectedSymptomType(1);
-    setCurrentDate(dayjs(new Date()).format(DateFormat.YEAR_MONTH_DATE_DASH));
+    setCurrentDate(null);
+  };
+  const handleChangeTab = (value: number) => {
+    if (value === SearchTopPageType.LOCATION) {
+      setSelectedStation([]);
+    } else {
+      setSelectedLocation([]);
+    }
   };
 
   const { data: response } = useFetch<ICommonDataSalon>(
@@ -56,7 +60,7 @@ const SearchTopPage = () => {
   const { data: lines } = useFetch<ICommonLineList>(
     commonQuery.stationLineList(),
   );
-  const handleSubmit = () => {
+  const handleSubmit = (isSkipCondition?: boolean) => {
     const data = {
       symptoms: selectedSymptom.join(),
       date: currentDate,
@@ -66,6 +70,13 @@ const SearchTopPage = () => {
       page: 1,
       sort: 'createdDate.desc',
     };
+
+    if (!data.symptoms && !data.areas && !data.stations && !isSkipCondition) {
+      Helper.toast('検索するためにエリア/駅または症状を選択してください。', {
+        type: 'error',
+      });
+      return;
+    }
 
     // Disable Button
     setDisabledSubmit(true);
@@ -113,7 +124,8 @@ const SearchTopPage = () => {
           disabled={disabledSubmit}
           activeTab={activeTab}
           onClose={handleCloseSearch}
-          onSubmit={handleSubmit}
+          onSubmit={() => handleSubmit()}
+          onChangeTab={handleChangeTab}
         />
       )}
     </Box>

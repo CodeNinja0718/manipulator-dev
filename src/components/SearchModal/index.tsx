@@ -3,6 +3,7 @@ import { Box, Button, CircularProgress } from '@mui/material';
 import CommonModal from 'components/CommonModal';
 import dynamic from 'next/dynamic';
 import React, { useMemo } from 'react';
+import { SearchTopPageType } from 'utils/const';
 
 import styles from './styles';
 
@@ -24,6 +25,7 @@ interface SearchModalProps {
   titleElement?: JSX.Element;
   tabs: { label: React.ReactNode; component?: React.ReactNode }[];
   onClose?: () => void;
+  onChangeTab?: (value: number) => void;
   activeTab?: number;
   onSubmit: () => void;
   disabled: boolean;
@@ -35,9 +37,10 @@ const SearchModal = ({
   titleElement,
   tabs = [],
   onClose,
-  activeTab = 0,
+  activeTab = SearchTopPageType.LOCATION,
   onSubmit,
   disabled = false,
+  onChangeTab,
 }: SearchModalProps) => {
   const openModal = useMemo(() => {
     return open;
@@ -62,7 +65,7 @@ const SearchModal = ({
       }
     >
       <Box sx={styles.contentContainer}>
-        <CommonTabs tabs={tabs} active={activeTab} />
+        <CommonTabs tabs={tabs} active={activeTab} onChangeTab={onChangeTab} />
       </Box>
     </CommonModal>
   );

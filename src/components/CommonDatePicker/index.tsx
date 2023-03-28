@@ -1,4 +1,6 @@
 import CalendarIcon from '@icons/icon_datepicker.svg';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Box, IconButton } from '@mui/material';
 import type { SxProps } from '@mui/material/styles';
 import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
@@ -10,10 +12,10 @@ import { DateFormat } from 'utils/const';
 import styles from './styles';
 
 interface CommonDatePickerProps {
-  value: Date | string;
+  value: Date | string | null;
   inputFormat?: string;
   placeholder?: string;
-  onChange: (value: Date | string) => void;
+  onChange: (value: Date | string | null) => void;
   componentStyle?: SxProps | object;
   disablePast?: boolean;
 }
@@ -37,7 +39,6 @@ const CommonDatePicker = ({
         if (dayjs.isDayjs(dateValue) && dateValue.isValid()) {
           currentValue = dateValue.format(inputFormat);
         } else currentValue = dateValue || '';
-
         onChange(currentValue);
       }}
       components={{
@@ -52,16 +53,31 @@ const CommonDatePicker = ({
       }}
       renderInput={(params) => {
         return (
-          <TextField
-            margin="none"
-            {...omit(params, ['onKeyUp', 'onKeyDown'])}
-            inputProps={{
-              ...params.inputProps,
-              placeholder: placeholder || params.inputProps?.placeholder,
-              readOnly: true,
-            }}
-            sx={componentStyle}
-          />
+          <Box position={'relative'}>
+            <TextField
+              margin="none"
+              {...omit(params, ['onKeyUp', 'onKeyDown'])}
+              inputProps={{
+                ...params.inputProps,
+                placeholder: placeholder || params.inputProps?.placeholder,
+                readOnly: true,
+              }}
+              sx={componentStyle}
+            />
+            {value && (
+              <IconButton
+                style={{
+                  position: 'absolute',
+                  top: '17px',
+                  margin: 'auto',
+                  right: '40px',
+                }}
+                onClick={() => onChange(null)}
+              >
+                <ClearIcon />
+              </IconButton>
+            )}
+          </Box>
         );
       }}
     />

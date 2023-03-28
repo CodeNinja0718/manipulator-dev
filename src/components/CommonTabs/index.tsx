@@ -6,9 +6,14 @@ import styles from './styles';
 interface CommonTabsProps {
   tabs?: { label: React.ReactNode; component?: React.ReactNode }[];
   active?: number;
+  onChangeTab?: (value: number) => void;
 }
 
-const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
+const CommonTabs = ({
+  tabs = [],
+  active = 0,
+  onChangeTab,
+}: CommonTabsProps) => {
   const [value, setValue] = useState(0);
   useEffect(() => {
     setValue(active);
@@ -16,6 +21,7 @@ const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    if (onChangeTab) onChangeTab(newValue);
   };
 
   const currentContent = useMemo(() => {
@@ -38,7 +44,7 @@ const CommonTabs = ({ tabs = [], active = 0 }: CommonTabsProps) => {
       <Box sx={styles.underline} className="underlineCustom"></Box>
       {/* Current Component */}
       {currentContent && (
-        <Box sx={styles.contentContainer}>
+        <Box sx={styles.contentContainer} className="contentTab">
           {currentContent.map((item, index) => (
             <Box key={`component-tabs-${index}`}>{item.component}</Box>
           ))}

@@ -279,3 +279,8 @@ export const WORK_TIMES: string[] = [
   '19:30',
   '20:00',
 ];
+
+export enum SearchTopPageType {
+  LOCATION = 0,
+  STATION,
+}

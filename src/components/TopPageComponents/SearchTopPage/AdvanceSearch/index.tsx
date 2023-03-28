@@ -8,12 +8,13 @@ import CircleBox from 'components/CircleBox';
 import { FILTER_ITEMS } from 'components/SearchManipulator/SymptomType/const';
 import Image from 'next/image';
 import React from 'react';
+import { SearchTopPageType } from 'utils/const';
 
 import styles from './styles';
 
 interface AdvanceSearchProps {
   onOpenSearch: () => void;
-  onSubmit: () => void;
+  onSubmit: (isSkipCondition?: boolean) => void;
   onSetActiveTab: (value: number) => void;
   onSetSelectedSymptomType: (value: number) => void;
   disabled?: boolean;
@@ -28,7 +29,7 @@ const AdvanceSearch = ({
 }: AdvanceSearchProps) => {
   const handleOpenSearch = () => {
     onOpenSearch();
-    onSetActiveTab(0);
+    onSetActiveTab(SearchTopPageType.LOCATION);
   };
 
   const handleClickSymptom = (value: number) => {
@@ -96,7 +97,7 @@ const AdvanceSearch = ({
                 color={disabled ? 'inherit' : 'orange'}
               />
             }
-            onClick={onSubmit}
+            onClick={() => onSubmit(true)}
           >
             整体師一覧を見る
           </Button>

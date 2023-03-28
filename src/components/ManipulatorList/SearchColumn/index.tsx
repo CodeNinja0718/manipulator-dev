@@ -98,7 +98,7 @@ const SearchColumn = () => {
             <ListItemText
               sx={styles.listItemText}
               primary={'日付'}
-              secondary={dateSelected ?? '指定なし'}
+              secondary={dateSelected || '指定なし'}
             />
           </ListItemButton>
           <ListItemButton sx={styles.listItemButton}>

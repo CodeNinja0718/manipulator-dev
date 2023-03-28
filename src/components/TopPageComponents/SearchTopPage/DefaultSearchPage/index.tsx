@@ -4,6 +4,7 @@ import StationIcon from '@icons/icon_station_on.svg';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
+import { SearchTopPageType } from 'utils/const';
 
 import styles from './styles';
 
@@ -49,7 +50,7 @@ const DefaultSearchPage = ({
               color={disabled ? 'inherit' : 'orange'}
             />
           }
-          onClick={() => handleOpenSearch(0)}
+          onClick={() => handleOpenSearch(SearchTopPageType.LOCATION)}
           disabled={disabled}
         >
           エリアから探す
@@ -72,7 +73,7 @@ const DefaultSearchPage = ({
             />
           }
           disabled={disabled}
-          onClick={() => handleOpenSearch(1)}
+          onClick={() => handleOpenSearch(SearchTopPageType.STATION)}
         >
           駅から探す
         </Button>

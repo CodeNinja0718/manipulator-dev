@@ -5,8 +5,8 @@ import CommonDatePicker from 'components/CommonDatePicker';
 import styles from './styles';
 
 interface DatePickerProps {
-  currentDate: Date | string;
-  onSetCurrentDate: (value: Date | string) => void;
+  currentDate: Date | string | null;
+  onSetCurrentDate: (value: Date | string | null) => void;
   placeholder?: string;
 }
 
@@ -23,7 +23,7 @@ const DatePicker = ({
       <CommonDatePicker
         value={currentDate}
         placeholder={placeholder}
-        onChange={(value: Date | string) => {
+        onChange={(value: Date | string | null) => {
           onSetCurrentDate(value);
         }}
         componentStyle={styles.calendar}

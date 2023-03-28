@@ -9,8 +9,8 @@ import React from 'react';
 interface StationTabItemProps {
   selectedSymptomType: number;
   onSetSelectedSymptomType: (value: number) => void;
-  currentDate: Date | string;
-  onSetCurrentDate: (value: Date | string) => void;
+  currentDate: Date | string | null;
+  onSetCurrentDate: (value: Date | string | null) => void;
   symptoms: {
     _id: number;
     symptomName: string;

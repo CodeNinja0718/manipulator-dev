@@ -4,7 +4,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import CommonTags from 'components/CommonTags';
 import isEmpty from 'lodash/isEmpty';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 interface CommonTagsProps {
   symptoms: {
@@ -26,10 +26,13 @@ const SymptomListByType = ({
   const list = useMemo(() => {
     const newValue = symptoms || [];
 
+    return newValue.filter((item) => item.typeId === selectedSymptomType);
+  }, [symptoms, selectedSymptomType]);
+
+  useEffect(() => {
     // Clear selected tag when changed symptom type
     setActives([]);
     onSelectedSymptoms([]);
-    return newValue.filter((item) => item.typeId === selectedSymptomType);
   }, [symptoms, selectedSymptomType]);
 
   const handleClickTag = (value: number) => {

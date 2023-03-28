@@ -1,4 +1,5 @@
 import SearchModal from 'components/SearchModal';
+import { SearchTopPageType } from 'utils/const';
 
 import { renderTabList } from './RenderTabList';
 import TitleElement from './TitleElement';
@@ -7,8 +8,8 @@ interface SearchModalElementProps {
   open: boolean;
   selectedSymptomType: number;
   onSetSelectedSymptomType: (value: number) => void;
-  currentDate: Date | string;
-  onSetCurrentDate: (value: Date | string) => void;
+  currentDate: Date | string | null;
+  onSetCurrentDate: (value: Date | string | null) => void;
   locations: {
     _id: number;
     name: string;
@@ -32,6 +33,7 @@ interface SearchModalElementProps {
   onSelectedSymptoms: (value: number[]) => void;
   onSetSelectedLocation: (value: string[]) => void;
   onSetSelectedStation: (value: string[]) => void;
+  onChangeTab?: (value: number) => void;
 }
 
 const SearchModalElement = ({
@@ -47,9 +49,10 @@ const SearchModalElement = ({
   onSetSelectedLocation,
   onSetSelectedStation,
   disabled = false,
-  activeTab = 0,
+  activeTab = SearchTopPageType.LOCATION,
   onClose,
   onSubmit,
+  onChangeTab,
 }: SearchModalElementProps) => {
   return (
     <SearchModal
@@ -69,8 +72,9 @@ const SearchModalElement = ({
       disabled={disabled}
       activeTab={activeTab}
       onClose={onClose}
-      onSubmit={onSubmit}
+      onSubmit={() => onSubmit()}
       titleElement={<TitleElement />}
+      onChangeTab={onChangeTab}
     />
   );
 };
