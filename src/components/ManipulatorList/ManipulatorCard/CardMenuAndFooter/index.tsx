@@ -5,7 +5,6 @@ import FormatDate from 'components/FormatDate';
 import dayjs from 'dayjs';
 import type { IManipulator, Menu } from 'models/manipulator/interface';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import styles from './styles';
@@ -14,8 +13,6 @@ interface CardMenuAndFooterProps {
   data: IManipulator;
 }
 const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
-  const router = useRouter();
-  const { date } = router.query;
   return (
     <Box>
       {data.menus?.length > 0 && (
@@ -75,34 +72,33 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
               </Grid>
             </Grid>
           ))}
-          {date && (
+          {data.timeSlots?.length > 0 && (
             <Box sx={styles.reservableTimeBox}>
               <Typography
                 component="p"
                 sx={styles.textStyle}
                 marginBottom="10px"
               >
-                {<FormatDate dateString={date.toString()} />}
+                {<FormatDate dateString={data.timeSlots[0]!} />}
                 の予約可能時間
               </Typography>
               <Box sx={styles.reservableTimeWrap}>
-                {data.timeSlots?.length &&
-                  data.timeSlots.map((item: string, index: number) => (
-                    <Button
-                      sx={styles.labelItem}
-                      color={'inherit'}
-                      variant={'outlined'}
-                      key={index}
-                      size="small"
-                    >
-                      {
-                        <FormatDate
-                          dateString={dayjs.utc(item).tz()}
-                          formatValue="HH:mm"
-                        />
-                      }
-                    </Button>
-                  ))}
+                {data.timeSlots.map((item: string, index: number) => (
+                  <Button
+                    sx={styles.labelItem}
+                    color={'inherit'}
+                    variant={'outlined'}
+                    key={index}
+                    size="small"
+                  >
+                    {
+                      <FormatDate
+                        dateString={dayjs.utc(item).tz()}
+                        formatValue="HH:mm"
+                      />
+                    }
+                  </Button>
+                ))}
               </Box>
             </Box>
           )}
