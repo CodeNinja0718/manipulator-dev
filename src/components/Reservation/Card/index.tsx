@@ -83,7 +83,11 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
           className="manipulator-avatar"
         />
       </Box>
-      <Stack direction="row" padding="19px 30px 20px 20px" gap={28}>
+      <Stack
+        direction={{ xs: 'column', tablet: 'row' }}
+        padding="19px 30px 20px 20px"
+        gap={28}
+      >
         <Stack flex="1 1 100%">
           <Typography color="black" fontWeight="bold">
             ご予約日
@@ -120,6 +124,7 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
                 alignItems="center"
                 justifyContent="space-between"
                 flexWrap="wrap"
+                flexShrink={1}
               >
                 <Typography color="black" fontWeight="bold">
                   お支払い金額予定
@@ -138,7 +143,7 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
               </Stack>
             </>
           )}
-          {data.status === ReservationStatus.RESERVED && (
+          {/* {data.status === ReservationStatus.RESERVED && (
             <>
               <Divider sx={{ my: 10 }} />
               <Stack
@@ -155,9 +160,13 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
                 </Typography>
               </Stack>
             </>
-          )}
+          )} */}
         </Stack>
-        <Stack flex="0 0 150px" gap={20}>
+        <Stack
+          flex={{ xs: 'auto', tablet: '0 0 150px' }}
+          alignItems="center"
+          gap={20}
+        >
           {renderActions()}
         </Stack>
       </Stack>

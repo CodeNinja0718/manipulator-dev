@@ -21,7 +21,6 @@ const styles: Record<string, SxProps<Theme>> = {
       backgroundColor: 'placeholder',
       paddingLeft: 70,
       fontWeight: 'bold',
-      whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
     },
@@ -45,6 +44,12 @@ const styles: Record<string, SxProps<Theme>> = {
     gap: 10,
     color: 'black',
     textDecoration: 'none',
+    alignItems: 'center',
+    flexGrow: 0,
+    flexDirection: {
+      xs: 'column',
+      tablet: 'row',
+    },
     '&:hover': {
       textDecoration: 'underline',
     },
