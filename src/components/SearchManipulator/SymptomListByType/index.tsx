@@ -69,17 +69,19 @@ const SymptomListByType = ({
           自律神経の症状一覧
         </Typography>
       </Box>
-      <Box display="flex" rowGap={10} mt={20} columnGap={6}>
-        <Box display="inherit" gap="inherit" flexWrap="wrap">
-          {list.map((item, index) => (
-            <CommonTags
-              key={item._id}
-              index={index}
-              label={item.symptomName}
-              active={actives.includes(index)}
-              onClick={handleClickTag}
-            />
-          ))}
+      <Box height={{ tablet: 200 }} overflow="auto">
+        <Box display="flex" rowGap={10} mt={20} columnGap={6}>
+          <Box display="inherit" gap="inherit" flexWrap="wrap">
+            {list.map((item, index) => (
+              <CommonTags
+                key={item._id}
+                index={index}
+                label={item.symptomName}
+                active={actives.includes(index)}
+                onClick={handleClickTag}
+              />
+            ))}
+          </Box>
         </Box>
       </Box>
     </Box>
