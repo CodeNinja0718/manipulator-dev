@@ -35,6 +35,7 @@ const DefaultSearchPage = ({
       >
         <Button
           variant="contained"
+          color="inherit"
           sx={styles.button}
           startIcon={
             <SvgIcon
@@ -57,6 +58,7 @@ const DefaultSearchPage = ({
         </Button>
         <Button
           variant="contained"
+          color="inherit"
           sx={styles.button}
           startIcon={
             <SvgIcon

@@ -21,14 +21,14 @@ const styles = {
         width: { xs: 16, tablet: 39 },
       },
     },
-    color: (theme: Theme) => theme.palette.text.primary,
-    '&:hover, &:active, &:focus': {
-      background: (theme: Theme) => theme.palette.orangeBold,
-      color: 'white',
-      '& svg': {
-        color: 'white',
-      },
-    },
+    // color: (theme: Theme) => theme.palette.text.primary,
+    // '&:hover, &:active, &:focus': {
+    //   background: (theme: Theme) => theme.palette.orangeBold,
+    //   color: 'white',
+    //   '& svg': {
+    //     color: 'white',
+    //   },
+    // },
   },
 } as Record<string, SxProps<Theme>>;
 

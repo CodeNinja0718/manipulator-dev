@@ -5,14 +5,14 @@ const styles = {
     width: 375,
     fontWeight: '600',
     background: 'white',
-    color: (theme: Theme) => theme.palette.text.primary,
-    '&:hover, &:active, &:focus': {
-      background: (theme: Theme) => theme.palette.orangeBold,
-      color: 'white',
-      '& svg': {
-        color: 'white',
-      },
-    },
+    // color: (theme: Theme) => theme.palette.text.primary,
+    // '&:hover, &:active, &:focus': {
+    //   background: (theme: Theme) => theme.palette.orangeBold,
+    //   color: 'white',
+    //   '& svg': {
+    //     color: 'white',
+    //   },
+    // },
 
     '& .MuiButton-startIcon': {
       '& svg': {

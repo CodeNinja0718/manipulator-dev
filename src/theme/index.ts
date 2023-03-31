@@ -1,6 +1,6 @@
 import type { PaletteOptions as MuiPaletteOptions } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { Noto_Sans_JP } from '@next/font/google';
+import { Noto_Sans_JP, Zen_Kaku_Gothic_Antique } from '@next/font/google';
 
 import components from './components';
 
@@ -10,6 +10,14 @@ export const noto = Noto_Sans_JP({
   display: 'swap',
   fallback: ['sans-serif'],
 });
+
+export const zen = Zen_Kaku_Gothic_Antique({
+  weight: ['400', '500', '700'],
+  subsets: ['latin', 'japanese'],
+  display: 'swap',
+  fallback: ['sans-serif'],
+});
+
 declare module '@mui/material/styles' {
   interface Palette {
     white: string;

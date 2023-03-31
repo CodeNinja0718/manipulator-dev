@@ -49,6 +49,7 @@ const FAQTopPage = () => {
       </Box>
       <Box
         sx={{
+          maxWidth: 979,
           mt: { xs: 40, tablet: 84 },
         }}
       >
