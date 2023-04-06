@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import dayjs from 'dayjs';
 import type { IListItem } from 'hooks/types';
 import { get, map } from 'lodash';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -151,6 +152,13 @@ const Helper = {
   },
   getFeatueImage: (id: string): string => {
     return FEATURES.find((item) => item.value === id)?.img || '';
+  },
+  checkExpTicketWarning: (day: string): boolean => {
+    const currentDay = dayjs().tz();
+    const expDay = dayjs(day).tz();
+    const countExp = expDay.diff(currentDay, 'day');
+    const isWarningExp = countExp <= 30;
+    return isWarningExp;
   },
 };
 
