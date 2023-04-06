@@ -1,5 +1,5 @@
-import ArrowDownIcon from '@icons/arrow-down.svg';
-import ArrowUpIcon from '@icons/arrow-up.svg';
+import ArrowDownIcon from '@icons/fill-arrow-down.svg';
+import ArrowUpIcon from '@icons/fill-arrow-up.svg';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { unstable_composeClasses as composeClasses } from '@mui/base';
 import { ButtonBase, InputAdornment, OutlinedInput } from '@mui/material';
@@ -8,7 +8,6 @@ import type { InputAdornmentProps } from '@mui/material/InputAdornment';
 import type { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import type { Theme } from '@mui/material/styles';
 import { styled, useThemeProps } from '@mui/material/styles';
-import SvgIcon from '@mui/material/SvgIcon';
 import cx from 'clsx';
 import { capitalize } from 'lodash';
 import type { PropsWithChildren } from 'react';
@@ -100,14 +99,10 @@ const NumberInputButton = styled(ButtonBase, {
 }));
 
 const defaultIncrementIcon = (
-  <SvgIcon color="primary" fontSize="small">
-    <ArrowUpIcon />
-  </SvgIcon>
+  <ArrowUpIcon width={10} height={5} color="black" />
 );
 const defaultDecrementIcon = (
-  <SvgIcon color="primary" fontSize="small">
-    <ArrowDownIcon />
-  </SvgIcon>
+  <ArrowDownIcon width={10} height={5} color="black" />
 );
 
 export const NumberInput = React.forwardRef<
