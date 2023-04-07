@@ -284,3 +284,8 @@ export enum SearchTopPageType {
   LOCATION = 0,
   STATION,
 }
+
+export enum CouponType {
+  PRIVATE = 0,
+  PUBLIC,
+}
