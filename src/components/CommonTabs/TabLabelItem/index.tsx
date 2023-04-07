@@ -9,11 +9,11 @@ const TabLabelItem = ({
 }: {
   label: string;
   style?: object;
-  icon: React.ElementType;
+  icon?: React.ElementType;
 }) => {
   return (
     <Box display="flex" alignItems="center">
-      <SvgIcon component={icon} viewBox="0 0 29 35" sx={style} />
+      {icon && <SvgIcon component={icon} viewBox="0 0 29 35" sx={style} />}
       <Typography
         pl={7.5}
         fontSize={{ xs: 14, normalMobile: 'inherit' }}
