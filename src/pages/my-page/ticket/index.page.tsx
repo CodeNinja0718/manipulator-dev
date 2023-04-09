@@ -1,19 +1,24 @@
 import TicketSvg from '@icons/icon_ticket.svg';
-import { Stack, Typography } from '@mui/material';
+import { CircularProgress, Stack, Typography } from '@mui/material';
 import Layout from 'components/Layout';
+import ListPagination from 'components/ListPagination';
 import TicketCard from 'components/Ticket/Card';
+import { useList } from 'hooks';
+import type { ITicketItem } from 'models/ticket/interface';
+import ticketQuery from 'models/ticket/query';
+import { useRouter } from 'next/router';
 
 const TicketListPage = () => {
-  // const router = useRouter();
-  // const { page = '1' } = router.query;
+  const router = useRouter();
+  const { page = '1' } = router.query;
 
-  // const { list, isLoading, totalPages, total } = useList<any>({
-  //   ...ticketQuery.getTickets,
-  //   customParams: {
-  //     page: typeof page === 'string' ? Number(page) : 1,
-  //     limit: 4,
-  //   },
-  // });
+  const { list, isLoading, totalPages, total } = useList<ITicketItem>({
+    ...ticketQuery.getTickets,
+    customParams: {
+      page: typeof page === 'string' ? Number(page) : 1,
+      limit: 4,
+    },
+  });
 
   return (
     <Stack
@@ -31,19 +36,28 @@ const TicketListPage = () => {
         <TicketSvg width={24} height={24} />
         回数券
       </Typography>
-      {/* {isLoading && (
+      {isLoading && (
         <Stack height="100%" justifyContent="center">
           <CircularProgress />
         </Stack>
-      )} */}
-      <Stack spacing={40} px={{ xs: 0, md: 40 }} width={'100%'}>
-        {/* {list.map((item) => (
-          <TicketCard key={item._id} data={item} />
-        ))} */}
-        <TicketCard data={{}} />
-        <TicketCard data={{}} />
+      )}
+      <Stack spacing={40} px={{ xs: 0, md: 40 }} width={'100%'} mb={40}>
+        {list.map((item) => (
+          <TicketCard key={item.ticketId} data={item} />
+        ))}
+        {total === 0 && (
+          <Typography
+            fontSize={24}
+            variant="subtitle1"
+            textAlign="center"
+            color="gray"
+            mb={30}
+          >
+            空のリスト
+          </Typography>
+        )}
       </Stack>
-      {/* {totalPages > 1 && <ListPagination total={total} limit={4} />} */}
+      {totalPages > 1 && <ListPagination total={total} limit={4} />}
     </Stack>
   );
 };

@@ -1,27 +1,33 @@
 import ArrowRight from '@icons/arrow-right.svg';
 import { Avatar, Box, Button, Grid, Stack, Typography } from '@mui/material';
+import FormatDate from 'components/FormatDate';
 import { NumberInput } from 'components/NumberInput';
+import type { ITicketItem } from 'models/ticket/interface';
 import { useMemo, useState } from 'react';
 import Helper from 'utils/helpers';
 
 import styles from './styles';
 
 interface TicketCardProps {
-  data: any;
+  data: ITicketItem;
 }
 const TicketCard = ({ data }: TicketCardProps) => {
   const [timesUse, setTimesUse] = useState(1);
-  const expDay = '2023-05-05';
   const isEpxWarning = useMemo(() => {
-    return Helper.checkExpTicketWarning(expDay);
-  }, [expDay]);
+    return Helper.checkExpTicketWarning(data.expiredAt);
+  }, [data.expiredAt]);
 
   return (
     <Box sx={styles.ticketWrapper}>
       <Box sx={styles.header}>
         <Box sx={styles.headerAbove} bgcolor="orange.main">
-          <Typography sx={styles.text} color={'white'} noWrap={true} title={''}>
-            快適整体院
+          <Typography
+            sx={styles.text}
+            color={'white'}
+            noWrap={true}
+            title={data.salonName}
+          >
+            {data.salonName}
           </Typography>
         </Box>
         <Box
@@ -31,7 +37,13 @@ const TicketCard = ({ data }: TicketCardProps) => {
           }}
         >
           <Stack spacing={10} direction={'row'}>
-            <Typography fontSize={16}>有効期限：2022/12/31</Typography>
+            <Typography fontSize={16}>
+              有効期限：
+              <FormatDate
+                dateString={data.expiredAt}
+                formatValue="yyyy/MM/dd"
+              />
+            </Typography>
             {isEpxWarning && (
               <Typography sx={styles.expText}>有効期限間近</Typography>
             )}
@@ -42,23 +54,25 @@ const TicketCard = ({ data }: TicketCardProps) => {
         <Grid item xs={12} tablet={5}>
           <Stack direction={'row'} spacing={12} alignItems={'center'}>
             <Avatar
-              alt={data?.name || ''}
-              src={data?.avatar || ''}
+              alt={data.manipulatorInfo.manipulatorName}
+              src={''}
               sx={styles.avatar}
             />
-            <Typography sx={styles.text}>整体師太郎</Typography>
+            <Typography sx={styles.text}>
+              {data.manipulatorInfo.manipulatorName}
+            </Typography>
           </Stack>
         </Grid>
         <Grid item xs={12} tablet={7}>
           <Typography sx={styles.text} mb={10}>
-            整体10回コース （目安時間：30分）
+            {data.ticketName}
           </Typography>
           <Stack direction={'row'} spacing={10} alignItems={'center'}>
             <Box sx={styles.timesLeft}>
               <Typography sx={styles.timesLeftText}>
                 残り
                 <Typography component={'span'} sx={styles.timesLeftNumber}>
-                  10
+                  {data.availableCount}
                 </Typography>
                 回
               </Typography>
@@ -75,6 +89,7 @@ const TicketCard = ({ data }: TicketCardProps) => {
               }}
               value={timesUse}
               min={1}
+              max={data.availableCount}
             />
             <Typography sx={styles.text}>回</Typography>
           </Stack>
@@ -86,7 +101,7 @@ const TicketCard = ({ data }: TicketCardProps) => {
         endIcon={<ArrowRight />}
         sx={styles.btn}
         disabled={timesUse < 1}
-        href={`/booking/maniId?menuId=&ticket=${timesUse}`}
+        href={`/booking/${data.manipulatorInfo.manipulatorId}?ticketId=${data.ticketId}&ticketUse=${timesUse}`}
       >
         回数券を使って予約する
       </Button>

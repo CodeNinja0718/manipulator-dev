@@ -1,6 +1,7 @@
 const ticketQuery = {
   getTickets: {
-    apiUrl: '/customer/tickets',
+    staleTime: Infinity,
+    apiUrl: '/coupon/customer/tickets',
     queryKey: ['currentUser', 'ticket-list'],
   },
 };
