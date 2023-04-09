@@ -45,7 +45,7 @@ const TicketListPage = () => {
         {list.map((item) => (
           <TicketCard key={item.ticketId} data={item} />
         ))}
-        {total === 0 && (
+        {total === 0 && !isLoading && (
           <Typography
             fontSize={24}
             variant="subtitle1"
