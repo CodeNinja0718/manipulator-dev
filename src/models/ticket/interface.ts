@@ -14,3 +14,16 @@ export interface ITicketItem {
     manipulatorNameKana: string;
   };
 }
+
+export interface ITicketOfMenu {
+  ticket: {
+    id: number;
+    name: string;
+    availableCount: number;
+    expiredAt: string;
+  };
+  manipulatorName: string;
+  manipulatorNameKana: string;
+  salonName: string;
+  salonNameKana: string;
+}

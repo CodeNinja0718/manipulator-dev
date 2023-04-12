@@ -8,9 +8,11 @@ import Link from 'components/Link';
 import ManipulatorSummaryInfo from 'components/Manipulator/SummaryInfo';
 import dayjs from 'dayjs';
 import { useFetch, useGlobalState, useMutate, useUser } from 'hooks';
+import isEmpty from 'lodash/isEmpty';
 import type {
   IManipulator,
   IReservationMenu,
+  ITicket,
 } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
 import type { CreateReservationPayload } from 'models/reservation/interface';
@@ -19,7 +21,7 @@ import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { STEPPER_CONTENT } from 'utils/const';
 import queryClient, { fetchData } from 'utils/queryClient';
 
@@ -40,11 +42,11 @@ const BookingPage = () => {
   const { slug } = router.query;
   const manipulatorId = slug![0] || '';
   const step = slug![1] || STEPPER_CONTENT[0].value;
+  const [ticketMenu, setTicketMenu] = useState<ITicket | any>({});
 
   const { mutateAsync: createReservation, isSuccess } = useMutate(
     reservationQuery.createReservation,
   );
-
   const { data: manipulatorTimeSlots } = useFetch<{
     manipulator: IManipulator;
     availableSlots: string[];
@@ -66,7 +68,40 @@ const BookingPage = () => {
   const [overviewBooking, setOverviewBooking] = useState({});
   const { booking, setBooking, setConfirmModal, setRedirectLogin } =
     useGlobalState();
-  const selectedMenu = manipulatorMenus?.docs.find(
+
+  // Manipulator Menu List
+  const manipulatorMenuList = useMemo(() => {
+    let result = manipulatorMenus?.docs || [];
+
+    if (!isEmpty(result)) {
+      result = result.map((item) => {
+        return {
+          ...item,
+          ticket:
+            booking?.menuId === item?._id
+              ? {
+                  ...booking?.ticket,
+                }
+              : {
+                  ...item.ticket,
+                  numberOfSelectedTicket: 1,
+                },
+        };
+      });
+    }
+    return result;
+  }, [booking, manipulatorMenus?.docs]);
+
+  useEffect(() => {
+    if (booking?.menuId) {
+      const currentTicketMenu = manipulatorMenuList.filter(
+        (item) => item._id === booking?.menuId,
+      );
+      setTicketMenu(currentTicketMenu?.[0]);
+    }
+  }, [booking, manipulatorMenuList]);
+
+  const selectedMenu = manipulatorMenuList?.find(
     (menu) => menu._id === booking.menuId,
   );
 
@@ -163,8 +198,15 @@ const BookingPage = () => {
         },
       });
     }
-    if (step === STEPPER_CONTENT[0].value && values.menuId) {
-      setBooking({ ...booking, ...values });
+    if (
+      step === STEPPER_CONTENT[0].value &&
+      (values.menuId || ticketMenu?._id)
+    ) {
+      const currentValue = ticketMenu?._id
+        ? { ...values, menuId: ticketMenu?._id, ticket: ticketMenu?.ticket }
+        : { ...values };
+
+      setBooking({ ...booking, ...currentValue });
       handleChangeStep(STEPPER_CONTENT[1].value);
     }
   };
@@ -187,14 +229,17 @@ const BookingPage = () => {
           selectedMenu={selectedMenu}
           handleChangeStep={handleChangeStep}
           onSubmit={handleSubmitStep}
+          ticketMenu={ticketMenu}
         />
       );
     }
     return (
       <BookingMenuSelection
-        initialMenu={booking.menuId || ''}
-        menus={manipulatorMenus?.docs || []}
+        initialMenu={ticketMenu?.ticket?.id || booking.menuId || ''}
+        menus={manipulatorMenuList || []}
+        ticketMenu={ticketMenu}
         onSubmit={handleSubmitStep}
+        onSetTicketMenu={setTicketMenu}
       />
     );
   };

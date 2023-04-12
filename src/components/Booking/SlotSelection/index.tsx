@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { useFetch } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
 import times from 'lodash/times';
-import type { IReservationMenu } from 'models/manipulator/interface';
+import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -19,12 +19,14 @@ interface BookingSlotSelectionProps {
   selectedMenu?: IReservationMenu;
   handleChangeStep: (step: string) => void;
   onSubmit: (values: Record<string, unknown>) => void;
+  ticketMenu: ITicket | any;
 }
 
 const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
   selectedMenu,
   handleChangeStep,
   onSubmit,
+  ticketMenu,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -57,6 +59,9 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
         .toISOString(),
     });
   };
+  const estimatedTime =
+    (selectedMenu?.estimatedTime || 0) *
+    (ticketMenu?.ticket?.numberOfSelectedTicket || 1);
 
   return (
     <Stack sx={styles.bookingSlotWrapper}>
@@ -64,7 +69,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
         <Typography fontWeight="bold">メニュー</Typography>
         <Typography>
           {selectedMenu?.name}&nbsp;&nbsp;
-          {selectedMenu?.estimatedTime}分
+          {estimatedTime}分
         </Typography>
       </Stack>
       <Typography color="secondary" fontSize={18} fontWeight="bold" mb={18}>
