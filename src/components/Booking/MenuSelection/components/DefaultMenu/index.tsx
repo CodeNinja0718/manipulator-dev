@@ -2,7 +2,12 @@ import { Radio, Stack, Typography } from '@mui/material';
 import type { IReservationMenu } from 'models/manipulator/interface';
 import { NumericFormat } from 'react-number-format';
 
-const DefaultMenu: React.FC<IReservationMenu> = ({ _id, name, price }) => {
+const DefaultMenu: React.FC<IReservationMenu> = ({
+  _id,
+  name,
+  price,
+  estimatedTime,
+}) => {
   return (
     <Stack
       direction="row"
@@ -20,7 +25,7 @@ const DefaultMenu: React.FC<IReservationMenu> = ({ _id, name, price }) => {
         justifyContent="space-between"
       >
         <Typography color="black" fontWeight="bold">
-          {name}
+          {name} {estimatedTime}分
         </Typography>
         <Typography color="black" fontWeight="bold">
           <NumericFormat
