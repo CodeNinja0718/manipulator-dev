@@ -33,12 +33,21 @@ export interface Menu {
   timeDisplay: boolean;
 }
 
+export interface ITicket {
+  expiryMonth: number;
+  id: string;
+  numberOfTicket: number;
+  numberOfSelectedTicket: number;
+  price: number;
+}
+
 export interface IReservationMenu extends Omit<Menu, 'menuId' | 'order'> {
   _id: string;
   salonId: string;
   menuTypes: string[];
   createdById: string;
   timeDisplay: boolean;
+  ticket: ITicket | any;
 }
 
 export interface Station {

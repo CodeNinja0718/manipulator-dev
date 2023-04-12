@@ -1,9 +1,17 @@
+interface ITicket {
+  expiryMonth: number;
+  id: string;
+  numberOfTicket: number;
+  numberOfSelectedTicket: number;
+  price: number;
+}
 export interface CreateReservationPayload {
   startTime?: string;
   endTime?: string;
   menuId?: string;
   manipulatorId?: string;
   paymentMethod?: string;
+  ticket?: ITicket;
 }
 
 export enum ReservationStatus {
