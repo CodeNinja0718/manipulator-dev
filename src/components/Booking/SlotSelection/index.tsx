@@ -63,13 +63,18 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
     (selectedMenu?.estimatedTime || 0) *
     (ticketMenu?.ticket?.numberOfSelectedTicket || 1);
 
+  const currentSelectedMenu: IReservationMenu | any = {
+    ...selectedMenu,
+    estimatedTime,
+  };
+
   return (
     <Stack sx={styles.bookingSlotWrapper}>
       <Stack direction="row" gap={24} sx={styles.selectedMenu}>
         <Typography fontWeight="bold">メニュー</Typography>
         <Typography>
-          {selectedMenu?.name}&nbsp;&nbsp;
-          {estimatedTime}分
+          {currentSelectedMenu?.name}&nbsp;&nbsp;
+          {currentSelectedMenu?.estimatedTime}分
         </Typography>
       </Stack>
       <Typography color="secondary" fontSize={18} fontWeight="bold" mb={18}>
@@ -115,7 +120,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
           const slotDate = date.add(index, 'day');
           return (
             <SlotColumn
-              selectedMenu={selectedMenu}
+              selectedMenu={currentSelectedMenu}
               date={slotDate}
               key={index}
               availableSlots={manipulatorTimeSlots?.availableSlots || []}

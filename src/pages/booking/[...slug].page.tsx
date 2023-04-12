@@ -82,10 +82,7 @@ const BookingPage = () => {
               ? {
                   ...booking?.ticket,
                 }
-              : {
-                  ...item.ticket,
-                  numberOfSelectedTicket: 1,
-                },
+              : item?.ticket,
         };
       });
     }

@@ -62,7 +62,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
         {menus.map((menu) => {
           return (
             <Box key={menu._id} sx={styles.menuItemWrapper}>
-              {!isEmpty(menu.ticket) ? (
+              {menu.ticket !== null ? (
                 <TicketMenu
                   {...menu}
                   onSelectedTicketOfMenu={handleSelectedTicketOfMenu}
