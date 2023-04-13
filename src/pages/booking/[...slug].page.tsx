@@ -9,6 +9,7 @@ import ManipulatorSummaryInfo from 'components/Manipulator/SummaryInfo';
 import dayjs from 'dayjs';
 import { useFetch, useGlobalState, useMutate, useUser } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import type {
   IManipulator,
   IReservationMenu,
@@ -202,8 +203,10 @@ const BookingPage = () => {
       const currentValue = ticketMenu?._id
         ? { ...values, menuId: ticketMenu?._id, ticket: ticketMenu?.ticket }
         : { ...values };
-
-      setBooking({ ...booking, ...currentValue });
+      const data = ticketMenu?._id
+        ? { ...booking, ...currentValue }
+        : omit({ ...booking, ...currentValue }, 'ticket');
+      setBooking(data);
       handleChangeStep(STEPPER_CONTENT[1].value);
     }
   };
