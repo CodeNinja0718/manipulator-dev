@@ -49,13 +49,12 @@ const SlotColumn: React.FC<SlotColumnProps> = ({
           .add(Number(timeSplit[0]) || 0, 'h')
           .add(Number(timeSplit[1]) || 0, 'm');
         const menuSlots = times(
-          selectedMenu?.estimatedTime ? selectedMenu.estimatedTime / 30 + 1 : 0,
+          selectedMenu?.estimatedTime ? selectedMenu.estimatedTime / 30 : 0,
         ).map((i) => slotDateTime.add(i ? i * 30 : 0, 'minute').toISOString());
         const slotAvailable =
           currentDateTime.isBefore(slotDateTime, 'minute') &&
           availableSlots.includes(slotDateTime.toISOString()) &&
           difference(menuSlots, availableSlots).length === 0;
-
         return (
           <Stack
             key={time}
