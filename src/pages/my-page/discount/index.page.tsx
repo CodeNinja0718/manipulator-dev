@@ -4,34 +4,54 @@ import CommonTabs from 'components/CommonTabs';
 import TabLabelItem from 'components/CommonTabs/TabLabelItem';
 import TabContent from 'components/Discount/TabContent';
 import Layout from 'components/Layout';
+import ListPagination from 'components/ListPagination';
+import { useList } from 'hooks';
+import type { ICoupon } from 'models/discount/interface';
+import { PRIVATE_COUPON, PUBLIC_COUPON } from 'models/discount/interface';
+import discountQuery from 'models/discount/query';
+import { useRouter } from 'next/router';
 import { CouponType } from 'utils/const';
 
 import styles from './styles';
 
 const DiscountListPage = () => {
-  // const router = useRouter();
-  // const { page = '1' } = router.query;
+  const router = useRouter();
+  const { type = PRIVATE_COUPON, page } = router.query;
 
-  // const { list, isLoading, totalPages, total } = useList<any>({
-  //   ...ticketQuery.getDiscounts,
-  //   customParams: {
-  //     page: typeof page === 'string' ? Number(page) : 1,
-  //     limit: 4,
-  //   },
-  // });
+  const { list, totalPages, total, isLoading } = useList<ICoupon>({
+    ...discountQuery.getDiscounts({
+      type,
+      page: typeof page === 'string' ? Number(page) : 1,
+      limit: 4,
+    }),
+  });
 
   const handleChangeTab = (value: number) => {
-    console.log(value);
+    const currentQuery = { ...router.query };
+    if (value === CouponType.PRIVATE) {
+      delete currentQuery.type;
+    } else {
+      currentQuery.type = PUBLIC_COUPON;
+    }
+
+    router.push({
+      pathname: router.pathname,
+      query: currentQuery,
+    });
   };
+
+  const renderTabContent = () => (
+    <TabContent data={list} isLoading={isLoading} />
+  );
 
   const tabs = [
     {
       label: <TabLabelItem label="プライベート" />,
-      component: <TabContent />,
+      component: renderTabContent(),
     },
     {
       label: <TabLabelItem label="公共" />,
-      component: <TabContent />,
+      component: renderTabContent(),
     },
   ];
 
@@ -53,10 +73,12 @@ const DiscountListPage = () => {
       </Typography>
       <CommonTabs
         tabs={tabs}
-        active={CouponType.PRIVATE}
+        active={
+          type === PRIVATE_COUPON ? CouponType.PRIVATE : CouponType.PUBLIC
+        }
         onChangeTab={handleChangeTab}
       />
-      {/* {totalPages > 1 && <ListPagination total={total} limit={4} />} */}
+      {totalPages > 1 && <ListPagination total={total} limit={4} />}
     </Stack>
   );
 };
