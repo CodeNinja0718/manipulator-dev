@@ -115,6 +115,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                         sx={styles.numberInput}
                         onChange={handleChangeTicket}
                         required
+                        inputProps={{ inputMode: 'numeric', pattern: '[1-9]*' }}
                         value={ticket?.numberOfSelectedTicket || 1}
                         min={1}
                         max={ticket?.numberOfTicket || 1}

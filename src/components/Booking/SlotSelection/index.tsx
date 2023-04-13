@@ -51,14 +51,6 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
     }
   }, [handleChangeStep, selectedMenu]);
 
-  const handleSelectSlot = (selectedDate: dayjs.Dayjs) => {
-    onSubmit({
-      startTime: selectedDate.toISOString(),
-      endTime: selectedDate
-        .add(selectedMenu?.estimatedTime || 0, 'minute')
-        .toISOString(),
-    });
-  };
   const estimatedTime =
     (selectedMenu?.estimatedTime || 0) *
     (ticketMenu?.ticket?.numberOfSelectedTicket || 1);
@@ -66,6 +58,15 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
   const currentSelectedMenu: IReservationMenu | any = {
     ...selectedMenu,
     estimatedTime,
+  };
+
+  const handleSelectSlot = (selectedDate: dayjs.Dayjs) => {
+    onSubmit({
+      startTime: selectedDate.toISOString(),
+      endTime: selectedDate
+        .add(currentSelectedMenu?.estimatedTime || 0, 'minute')
+        .toISOString(),
+    });
   };
 
   return (
