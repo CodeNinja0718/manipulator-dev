@@ -18,13 +18,15 @@ const DiscountListPage = () => {
   const router = useRouter();
   const { type = PRIVATE_COUPON, page } = router.query;
 
-  const { list, totalPages, total, isLoading } = useList<ICoupon>({
+  const { list, perPage, total, isLoading } = useList<ICoupon>({
     ...discountQuery.getDiscounts({
       type,
       page: typeof page === 'string' ? Number(page) : 1,
       limit: 4,
     }),
   });
+
+  const totalPages = Math.ceil(total / perPage);
 
   const handleChangeTab = (value: number) => {
     const currentQuery = { ...router.query };
