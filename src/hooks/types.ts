@@ -9,6 +9,7 @@ export interface IListResult<T> {
   totalDocs: number;
   total: number;
   limit: number;
+  perPage: number;
   page: number;
   totalPages: number;
 }
