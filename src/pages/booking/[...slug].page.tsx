@@ -216,6 +216,7 @@ const BookingPage = () => {
       return (
         <BookingPayment
           selectedMenu={selectedMenu}
+          ticketMenu={ticketMenu}
           startTime={booking?.startTime}
           endTime={booking?.endTime}
           handleChangeStep={handleChangeStep}
