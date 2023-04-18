@@ -27,6 +27,50 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
   const startTimeDay = dayjs(bookingDetail?.startTime).tz();
   const endTimeDay = dayjs(bookingDetail?.endTime).tz();
 
+  const renderCouponData = (() => {
+    if (!bookingDetail?.ticket) {
+      return <></>;
+    }
+
+    const couponInfomation = new Map<string, string>();
+    couponInfomation.set(
+      '回数券',
+      `${bookingDetail?.ticket?.numberOfSelectedTicket || 1}回使用`,
+    );
+    couponInfomation.set(
+      'クーポン',
+      `- ${bookingDetail?.ticket?.price || 0}円`,
+    );
+
+    return (
+      <>
+        {Array.from(couponInfomation.keys()).map(
+          (item: string, idx: number) => (
+            <Stack key={item}>
+              <Divider sx={{ my: 10 }} />
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
+                <Typography color="black" fontWeight="bold">
+                  {item}
+                </Typography>
+                <Typography
+                  color={idx === 1 ? 'red' : 'black'}
+                  fontWeight="bold"
+                >
+                  {couponInfomation.get(item)}
+                </Typography>
+              </Stack>
+            </Stack>
+          ),
+        )}
+      </>
+    );
+  })();
+
   return (
     <Stack sx={styles.bookingOverviewWrapper} alignItems="center">
       <Typography variant="title" mb={35}>
@@ -80,6 +124,8 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
                 )}
               />
             </Stack>
+            {/* Render Coupon Infomations */}
+            {renderCouponData}
             <Divider sx={{ my: 10 }} />
             <Stack
               direction="row"
