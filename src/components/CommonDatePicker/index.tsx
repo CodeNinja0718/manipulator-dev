@@ -34,6 +34,9 @@ const CommonDatePicker = ({
       {...props}
       value={value}
       disablePast={disablePast}
+      PopperProps={{
+        sx: styles.popperSx,
+      }}
       onChange={(dateValue) => {
         let currentValue: Date | string = new Date();
         if (dayjs.isDayjs(dateValue) && dateValue.isValid()) {
