@@ -23,7 +23,7 @@ import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { STEPPER_CONTENT } from 'utils/const';
+import { PAYMENT_MENU_TYPES, STEPPER_CONTENT } from 'utils/const';
 import queryClient, { fetchData } from 'utils/queryClient';
 
 import styles from './styles';
@@ -152,11 +152,35 @@ const BookingPage = () => {
 
   const handleSubmitStep = (values: CreateReservationPayload) => {
     if (step === STEPPER_CONTENT[2].value && values.paymentMethod) {
+      let params = omit(booking, 'ticket');
+      const ticketParams = isEmpty(booking?.ticket)
+        ? {}
+        : {
+            ticketId: booking?.ticket?.id,
+            ticketUse: booking?.ticket?.numberOfSelectedTicket,
+          };
+      const couponParams = isEmpty(values?.selectedMenuType)
+        ? {}
+        : {
+            couponCode: booking?.couponCode,
+          };
+
+      params = {
+        ...params,
+        ...ticketParams,
+        ...couponParams,
+        manipulatorId,
+        paymentMethod: values.paymentMethod,
+      };
+
       createReservation(
         {
-          ...booking,
-          ...values,
-          manipulatorId,
+          ...omit(
+            params,
+            PAYMENT_MENU_TYPES.TICKET === values?.selectedMenuType
+              ? ['couponCode']
+              : ['ticketId', 'ticketUse'],
+          ),
         },
         {
           onSuccess: () => {
@@ -204,8 +228,8 @@ const BookingPage = () => {
         ? { ...values, menuId: ticketMenu?._id, ticket: ticketMenu?.ticket }
         : { ...values };
       const data = ticketMenu?._id
-        ? { ...booking, ...currentValue }
-        : omit({ ...booking, ...currentValue }, 'ticket');
+        ? { ...booking, ...currentValue, couponCode: '' }
+        : omit({ ...booking, ...currentValue, couponCode: '' }, 'ticket');
       setBooking(data);
       handleChangeStep(STEPPER_CONTENT[1].value);
     }

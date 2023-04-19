@@ -12,6 +12,8 @@ export interface CreateReservationPayload {
   manipulatorId?: string;
   paymentMethod?: string;
   ticket?: ITicket;
+  selectedMenuType?: string;
+  couponCode?: string;
 }
 
 export enum ReservationStatus {

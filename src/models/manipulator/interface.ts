@@ -39,6 +39,10 @@ export interface ITicket {
   numberOfTicket: number;
   numberOfSelectedTicket: number;
   price: number;
+  availableCount?: number;
+  expiredAt?: string;
+  manipulatorNameKana?: string;
+  salonNameKana?: string;
 }
 
 export interface IReservationMenu extends Omit<Menu, 'menuId' | 'order'> {

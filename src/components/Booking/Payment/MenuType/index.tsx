@@ -12,6 +12,8 @@ import {
   SvgIcon,
   Typography,
 } from '@mui/material';
+import dayjs from 'dayjs';
+import isEmpty from 'lodash/isEmpty';
 import type { ITicket } from 'models/manipulator/interface';
 
 import styles from './styles';
@@ -32,93 +34,111 @@ const MenuType = ({
     onSetSelectedMenuType(value);
   };
   const handleExistTicket = () => {
-    const numberTicket = ticketMenu?.ticket?.numberOfTicket || 0;
+    const numberTicket =
+      ticketMenu?.ticket?.availableCount ||
+      ticketMenu?.ticket?.numberOfTicket ||
+      0;
     const numberOfSelectedTicket =
       ticketMenu?.ticket?.numberOfSelectedTicket || 0;
 
     return numberTicket - numberOfSelectedTicket;
   };
 
+  const isHaveTicket = !isEmpty(ticketMenu?.ticket);
+
   return (
     <Box sx={styles.wrapper}>
       <RadioGroup onChange={handleSelect} value={selectedMenuType}>
-        <Stack
-          component="label"
-          width="100%"
-          sx={{
-            cursor: 'pointer',
-          }}
-        >
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            mb={10}
+        {isHaveTicket ? (
+          <Stack
+            component="label"
+            width="100%"
+            sx={{
+              cursor: 'pointer',
+            }}
           >
-            <Box display="flex" alignItems="center">
-              <Radio
-                sx={{
-                  p: 11,
-                }}
-                value="ticket"
-              />
-              <TicketSvg width={25} height={25} />
-              <Typography
-                color="secondary"
-                fontSize={18}
-                fontWeight="bold"
-                ml={13}
-              >
-                回数券
-              </Typography>
-              <Typography fontSize={14} fontWeight="bold" ml={16}>
-                有効期限：2022/12/31
-              </Typography>
-            </Box>
-            <Box>
-              <Button
-                size="small"
-                variant="outlined"
-                sx={styles.button}
-                startIcon={<SvgIcon component={IconReloadSvg} inheritViewBox />}
-              >
-                <span>変更する</span>
-              </Button>
-            </Box>
-          </Box>
-
-          <Box sx={styles.ticketBox}>
-            <Typography fontWeight="bold" fontSize={14} mb={11}>
-              整体師太郎 / 快適整体院
-            </Typography>
-            <Typography fontWeight="bold" fontSize={16} mb={13}>
-              整体{ticketMenu?.ticket?.numberOfTicket}回コース（目安時間：
-              {ticketMenu?.estimatedTime || 0}分）
-            </Typography>
-
-            <Box display="flex" alignItems="center" justifyContent="initial">
-              <Box sx={styles.ticketLeft}>
-                <Typography sx={styles.ticketLeftText}>
-                  残り
-                  <Typography component={'span'} sx={styles.ticketLeftNumber}>
-                    {handleExistTicket()}
-                  </Typography>
-                  回
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              mb={10}
+            >
+              <Box display="flex" alignItems="center">
+                <Radio
+                  sx={{
+                    p: 11,
+                  }}
+                  value="ticket"
+                />
+                <TicketSvg width={25} height={25} />
+                <Typography
+                  color="secondary"
+                  fontSize={18}
+                  fontWeight="bold"
+                  ml={13}
+                >
+                  回数券
+                </Typography>
+                <Typography fontSize={14} fontWeight="bold" ml={16}>
+                  有効期限：
+                  {dayjs(ticketMenu?.ticket?.expiredAt)
+                    .tz()
+                    .format('YYYY/MM/DD')}
                 </Typography>
               </Box>
-              <Typography fontWeight="bold" fontSize={16} ml={17}>
-                {ticketMenu?.ticket?.numberOfSelectedTicket || 0}回使用
-              </Typography>
+              <Box>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  sx={styles.button}
+                  startIcon={
+                    <SvgIcon component={IconReloadSvg} inheritViewBox />
+                  }
+                >
+                  <span>変更する</span>
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </Stack>
+
+            <Box sx={styles.ticketBox}>
+              <Typography fontWeight="bold" fontSize={14} mb={11}>
+                {ticketMenu?.ticket?.manipulatorNameKana} /{' '}
+                {ticketMenu?.ticket?.salonNameKana}
+              </Typography>
+              <Typography fontWeight="bold" fontSize={16} mb={13}>
+                整体
+                {ticketMenu?.ticket?.availableCount ||
+                  ticketMenu?.ticket?.numberOfTicket}
+                回コース（目安時間：
+                {ticketMenu?.estimatedTime || 0}分）
+              </Typography>
+
+              <Box display="flex" alignItems="center" justifyContent="initial">
+                <Box sx={styles.ticketLeft}>
+                  <Typography sx={styles.ticketLeftText}>
+                    残り
+                    <Typography component={'span'} sx={styles.ticketLeftNumber}>
+                      {handleExistTicket()}
+                    </Typography>
+                    回
+                  </Typography>
+                </Box>
+                <Typography fontWeight="bold" fontSize={16} ml={17}>
+                  {ticketMenu?.ticket?.numberOfSelectedTicket || 0}回使用
+                </Typography>
+              </Box>
+            </Box>
+          </Stack>
+        ) : (
+          <></>
+        )}
 
         <Stack
           component="label"
           width="100%"
           sx={{
             cursor: 'pointer',
-            mt: 17,
+            mt: isHaveTicket ? 17 : 0,
           }}
         >
           <Box
