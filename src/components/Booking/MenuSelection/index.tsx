@@ -1,7 +1,10 @@
 import ArrowRight from '@icons/arrow-right.svg';
 import { Box, Button, RadioGroup, Stack, Typography } from '@mui/material';
+import { useFetch } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type { ITicketOfMenu } from 'models/ticket/interface';
+import ticketQuery from 'models/ticket/query';
 import { useMemo, useState } from 'react';
 
 import DefaultMenu from './components/DefaultMenu';
@@ -32,13 +35,33 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
     [menuId, menus],
   );
 
+  const { data } = useFetch<ITicketOfMenu>(
+    ticketQuery.getInfoOfTicket(
+      selectedMenu?.[0]?.createdById,
+      selectedMenu?.[0]?._id,
+    ),
+  );
+
   const handleSelectMenu = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const ticketMenuData = menus.filter(
       (menu) => menu?.ticket?.id === value && menu?._id !== value,
     );
-    const currentTicketMenu = ticketMenuData?.[0] || {};
-    onSetTicketMenu(currentTicketMenu);
+    const currentTicketMenu: IReservationMenu | any = ticketMenuData?.[0] || {};
+    onSetTicketMenu(
+      isEmpty(currentTicketMenu)
+        ? currentTicketMenu
+        : {
+            ...currentTicketMenu,
+            ticket: {
+              ...currentTicketMenu?.ticket,
+              availableCount: data?.ticket?.availableCount,
+              expiredAt: data?.ticket?.expiredAt,
+              manipulatorNameKana: data?.manipulatorNameKana,
+              salonNameKana: data?.salonNameKana,
+            },
+          },
+    );
     setMenuId(e.target.value);
   };
 
@@ -53,13 +76,38 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
       });
     }
   };
+
+  const menuList = useMemo(() => {
+    let list = menus;
+
+    if (!isEmpty(data)) {
+      list = list.map((item) => {
+        let temp = { ...item };
+        if (temp._id === selectedMenu?.[0]?._id) {
+          temp = {
+            ...temp,
+            ticket: {
+              ...temp.ticket,
+              availableCount: data?.ticket?.availableCount,
+              expiredAt: data?.ticket?.expiredAt,
+              manipulatorNameKana: data?.manipulatorNameKana,
+              salonNameKana: data?.salonNameKana,
+            },
+          };
+        }
+        return temp;
+      });
+    }
+    return list;
+  }, [menus, data, selectedMenu]);
+
   return (
     <Stack sx={styles.bookingMenuWrapper}>
       <Typography color="secondary" fontSize={18} fontWeight="bold">
         メニューを選択してください
       </Typography>
       <RadioGroup value={menuId} onChange={handleSelectMenu}>
-        {menus.map((menu) => {
+        {menuList.map((menu) => {
           return (
             <Box key={menu._id} sx={styles.menuItemWrapper}>
               {menu.ticket !== null ? (

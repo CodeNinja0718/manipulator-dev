@@ -29,6 +29,7 @@ interface BookingPaymentProps {
   handleChangeStep: (step: string) => void;
   onSubmit: (values: Record<string, unknown>) => void;
   ticketMenu: ITicket | any;
+  couponCode?: string;
 }
 
 const BookingPayment: React.FC<BookingPaymentProps> = ({
@@ -38,6 +39,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   handleChangeStep,
   onSubmit,
   ticketMenu,
+  couponCode,
 }) => {
   const { data: currentUser, isFetching } = useUser();
   const { data: cardList, isLoading: isLoadingCard } = useFetch<{
@@ -96,6 +98,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     } else {
       onSubmit({
         paymentMethod: payment,
+        selectedMenuType,
       });
     }
   };
@@ -238,7 +241,9 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         sx={styles.submitBtn}
         disabled={
           (isEmpty(cardList?.items) && !isValid) ||
-          (!isEmpty(cardList?.items) && !payment)
+          (!isEmpty(cardList?.items) && !payment) ||
+          (selectedMenuType === PAYMENT_MENU_TYPES.COUPON &&
+            isEmpty(couponCode))
         }
         loading={isGettingToken || isAddingCard}
         onClick={handleSubmit}

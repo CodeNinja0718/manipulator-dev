@@ -103,7 +103,9 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                             component={'span'}
                             sx={styles.ticketLeftNumber}
                           >
-                            {ticket?.numberOfTicket || 0}
+                            {ticket?.availableCount ||
+                              ticket?.numberOfTicket ||
+                              0}
                           </Typography>
                           回
                         </Typography>
@@ -118,7 +120,9 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                         inputProps={{ inputMode: 'numeric', pattern: '[1-9]*' }}
                         value={ticket?.numberOfSelectedTicket || 1}
                         min={1}
-                        max={ticket?.numberOfTicket || 1}
+                        max={
+                          ticket?.availableCount || ticket?.numberOfTicket || 1
+                        }
                       />
                       <Typography sx={styles.text}>回</Typography>
                     </Stack>
