@@ -6,7 +6,7 @@ import { number, object, string } from 'yup';
 
 const schema = object({
   name: string().required(),
-  nameKana: string().required().matches(Regex.KATAKANA, '無効な形式です。'),
+  nameKana: string().required().matches(Regex.FURAGANA, '無効な形式です。'),
   email: string().required().matches(Regex.EMAIL, '無効な形式です。'),
   phone: string().required().matches(Regex.PHONE, '無効な形式です。'),
   birthday: string()
