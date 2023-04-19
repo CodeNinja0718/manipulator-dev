@@ -92,7 +92,7 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
                   label={item.name}
                   sx={styles.checkboxItem}
                   labelPlacement="start"
-                  value={item._id}
+                  value={item.groupId}
                   onClick={() => !selectedLine && handleSelectedLine(item._id)}
                   onChange={(event: any) => selectedLine && handleChange(event)}
                 />
