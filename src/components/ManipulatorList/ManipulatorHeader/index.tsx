@@ -1,7 +1,7 @@
-import { Grid, Typography } from "@mui/material";
-import * as React from "react";
+import { Grid, Typography } from '@mui/material';
+import * as React from 'react';
 
-import styles from "./styles";
+import styles from './styles';
 
 interface ManipulatorHeaderProps {
   resultTotal: number;
