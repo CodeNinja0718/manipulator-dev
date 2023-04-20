@@ -65,13 +65,18 @@ const SearchTopPage = () => {
       symptoms: selectedSymptom.join(),
       date: currentDate,
       areas: selectedLocation.join(),
-      stations: selectedStation.join(),
+      stationGroups: selectedStation.join(),
       limit: 10,
       page: 1,
       sort: 'createdDate.desc',
     };
 
-    if (!data.symptoms && !data.areas && !data.stations && !isSkipCondition) {
+    if (
+      !data.symptoms &&
+      !data.areas &&
+      !data.stationGroups &&
+      !isSkipCondition
+    ) {
       Helper.toast('検索するためにエリア/駅または症状を選択してください。', {
         type: 'error',
       });

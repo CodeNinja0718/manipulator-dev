@@ -143,6 +143,7 @@ const BookingPage = () => {
     ) {
       setConfirmModal({
         title: '予約日時の確認',
+        confirmText: '次に進む',
         content: (
           <SlotConfirmContent
             isGuest={!currentUser}
