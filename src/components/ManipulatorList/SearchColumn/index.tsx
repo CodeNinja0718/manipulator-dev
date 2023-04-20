@@ -62,18 +62,6 @@ const SearchColumn = () => {
     return dateCondition ? <FormatDate dateString={dateCondition} /> : '';
   }, [dateCondition]);
 
-  const onSearchUpdate = () => {
-    router.push({
-      pathname: '/',
-      query: {
-        search: true,
-        ...(dateCondition && { date: dateCondition }),
-        ...(areaCondition && { areas: areaCondition }),
-        ...(symptomsCondition && { symptom: symptomsCondition }),
-      },
-    });
-  };
-
   return (
     <Box sx={styles.searchColumn}>
       <Box sx={styles.searchColumnBox}>
@@ -132,7 +120,6 @@ const SearchColumn = () => {
             variant="contained"
             sx={styles.button}
             startIcon={<SvgIcon component={IconReloadSvg} inheritViewBox />}
-            onClick={onSearchUpdate}
           >
             条件を変更する
           </Button>

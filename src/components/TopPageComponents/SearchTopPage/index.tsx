@@ -9,7 +9,7 @@ import type {
 } from 'models/common/interface';
 import commonQuery from 'models/common/query';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SearchTopPageType } from 'utils/const';
 import Helper from 'utils/helpers';
 
@@ -27,16 +27,6 @@ const SearchTopPage = () => {
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
   const [selectedStation, setSelectedStation] = useState<string[]>([]);
   const [disabledSubmit, setDisabledSubmit] = useState(false);
-
-  useEffect(() => {
-    const { search = false, date, areas, symptoms } = router.query;
-    setOpen(Boolean(search));
-    setSelectedLocation(areas as string[]);
-    setCurrentDate(new Date(date as string));
-    setSelectedSymptom(
-      ((symptoms as string[]) || []).map((symptom) => Number(symptom)),
-    );
-  }, [router]);
 
   const handleSetActiveTab = (value: number) => setActiveTab(value);
   const handleSetSelectedSymptomType = (value: number) =>
