@@ -30,7 +30,7 @@ const DefaultMenu: React.FC<IReservationMenu> = ({
             {name}
           </Typography>
           {!timeDisplay && (
-            <Typography fontSize={14} fontWeight={500} color={'black'}>
+            <Typography component={'p'} fontWeight={'bold'} color={'black'}>
               {estimatedTime}分
             </Typography>
           )}
