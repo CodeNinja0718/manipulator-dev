@@ -7,6 +7,7 @@ const DefaultMenu: React.FC<IReservationMenu> = ({
   name,
   price,
   estimatedTime,
+  timeDisplay,
 }) => {
   return (
     <Stack
@@ -24,9 +25,16 @@ const DefaultMenu: React.FC<IReservationMenu> = ({
         flexGrow={1}
         justifyContent="space-between"
       >
-        <Typography color="black" fontWeight="bold">
-          {name} {estimatedTime}分
-        </Typography>
+        <Stack direction={'row'} spacing={12}>
+          <Typography component="p" fontWeight={'bold'} color={'black'}>
+            {name}
+          </Typography>
+          {!timeDisplay && (
+            <Typography fontSize={14} fontWeight={500} color={'black'}>
+              {estimatedTime}分
+            </Typography>
+          )}
+        </Stack>
         <Typography color="black" fontWeight="bold">
           <NumericFormat
             value={price}

@@ -19,6 +19,8 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   price,
   menuTypes,
   ticket,
+  timeDisplay,
+  estimatedTime,
   onSelectedTicketOfMenu,
 }) => {
   const handleGetLabel = (item: string) => {
@@ -55,9 +57,21 @@ const TicketMenu: React.FC<IMenuSelection> = ({
         flexGrow={1}
         justifyContent="space-between"
       >
-        <Typography color="black" fontSize={16} fontWeight="bold">
-          {name}
-        </Typography>
+        <Stack direction={'row'} spacing={12}>
+          <Typography
+            component="p"
+            fontSize={16}
+            fontWeight={'bold'}
+            color={'black'}
+          >
+            {name}
+          </Typography>
+          {!timeDisplay && (
+            <Typography fontSize={16} fontWeight={'bold'} color={'black'}>
+              {estimatedTime}分
+            </Typography>
+          )}
+        </Stack>
         {!isEmpty(menuTypeList) ? (
           <Box width="100%" display="flex" flexDirection="column">
             {menuTypeList.map((item, index) => (
