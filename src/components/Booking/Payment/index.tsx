@@ -12,7 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 import type { ICardItem } from 'models/card/interface';
 import cardQuery from 'models/card/query';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
-import type { ITicketOfMenu } from 'models/ticket/interface';
+import type { ITicketOfMenu, ITicketTime } from 'models/ticket/interface';
 import ticketQuery from 'models/ticket/query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -32,6 +32,7 @@ interface BookingPaymentProps {
   onSubmit: (values: Record<string, unknown>) => void;
   ticketMenu: ITicket | any;
   couponCode?: string;
+  ticketTimeList: ITicketTime[];
 }
 
 const BookingPayment: React.FC<BookingPaymentProps> = ({
@@ -42,6 +43,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   onSubmit,
   ticketMenu,
   couponCode,
+  ticketTimeList,
 }) => {
   const { data: currentUser, isFetching } = useUser();
   const { data: cardList, isLoading: isLoadingCard } = useFetch<{
@@ -159,6 +161,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         endTime={endTime}
         selectedMenu={selectedMenu}
         ticketMenu={currentTicketMenu}
+        ticketsTimeList={ticketTimeList}
       />
 
       <Typography fontSize={14} color="black">

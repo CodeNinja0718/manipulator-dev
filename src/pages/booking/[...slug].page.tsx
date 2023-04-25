@@ -18,6 +18,7 @@ import type {
 import manipulatorQuery from 'models/manipulator/query';
 import type { CreateReservationPayload } from 'models/reservation/interface';
 import reservationQuery from 'models/reservation/query';
+import type { ITicketTime } from 'models/ticket/interface';
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
@@ -36,6 +37,31 @@ const BookingMenuSelection = dynamic(
 );
 const BookingPayment = dynamic(() => import('components/Booking/Payment'));
 const BookingOverview = dynamic(() => import('components/Booking/Overview'));
+
+const calculateTicketTimes = (
+  numberOfTickets: number,
+  startTime: string | undefined,
+  endTime: string | undefined,
+  estimatedTime: number = 0,
+) => {
+  if (numberOfTickets <= 0 || !startTime || !endTime) {
+    return [];
+  }
+
+  const startTimeDayjs = dayjs(startTime).tz();
+
+  const tickets: ITicketTime[] = [];
+
+  for (let i = 0; i < numberOfTickets; i += 1) {
+    const lastTicket = tickets.length ? tickets[tickets.length - 1] : undefined;
+    const initStartTime = lastTicket?.endTime || startTimeDayjs;
+    const initEndTime = initStartTime.add(estimatedTime, 'minute');
+
+    tickets.push({ startTime: initStartTime, endTime: initEndTime });
+  }
+
+  return tickets;
+};
 
 const BookingPage = () => {
   const { data: currentUser } = useUser();
@@ -66,7 +92,11 @@ const BookingPage = () => {
     staleTime: 1000 * 60 * 2,
   });
 
-  const [overviewBooking, setOverviewBooking] = useState({});
+  const [overviewBooking, setOverviewBooking] = useState<
+    CreateReservationPayload & {
+      menu?: IReservationMenu;
+    }
+  >({});
   const { booking, setBooking, setConfirmModal, setRedirectLogin } =
     useGlobalState();
 
@@ -238,6 +268,12 @@ const BookingPage = () => {
 
   const renderStepContent = () => {
     if (step === STEPPER_CONTENT[2].value) {
+      const tickets = calculateTicketTimes(
+        ticketMenu?.ticket?.numberOfSelectedTicket || 0,
+        booking?.startTime,
+        booking?.endTime,
+        ticketMenu?.estimatedTime || 0,
+      );
       return (
         <BookingPayment
           selectedMenu={selectedMenu}
@@ -246,6 +282,7 @@ const BookingPage = () => {
           endTime={booking?.endTime}
           handleChangeStep={handleChangeStep}
           onSubmit={handleSubmitStep}
+          ticketTimeList={tickets}
         />
       );
     }
@@ -270,10 +307,17 @@ const BookingPage = () => {
   };
 
   if (isSuccess) {
+    const tickets = calculateTicketTimes(
+      overviewBooking?.ticket?.numberOfSelectedTicket || 0,
+      overviewBooking?.startTime,
+      overviewBooking?.endTime,
+      overviewBooking?.menu?.estimatedTime || 0,
+    );
     return (
       <BookingOverview
         manipulatorDetail={manipulatorTimeSlots?.manipulator}
         bookingDetail={overviewBooking}
+        ticketTimeList={tickets}
       />
     );
   }

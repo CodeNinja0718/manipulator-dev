@@ -4,6 +4,7 @@ import { Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import isEmpty from 'lodash/isEmpty';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type { ITicketTime } from 'models/ticket/interface';
 import { NumericFormat } from 'react-number-format';
 
 import styles from './styles';
@@ -13,6 +14,7 @@ interface IDetailMenu {
   endTime?: string;
   selectedMenu?: IReservationMenu;
   ticketMenu: ITicket | any;
+  ticketsTimeList: ITicketTime[];
 }
 
 const RenderElement = ({
@@ -58,37 +60,12 @@ const DetailMenu = ({
   endTime,
   selectedMenu,
   ticketMenu,
+  ticketsTimeList,
 }: IDetailMenu) => {
   const startTimeDayjs = dayjs(startTime).tz();
   const endTimeDayjs = dayjs(endTime).tz();
-  const numberOfSelectedTicket = !isEmpty(ticketMenu)
-    ? ticketMenu?.ticket?.numberOfSelectedTicket
-    : 0;
 
-  const handleRenderTime = () => {
-    const tickets = [];
-
-    if (numberOfSelectedTicket > 0) {
-      for (let i: number = 0; i < numberOfSelectedTicket; i += 1) {
-        const initStartTime: dayjs.Dayjs =
-          tickets?.[0]?.endTimeDayjs || startTimeDayjs;
-        const initEndTime = initStartTime.add(
-          ticketMenu?.estimatedTime || 0,
-          'minute',
-        );
-
-        tickets.push({
-          startTimeDayjs: initStartTime,
-          endTimeDayjs: initEndTime,
-        });
-      }
-    }
-
-    return tickets;
-  };
-  const tickets = handleRenderTime();
-
-  return isEmpty(tickets) ? (
+  return isEmpty(ticketsTimeList) ? (
     <RenderElement
       startTimeDayjs={startTimeDayjs}
       endTimeDayjs={endTimeDayjs}
@@ -98,11 +75,11 @@ const DetailMenu = ({
     />
   ) : (
     <Stack mb={25}>
-      {tickets.map((item, id) => (
+      {ticketsTimeList.map((item, id) => (
         <RenderElement
           key={`menu-time-${id}`}
-          startTimeDayjs={item.startTimeDayjs}
-          endTimeDayjs={item.endTimeDayjs}
+          startTimeDayjs={item.startTime}
+          endTimeDayjs={item.endTime}
           selectedMenu={selectedMenu}
           price={ticketMenu?.ticket?.price || 0}
           elementStyles={styles.ticketMenuDetailWrapper}

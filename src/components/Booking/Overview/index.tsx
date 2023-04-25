@@ -8,8 +8,10 @@ import type {
   IReservationMenu,
 } from 'models/manipulator/interface';
 import type { CreateReservationPayload } from 'models/reservation/interface';
+import type { ITicketTime } from 'models/ticket/interface';
 import Link from 'next/link';
 import { NumericFormat } from 'react-number-format';
+import Helper from 'utils/helpers';
 
 import styles from './styles';
 
@@ -18,14 +20,22 @@ interface BookingOverviewProps {
     menu?: IReservationMenu;
   };
   manipulatorDetail?: IManipulator;
+  ticketTimeList: ITicketTime[];
 }
 
 const BookingOverview: React.FC<BookingOverviewProps> = ({
   manipulatorDetail,
   bookingDetail,
+  ticketTimeList,
 }) => {
   const startTimeDay = dayjs(bookingDetail?.startTime).tz();
   const endTimeDay = dayjs(bookingDetail?.endTime).tz();
+
+  const numberOfSessions = bookingDetail?.ticket?.numberOfSelectedTicket || 1;
+  const bookingPrice = (bookingDetail?.menu?.price || 0) * numberOfSessions;
+  const totalPrice =
+    ((bookingDetail?.menu?.price || 0) - (bookingDetail?.ticket?.price || 0)) *
+    numberOfSessions;
 
   const renderCouponData = (() => {
     if (!bookingDetail?.ticket) {
@@ -39,7 +49,9 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
     );
     couponInfomation.set(
       'クーポン',
-      `- ${bookingDetail?.ticket?.price || 0}円`,
+      `- ${Helper.addComma(
+        (bookingDetail?.ticket?.price || 0) * numberOfSessions,
+      )}円`,
     );
 
     return (
@@ -97,10 +109,23 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
             <Typography color="black" fontWeight="bold">
               ご予約日
             </Typography>
-            <Typography>
-              {startTimeDay.format('YYYY/MM/DD（ddd）')}
-              {`${startTimeDay.format('HH:mm')}～${endTimeDay.format('HH:mm')}`}
-            </Typography>
+            {ticketTimeList.length ? (
+              ticketTimeList.map((ticket, idx) => (
+                <Typography key={`ticket-time-${idx}`}>
+                  {startTimeDay.format('YYYY/MM/DD（ddd）')}
+                  {`${ticket.startTime.format(
+                    'HH:mm',
+                  )}～${ticket.endTime.format('HH:mm')}`}
+                </Typography>
+              ))
+            ) : (
+              <Typography>
+                {startTimeDay.format('YYYY/MM/DD（ddd）')}
+                {`${startTimeDay.format('HH:mm')}～${endTimeDay.format(
+                  'HH:mm',
+                )}`}
+              </Typography>
+            )}
             <Divider sx={{ my: 10 }} />
             <Stack
               direction="row"
@@ -113,7 +138,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
                 分
               </Typography>
               <NumericFormat
-                value={bookingDetail?.menu?.price}
+                value={bookingPrice}
                 thousandSeparator=","
                 suffix="円"
                 displayType="text"
@@ -137,7 +162,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
                 お支払い金額予定
               </Typography>
               <NumericFormat
-                value={bookingDetail?.menu?.price}
+                value={totalPrice}
                 thousandSeparator=","
                 displayType="text"
                 renderText={(value) => (
