@@ -371,14 +371,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     }
 
     await fetchData({
-      ...manipulatorQuery.manipulatorTimeSlots({
-        manipulatorId,
-        startTime: dayjs().tz().startOf('day').toISOString(),
-        endTime: dayjs().tz().startOf('day').add(7, 'day').toISOString(),
-      }),
-      staleTime: 1000 * 60 * 2,
-    });
-    await fetchData({
       ...manipulatorQuery.manipulatorMenus(manipulatorId),
       staleTime: 1000 * 60 * 2,
     });
