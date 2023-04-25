@@ -46,17 +46,29 @@ const TicketMenu: React.FC<IMenuSelection> = ({
     return MENU_TYPES_KEYS.COUPON === el;
   };
 
-  const handleChangeTicket = (e: number | any) => {
-    onSelectedTicketOfMenu(e);
-  };
-
-  const handleChange = () => {
+  const handleChangeTicket = () => {
     if (numberOfTicketRef?.current) {
       const children: any = numberOfTicketRef?.current?.firstChild;
       const numberOfSelectedTicket: number | any = children?.value || 1;
       onSelectedTicketOfMenu({
         ...ticket,
         numberOfSelectedTicket: Number(numberOfSelectedTicket),
+      });
+    }
+  };
+
+  const handleChange = (isHaveTicket: boolean) => {
+    if (numberOfTicketRef?.current) {
+      const children: any = numberOfTicketRef?.current?.firstChild;
+      const numberOfSelectedTicket: number | any = children?.value || 1;
+      const numberOfSelectedTicketData = isHaveTicket
+        ? {
+            numberOfSelectedTicket: Number(numberOfSelectedTicket),
+          }
+        : {};
+      onSelectedTicketOfMenu({
+        ...ticket,
+        ...numberOfSelectedTicketData,
       });
     }
   };
@@ -103,7 +115,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                   sx={{
                     cursor: 'pointer',
                   }}
-                  onChange={handleChange}
+                  onChange={() => handleChange(isTicket(item))}
                 >
                   <Box display="flex" alignItems="center">
                     <Radio
@@ -143,7 +155,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                       <NumberInput
                         ref={numberOfTicketRef}
                         sx={styles.numberInput}
-                        onChange={handleChangeTicket}
+                        onClick={handleChangeTicket}
                         required
                         inputProps={{
                           inputMode: 'numeric',

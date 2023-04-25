@@ -48,7 +48,12 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
               : { ...currentTicketMenu?.ticket },
           },
     );
-    setMenuId(id);
+
+    setMenuId(
+      numberOfSelectedTicket || isEmpty(currentTicketMenu)
+        ? id
+        : currentTicketMenu?._id,
+    );
   };
 
   const handleSelectedTicketOfMenu = (value: number | any) => {
