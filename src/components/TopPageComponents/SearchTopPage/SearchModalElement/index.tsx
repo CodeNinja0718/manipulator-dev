@@ -25,6 +25,7 @@ interface SearchModalElementProps {
   lines: {
     _id: number;
     name: string;
+    groupId: string;
   }[];
   disabled: boolean;
   activeTab?: number;
@@ -34,6 +35,12 @@ interface SearchModalElementProps {
   onSetSelectedLocation: (value: string[]) => void;
   onSetSelectedStation: (value: string[]) => void;
   onChangeTab?: (value: number) => void;
+  selectedDefaultLocations:string[]
+  selectedDefaultSymptoms:number[]
+  setSelectedDefaultSymptoms: (value: number[]) =>void
+  selectedDefaultStations:string[]
+  selectedLine: number
+  setSelectedLine : (value:number) => void
 }
 
 const SearchModalElement = ({
@@ -53,6 +60,12 @@ const SearchModalElement = ({
   onClose,
   onSubmit,
   onChangeTab,
+  selectedDefaultLocations,
+  selectedDefaultSymptoms,
+  setSelectedDefaultSymptoms,
+  selectedDefaultStations,
+  selectedLine,
+  setSelectedLine
 }: SearchModalElementProps) => {
   return (
     <SearchModal
@@ -68,6 +81,12 @@ const SearchModalElement = ({
         onSelectedSymptoms,
         onSetSelectedLocation,
         onSetSelectedStation,
+        selectedDefaultLocations,
+        selectedDefaultSymptoms,
+        setSelectedDefaultSymptoms,
+        selectedDefaultStations,
+        selectedLine,
+        setSelectedLine
       )}
       disabled={disabled}
       activeTab={activeTab}
