@@ -14,7 +14,6 @@ import { useFetch } from 'hooks';
 import type { ICommonDataSalon, ILocationList } from 'models/common/interface';
 import commonQuery from 'models/common/query';
 import { useRouter } from 'next/router';
-
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -65,12 +64,12 @@ const SearchColumn = () => {
   }, [dateCondition]);
 
   const searchCondition = () => {
-    if( areas || symptoms) {
-      router.push(router.asPath.replace("manipulator", ""))
+    if (areas || symptoms) {
+      router.push(router.asPath.replace('manipulator', ''));
     } else {
-      router.push('/')
+      router.push('/');
     }
-  }
+  };
 
   return (
     <Box sx={styles.searchColumn}>

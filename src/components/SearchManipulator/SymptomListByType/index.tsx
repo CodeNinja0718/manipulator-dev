@@ -31,10 +31,9 @@ const SymptomListByType = ({
     return newValue.filter((item) => item.typeId === selectedSymptomType);
   }, [symptoms, selectedSymptomType]);
 
-
   useEffect(() => {
     // Clear selected tag when changed symptom type
-    if(selectedDefaultSymptoms.length > 0) {
+    if (selectedDefaultSymptoms.length > 0) {
       setActives([...selectedDefaultSymptoms]);
     } else {
       setActives([]);
@@ -51,7 +50,9 @@ const SymptomListByType = ({
     setActives(selected);
 
     // Handle selected tags
-    const selectedValue = list.filter((item) => selected.includes(item._id)).map((_item) => _item._id);
+    const selectedValue = list
+      .filter((item) => selected.includes(item._id))
+      .map((_item) => _item._id);
     onSelectedSymptoms(selectedValue);
   };
 
@@ -77,7 +78,7 @@ const SymptomListByType = ({
       <Box height={{ tablet: 200 }} overflow="auto">
         <Box display="flex" rowGap={10} mt={20} columnGap={6}>
           <Box display="inherit" gap="inherit" flexWrap="wrap">
-            {list.map(item => (
+            {list.map((item) => (
               <CommonTags
                 key={item._id}
                 index={item._id}

@@ -12,17 +12,17 @@ import styles from './styles';
 const LocationList = ({
   locations,
   onSetSelectedLocation,
-  selectedDefaultLocations
+  selectedDefaultLocations,
 }: LocationListProps) => {
   const list: LocationProps[] = useMemo(() => {
     return locations || [];
   }, [locations]);
   const [selected, setSelected] = useState<string[]>([]);
 
-  useEffect(()=>{
-    setSelected([...selectedDefaultLocations])
-    onSetSelectedLocation([...selectedDefaultLocations])
-  },[selectedDefaultLocations])
+  useEffect(() => {
+    setSelected([...selectedDefaultLocations]);
+    onSetSelectedLocation([...selectedDefaultLocations]);
+  }, [selectedDefaultLocations]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target;
@@ -48,7 +48,14 @@ const LocationList = ({
             {list.map((item) => (
               <FormControlLabel
                 key={item._id}
-                control={<CheckboxBase iconClassName="customCheckbox" defaultChecked={selectedDefaultLocations.includes(`${item._id}`)}/>}
+                control={
+                  <CheckboxBase
+                    iconClassName="customCheckbox"
+                    defaultChecked={selectedDefaultLocations.includes(
+                      `${item._id}`,
+                    )}
+                  />
+                }
                 label={item.name}
                 sx={styles.checkboxItem}
                 labelPlacement="start"

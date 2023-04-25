@@ -29,7 +29,7 @@ export interface ICommonLineList {
   result: {
     _id: number;
     name: string;
-    groupId:string;
+    groupId: string;
   }[];
 }
 
