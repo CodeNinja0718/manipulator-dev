@@ -13,7 +13,6 @@ interface BookingMenuSelectionProps {
   menus: IReservationMenu[];
   onSubmit: (values: Record<string, unknown>) => void;
   onSetTicketMenu: (values: ITicket | any) => void;
-  ticketMenu: ITicket | any;
 }
 
 const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
@@ -21,7 +20,6 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
   menus,
   onSubmit,
   onSetTicketMenu,
-  ticketMenu,
 }) => {
   const [menuId, setMenuId] = useState(initialMenu);
   const selectedMenu = useMemo(
@@ -32,10 +30,9 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
     [menuId, menus],
   );
 
-  const handleSelectMenu = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+  const handleChangeMenu = (id: string, numberOfSelectedTicket?: number) => {
     const ticketMenuData = menus.filter(
-      (menu) => menu?.ticket?.id === value && menu?._id !== value,
+      (menu) => menu?.ticket?.id === id && menu?._id !== id,
     );
     const currentTicketMenu: IReservationMenu | any = ticketMenuData?.[0] || {};
     onSetTicketMenu(
@@ -43,24 +40,23 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
         ? currentTicketMenu
         : {
             ...currentTicketMenu,
-            ticket: {
-              ...currentTicketMenu?.ticket,
-            },
+            ticket: numberOfSelectedTicket
+              ? {
+                  ...currentTicketMenu?.ticket,
+                  numberOfSelectedTicket,
+                }
+              : { ...currentTicketMenu?.ticket },
           },
     );
-    setMenuId(e.target.value);
+    setMenuId(id);
   };
 
   const handleSelectedTicketOfMenu = (value: number | any) => {
-    if (!isEmpty(ticketMenu)) {
-      onSetTicketMenu({
-        ...ticketMenu,
-        ticket: {
-          ...ticketMenu?.ticket,
-          numberOfSelectedTicket: value,
-        },
-      });
-    }
+    handleChangeMenu(value?.id, value?.numberOfSelectedTicket);
+  };
+
+  const handleSelectMenu = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChangeMenu(e.target.value);
   };
 
   const menuList = useMemo(() => {

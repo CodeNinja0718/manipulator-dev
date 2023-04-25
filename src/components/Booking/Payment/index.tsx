@@ -12,6 +12,8 @@ import isEmpty from 'lodash/isEmpty';
 import type { ICardItem } from 'models/card/interface';
 import cardQuery from 'models/card/query';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type { ITicketOfMenu } from 'models/ticket/interface';
+import ticketQuery from 'models/ticket/query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -124,6 +126,27 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     }
   }, [cardList?.items]);
 
+  const { data } = useFetch<ITicketOfMenu>(
+    ticketQuery.getInfoOfTicket(
+      ticketMenu?.createdById,
+      ticketMenu?._id,
+      selectedMenuType === PAYMENT_MENU_TYPES.TICKET,
+    ),
+  );
+
+  const currentTicketMenu = data
+    ? {
+        ...ticketMenu,
+        ticket: {
+          ...ticketMenu?.ticket,
+          manipulatorNameKana: data?.manipulatorNameKana,
+          salonNameKana: data?.salonNameKana,
+          availableCount: data?.ticket?.availableCount,
+          expiredAt: data?.ticket?.expiredAt,
+        },
+      }
+    : ticketMenu;
+
   return (
     <Stack sx={styles.bookingPaymentWrapper}>
       <Typography color="secondary" fontSize={18} fontWeight="bold">
@@ -135,7 +158,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         startTime={startTime}
         endTime={endTime}
         selectedMenu={selectedMenu}
-        ticketMenu={ticketMenu}
+        ticketMenu={currentTicketMenu}
       />
 
       <Typography fontSize={14} color="black">
@@ -144,9 +167,9 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         ※料金はメニュー変更・オプション追加によって変動する場合があります。
       </Typography>
 
-      {!isEmpty(ticketMenu) ? (
+      {!isEmpty(currentTicketMenu) ? (
         <MenuType
-          ticketMenu={ticketMenu}
+          ticketMenu={currentTicketMenu}
           selectedMenuType={selectedMenuType}
           onSetSelectedMenuType={setSelectedMenuType}
         />

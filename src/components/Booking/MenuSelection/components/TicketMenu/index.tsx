@@ -3,7 +3,7 @@ import { NumberInput } from 'components/NumberInput';
 import head from 'lodash/head';
 import isEmpty from 'lodash/isEmpty';
 import type { IReservationMenu } from 'models/manipulator/interface';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { MENU_TYPES, MENU_TYPES_KEYS } from 'utils/const';
 
@@ -23,6 +23,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   estimatedTime,
   onSelectedTicketOfMenu,
 }) => {
+  const numberOfTicketRef = useRef<HTMLInputElement>(null);
   const handleGetLabel = (item: string) => {
     if (isEmpty(item)) return false;
 
@@ -47,6 +48,17 @@ const TicketMenu: React.FC<IMenuSelection> = ({
 
   const handleChangeTicket = (e: number | any) => {
     onSelectedTicketOfMenu(e);
+  };
+
+  const handleChange = () => {
+    if (numberOfTicketRef?.current) {
+      const children: any = numberOfTicketRef?.current?.firstChild;
+      const numberOfSelectedTicket: number | any = children?.value || 1;
+      onSelectedTicketOfMenu({
+        ...ticket,
+        numberOfSelectedTicket: Number(numberOfSelectedTicket),
+      });
+    }
   };
 
   return (
@@ -91,6 +103,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                   sx={{
                     cursor: 'pointer',
                   }}
+                  onChange={handleChange}
                 >
                   <Box display="flex" alignItems="center">
                     <Radio
@@ -128,10 +141,14 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                         使用する
                       </Typography>
                       <NumberInput
+                        ref={numberOfTicketRef}
                         sx={styles.numberInput}
                         onChange={handleChangeTicket}
                         required
-                        inputProps={{ inputMode: 'numeric', pattern: '[1-9]*' }}
+                        inputProps={{
+                          inputMode: 'numeric',
+                          pattern: '[1-9]*',
+                        }}
                         value={ticket?.numberOfSelectedTicket || 1}
                         min={1}
                         max={
