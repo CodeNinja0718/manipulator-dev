@@ -8,14 +8,18 @@ import styles from './styles';
 interface SymptomTypeProps {
   selectedSymptomType: number;
   onSetSelectedSymptomType: (value: number) => void;
+  setSelectedDefaultSymptoms: (value:number[]) =>void
 }
 
 const SymptomType = ({
-  selectedSymptomType = 1,
   onSetSelectedSymptomType,
+  selectedSymptomType,
+  setSelectedDefaultSymptoms
 }: SymptomTypeProps) => {
+
   const handleSelected = (value: number) => {
     onSetSelectedSymptomType(value);
+    setSelectedDefaultSymptoms([])
   };
 
   return (

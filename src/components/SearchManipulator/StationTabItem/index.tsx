@@ -20,9 +20,15 @@ interface StationTabItemProps {
   lines: {
     _id: number;
     name: string;
+    groupId: string;
   }[];
   onSelectedSymptoms: (value: number[]) => void;
   onSetSelectedStation: (value: string[]) => void;
+  selectedDefaultSymptoms: number[]
+  setSelectedDefaultSymptoms: (value:number[]) =>void
+  selectedDefaultStations : string[]
+  setSelectedLine : (value:number) => void,
+  selectedLine : number
 }
 
 const StationTabItem = ({
@@ -34,6 +40,11 @@ const StationTabItem = ({
   onSelectedSymptoms,
   lines,
   onSetSelectedStation,
+  selectedDefaultSymptoms,
+  setSelectedDefaultSymptoms,
+  selectedDefaultStations,
+  setSelectedLine,
+  selectedLine
 }: StationTabItemProps) => {
   return (
     <Box
@@ -47,6 +58,9 @@ const StationTabItem = ({
           <StationList
             lines={lines}
             onSetSelectedStation={onSetSelectedStation}
+            selectedDefaultStations={selectedDefaultStations}
+            selectedLine={selectedLine}
+            setSelectedLine={setSelectedLine}
           />
           <DatePicker
             currentDate={currentDate}
@@ -60,11 +74,13 @@ const StationTabItem = ({
           <SymptomType
             selectedSymptomType={selectedSymptomType}
             onSetSelectedSymptomType={onSetSelectedSymptomType}
+            setSelectedDefaultSymptoms={setSelectedDefaultSymptoms}
           />
           <SymptomListByType
             symptoms={symptoms}
             selectedSymptomType={selectedSymptomType}
             onSelectedSymptoms={onSelectedSymptoms}
+            selectedDefaultSymptoms={selectedDefaultSymptoms}
           />
         </>
       </TabItem>

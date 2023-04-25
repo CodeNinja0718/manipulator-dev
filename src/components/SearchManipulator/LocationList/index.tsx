@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import CheckboxList from 'components/CheckboxList';
 import CheckboxBase from 'components/Form/CheckBox/CheckboxBase';
 import isEmpty from 'lodash/isEmpty';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import type { LocationListProps, LocationProps } from './model';
 import styles from './styles';
@@ -12,11 +12,17 @@ import styles from './styles';
 const LocationList = ({
   locations,
   onSetSelectedLocation,
+  selectedDefaultLocations
 }: LocationListProps) => {
   const list: LocationProps[] = useMemo(() => {
     return locations || [];
   }, [locations]);
   const [selected, setSelected] = useState<string[]>([]);
+
+  useEffect(()=>{
+    setSelected([...selectedDefaultLocations])
+    onSetSelectedLocation([...selectedDefaultLocations])
+  },[selectedDefaultLocations])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target;
@@ -42,7 +48,7 @@ const LocationList = ({
             {list.map((item) => (
               <FormControlLabel
                 key={item._id}
-                control={<CheckboxBase iconClassName="customCheckbox" />}
+                control={<CheckboxBase iconClassName="customCheckbox" defaultChecked={selectedDefaultLocations.includes(`${item._id}`)}/>}
                 label={item.name}
                 sx={styles.checkboxItem}
                 labelPlacement="start"
