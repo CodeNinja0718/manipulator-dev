@@ -38,7 +38,6 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
 
   const handleBackLineList = () => {
     handleSelectedLine(0);
-    setSelected([]);
   };
 
   const line: LinesProps[] = useMemo(() => {
@@ -51,6 +50,9 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
   }, [stations]);
 
   const list = selectedLine ? stationsList : line;
+
+  const isCheckboxChecked = (item: LinesProps) =>
+    selected.indexOf(item.groupId.toString()) !== -1;
 
   return (
     <Box>
@@ -84,7 +86,10 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
                   key={item._id}
                   control={
                     selectedLine ? (
-                      <CheckboxBase iconClassName="customCheckbox" />
+                      <CheckboxBase
+                        iconClassName="customCheckbox"
+                        checked={isCheckboxChecked(item)}
+                      />
                     ) : (
                       <Typography />
                     )
