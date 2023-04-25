@@ -24,11 +24,11 @@ interface StationTabItemProps {
   }[];
   onSelectedSymptoms: (value: number[]) => void;
   onSetSelectedStation: (value: string[]) => void;
-  selectedDefaultSymptoms: number[]
-  setSelectedDefaultSymptoms: (value:number[]) =>void
-  selectedDefaultStations : string[]
-  setSelectedLine : (value:number) => void,
-  selectedLine : number
+  selectedDefaultSymptoms: number[];
+  setSelectedDefaultSymptoms: (value: number[]) => void;
+  selectedDefaultStations: string[];
+  setSelectedLine: (value: number) => void;
+  selectedLine: number;
 }
 
 const StationTabItem = ({
@@ -44,7 +44,7 @@ const StationTabItem = ({
   setSelectedDefaultSymptoms,
   selectedDefaultStations,
   setSelectedLine,
-  selectedLine
+  selectedLine,
 }: StationTabItemProps) => {
   return (
     <Box

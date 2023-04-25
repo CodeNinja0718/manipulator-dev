@@ -26,8 +26,8 @@ interface LocationTabItemProps {
   onSelectedSymptoms: (value: number[]) => void;
   onSetSelectedLocation: (value: string[]) => void;
   selectedDefaultLocations: string[];
-  selectedDefaultSymptoms: number[]
-  setSelectedDefaultSymptoms: (value:number[]) =>void
+  selectedDefaultSymptoms: number[];
+  setSelectedDefaultSymptoms: (value: number[]) => void;
 }
 
 const LocationTabItem = ({
@@ -41,9 +41,8 @@ const LocationTabItem = ({
   onSetSelectedLocation,
   selectedDefaultLocations,
   selectedDefaultSymptoms,
-  setSelectedDefaultSymptoms
+  setSelectedDefaultSymptoms,
 }: LocationTabItemProps) => {
-
   return (
     <Box
       display="flex"

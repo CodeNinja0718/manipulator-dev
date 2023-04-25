@@ -32,21 +32,21 @@ export const renderTabList = (
   onSetSelectedStation: (value: string[]) => void,
   selectedDefaultLocations: string[],
   selectedDefaultSymptoms: number[],
-  setSelectedDefaultSymptoms: (value:number[]) =>void,
-  selectedDefaultStations:string[],
+  setSelectedDefaultSymptoms: (value: number[]) => void,
+  selectedDefaultStations: string[],
   selectedLine: number,
-  setSelectedLine : (value:number) => void
+  setSelectedLine: (value: number) => void,
 ) => {
-
-  useEffect(()=>{
-    if(selectedDefaultSymptoms.length > 0) {
-      const firstID = selectedDefaultSymptoms[0] || 1
-      const defaultSymptomId : number = symptoms.find(item => item._id === firstID)?.typeId || 1
-      onSetSelectedSymptomType(defaultSymptomId)
-     
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (selectedDefaultSymptoms.length > 0) {
+      const firstID = selectedDefaultSymptoms[0] || 1;
+      const defaultSymptomId: number =
+        symptoms.find((item) => item._id === firstID)?.typeId || 1;
+      onSetSelectedSymptomType(defaultSymptomId);
     }
-  },[selectedDefaultSymptoms,symptoms])
-  
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDefaultSymptoms, symptoms]);
 
   const list = [
     {
