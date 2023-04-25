@@ -1,3 +1,5 @@
+import type dayjs from 'dayjs';
+
 export interface ITicketItem {
   ticketId: string;
   name: string;
@@ -26,4 +28,9 @@ export interface ITicketOfMenu {
   manipulatorNameKana: string;
   salonName: string;
   salonNameKana: string;
+}
+
+export interface ITicketTime {
+  startTime: dayjs.Dayjs;
+  endTime: dayjs.Dayjs;
 }
