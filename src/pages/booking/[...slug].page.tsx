@@ -263,7 +263,6 @@ const BookingPage = () => {
       <BookingMenuSelection
         initialMenu={ticketMenu?.ticket?.id || booking.menuId || ''}
         menus={manipulatorMenuList || []}
-        ticketMenu={ticketMenu}
         onSubmit={handleSubmitStep}
         onSetTicketMenu={setTicketMenu}
       />
