@@ -7,4 +7,7 @@ export interface LinesProps {
 export interface StationListProps {
   lines: LinesProps[];
   onSetSelectedStation: (value: string[]) => void;
+  selectedDefaultStations: string[];
+  setSelectedLine: (value: number) => void;
+  selectedLine: number;
 }

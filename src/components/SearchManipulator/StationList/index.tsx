@@ -10,20 +10,32 @@ import useFetch from 'hooks/useFetch';
 import get from 'lodash/get';
 import type { ICommonStation } from 'models/common/interface';
 import commonQuery from 'models/common/query';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import type { LinesProps, StationListProps } from './model';
 import styles from './styles';
 
-const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
+const StationList = ({
+  lines,
+  onSetSelectedStation,
+  selectedDefaultStations,
+  setSelectedLine,
+  selectedLine,
+}: StationListProps) => {
   const [selected, setSelected] = useState<string[]>([]);
-  const [selectedLine, setSelectedLine] = useState<number>(0);
   const handleSelectedLine = (value: number) => {
     setSelectedLine(value);
   };
   const { data: stations } = useFetch<ICommonStation>(
     commonQuery.stationListByLine(selectedLine),
   );
+
+  useEffect(() => {
+    if (selectedDefaultStations.length > 0) {
+      setSelected([...selectedDefaultStations]);
+    }
+  }, [selectedDefaultStations]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target;
     let currentSelected: string[] = [];
@@ -89,6 +101,9 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
                       <CheckboxBase
                         iconClassName="customCheckbox"
                         checked={isCheckboxChecked(item)}
+                        defaultChecked={selectedDefaultStations.includes(
+                          `${item.groupId}`,
+                        )}
                       />
                     ) : (
                       <Typography />

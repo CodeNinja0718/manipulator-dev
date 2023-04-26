@@ -3,6 +3,7 @@ import StationIcon from '@icons/icon_station_on.svg';
 import TabLabelItem from 'components/CommonTabs/TabLabelItem';
 import LocationTabItem from 'components/SearchManipulator/LocationTabItem';
 import StationTabItem from 'components/SearchManipulator/StationTabItem';
+import { useEffect } from 'react';
 
 export const renderTabList = (
   selectedSymptomType: number,
@@ -24,11 +25,29 @@ export const renderTabList = (
   lines: {
     _id: number;
     name: string;
+    groupId: string;
   }[],
   onSelectedSymptoms: (value: number[]) => void,
   onSetSelectedLocation: (value: string[]) => void,
   onSetSelectedStation: (value: string[]) => void,
+  selectedDefaultLocations: string[],
+  selectedDefaultSymptoms: number[],
+  setSelectedDefaultSymptoms: (value: number[]) => void,
+  selectedDefaultStations: string[],
+  selectedLine: number,
+  setSelectedLine: (value: number) => void,
 ) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (selectedDefaultSymptoms.length > 0) {
+      const firstID = selectedDefaultSymptoms[0] || 1;
+      const defaultSymptomId: number =
+        symptoms.find((item) => item._id === firstID)?.typeId || 1;
+      onSetSelectedSymptomType(defaultSymptomId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDefaultSymptoms, symptoms]);
+
   const list = [
     {
       label: (
@@ -51,6 +70,9 @@ export const renderTabList = (
           symptoms={symptoms}
           onSelectedSymptoms={onSelectedSymptoms}
           onSetSelectedLocation={onSetSelectedLocation}
+          selectedDefaultLocations={selectedDefaultLocations}
+          selectedDefaultSymptoms={selectedDefaultSymptoms}
+          setSelectedDefaultSymptoms={setSelectedDefaultSymptoms}
         />
       ),
     },
@@ -75,6 +97,11 @@ export const renderTabList = (
           lines={lines}
           onSelectedSymptoms={onSelectedSymptoms}
           onSetSelectedStation={onSetSelectedStation}
+          selectedDefaultSymptoms={selectedDefaultSymptoms}
+          setSelectedDefaultSymptoms={setSelectedDefaultSymptoms}
+          selectedDefaultStations={selectedDefaultStations}
+          selectedLine={selectedLine}
+          setSelectedLine={setSelectedLine}
         />
       ),
     },

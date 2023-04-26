@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
 import useFetch from 'hooks/useFetch';
@@ -9,7 +10,7 @@ import type {
 } from 'models/common/interface';
 import commonQuery from 'models/common/query';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SearchTopPageType } from 'utils/const';
 import Helper from 'utils/helpers';
 
@@ -19,6 +20,13 @@ import SearchModalElement from './SearchModalElement';
 
 const SearchTopPage = () => {
   const router = useRouter();
+  const {
+    date: defaultDate,
+    areas: defaultAreas,
+    symptoms: defaultSymptoms,
+    stationGroups: defaultStationGroups,
+    line: defaultLine,
+  } = router.query;
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(SearchTopPageType.LOCATION);
   const [selectedSymptomType, setSelectedSymptomType] = useState(1);
@@ -27,6 +35,17 @@ const SearchTopPage = () => {
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
   const [selectedStation, setSelectedStation] = useState<string[]>([]);
   const [disabledSubmit, setDisabledSubmit] = useState(false);
+  const [selectedLine, setSelectedLine] = useState<number>(0);
+
+  const [selectedDefaultLocations, setSelectedDefaultLocations] = useState<
+    string[]
+  >([]);
+  const [selectedDefaultSymptoms, setSelectedDefaultSymptoms] = useState<
+    number[]
+  >([]);
+  const [selectedDefaultStations, setSelectedDefaultStations] = useState<
+    string[]
+  >([]);
 
   const handleSetActiveTab = (value: number) => setActiveTab(value);
   const handleSetSelectedSymptomType = (value: number) =>
@@ -61,7 +80,7 @@ const SearchTopPage = () => {
     commonQuery.stationLineList(),
   );
   const handleSubmit = (isSkipCondition?: boolean) => {
-    const data = {
+    const data: any = {
       symptoms: selectedSymptom.join(),
       date: currentDate,
       areas: selectedLocation.join(),
@@ -70,6 +89,10 @@ const SearchTopPage = () => {
       page: 1,
       sort: 'createdDate.desc',
     };
+
+    if (selectedStation.length > 0) {
+      data.line = selectedLine;
+    }
 
     if (
       !data.symptoms &&
@@ -88,6 +111,39 @@ const SearchTopPage = () => {
 
     router.push(`${Helper.parseURLByParams(data, '/manipulator')}`);
   };
+
+  useEffect(() => {
+    if (defaultAreas || defaultSymptoms || defaultStationGroups) {
+      if (defaultAreas) {
+        const _defaultAreas = (defaultAreas as string).split(',');
+
+        setSelectedDefaultLocations(_defaultAreas);
+        setSelectedLocation(_defaultAreas);
+      }
+      if (defaultSymptoms) {
+        const _defaultSymptoms: number[] = (defaultSymptoms as string)
+          .split(',')
+          .map((item) => Number(item));
+        setSelectedDefaultSymptoms(_defaultSymptoms);
+        setSelectedSymptom(_defaultSymptoms);
+      }
+      if (defaultStationGroups) {
+        const _defaultStationGroups: string[] = (
+          defaultStationGroups as string
+        ).split(',');
+        setSelectedDefaultStations(_defaultStationGroups);
+        setSelectedStation(_defaultStationGroups);
+        setActiveTab(SearchTopPageType.STATION);
+
+        setSelectedLine(Number(defaultLine));
+      }
+      handleOpenSearch();
+    }
+
+    if (defaultDate && !Array.isArray(defaultDate)) {
+      setCurrentDate(defaultDate);
+    }
+  }, [router]);
 
   return (
     <Box>
@@ -131,6 +187,12 @@ const SearchTopPage = () => {
           onClose={handleCloseSearch}
           onSubmit={() => handleSubmit()}
           onChangeTab={handleChangeTab}
+          selectedDefaultLocations={selectedDefaultLocations}
+          selectedDefaultStations={selectedDefaultStations}
+          selectedDefaultSymptoms={selectedDefaultSymptoms}
+          setSelectedDefaultSymptoms={setSelectedDefaultSymptoms}
+          selectedLine={selectedLine}
+          setSelectedLine={setSelectedLine}
         />
       )}
     </Box>

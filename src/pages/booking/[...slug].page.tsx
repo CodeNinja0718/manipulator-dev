@@ -23,7 +23,7 @@ import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { PAYMENT_MENU_TYPES, STEPPER_CONTENT } from 'utils/const';
 import queryClient, { fetchData } from 'utils/queryClient';
 
@@ -119,15 +119,6 @@ const BookingPage = () => {
     }
     return result;
   }, [booking, manipulatorMenus?.docs]);
-
-  useEffect(() => {
-    if (booking?.menuId) {
-      const currentTicketMenu = manipulatorMenuList.filter(
-        (item) => item._id === booking?.menuId,
-      );
-      setTicketMenu(currentTicketMenu?.[0]);
-    }
-  }, [booking, manipulatorMenuList]);
 
   const selectedMenu = manipulatorMenuList?.find(
     (menu) => menu._id === booking.menuId,
@@ -298,7 +289,7 @@ const BookingPage = () => {
     }
     return (
       <BookingMenuSelection
-        initialMenu={ticketMenu?.ticket?.id || booking.menuId || ''}
+        initialMenu={ticketMenu?.ticket?.id || booking?.menuId || ''}
         menus={manipulatorMenuList || []}
         onSubmit={handleSubmitStep}
         onSetTicketMenu={setTicketMenu}

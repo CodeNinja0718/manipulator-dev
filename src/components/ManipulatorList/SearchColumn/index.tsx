@@ -33,8 +33,9 @@ const SearchColumn = () => {
   const [areaCondition, setAreaCondition] = useState('');
   const [dateCondition, setDateCondition] = useState('');
   const [symptomsCondition, setSymptomsCondition] = useState('');
+  const { date, areas, symptoms } = router.query;
+
   useEffect(() => {
-    const { date, areas, symptoms } = router.query;
     setDateCondition(date as string);
     setAreaCondition(areas as string);
     setSymptomsCondition(symptoms as string);
@@ -62,6 +63,14 @@ const SearchColumn = () => {
     return dateCondition ? <FormatDate dateString={dateCondition} /> : '';
   }, [dateCondition]);
 
+  const searchCondition = () => {
+    if (areas || symptoms) {
+      router.push(router.asPath.replace('manipulator', ''));
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
     <Box sx={styles.searchColumn}>
       <Box sx={styles.searchColumnBox}>
@@ -76,6 +85,7 @@ const SearchColumn = () => {
                   size="small"
                   variant="contained"
                   sx={styles.button}
+                  onClick={searchCondition}
                   startIcon={
                     <SvgIcon component={IconReloadSvg} inheritViewBox />
                   }
@@ -119,6 +129,7 @@ const SearchColumn = () => {
             size="small"
             variant="contained"
             sx={styles.button}
+            onClick={searchCondition}
             startIcon={<SvgIcon component={IconReloadSvg} inheritViewBox />}
           >
             条件を変更する

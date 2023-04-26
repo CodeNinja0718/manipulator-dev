@@ -8,4 +8,5 @@ export interface LocationProps {
 export interface LocationListProps {
   locations: LocationProps[];
   onSetSelectedLocation: (value: string[]) => void;
+  selectedDefaultLocations: string[];
 }
