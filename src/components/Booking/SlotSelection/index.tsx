@@ -42,7 +42,6 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
       startTime: date.toISOString(),
       endTime: date.add(7, 'day').toISOString(),
     }),
-    staleTime: 1000 * 60 * 2,
   });
 
   useEffect(() => {
