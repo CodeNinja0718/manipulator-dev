@@ -143,7 +143,13 @@ const SearchTopPage = () => {
     if (defaultDate && !Array.isArray(defaultDate)) {
       setCurrentDate(defaultDate);
     }
-  }, [router]);
+  }, [
+    defaultAreas,
+    defaultDate,
+    defaultStationGroups,
+    defaultSymptoms,
+    defaultLine,
+  ]);
 
   return (
     <Box>
