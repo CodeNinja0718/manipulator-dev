@@ -33,7 +33,7 @@ const SearchColumn = () => {
   const [areaCondition, setAreaCondition] = useState('');
   const [dateCondition, setDateCondition] = useState('');
   const [symptomsCondition, setSymptomsCondition] = useState('');
-  const { date, areas, symptoms } = router.query;
+  const { date, areas, symptoms, stationGroups } = router.query;
 
   useEffect(() => {
     setDateCondition(date as string);
@@ -64,7 +64,7 @@ const SearchColumn = () => {
   }, [dateCondition]);
 
   const searchCondition = () => {
-    if (areas || symptoms) {
+    if (areas || symptoms || stationGroups) {
       router.push(router.asPath.replace('manipulator', ''));
     } else {
       router.push('/');

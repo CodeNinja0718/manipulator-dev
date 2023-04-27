@@ -39,12 +39,7 @@ const SymptomListByType = ({
       setActives([]);
       onSelectedSymptoms([]);
     }
-  }, [
-    symptoms,
-    selectedSymptomType,
-    onSelectedSymptoms,
-    selectedDefaultSymptoms,
-  ]);
+  }, [symptoms, selectedSymptomType]);
 
   const handleClickTag = (value: number) => {
     let selected: number[] = [];
