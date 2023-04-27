@@ -22,7 +22,7 @@ const LocationList = ({
   useEffect(() => {
     setSelected([...selectedDefaultLocations]);
     onSetSelectedLocation([...selectedDefaultLocations]);
-  }, [selectedDefaultLocations]);
+  }, [selectedDefaultLocations, onSetSelectedLocation]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target;

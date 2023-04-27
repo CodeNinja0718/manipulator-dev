@@ -39,7 +39,7 @@ const SearchColumn = () => {
     setDateCondition(date as string);
     setAreaCondition(areas as string);
     setSymptomsCondition(symptoms as string);
-  }, [router]);
+  }, [date, areas, symptoms]);
 
   const { data: response } = useFetch<ICommonDataSalon>(
     commonQuery.salonCommonData(),
