@@ -64,7 +64,7 @@ const StationList = ({
   const list = selectedLine ? stationsList : line;
 
   const isCheckboxChecked = (item: LinesProps) =>
-    selected.indexOf(item.groupId.toString()) !== -1;
+    selected.indexOf(item._id.toString()) !== -1;
 
   return (
     <Box>
@@ -112,7 +112,7 @@ const StationList = ({
                   label={item.name}
                   sx={styles.checkboxItem}
                   labelPlacement="start"
-                  value={item.groupId}
+                  value={item._id}
                   onClick={() => !selectedLine && handleSelectedLine(item._id)}
                   onChange={(event: any) => selectedLine && handleChange(event)}
                 />
