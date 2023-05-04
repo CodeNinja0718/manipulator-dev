@@ -1,6 +1,12 @@
 import type { SxProps } from '@mui/material';
 
 const styles: Record<string, SxProps> = {
+  addTicketBtn: {
+    mt: 20,
+    fontWeight: 'bold',
+    maxWidth: { xs: undefined, tablet: 280 },
+    width: '100%',
+  },
   ticketLeftText: {
     color: 'orange.main',
     display: 'flex',

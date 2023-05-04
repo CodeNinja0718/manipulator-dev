@@ -257,6 +257,12 @@ const BookingPage = () => {
     }
   };
 
+  const handleAddTicket = () => {
+    router.push({
+      pathname: '/booking/add-ticket',
+    });
+  };
+
   const renderStepContent = () => {
     if (step === STEPPER_CONTENT[2].value) {
       const tickets = calculateTicketTimes(
@@ -293,6 +299,7 @@ const BookingPage = () => {
         menus={manipulatorMenuList || []}
         onSubmit={handleSubmitStep}
         onSetTicketMenu={setTicketMenu}
+        onAddTicket={handleAddTicket}
       />
     );
   };
