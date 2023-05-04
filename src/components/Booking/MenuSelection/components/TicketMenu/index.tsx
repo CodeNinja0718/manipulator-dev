@@ -1,4 +1,5 @@
-import { Box, Radio, Stack, Typography } from '@mui/material';
+import ArrowRight from '@icons/arrow-right.svg';
+import { Box, Button, Radio, Stack, Typography } from '@mui/material';
 import { NumberInput } from 'components/NumberInput';
 import head from 'lodash/head';
 import isEmpty from 'lodash/isEmpty';
@@ -10,6 +11,7 @@ import { MENU_TYPES, MENU_TYPES_KEYS } from 'utils/const';
 import styles from './styles';
 
 interface IMenuSelection extends IReservationMenu {
+  onAddTicket: () => void;
   onSelectedTicketOfMenu: (value: number | any) => void;
 }
 
@@ -21,6 +23,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   ticket,
   timeDisplay,
   estimatedTime,
+  onAddTicket,
   onSelectedTicketOfMenu,
 }) => {
   const numberOfTicketRef = useRef<HTMLInputElement>(null);
@@ -129,45 +132,59 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                     </Typography>
                   </Box>
                   {isTicket(item) ? (
-                    <Stack
-                      direction={'row'}
-                      spacing={10}
-                      pl={11}
-                      alignItems={'center'}
-                    >
-                      <Box sx={styles.ticketLeft}>
-                        <Typography sx={styles.ticketLeftText}>
-                          残り
-                          <Typography
-                            component={'span'}
-                            sx={styles.ticketLeftNumber}
-                          >
-                            {ticket?.availableCount ||
-                              ticket?.numberOfTicket ||
-                              0}
+                    <Stack direction={'column'} alignItems={'flex-start'}>
+                      <Stack
+                        direction={'row'}
+                        spacing={10}
+                        pl={11}
+                        alignItems={'center'}
+                      >
+                        <Box sx={styles.ticketLeft}>
+                          <Typography sx={styles.ticketLeftText}>
+                            残り
+                            <Typography
+                              component={'span'}
+                              sx={styles.ticketLeftNumber}
+                            >
+                              {ticket?.availableCount ||
+                                ticket?.numberOfTicket ||
+                                0}
+                            </Typography>
+                            回
                           </Typography>
-                          回
+                        </Box>
+                        <Typography sx={styles.text} pl={5}>
+                          使用する
                         </Typography>
-                      </Box>
-                      <Typography sx={styles.text} pl={5}>
-                        使用する
-                      </Typography>
-                      <NumberInput
-                        ref={numberOfTicketRef}
-                        sx={styles.numberInput}
-                        onClick={handleChangeTicket}
-                        required
-                        inputProps={{
-                          inputMode: 'numeric',
-                          pattern: '[1-9]*',
-                        }}
-                        value={ticket?.numberOfSelectedTicket || 1}
-                        min={1}
-                        max={
-                          ticket?.availableCount || ticket?.numberOfTicket || 1
-                        }
-                      />
-                      <Typography sx={styles.text}>回</Typography>
+                        <NumberInput
+                          ref={numberOfTicketRef}
+                          sx={styles.numberInput}
+                          onClick={handleChangeTicket}
+                          required
+                          inputProps={{
+                            inputMode: 'numeric',
+                            pattern: '[1-9]*',
+                          }}
+                          value={ticket?.numberOfSelectedTicket || 1}
+                          min={1}
+                          max={
+                            ticket?.availableCount ||
+                            ticket?.numberOfTicket ||
+                            1
+                          }
+                        />
+                        <Typography sx={styles.text}>回</Typography>
+                      </Stack>
+                      <Button
+                        size="medium"
+                        color="primary"
+                        endIcon={<ArrowRight />}
+                        variant="contained"
+                        sx={styles.addTicketBtn}
+                        onClick={onAddTicket}
+                      >
+                        回数券購入へ進む
+                      </Button>
                     </Stack>
                   ) : (
                     <></>
