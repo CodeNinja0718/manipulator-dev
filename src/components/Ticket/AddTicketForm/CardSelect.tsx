@@ -23,7 +23,7 @@ import Helper from 'utils/helpers';
 import styles from './styles';
 
 const CardSelect = () => {
-  const { data: currentUser, isFetched } = useUser();
+  const { data: currentUser } = useUser();
 
   const { data: cardList, isLoading: isLoadingCard } = useFetch<{
     items: ICardItem[];
@@ -33,12 +33,7 @@ const CardSelect = () => {
   });
   const [payment, setPayment] = useState<string | undefined>(undefined);
 
-  const {
-    control,
-    getValues,
-    reset,
-    formState: { isValid },
-  } = useForm<AddCardFormValues>({
+  const { control } = useForm<AddCardFormValues>({
     resolver: yupResolver(schema),
     mode: 'onTouched',
   });

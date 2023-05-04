@@ -22,7 +22,7 @@ const schema = yup.object().shape({
 });
 
 const AddTicketForm = () => {
-  const { control, handleSubmit } = useForm({
+  const { control } = useForm({
     resolver: yupResolver(schema),
   });
   return (
