@@ -11,7 +11,6 @@ import type { CreateReservationPayload } from 'models/reservation/interface';
 import type { ITicketTime } from 'models/ticket/interface';
 import Link from 'next/link';
 import { NumericFormat } from 'react-number-format';
-import Helper from 'utils/helpers';
 
 import styles from './styles';
 
@@ -33,9 +32,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
 
   const numberOfSessions = bookingDetail?.ticket?.numberOfSelectedTicket || 1;
   const bookingPrice = (bookingDetail?.menu?.price || 0) * numberOfSessions;
-  const totalPrice =
-    ((bookingDetail?.menu?.price || 0) - (bookingDetail?.ticket?.price || 0)) *
-    numberOfSessions;
+  const totalPrice = bookingPrice;
 
   const renderCouponData = (() => {
     if (!bookingDetail?.ticket) {
@@ -47,12 +44,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
       '回数券',
       `${bookingDetail?.ticket?.numberOfSelectedTicket || 1}回使用`,
     );
-    couponInfomation.set(
-      'クーポン',
-      `- ${Helper.addComma(
-        (bookingDetail?.ticket?.price || 0) * numberOfSessions,
-      )}円`,
-    );
+    couponInfomation.set('クーポン', `-`);
 
     return (
       <>
