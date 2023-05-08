@@ -13,6 +13,11 @@ import styles from './styles';
 interface IMenuSelection extends IReservationMenu {
   onAddTicket: () => void;
   onSelectedTicketOfMenu: (value: number | any) => void;
+  selectedMenu: IReservationMenu | any;
+  isSelectedMenu: boolean;
+  parentMenuID: string;
+  availableCount: number;
+  fetchStatus: string;
 }
 
 const TicketMenu: React.FC<IMenuSelection> = ({
@@ -25,6 +30,11 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   estimatedTime,
   onAddTicket,
   onSelectedTicketOfMenu,
+  selectedMenu,
+  isSelectedMenu,
+  parentMenuID,
+  availableCount,
+  fetchStatus,
 }) => {
   const numberOfTicketRef = useRef<HTMLInputElement>(null);
   const handleGetLabel = (item: string) => {
@@ -75,6 +85,11 @@ const TicketMenu: React.FC<IMenuSelection> = ({
       });
     }
   };
+
+  const isShowAvailableCount =
+    availableCount === 0 &&
+    isSelectedMenu &&
+    selectedMenu?._id === parentMenuID;
 
   return (
     <Stack direction="row" alignItems="center">
@@ -133,58 +148,65 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                   </Box>
                   {isTicket(item) ? (
                     <Stack direction={'column'} alignItems={'flex-start'}>
-                      <Stack
-                        direction={'row'}
-                        spacing={10}
-                        pl={11}
-                        alignItems={'center'}
-                      >
-                        <Box sx={styles.ticketLeft}>
-                          <Typography sx={styles.ticketLeftText}>
-                            残り
-                            <Typography
-                              component={'span'}
-                              sx={styles.ticketLeftNumber}
-                            >
-                              {ticket?.availableCount ||
-                                ticket?.numberOfTicket ||
-                                0}
+                      {selectedMenu?._id === parentMenuID &&
+                      availableCount === 0 ? (
+                        <></>
+                      ) : (
+                        <Stack
+                          direction={'row'}
+                          spacing={10}
+                          pl={11}
+                          alignItems={'center'}
+                        >
+                          <Box sx={styles.ticketLeft}>
+                            <Typography sx={styles.ticketLeftText}>
+                              残り
+                              <Typography
+                                component={'span'}
+                                sx={styles.ticketLeftNumber}
+                              >
+                                {selectedMenu?._id === parentMenuID
+                                  ? availableCount
+                                  : ticket?.numberOfTicket || 0}
+                              </Typography>
+                              回
                             </Typography>
-                            回
+                          </Box>
+                          <Typography sx={styles.text} pl={5}>
+                            使用する
                           </Typography>
-                        </Box>
-                        <Typography sx={styles.text} pl={5}>
-                          使用する
-                        </Typography>
-                        <NumberInput
-                          ref={numberOfTicketRef}
-                          sx={styles.numberInput}
-                          onClick={handleChangeTicket}
-                          required
-                          inputProps={{
-                            inputMode: 'numeric',
-                            pattern: '[1-9]*',
-                          }}
-                          value={ticket?.numberOfSelectedTicket || 1}
-                          min={1}
-                          max={
-                            ticket?.availableCount ||
-                            ticket?.numberOfTicket ||
-                            1
-                          }
-                        />
-                        <Typography sx={styles.text}>回</Typography>
-                      </Stack>
-                      <Button
-                        size="medium"
-                        color="primary"
-                        endIcon={<ArrowRight />}
-                        variant="contained"
-                        sx={styles.addTicketBtn}
-                        onClick={onAddTicket}
-                      >
-                        回数券購入へ進む
-                      </Button>
+                          <NumberInput
+                            ref={numberOfTicketRef}
+                            sx={styles.numberInput}
+                            onClick={handleChangeTicket}
+                            required
+                            inputProps={{
+                              inputMode: 'numeric',
+                              pattern: '[1-9]*',
+                            }}
+                            value={ticket?.numberOfSelectedTicket || 1}
+                            min={1}
+                            max={ticket?.numberOfTicket || 1}
+                          />
+                          <Typography sx={styles.text}>回</Typography>
+                        </Stack>
+                      )}
+                      {fetchStatus.indexOf('fetching') > 0 ? (
+                        <></>
+                      ) : (
+                        isShowAvailableCount && (
+                          <Button
+                            size="medium"
+                            color="primary"
+                            endIcon={<ArrowRight />}
+                            variant="contained"
+                            sx={styles.addTicketBtn}
+                            onClick={onAddTicket}
+                          >
+                            回数券購入へ進む
+                          </Button>
+                        )
+                      )}
                     </Stack>
                   ) : (
                     <></>

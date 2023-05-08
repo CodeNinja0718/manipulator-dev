@@ -11,7 +11,13 @@ const ticketQuery = {
   ) => ({
     staleTime: Infinity,
     apiUrl: `/coupon/customer/tickets/${manipulatorId}/menu/${menuId}`,
-    queryKey: ['manipulatorId', 'menuId', 'infor-ticket'],
+    queryKey: [
+      'manipulatorId',
+      'menuId',
+      'infor-ticket',
+      manipulatorId,
+      menuId,
+    ],
     enabled: !!manipulatorId && !!menuId && isTicket,
   }),
 };

@@ -1,7 +1,10 @@
 import ArrowRight from '@icons/arrow-right.svg';
 import { Box, Button, RadioGroup, Stack, Typography } from '@mui/material';
+import { useFetch } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type { ITicketOfMenu } from 'models/ticket/interface';
+import ticketQuery from 'models/ticket/query';
 import { useMemo, useState } from 'react';
 
 import DefaultMenu from './components/DefaultMenu';
@@ -70,6 +73,21 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
     return menus;
   }, [menus]);
 
+  const isTicket = !!selectedMenu?.[0]?.ticket;
+  const { data, fetchStatus } = useFetch<ITicketOfMenu>(
+    ticketQuery.getInfoOfTicket(
+      selectedMenu?.[0]?.createdById,
+      selectedMenu?.[0]?._id,
+      isTicket,
+    ),
+  );
+
+  const availableCount = data?.ticket?.availableCount ?? 0;
+  const isNotAvailableTicket =
+    availableCount === 0 &&
+    isTicket &&
+    selectedMenu?.[0]?.ticket?.id === menuId;
+
   return (
     <Stack sx={styles.bookingMenuWrapper}>
       <Typography color="secondary" fontSize={18} fontWeight="bold">
@@ -82,8 +100,16 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
               {menu.ticket !== null ? (
                 <TicketMenu
                   {...menu}
+                  parentMenuID={menu._id}
+                  isSelectedMenu={isTicket}
+                  selectedMenu={{
+                    ...data,
+                    _id: selectedMenu?.[0]?._id || null,
+                  }}
+                  availableCount={availableCount}
                   onAddTicket={onAddTicket}
                   onSelectedTicketOfMenu={handleSelectedTicketOfMenu}
+                  fetchStatus={fetchStatus}
                 />
               ) : (
                 <DefaultMenu {...menu} />
@@ -103,7 +129,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
         endIcon={<ArrowRight />}
         sx={styles.submitBtn}
         onClick={() => onSubmit({ menuId })}
-        disabled={isEmpty(selectedMenu)}
+        disabled={isNotAvailableTicket || isEmpty(selectedMenu)}
       >
         予約日時を選択する
       </Button>
