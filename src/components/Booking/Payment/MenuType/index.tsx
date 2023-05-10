@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import dayjs from 'dayjs';
 import isEmpty from 'lodash/isEmpty';
+import type { ICoupon } from 'models/discount/interface';
 import type { ITicket } from 'models/manipulator/interface';
 
 import styles from './styles';
@@ -22,12 +23,16 @@ interface IMenuType {
   selectedMenuType: string;
   onSetSelectedMenuType: (value: string) => void;
   ticketMenu: ITicket | any;
+  coupon?: ICoupon;
+  onSelectCoupon?: () => void;
 }
 
 const MenuType = ({
   selectedMenuType,
   onSetSelectedMenuType,
   ticketMenu,
+  coupon,
+  onSelectCoupon,
 }: IMenuType) => {
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -45,6 +50,13 @@ const MenuType = ({
   };
 
   const isHaveTicket = !isEmpty(ticketMenu?.ticket);
+
+  const handleSelectCoupon = () => {
+    onSetSelectedMenuType('coupon');
+    if (onSelectCoupon) {
+      onSelectCoupon();
+    }
+  };
 
   return (
     <Box sx={styles.wrapper}>
@@ -165,14 +177,19 @@ const MenuType = ({
             </Box>
           </Box>
           <Box sx={styles.couponBox}>
-            <LoadingButton
-              sx={styles.submitBtn}
-              fullWidth
-              variant="outlined"
-              endIcon={<ArrowRight />}
-            >
-              クーポン一覧を見る
-            </LoadingButton>
+            {coupon ? (
+              <></>
+            ) : (
+              <LoadingButton
+                sx={styles.submitBtn}
+                fullWidth
+                variant="outlined"
+                endIcon={<ArrowRight />}
+                onClick={handleSelectCoupon}
+              >
+                クーポン一覧を見る
+              </LoadingButton>
+            )}
           </Box>
         </Stack>
       </RadioGroup>

@@ -6,11 +6,13 @@ import { Radio, RadioGroup, Stack, Typography } from '@mui/material';
 import AddCardFields from 'components/Card/AddCardFields';
 import type { AddCardFormValues } from 'components/Card/AddCardFields/schema';
 import schema from 'components/Card/AddCardFields/schema';
-import { useFetch, useMutate, useUser } from 'hooks';
+import { useFetch, useList, useMutate, useUser } from 'hooks';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import type { ICardItem } from 'models/card/interface';
 import cardQuery from 'models/card/query';
+import type { ICoupon } from 'models/discount/interface';
+import discountQuery from 'models/discount/query';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
 import type { ITicketOfMenu, ITicketTime } from 'models/ticket/interface';
 import ticketQuery from 'models/ticket/query';
@@ -20,6 +22,7 @@ import { useForm } from 'react-hook-form';
 import { PAYMENT_MENU_TYPES, STEPPER_CONTENT } from 'utils/const';
 import Helper from 'utils/helpers';
 
+import CouponSelectModal from './CouponSelectModal';
 import DetailMenu from './DetailMenu';
 import MenuType from './MenuType';
 import styles from './styles';
@@ -52,9 +55,29 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     ...cardQuery.cardList,
     enabled: !!currentUser,
   });
+
+  const { list: privateCouponsList, isLoading: isPrivateCouponLoading } =
+    useList<ICoupon>({
+      ...discountQuery.getDiscounts({
+        type: 'Private',
+      }),
+    });
+
+  const { list: publicCouponsList, isLoading: isPublicCouponLoading } =
+    useList<ICoupon>({
+      ...discountQuery.getDiscounts({
+        type: 'Public',
+      }),
+    });
+
   const [payment, setPayment] = useState(cardList?.items[0]?.id);
   const [selectedMenuType, setSelectedMenuType] = useState(
     PAYMENT_MENU_TYPES.TICKET,
+  );
+
+  const [couponSelectVisible, setCouponSelectVisibility] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState<ICoupon | undefined>(
+    undefined,
   );
 
   const { mutateAsync: getCardToken, isLoading: isGettingToken } = useMutate<
@@ -78,6 +101,17 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
 
   const handleChangePayment = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPayment(event.target.value);
+  };
+
+  const onCouponSelect = (code: string) => {
+    const currentCoupon = [...privateCouponsList, ...publicCouponsList].find(
+      (item) => item.code === code,
+    );
+
+    if (currentCoupon) {
+      setSelectedCoupon(currentCoupon);
+    }
+    setCouponSelectVisibility(false);
   };
 
   const handleSubmit = async () => {
@@ -175,6 +209,8 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
           ticketMenu={currentTicketMenu}
           selectedMenuType={selectedMenuType}
           onSetSelectedMenuType={setSelectedMenuType}
+          onSelectCoupon={() => setCouponSelectVisibility(true)}
+          coupon={selectedCoupon}
         />
       ) : (
         <></>
@@ -276,6 +312,16 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
       >
         予約を確定する
       </LoadingButton>
+      <CouponSelectModal
+        visible={couponSelectVisible}
+        isLoading={isPrivateCouponLoading || isPublicCouponLoading}
+        privateCoupons={privateCouponsList}
+        publicCoupons={publicCouponsList}
+        onClose={() => {
+          setCouponSelectVisibility(false);
+        }}
+        onSubmit={onCouponSelect}
+      />
     </Stack>
   );
 };
