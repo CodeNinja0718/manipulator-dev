@@ -31,13 +31,16 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
   const endTimeDay = dayjs(bookingDetail?.endTime).tz();
 
   const numberOfSessions = bookingDetail?.ticket?.numberOfSelectedTicket || 1;
-  const bookingPrice = (bookingDetail?.menu?.price || 0) * numberOfSessions;
-  const totalPrice = bookingPrice - (bookingDetail?.coupon?.amount || 0);
+  const bookingPrice = bookingDetail?.ticket
+    ? bookingDetail.ticket.price
+    : bookingDetail?.menu?.price || 0;
+  const totalPrice =
+    bookingPrice * numberOfSessions - (bookingDetail?.coupon?.amount || 0);
 
   const renderTicketData = (() => {
-    const ticketValue = bookingDetail?.ticket
-      ? `${bookingDetail?.ticket?.numberOfSelectedTicket || 1}回使用`
-      : '-';
+    if (!bookingDetail?.ticket) {
+      return <></>;
+    }
 
     return (
       <Stack>
@@ -52,7 +55,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
             回数券
           </Typography>
           <Typography color={'black'} fontWeight="bold">
-            {ticketValue}
+            {`${bookingDetail?.ticket?.numberOfSelectedTicket || 1}回使用`}
           </Typography>
         </Stack>
       </Stack>
@@ -60,6 +63,10 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
   })();
 
   const renderCouponData = (() => {
+    if (!bookingDetail?.coupon) {
+      return <></>;
+    }
+
     return (
       <Stack>
         <Divider sx={{ my: 10 }} />
@@ -72,23 +79,17 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
           <Typography color="black" fontWeight="bold">
             クーポン
           </Typography>
-          {bookingDetail?.coupon ? (
-            <NumericFormat
-              value={bookingDetail?.coupon?.amount}
-              thousandSeparator=","
-              suffix="円"
-              displayType="text"
-              renderText={(value) => (
-                <Typography color="red" fontWeight="bold">
-                  {`- ${value}`}
-                </Typography>
-              )}
-            />
-          ) : (
-            <Typography color="red" fontWeight="bold">
-              -
-            </Typography>
-          )}
+          <NumericFormat
+            value={bookingDetail?.coupon?.amount}
+            thousandSeparator=","
+            suffix="円"
+            displayType="text"
+            renderText={(value) => (
+              <Typography color="red" fontWeight="bold">
+                {`- ${value}`}
+              </Typography>
+            )}
+          />
         </Stack>
       </Stack>
     );

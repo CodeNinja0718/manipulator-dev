@@ -250,8 +250,8 @@ const BookingPage = () => {
         ? { ...values, menuId: ticketMenu?._id, ticket: ticketMenu?.ticket }
         : { ...values };
       const data = ticketMenu?._id
-        ? { ...booking, ...currentValue, couponCode: '' }
-        : omit({ ...booking, ...currentValue, couponCode: '' }, 'ticket');
+        ? { ...booking, ...currentValue }
+        : omit({ ...booking, ...currentValue }, 'ticket');
       setBooking(data);
       handleChangeStep(STEPPER_CONTENT[1].value);
     }
