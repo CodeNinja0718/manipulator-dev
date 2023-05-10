@@ -32,46 +32,65 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
 
   const numberOfSessions = bookingDetail?.ticket?.numberOfSelectedTicket || 1;
   const bookingPrice = (bookingDetail?.menu?.price || 0) * numberOfSessions;
-  const totalPrice = bookingPrice;
+  const totalPrice = bookingPrice - (bookingDetail?.coupon?.amount || 0);
 
-  const renderCouponData = (() => {
-    if (!bookingDetail?.ticket) {
-      return <></>;
-    }
-
-    const couponInfomation = new Map<string, string>();
-    couponInfomation.set(
-      '回数券',
-      `${bookingDetail?.ticket?.numberOfSelectedTicket || 1}回使用`,
-    );
-    couponInfomation.set('クーポン', `-`);
+  const renderTicketData = (() => {
+    const ticketValue = bookingDetail?.ticket
+      ? `${bookingDetail?.ticket?.numberOfSelectedTicket || 1}回使用`
+      : '-';
 
     return (
-      <>
-        {Array.from(couponInfomation.keys()).map(
-          (item: string, idx: number) => (
-            <Stack key={item}>
-              <Divider sx={{ my: 10 }} />
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                flexWrap="wrap"
-              >
-                <Typography color="black" fontWeight="bold">
-                  {item}
+      <Stack>
+        <Divider sx={{ my: 10 }} />
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+        >
+          <Typography color="black" fontWeight="bold">
+            回数券
+          </Typography>
+          <Typography color={'black'} fontWeight="bold">
+            {ticketValue}
+          </Typography>
+        </Stack>
+      </Stack>
+    );
+  })();
+
+  const renderCouponData = (() => {
+    return (
+      <Stack>
+        <Divider sx={{ my: 10 }} />
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+        >
+          <Typography color="black" fontWeight="bold">
+            クーポン
+          </Typography>
+          {bookingDetail?.coupon ? (
+            <NumericFormat
+              value={bookingDetail?.coupon?.amount}
+              thousandSeparator=","
+              suffix="円"
+              displayType="text"
+              renderText={(value) => (
+                <Typography color="red" fontWeight="bold">
+                  {`- ${value}`}
                 </Typography>
-                <Typography
-                  color={idx === 1 ? 'red' : 'black'}
-                  fontWeight="bold"
-                >
-                  {couponInfomation.get(item)}
-                </Typography>
-              </Stack>
-            </Stack>
-          ),
-        )}
-      </>
+              )}
+            />
+          ) : (
+            <Typography color="red" fontWeight="bold">
+              -
+            </Typography>
+          )}
+        </Stack>
+      </Stack>
     );
   })();
 
@@ -142,6 +161,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
               />
             </Stack>
             {/* Render Coupon Infomations */}
+            {renderTicketData}
             {renderCouponData}
             <Divider sx={{ my: 10 }} />
             <Stack
