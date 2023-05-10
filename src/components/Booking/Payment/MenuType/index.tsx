@@ -17,6 +17,7 @@ import isEmpty from 'lodash/isEmpty';
 import type { ICoupon } from 'models/discount/interface';
 import type { ITicket } from 'models/manipulator/interface';
 
+import CouponPreview from './CouponPreview';
 import styles from './styles';
 
 interface IMenuType {
@@ -175,20 +176,42 @@ const MenuType = ({
                 クーポン
               </Typography>
             </Box>
+            {!!coupon && (
+              <Box>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  sx={styles.button}
+                  startIcon={
+                    <SvgIcon component={IconReloadSvg} inheritViewBox />
+                  }
+                  onClick={handleSelectCoupon}
+                >
+                  <span>変更する</span>
+                </Button>
+              </Box>
+            )}
           </Box>
           <Box sx={styles.couponBox}>
             {coupon ? (
-              <></>
+              <CouponPreview data={coupon} />
             ) : (
-              <LoadingButton
-                sx={styles.submitBtn}
-                fullWidth
-                variant="outlined"
-                endIcon={<ArrowRight />}
-                onClick={handleSelectCoupon}
+              <Stack
+                display={'flex'}
+                flexDirection={'column'}
+                alignItems={'center'}
+                sx={{ width: '100%' }}
               >
-                クーポン一覧を見る
-              </LoadingButton>
+                <LoadingButton
+                  sx={styles.submitBtn}
+                  fullWidth
+                  variant="outlined"
+                  endIcon={<ArrowRight />}
+                  onClick={handleSelectCoupon}
+                >
+                  クーポン一覧を見る
+                </LoadingButton>
+              </Stack>
             )}
           </Box>
         </Stack>

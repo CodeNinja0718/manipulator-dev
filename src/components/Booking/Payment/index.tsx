@@ -315,6 +315,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
       <CouponSelectModal
         visible={couponSelectVisible}
         isLoading={isPrivateCouponLoading || isPublicCouponLoading}
+        currentSelectedCouponCode={selectedCoupon?.code}
         privateCoupons={privateCouponsList}
         publicCoupons={publicCouponsList}
         onClose={() => {
