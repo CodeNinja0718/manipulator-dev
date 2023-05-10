@@ -17,10 +17,16 @@ interface ReservationCardProps {
 const ReservationCard = ({ data }: ReservationCardProps) => {
   const startTimeDay = dayjs(data?.startTime).tz();
   const endTimeDay = dayjs(data?.endTime).tz();
-  const menuInfo =
-    data.status === ReservationStatus.DONE
-      ? data.result.menuInfo
-      : data.plan.menuInfo;
+  const bookingInfo =
+    data.status === ReservationStatus.DONE ? data.result : data.plan;
+  const { menuInfo } = bookingInfo;
+
+  const totalCash = (() => {
+    if (data.couponDiscount) {
+      return bookingInfo.amount;
+    }
+    return bookingInfo.totalAmount;
+  })();
 
   const renderActions = () => {
     if (data.status === ReservationStatus.PAID_CANCELED) {
@@ -116,6 +122,51 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
               )}
             />
           </Stack>
+
+          {!!data.ticketUsed && (
+            <>
+              <Divider sx={{ my: 10 }} />
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
+                <Typography color="black" fontWeight="bold">
+                  回数券
+                </Typography>
+                <Typography color="black">
+                  {data.ticketUsed ? `${data.ticketUsed}回使用` : '-'}
+                </Typography>
+              </Stack>
+            </>
+          )}
+
+          {!!data.couponDiscount && (
+            <>
+              <Divider sx={{ my: 10 }} />
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
+                <Typography color="black" fontWeight="bold">
+                  クーポン
+                </Typography>
+                <NumericFormat
+                  value={data.couponDiscount}
+                  thousandSeparator=","
+                  suffix="円"
+                  displayType="text"
+                  renderText={(value) => (
+                    <Typography color="red">{`- ${value}`}</Typography>
+                  )}
+                />
+              </Stack>
+            </>
+          )}
+
           {data.status !== ReservationStatus.FREE_CANCELED && (
             <>
               <Divider sx={{ my: 10 }} />
@@ -130,7 +181,7 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
                   お支払い金額予定
                 </Typography>
                 <NumericFormat
-                  value={menuInfo.price}
+                  value={totalCash}
                   thousandSeparator=","
                   displayType="text"
                   renderText={(value) => (

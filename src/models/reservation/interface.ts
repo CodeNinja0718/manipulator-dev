@@ -60,4 +60,6 @@ export interface IReservationItem {
   };
   plan: IReservationPlan;
   result: IReservationPlan;
+  ticketUsed: number;
+  couponDiscount: number;
 }
