@@ -46,7 +46,7 @@ const styles: Record<string, SxProps> = {
   },
   couponBox: {
     display: 'flex',
-    justifyContent: 'center',
+    py: 8,
   },
   button: {
     display: 'flex',
@@ -74,6 +74,27 @@ const styles: Record<string, SxProps> = {
     fontWeight: 'bold',
     px: 18,
     backgroundColor: 'white',
+  },
+  couponContainer: {
+    width: '100%',
+  },
+  couponTitle: {
+    py: 12,
+    px: 22,
+    borderTopLeftRadius: 20,
+    bgcolor: 'secondary.main',
+    width: '100%',
+  },
+  couponExpiredDate: {
+    py: 8,
+    px: 22,
+    borderBottom: '1px solid silver',
+    width: '100%',
+  },
+  couponDescription: {
+    px: 22,
+    py: 12,
+    width: '100%',
   },
 };
 

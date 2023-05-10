@@ -21,6 +21,7 @@ import TabContent from './TabContent';
 interface CouponSelectModalProps {
   visible: boolean;
   isLoading?: boolean;
+  currentSelectedCouponCode?: string;
   privateCoupons?: ICoupon[];
   publicCoupons?: ICoupon[];
   onClose: () => void;
@@ -30,13 +31,14 @@ interface CouponSelectModalProps {
 const CouponSelectModal = ({
   visible,
   isLoading,
+  currentSelectedCouponCode = '',
   privateCoupons = [],
   publicCoupons = [],
   onClose,
   onSubmit,
 }: CouponSelectModalProps) => {
   const [tabIndex, setTabIndex] = useState(0);
-  const [selectedCode, setSelectedCode] = useState<string>('');
+  const [selectedCode, setSelectedCode] = useState(currentSelectedCouponCode);
 
   const renderTabContent = (type: 'private' | 'public' = 'private') => {
     if (type === 'public') {
