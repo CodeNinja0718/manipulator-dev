@@ -1,3 +1,5 @@
+import type { ICoupon } from 'models/discount/interface';
+
 interface ITicket {
   expiryMonth: number;
   id: string;
@@ -13,7 +15,7 @@ export interface CreateReservationPayload {
   paymentMethod?: string;
   ticket?: ITicket;
   selectedMenuType?: string;
-  couponCode?: string;
+  coupon?: ICoupon;
 }
 
 export enum ReservationStatus {

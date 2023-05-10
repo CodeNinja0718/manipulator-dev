@@ -173,18 +173,22 @@ const BookingPage = () => {
 
   const handleSubmitStep = (values: CreateReservationPayload) => {
     if (step === STEPPER_CONTENT[2].value && values.paymentMethod) {
-      let params = omit(booking, 'ticket');
-      const ticketParams = isEmpty(booking?.ticket)
-        ? {}
-        : {
-            ticketId: booking?.ticket?.id,
-            ticketUse: booking?.ticket?.numberOfSelectedTicket,
-          };
-      const couponParams = isEmpty(values?.selectedMenuType)
-        ? {}
-        : {
-            couponCode: booking?.couponCode,
-          };
+      let params = omit(booking, 'ticket', 'couponCode');
+      const ticketParams =
+        !isEmpty(booking?.ticket) &&
+        values.selectedMenuType === PAYMENT_MENU_TYPES.TICKET
+          ? {
+              ticketId: booking?.ticket?.id,
+              ticketUse: booking?.ticket?.numberOfSelectedTicket,
+            }
+          : {};
+      const couponParams =
+        !isEmpty(values?.coupon) &&
+        values.selectedMenuType === PAYMENT_MENU_TYPES.COUPON
+          ? {
+              couponCode: values.coupon.code,
+            }
+          : {};
 
       params = {
         ...params,
@@ -194,25 +198,21 @@ const BookingPage = () => {
         paymentMethod: values.paymentMethod,
       };
 
-      createReservation(
-        {
-          ...omit(
-            params,
-            PAYMENT_MENU_TYPES.TICKET === values?.selectedMenuType
-              ? ['couponCode']
-              : ['ticketId', 'ticketUse'],
-          ),
+      createReservation(params, {
+        onSuccess: () => {
+          setOverviewBooking({
+            ...omit(
+              booking,
+              values.selectedMenuType !== PAYMENT_MENU_TYPES.TICKET
+                ? ['ticket']
+                : [],
+            ),
+            menu: selectedMenu,
+            coupon: values.coupon,
+          });
+          setBooking({});
         },
-        {
-          onSuccess: () => {
-            setOverviewBooking({
-              ...booking,
-              menu: selectedMenu,
-            });
-            setBooking({});
-          },
-        },
-      );
+      });
     }
     if (
       step === STEPPER_CONTENT[1].value &&

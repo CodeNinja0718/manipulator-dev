@@ -34,7 +34,6 @@ interface BookingPaymentProps {
   handleChangeStep: (step: string) => void;
   onSubmit: (values: Record<string, unknown>) => void;
   ticketMenu: ITicket | any;
-  couponCode?: string;
   ticketTimeList: ITicketTime[];
 }
 
@@ -45,7 +44,6 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   handleChangeStep,
   onSubmit,
   ticketMenu,
-  couponCode,
   ticketTimeList,
 }) => {
   const { data: currentUser, isFetching } = useUser();
@@ -136,6 +134,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     } else {
       onSubmit({
         paymentMethod: payment,
+        coupon: selectedCoupon,
         selectedMenuType,
       });
     }
@@ -305,7 +304,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
           (isEmpty(cardList?.items) && !isValid) ||
           (!isEmpty(cardList?.items) && !payment) ||
           (selectedMenuType === PAYMENT_MENU_TYPES.COUPON &&
-            isEmpty(couponCode))
+            isEmpty(selectedCoupon))
         }
         loading={isGettingToken || isAddingCard}
         onClick={handleSubmit}
