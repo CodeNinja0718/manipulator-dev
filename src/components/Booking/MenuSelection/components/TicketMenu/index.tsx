@@ -1,5 +1,12 @@
 import ArrowRight from '@icons/arrow-right.svg';
-import { Box, Button, Radio, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Radio,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { NumberInput } from 'components/NumberInput';
 import head from 'lodash/head';
 import isEmpty from 'lodash/isEmpty';
@@ -124,7 +131,8 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                 alignItems="flex-start"
                 sx={{
                   py: 11,
-                  borderTop: isTicket(item) ? '2px dashed #cccccc' : '',
+                  borderTop:
+                    isTicket(item) && price ? '2px dashed #cccccc' : '',
                 }}
               >
                 <Stack
@@ -191,22 +199,25 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                           <Typography sx={styles.text}>回</Typography>
                         </Stack>
                       )}
-                      {fetchStatus.indexOf('fetching') > 0 ? (
-                        <></>
-                      ) : (
-                        isShowAvailableCount && (
-                          <Button
-                            size="medium"
-                            color="primary"
-                            endIcon={<ArrowRight />}
-                            variant="contained"
-                            sx={styles.addTicketBtn}
-                            onClick={onAddTicket}
-                          >
-                            回数券購入へ進む
-                          </Button>
-                        )
-                      )}
+                      {fetchStatus.indexOf('fetching') > -1
+                        ? selectedMenu?._id === parentMenuID && (
+                            <CircularProgress
+                              size="small"
+                              sx={styles.loading}
+                            />
+                          )
+                        : isShowAvailableCount && (
+                            <Button
+                              size="medium"
+                              color="primary"
+                              endIcon={<ArrowRight />}
+                              variant="contained"
+                              sx={styles.addTicketBtn}
+                              onClick={onAddTicket}
+                            >
+                              回数券購入へ進む
+                            </Button>
+                          )}
                     </Stack>
                   ) : (
                     <></>

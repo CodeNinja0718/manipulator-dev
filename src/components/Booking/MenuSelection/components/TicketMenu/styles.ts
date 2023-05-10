@@ -1,6 +1,6 @@
-import type { SxProps } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
 
-const styles: Record<string, SxProps> = {
+const styles = {
   addTicketBtn: {
     mt: 20,
     fontWeight: 'bold',
@@ -54,6 +54,11 @@ const styles: Record<string, SxProps> = {
       cursor: 'not-allowed',
     },
   },
-};
+  loading: {
+    width: 40,
+    height: 40,
+    color: (theme: Theme) => theme.palette.orangeBold,
+  },
+} as Record<string, SxProps<Theme>>;
 
 export default styles;

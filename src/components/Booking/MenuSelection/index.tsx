@@ -69,11 +69,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
     handleChangeMenu(e.target.value);
   };
 
-  const menuList = useMemo(() => {
-    return menus;
-  }, [menus]);
-
-  const isTicket = !!selectedMenu?.[0]?.ticket;
+  const isTicket = !isEmpty(selectedMenu?.[0]?.ticket);
   const { data, fetchStatus } = useFetch<ITicketOfMenu>(
     ticketQuery.getInfoOfTicket(
       selectedMenu?.[0]?.createdById,
@@ -81,6 +77,10 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
       isTicket,
     ),
   );
+
+  const menuList = useMemo(() => {
+    return menus;
+  }, [menus]);
 
   const availableCount = data?.ticket?.availableCount ?? 0;
   const isNotAvailableTicket =
