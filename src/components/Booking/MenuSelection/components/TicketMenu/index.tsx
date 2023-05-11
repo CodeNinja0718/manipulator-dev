@@ -194,7 +194,11 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                             }}
                             value={ticket?.numberOfSelectedTicket || 1}
                             min={1}
-                            max={ticket?.numberOfTicket || 1}
+                            max={
+                              selectedMenu?._id === parentMenuID
+                                ? availableCount
+                                : ticket?.numberOfTicket || 1
+                            }
                           />
                           <Typography sx={styles.text}>回</Typography>
                         </Stack>
