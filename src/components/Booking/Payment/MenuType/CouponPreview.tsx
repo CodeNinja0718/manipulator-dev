@@ -1,3 +1,4 @@
+import TrashBoxSvg from '@icons/icon_trashbox.svg';
 import { Box, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import type { ICoupon } from 'models/discount/interface';
@@ -8,10 +9,17 @@ import styles from './styles';
 
 interface CouponPreviewProps {
   data: ICoupon;
+  onSetCouponSelect: (code: string | any) => void;
 }
 
-const CouponPreview = ({ data }: CouponPreviewProps) => {
+const CouponPreview = ({ data, onSetCouponSelect }: CouponPreviewProps) => {
   const expiredDate = dayjs(data.expiredAt).format(DateFormat.YEAR_MONTH_DATE);
+
+  const handleUnSelectedCoupon = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    onSetCouponSelect(undefined);
+  };
+
   return (
     <Stack
       display={'flex'}
@@ -24,6 +32,10 @@ const CouponPreview = ({ data }: CouponPreviewProps) => {
       <Box sx={styles.couponTitle}>
         <Typography fontSize={16} fontWeight={'bold'} color={'white'}>
           {data.title}
+        </Typography>
+        <Typography onClick={handleUnSelectedCoupon} sx={styles.removeCoupon}>
+          <TrashBoxSvg />
+          削除
         </Typography>
       </Box>
       <Box sx={styles.couponExpiredDate}>

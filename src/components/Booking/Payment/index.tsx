@@ -25,6 +25,7 @@ import Helper from 'utils/helpers';
 import CouponSelectModal from './CouponSelectModal';
 import DetailMenu from './DetailMenu';
 import MenuType from './MenuType';
+import CouponType from './MenuType/CouponType';
 import styles from './styles';
 
 interface BookingPaymentProps {
@@ -69,9 +70,9 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     });
 
   const [payment, setPayment] = useState(cardList?.items[0]?.id);
-  const [selectedMenuType, setSelectedMenuType] = useState(
-    PAYMENT_MENU_TYPES.TICKET,
-  );
+  const selectedMenuType = ticketMenu?.ticket?.numberOfSelectedTicket
+    ? PAYMENT_MENU_TYPES.TICKET
+    : PAYMENT_MENU_TYPES.COUPON;
 
   const [couponSelectVisible, setCouponSelectVisibility] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState<ICoupon | undefined>(
@@ -203,16 +204,14 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         ※料金はメニュー変更・オプション追加によって変動する場合があります。
       </Typography>
 
-      {!isEmpty(currentTicketMenu) ? (
-        <MenuType
-          ticketMenu={currentTicketMenu}
-          selectedMenuType={selectedMenuType}
-          onSetSelectedMenuType={setSelectedMenuType}
-          onSelectCoupon={() => setCouponSelectVisibility(true)}
-          coupon={selectedCoupon}
-        />
+      {selectedMenuType === PAYMENT_MENU_TYPES.TICKET ? (
+        <MenuType ticketMenu={currentTicketMenu} />
       ) : (
-        <></>
+        <CouponType
+          onSelectCoupon={setCouponSelectVisibility}
+          coupon={selectedCoupon}
+          onSetCouponSelect={setSelectedCoupon}
+        />
       )}
 
       <Stack sx={styles.selectPaymentWrapper}>
@@ -302,26 +301,26 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         sx={styles.submitBtn}
         disabled={
           (isEmpty(cardList?.items) && !isValid) ||
-          (!isEmpty(cardList?.items) && !payment) ||
-          (selectedMenuType === PAYMENT_MENU_TYPES.COUPON &&
-            isEmpty(selectedCoupon))
+          (!isEmpty(cardList?.items) && !payment)
         }
         loading={isGettingToken || isAddingCard}
         onClick={handleSubmit}
       >
         予約を確定する
       </LoadingButton>
-      <CouponSelectModal
-        visible={couponSelectVisible}
-        isLoading={isPrivateCouponLoading || isPublicCouponLoading}
-        currentSelectedCouponCode={selectedCoupon?.code}
-        privateCoupons={privateCouponsList}
-        publicCoupons={publicCouponsList}
-        onClose={() => {
-          setCouponSelectVisibility(false);
-        }}
-        onSubmit={onCouponSelect}
-      />
+      {couponSelectVisible && (
+        <CouponSelectModal
+          visible={couponSelectVisible}
+          isLoading={isPrivateCouponLoading || isPublicCouponLoading}
+          currentSelectedCouponCode={selectedCoupon?.code}
+          privateCoupons={privateCouponsList}
+          publicCoupons={publicCouponsList}
+          onClose={() => {
+            setCouponSelectVisibility(false);
+          }}
+          onSubmit={onCouponSelect}
+        />
+      )}
     </Stack>
   );
 };
