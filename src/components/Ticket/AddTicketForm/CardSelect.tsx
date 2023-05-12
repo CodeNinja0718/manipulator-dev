@@ -16,13 +16,18 @@ import isEmpty from 'lodash/isEmpty';
 import type { ICardItem } from 'models/card/interface';
 import cardQuery from 'models/card/query';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Helper from 'utils/helpers';
 
 import styles from './styles';
 
-const CardSelect = () => {
+interface CardSelectProps {
+  payment: string | undefined;
+  setPayment: (payment: string | undefined) => void;
+}
+
+const CardSelect = ({ payment, setPayment }: CardSelectProps) => {
   const { data: currentUser } = useUser();
 
   const { data: cardList, isLoading: isLoadingCard } = useFetch<{
@@ -31,7 +36,6 @@ const CardSelect = () => {
     ...cardQuery.cardList,
     enabled: !!currentUser,
   });
-  const [payment, setPayment] = useState<string | undefined>(undefined);
 
   const { control } = useForm<AddCardFormValues>({
     resolver: yupResolver(schema),
@@ -42,7 +46,7 @@ const CardSelect = () => {
     if (!isEmpty(cardList?.items)) {
       setPayment(cardList?.items[0]?.id);
     }
-  }, [cardList?.items]);
+  }, [cardList?.items, setPayment]);
 
   const handleChangePayment = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPayment(event.target.value);
