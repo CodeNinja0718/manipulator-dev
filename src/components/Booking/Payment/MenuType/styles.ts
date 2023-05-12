@@ -79,11 +79,14 @@ const styles: Record<string, SxProps> = {
     width: '100%',
   },
   couponTitle: {
+    display: 'flex',
     py: 12,
     px: 22,
     borderTopLeftRadius: 20,
     bgcolor: 'secondary.main',
     width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   couponExpiredDate: {
     py: 8,
@@ -95,6 +98,20 @@ const styles: Record<string, SxProps> = {
     px: 22,
     py: 12,
     width: '100%',
+  },
+  removeCoupon: {
+    fontSize: 14,
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+    svg: {
+      color: 'white',
+    },
   },
 };
 
