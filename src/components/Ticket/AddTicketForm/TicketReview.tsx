@@ -1,8 +1,28 @@
 import IconTicket from '@icons/icon_ticket.svg';
 import { Box, Divider, Stack, SvgIcon, Typography } from '@mui/material';
+import dayjs from 'dayjs';
+import type { IManipulator } from 'models/manipulator/interface';
+import type { IAvailableTicket } from 'models/ticket/interface';
 import React from 'react';
+import { DateFormat } from 'utils/const';
+import Helper from 'utils/helpers';
 
-const TicketReview = () => {
+interface TicketReviewProps {
+  ticketData: IAvailableTicket | undefined;
+  manipulator: Partial<IManipulator>;
+}
+
+const TicketReview = ({ ticketData: data, manipulator }: TicketReviewProps) => {
+  if (!data) {
+    return null;
+  }
+
+  const estimatedExpiredDate = dayjs()
+    .add(data.expiryMonth, 'month')
+    .format(DateFormat.YEAR_MONTH_DATE);
+
+  const totalPrice = (data.ticketPrice || 0) * (data.numberOfTickets || 1);
+
   return (
     <Stack
       mt={48}
@@ -39,13 +59,13 @@ const TicketReview = () => {
         flexDirection={'column'}
       >
         <Typography fontSize={14} fontWeight={'bold'} mb={8}>
-          整体師太郎 / 快適整体院
+          {`${manipulator?.nameKana || ''} / ${data.salonNameKana}`}
         </Typography>
         <Typography fontSize={14} fontWeight={'bold'} mb={12}>
-          整体10回コース（目安時間：30分）
+          {`${data.ticketName}（目安時間：${data.estimatedTime}分）`}
         </Typography>
         <Typography fontSize={16} fontWeight={'bold'} mb={20} color={'red'}>
-          有効期限：2023/6/30
+          有効期限：{estimatedExpiredDate}
         </Typography>
         <Divider />
         <Box
@@ -60,7 +80,7 @@ const TicketReview = () => {
             金額
           </Typography>
           <Typography fontSize={26} fontWeight={'bold'}>
-            50,000
+            {Helper.addComma(totalPrice)}
             <Typography component={'span'} fontSize={16}>
               円
             </Typography>

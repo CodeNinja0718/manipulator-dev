@@ -17,6 +17,19 @@ export interface ITicketItem {
   };
 }
 
+export interface IAvailableTicket {
+  ticketId: string;
+  ticketName: string;
+  ticketPrice: number;
+  expiryMonth: number;
+  numberOfTickets: number;
+  menuId: string;
+  estimatedTime: number;
+  status: string;
+  salonName: string;
+  salonNameKana: string;
+}
+
 export interface ITicketOfMenu {
   ticket: {
     id: number;

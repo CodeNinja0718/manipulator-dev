@@ -257,9 +257,13 @@ const BookingPage = () => {
     }
   };
 
-  const handleAddTicket = () => {
+  const handleAddTicket = (ticketId: string) => {
     router.push({
       pathname: '/booking/add-ticket',
+      query: {
+        slug: [manipulatorId, ticketId],
+        href: router.pathname,
+      },
     });
   };
 
