@@ -16,7 +16,7 @@ interface BookingMenuSelectionProps {
   menus: IReservationMenu[];
   onSubmit: (values: Record<string, unknown>) => void;
   onSetTicketMenu: (values: ITicket | any) => void;
-  onAddTicket: () => void;
+  onAddTicket: (ticketId: string) => void;
 }
 
 const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
@@ -107,7 +107,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
                     _id: selectedMenu?.[0]?._id || null,
                   }}
                   availableCount={availableCount}
-                  onAddTicket={onAddTicket}
+                  onAddTicket={() => onAddTicket(menu?.ticket?.id || '')}
                   onSelectedTicketOfMenu={handleSelectedTicketOfMenu}
                   fetchStatus={fetchStatus}
                 />

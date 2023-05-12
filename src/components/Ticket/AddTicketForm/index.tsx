@@ -1,46 +1,97 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowRight from '@icons/arrow-right.svg';
 import { LoadingButton } from '@mui/lab';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, CircularProgress, Stack, Typography } from '@mui/material';
 import { Select } from 'components/Form';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import type { IManipulator } from 'models/manipulator/interface';
+import type { IAvailableTicket } from 'models/ticket/interface';
+import React, { useMemo, useState } from 'react';
+import type { Control, FieldValues } from 'react-hook-form';
+import { useWatch } from 'react-hook-form';
 
 import CardSelect from './CardSelect';
 import styles from './styles';
 import TicketReview from './TicketReview';
 
-const COUPONS = [
-  { id: 1, name: '整体10回コース（目安時間：30分）' },
-  { id: 2, name: '整体10回コース（目安時間：29分）' },
-  { id: 3, name: '整体10回コース（目安時間：28分）' },
-];
+interface ITicketSelectItem extends IAvailableTicket {
+  id: string;
+  name: string;
+}
 
-const schema = yup.object().shape({
-  couponId: yup.string().required(),
-});
+interface AddTicketFormProps {
+  control: Control<FieldValues, any>;
+  ticketsList: IAvailableTicket[];
+  manipulator: Partial<IManipulator>;
+  isLoading?: boolean;
+  onSubmit: (payment: string) => void;
+}
 
-const AddTicketForm = () => {
-  const { control } = useForm({
-    resolver: yupResolver(schema),
+const AddTicketForm = ({
+  control,
+  ticketsList,
+  manipulator,
+  isLoading,
+  onSubmit,
+}: AddTicketFormProps) => {
+  const [payment, setPayment] = useState<string | undefined>(undefined);
+
+  const selectedTicketId = useWatch({
+    control,
+    name: 'ticketId',
+    defaultValue: '',
   });
+
+  const selectedTicket = useMemo(
+    () => ticketsList.find((t) => t.ticketId === selectedTicketId),
+    [selectedTicketId, ticketsList],
+  );
+
+  const dataList: ITicketSelectItem[] = useMemo(
+    () =>
+      ticketsList.map((item) => ({
+        ...item,
+        id: item.ticketId,
+        name: `${item.ticketName} (目安時間：${item.estimatedTime}分)`,
+      })),
+    [ticketsList],
+  );
+
+  const handleSubmit = () => {
+    if (!payment) {
+      return;
+    }
+
+    onSubmit(payment);
+  };
+
+  if (isLoading) {
+    return (
+      <Stack
+        display={'flex'}
+        alignSelf={'stretch'}
+        alignItems={'center'}
+        justifyContent={'center'}
+      >
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
   return (
     <Stack sx={styles.couponFormContainer} pt={60} display={'flex'}>
       <Select
         label="メニューを選択してください"
         placeholder="メニューを選択してください"
-        name="couponId"
+        name="ticketId"
         control={control}
-        data={COUPONS}
+        data={dataList}
         required
       />
       <Typography fontSize={14} fontWeight={'bold'}>
         ※補足テキスト欄（不要であれば削除）
       </Typography>
 
-      <TicketReview />
-      <CardSelect />
+      <TicketReview ticketData={selectedTicket} manipulator={manipulator} />
+      <CardSelect payment={payment} setPayment={setPayment} />
 
       <Box display={'flex'} justifyContent={'center'} mt={32}>
         <LoadingButton
@@ -51,6 +102,7 @@ const AddTicketForm = () => {
           endIcon={<ArrowRight />}
           loadingPosition="end"
           sx={styles.submitBtn}
+          onClick={handleSubmit}
         >
           回数券を購入する
         </LoadingButton>
