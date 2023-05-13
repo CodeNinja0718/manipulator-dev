@@ -10,6 +10,7 @@ import {
 import { NumberInput } from 'components/NumberInput';
 import head from 'lodash/head';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import type { IReservationMenu } from 'models/manipulator/interface';
 import React, { useMemo, useRef } from 'react';
 import { NumericFormat } from 'react-number-format';
@@ -81,14 +82,16 @@ const TicketMenu: React.FC<IMenuSelection> = ({
     if (numberOfTicketRef?.current) {
       const children: any = numberOfTicketRef?.current?.firstChild;
       const numberOfSelectedTicket: number | any = children?.value || 1;
-      const numberOfSelectedTicketData = isHaveTicket
-        ? {
-            numberOfSelectedTicket: Number(numberOfSelectedTicket),
-          }
-        : {};
-      onSelectedTicketOfMenu({
+      const numberOfSelectedTicketData = {
+        numberOfSelectedTicket: Number(numberOfSelectedTicket),
+      };
+      const data = {
         ...ticket,
         ...numberOfSelectedTicketData,
+      };
+
+      onSelectedTicketOfMenu({
+        ...(isHaveTicket ? data : omit(data, ['numberOfSelectedTicket'])),
       });
     }
   };
@@ -156,8 +159,10 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                   </Box>
                   {isTicket(item) ? (
                     <Stack direction={'column'} alignItems={'flex-start'}>
-                      {selectedMenu?._id === parentMenuID &&
-                      availableCount === 0 ? (
+                      {(fetchStatus.indexOf('fetching') > -1 &&
+                        selectedMenu?._id === parentMenuID) ||
+                      (selectedMenu?._id === parentMenuID &&
+                        availableCount === 0) ? (
                         <></>
                       ) : (
                         <Stack
