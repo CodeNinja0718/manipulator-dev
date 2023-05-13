@@ -102,23 +102,9 @@ const BookingPage = () => {
 
   // Manipulator Menu List
   const manipulatorMenuList = useMemo(() => {
-    let result = manipulatorMenus?.docs || [];
-
-    if (!isEmpty(result)) {
-      result = result.map((item) => {
-        return {
-          ...item,
-          ticket:
-            booking?.menuId === item?._id
-              ? {
-                  ...booking?.ticket,
-                }
-              : item?.ticket,
-        };
-      });
-    }
+    const result = manipulatorMenus?.docs || [];
     return result;
-  }, [booking, manipulatorMenus?.docs]);
+  }, [manipulatorMenus?.docs]);
 
   const selectedMenu = manipulatorMenuList?.find(
     (menu) => menu._id === booking.menuId,
@@ -249,9 +235,14 @@ const BookingPage = () => {
       const currentValue = ticketMenu?._id
         ? { ...values, menuId: ticketMenu?._id, ticket: ticketMenu?.ticket }
         : { ...values };
-      const data = ticketMenu?._id
+      let data = ticketMenu?._id
         ? { ...booking, ...currentValue }
         : omit({ ...booking, ...currentValue }, 'ticket');
+
+      data = ticketMenu?.ticket?.numberOfSelectedTicket
+        ? data
+        : omit(data, ['ticket']);
+
       setBooking(data);
       handleChangeStep(STEPPER_CONTENT[1].value);
     }
@@ -299,7 +290,11 @@ const BookingPage = () => {
     }
     return (
       <BookingMenuSelection
-        initialMenu={ticketMenu?.ticket?.id || booking?.menuId || ''}
+        initialMenu={
+          ticketMenu?.ticket?.numberOfSelectedTicket
+            ? ticketMenu?.ticket?.id
+            : ticketMenu?._id || ''
+        }
         menus={manipulatorMenuList || []}
         onSubmit={handleSubmitStep}
         onSetTicketMenu={setTicketMenu}

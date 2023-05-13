@@ -2,6 +2,7 @@ import ArrowRight from '@icons/arrow-right.svg';
 import { Box, Button, RadioGroup, Stack, Typography } from '@mui/material';
 import { useFetch } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
 import type { ITicketOfMenu } from 'models/ticket/interface';
 import ticketQuery from 'models/ticket/query';
@@ -50,7 +51,11 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
                   ...currentTicketMenu?.ticket,
                   numberOfSelectedTicket,
                 }
-              : { ...currentTicketMenu?.ticket },
+              : {
+                  ...omit({ ...currentTicketMenu?.ticket }, [
+                    'numberOfSelectedTicket',
+                  ]),
+                },
           },
     );
 
