@@ -34,8 +34,9 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
   const bookingPrice = bookingDetail?.ticket
     ? bookingDetail.ticket.price
     : bookingDetail?.menu?.price || 0;
-  const totalPrice =
-    bookingPrice * numberOfSessions - (bookingDetail?.coupon?.amount || 0);
+  const totalPrice = bookingDetail?.ticket
+    ? 0
+    : bookingPrice * numberOfSessions - (bookingDetail?.coupon?.amount || 0);
 
   const renderTicketData = (() => {
     if (!bookingDetail?.ticket) {

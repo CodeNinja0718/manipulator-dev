@@ -21,13 +21,6 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
     data.status === ReservationStatus.DONE ? data.result : data.plan;
   const { menuInfo } = bookingInfo;
 
-  const totalCash = (() => {
-    if (data.couponDiscount) {
-      return bookingInfo.amount;
-    }
-    return bookingInfo.totalAmount;
-  })();
-
   const renderActions = () => {
     if (data.status === ReservationStatus.PAID_CANCELED) {
       return (
@@ -113,7 +106,7 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
               {menuInfo.name} {menuInfo.estimatedTime}分
             </Typography>
             <NumericFormat
-              value={menuInfo.price}
+              value={bookingInfo.originalPrice}
               thousandSeparator=","
               suffix="円"
               displayType="text"
@@ -155,7 +148,7 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
                   クーポン
                 </Typography>
                 <NumericFormat
-                  value={data.couponDiscount}
+                  value={bookingInfo.discountAmount}
                   thousandSeparator=","
                   suffix="円"
                   displayType="text"
@@ -181,7 +174,7 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
                   お支払い金額予定
                 </Typography>
                 <NumericFormat
-                  value={totalCash}
+                  value={bookingInfo.finalPrice}
                   thousandSeparator=","
                   displayType="text"
                   renderText={(value) => (

@@ -26,9 +26,9 @@ export enum ReservationStatus {
 }
 
 export interface IReservationPlan {
-  amount: number;
+  originalPrice: number;
   discountAmount: number;
-  totalAmount: number;
+  finalPrice: number;
   menuId: string;
   menuInfo: {
     currency: string;
