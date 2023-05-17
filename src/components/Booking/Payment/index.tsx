@@ -87,6 +87,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     token: string;
     type: string;
   }>({ ...cardQuery.addCard, successMessage: undefined });
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const {
     control,
@@ -114,30 +115,35 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   };
 
   const handleSubmit = async () => {
-    if (isEmpty(cardList?.items)) {
-      const values = getValues();
-      const data = await getCardToken({
-        ...values,
-        card_number: values.card_number.trim(),
-        security_code: values.security_code.trim(),
-      });
-      addCard(
-        { token: data.token, type: 'CARD' },
-        {
-          onSuccess: (response) => {
-            reset();
-            onSubmit({
-              paymentMethod: get(response, 'items[0].id'),
-            });
+    setIsSubmit(true);
+    try {
+      if (isEmpty(cardList?.items)) {
+        const values = getValues();
+        const data = await getCardToken({
+          ...values,
+          card_number: values.card_number.trim(),
+          security_code: values.security_code.trim(),
+        });
+        addCard(
+          { token: data.token, type: 'CARD' },
+          {
+            onSuccess: (response) => {
+              reset();
+              onSubmit({
+                paymentMethod: get(response, 'items[0].id'),
+              });
+            },
           },
-        },
-      );
-    } else {
-      onSubmit({
-        paymentMethod: payment,
-        coupon: selectedCoupon,
-        selectedMenuType,
-      });
+        );
+      } else {
+        onSubmit({
+          paymentMethod: payment,
+          coupon: selectedCoupon,
+          selectedMenuType,
+        });
+      }
+    } catch {
+      setIsSubmit(false);
     }
   };
 
@@ -301,7 +307,8 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         sx={styles.submitBtn}
         disabled={
           (isEmpty(cardList?.items) && !isValid) ||
-          (!isEmpty(cardList?.items) && !payment)
+          (!isEmpty(cardList?.items) && !payment) ||
+          isSubmit
         }
         loading={isGettingToken || isAddingCard}
         onClick={handleSubmit}
