@@ -59,22 +59,23 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
           },
     );
 
-    setMenuId(
-      numberOfSelectedTicket || isEmpty(currentTicketMenu)
-        ? id
-        : currentTicketMenu?._id,
-    );
+    setMenuId(id);
   };
 
   const handleSelectedTicketOfMenu = (value: number | any) => {
-    handleChangeMenu(value?.id, value?.numberOfSelectedTicket);
+    if (value?.numberOfSelectedTicket) {
+      handleChangeMenu(value?.id, value?.numberOfSelectedTicket);
+    }
   };
 
   const handleSelectMenu = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChangeMenu(e.target.value);
   };
 
-  const isTicket = !isEmpty(selectedMenu?.[0]?.ticket);
+  const isTicket =
+    !isEmpty(selectedMenu?.[0]?.ticket) &&
+    menuId === selectedMenu?.[0]?.ticket?.id;
+
   const { data, fetchStatus } = useFetch<ITicketOfMenu>(
     ticketQuery.getInfoOfTicket(
       selectedMenu?.[0]?.createdById,
