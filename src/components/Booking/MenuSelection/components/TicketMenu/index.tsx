@@ -159,10 +159,8 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                   </Box>
                   {isTicket(item) ? (
                     <Stack direction={'column'} alignItems={'flex-start'}>
-                      {(fetchStatus.indexOf('fetching') > -1 &&
-                        selectedMenu?._id === parentMenuID) ||
-                      (selectedMenu?._id === parentMenuID &&
-                        availableCount === 0) ? (
+                      {fetchStatus.indexOf('fetching') > -1 &&
+                      selectedMenu?._id === parentMenuID ? (
                         <></>
                       ) : (
                         <Stack
@@ -179,7 +177,9 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                                 sx={styles.ticketLeftNumber}
                               >
                                 {selectedMenu?._id === parentMenuID
-                                  ? availableCount
+                                  ? availableCount ||
+                                    ticket?.numberOfTicket ||
+                                    0
                                   : ticket?.numberOfTicket || 0}
                               </Typography>
                               回
@@ -201,7 +201,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                             min={1}
                             max={
                               selectedMenu?._id === parentMenuID
-                                ? availableCount
+                                ? availableCount || ticket?.numberOfTicket || 1
                                 : ticket?.numberOfTicket || 1
                             }
                           />
