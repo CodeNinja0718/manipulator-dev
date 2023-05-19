@@ -18,7 +18,8 @@ const TicketReview = ({ ticketData: data, manipulator }: TicketReviewProps) => {
   }
 
   const estimatedExpiredDate = dayjs()
-    .add(data.expiryMonth, 'month')
+    .tz()
+    .add(data.expiryMonth * 30, 'day')
     .format(DateFormat.YEAR_MONTH_DATE);
 
   const totalPrice = (data.ticketPrice || 0) * (data.numberOfTickets || 1);
