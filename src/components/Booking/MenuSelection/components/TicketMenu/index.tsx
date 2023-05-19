@@ -8,10 +8,13 @@ import {
   Typography,
 } from '@mui/material';
 import { NumberInput } from 'components/NumberInput';
+import { useFetch } from 'hooks';
 import head from 'lodash/head';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
-import type { IReservationMenu } from 'models/manipulator/interface';
+import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type { ITicketOfMenu } from 'models/ticket/interface';
+import ticketQuery from 'models/ticket/query';
 import React, { useMemo, useRef } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { MENU_TYPES, MENU_TYPES_KEYS } from 'utils/const';
@@ -21,12 +24,71 @@ import styles from './styles';
 interface IMenuSelection extends IReservationMenu {
   onAddTicket: () => void;
   onSelectedTicketOfMenu: (value: number | any) => void;
-  selectedMenu: IReservationMenu | any;
-  isSelectedMenu: boolean;
-  parentMenuID: string;
-  availableCount: number;
-  fetchStatus: string;
 }
+
+interface ITicketElement {
+  isShowAvailableCount: boolean;
+  onAddTicket: () => void;
+  availableCount: number;
+  handleChangeTicket: () => void;
+  numberOfTicketRef: React.RefObject<HTMLInputElement>;
+  ticket: ITicket | any;
+}
+
+const TicketElement: React.FC<ITicketElement> = ({
+  isShowAvailableCount,
+  onAddTicket,
+  availableCount,
+  ticket,
+  handleChangeTicket,
+  numberOfTicketRef,
+}) => {
+  return (
+    <Stack direction={'column'} alignItems={'flex-start'}>
+      {isShowAvailableCount ? (
+        <Button
+          size="medium"
+          color="primary"
+          endIcon={<ArrowRight />}
+          variant="contained"
+          sx={styles.addTicketBtn}
+          onClick={onAddTicket}
+        >
+          回数券購入へ進む
+        </Button>
+      ) : (
+        <Stack direction={'row'} spacing={10} pl={11} alignItems={'center'}>
+          <Box sx={styles.ticketLeft}>
+            <Typography sx={styles.ticketLeftText}>
+              残り
+              <Typography component={'span'} sx={styles.ticketLeftNumber}>
+                {availableCount || ticket?.numberOfTicket || 0}
+              </Typography>
+              回
+            </Typography>
+          </Box>
+          <Typography sx={styles.text} pl={5}>
+            使用する
+          </Typography>
+          <NumberInput
+            ref={numberOfTicketRef}
+            sx={styles.numberInput}
+            onClick={handleChangeTicket}
+            required
+            inputProps={{
+              inputMode: 'numeric',
+              pattern: '[1-9]*',
+            }}
+            value={ticket?.numberOfSelectedTicket || 1}
+            min={1}
+            max={availableCount || ticket?.numberOfTicket || 1}
+          />
+          <Typography sx={styles.text}>回</Typography>
+        </Stack>
+      )}
+    </Stack>
+  );
+};
 
 const TicketMenu: React.FC<IMenuSelection> = ({
   _id,
@@ -38,11 +100,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   estimatedTime,
   onAddTicket,
   onSelectedTicketOfMenu,
-  selectedMenu,
-  isSelectedMenu,
-  parentMenuID,
-  availableCount,
-  fetchStatus,
+  createdById,
 }) => {
   const numberOfTicketRef = useRef<HTMLInputElement>(null);
   const handleGetLabel = (item: string) => {
@@ -96,10 +154,12 @@ const TicketMenu: React.FC<IMenuSelection> = ({
     }
   };
 
-  const isShowAvailableCount =
-    availableCount === 0 &&
-    isSelectedMenu &&
-    selectedMenu?._id === parentMenuID;
+  const { data, fetchStatus } = useFetch<ITicketOfMenu>(
+    ticketQuery.getInfoOfTicket(createdById, _id, true),
+  );
+  const availableCount = data?.ticket?.availableCount ?? 0;
+
+  const isShowAvailableCount = availableCount === 0;
 
   return (
     <Stack direction="row" alignItems="center">
@@ -158,76 +218,20 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                     </Typography>
                   </Box>
                   {isTicket(item) ? (
-                    <Stack direction={'column'} alignItems={'flex-start'}>
-                      {fetchStatus.indexOf('fetching') > -1 &&
-                      selectedMenu?._id === parentMenuID ? (
-                        <></>
+                    <>
+                      {fetchStatus.indexOf('fetching') > -1 ? (
+                        <CircularProgress size="small" sx={styles.loading} />
                       ) : (
-                        <Stack
-                          direction={'row'}
-                          spacing={10}
-                          pl={11}
-                          alignItems={'center'}
-                        >
-                          <Box sx={styles.ticketLeft}>
-                            <Typography sx={styles.ticketLeftText}>
-                              残り
-                              <Typography
-                                component={'span'}
-                                sx={styles.ticketLeftNumber}
-                              >
-                                {selectedMenu?._id === parentMenuID
-                                  ? availableCount ||
-                                    ticket?.numberOfTicket ||
-                                    0
-                                  : ticket?.numberOfTicket || 0}
-                              </Typography>
-                              回
-                            </Typography>
-                          </Box>
-                          <Typography sx={styles.text} pl={5}>
-                            使用する
-                          </Typography>
-                          <NumberInput
-                            ref={numberOfTicketRef}
-                            sx={styles.numberInput}
-                            onClick={handleChangeTicket}
-                            required
-                            inputProps={{
-                              inputMode: 'numeric',
-                              pattern: '[1-9]*',
-                            }}
-                            value={ticket?.numberOfSelectedTicket || 1}
-                            min={1}
-                            max={
-                              selectedMenu?._id === parentMenuID
-                                ? availableCount || ticket?.numberOfTicket || 1
-                                : ticket?.numberOfTicket || 1
-                            }
-                          />
-                          <Typography sx={styles.text}>回</Typography>
-                        </Stack>
+                        <TicketElement
+                          isShowAvailableCount={isShowAvailableCount}
+                          onAddTicket={onAddTicket}
+                          availableCount={availableCount}
+                          ticket={ticket}
+                          handleChangeTicket={handleChangeTicket}
+                          numberOfTicketRef={numberOfTicketRef}
+                        />
                       )}
-                      {fetchStatus.indexOf('fetching') > -1
-                        ? selectedMenu?._id === parentMenuID && (
-                            <CircularProgress
-                              size="small"
-                              sx={styles.loading}
-                            />
-                          )
-                        : isShowAvailableCount && (
-                            <Button
-                              size="medium"
-                              color="primary"
-                              endIcon={<ArrowRight />}
-                              variant="contained"
-                              sx={styles.addTicketBtn}
-                              onClick={onAddTicket}
-                            >
-                              回数券購入へ進む
-                            </Button>
-                          )}
-                    </Stack>
+                    </>
                   ) : (
                     <></>
                   )}

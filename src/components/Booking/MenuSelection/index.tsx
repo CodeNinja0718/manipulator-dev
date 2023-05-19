@@ -1,11 +1,8 @@
 import ArrowRight from '@icons/arrow-right.svg';
 import { Box, Button, RadioGroup, Stack, Typography } from '@mui/material';
-import { useFetch } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
-import type { ITicketOfMenu } from 'models/ticket/interface';
-import ticketQuery from 'models/ticket/query';
 import { useMemo, useState } from 'react';
 
 import DefaultMenu from './components/DefaultMenu';
@@ -14,6 +11,7 @@ import styles from './styles';
 
 interface BookingMenuSelectionProps {
   initialMenu: string;
+  ticketMenu: ITicket | any;
   menus: IReservationMenu[];
   onSubmit: (values: Record<string, unknown>) => void;
   onSetTicketMenu: (values: ITicket | any) => void;
@@ -26,6 +24,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
   onSubmit,
   onSetTicketMenu,
   onAddTicket,
+  ticketMenu,
 }) => {
   const [menuId, setMenuId] = useState(initialMenu);
   const selectedMenu = useMemo(
@@ -76,19 +75,11 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
     !isEmpty(selectedMenu?.[0]?.ticket) &&
     menuId === selectedMenu?.[0]?.ticket?.id;
 
-  const { data, fetchStatus } = useFetch<ITicketOfMenu>(
-    ticketQuery.getInfoOfTicket(
-      selectedMenu?.[0]?.createdById,
-      selectedMenu?.[0]?._id,
-      isTicket,
-    ),
-  );
-
   const menuList = useMemo(() => {
     return menus;
   }, [menus]);
 
-  const availableCount = data?.ticket?.availableCount ?? 0;
+  const availableCount = ticketMenu?.ticket?.numberOfSelectedTicket ?? 0;
   const isNotAvailableTicket =
     availableCount === 0 &&
     isTicket &&
@@ -106,16 +97,8 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
               {menu.ticket !== null ? (
                 <TicketMenu
                   {...menu}
-                  parentMenuID={menu._id}
-                  isSelectedMenu={isTicket}
-                  selectedMenu={{
-                    ...data,
-                    _id: selectedMenu?.[0]?._id || null,
-                  }}
-                  availableCount={availableCount}
                   onAddTicket={() => onAddTicket(menu?.ticket?.id || '')}
                   onSelectedTicketOfMenu={handleSelectedTicketOfMenu}
-                  fetchStatus={fetchStatus}
                 />
               ) : (
                 <DefaultMenu {...menu} />
