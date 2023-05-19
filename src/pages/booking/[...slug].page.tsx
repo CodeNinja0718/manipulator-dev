@@ -296,6 +296,7 @@ const BookingPage = () => {
             : ticketMenu?._id || ''
         }
         menus={manipulatorMenuList || []}
+        ticketMenu={ticketMenu}
         onSubmit={handleSubmitStep}
         onSetTicketMenu={setTicketMenu}
         onAddTicket={handleAddTicket}
