@@ -24,6 +24,7 @@ import styles from './styles';
 interface IMenuSelection extends IReservationMenu {
   onAddTicket: () => void;
   onSelectedTicketOfMenu: (value: number | any) => void;
+  selectedMenu: string | any;
 }
 
 interface ITicketElement {
@@ -33,6 +34,7 @@ interface ITicketElement {
   handleChangeTicket: () => void;
   numberOfTicketRef: React.RefObject<HTMLInputElement>;
   ticket: ITicket | any;
+  isSelected: boolean | any;
 }
 
 const TicketElement: React.FC<ITicketElement> = ({
@@ -42,7 +44,20 @@ const TicketElement: React.FC<ITicketElement> = ({
   ticket,
   handleChangeTicket,
   numberOfTicketRef,
+  isSelected,
 }) => {
+  const handleExistTicket = () => {
+    const numberTicket = availableCount || ticket?.numberOfTicket || 0;
+    let numberOfSelectedTicket = ticket?.numberOfSelectedTicket || 1;
+
+    if (numberOfTicketRef?.current) {
+      const children: any = numberOfTicketRef?.current?.firstChild;
+      numberOfSelectedTicket = children?.value || 1;
+    }
+
+    return isSelected ? numberTicket - numberOfSelectedTicket : numberTicket;
+  };
+
   return (
     <Stack direction={'column'} alignItems={'flex-start'}>
       {isShowAvailableCount ? (
@@ -62,7 +77,7 @@ const TicketElement: React.FC<ITicketElement> = ({
             <Typography sx={styles.ticketLeftText}>
               残り
               <Typography component={'span'} sx={styles.ticketLeftNumber}>
-                {availableCount || ticket?.numberOfTicket || 0}
+                {handleExistTicket()}
               </Typography>
               回
             </Typography>
@@ -70,19 +85,23 @@ const TicketElement: React.FC<ITicketElement> = ({
           <Typography sx={styles.text} pl={5}>
             使用する
           </Typography>
-          <NumberInput
-            ref={numberOfTicketRef}
-            sx={styles.numberInput}
-            onClick={handleChangeTicket}
-            required
-            inputProps={{
-              inputMode: 'numeric',
-              pattern: '[1-9]*',
-            }}
-            value={ticket?.numberOfSelectedTicket || 1}
-            min={1}
-            max={availableCount || ticket?.numberOfTicket || 1}
-          />
+          {isSelected ? (
+            <NumberInput
+              ref={numberOfTicketRef}
+              sx={styles.numberInput}
+              onClick={handleChangeTicket}
+              required
+              inputProps={{
+                inputMode: 'numeric',
+                pattern: '[1-9]*',
+              }}
+              value={ticket?.numberOfSelectedTicket || 1}
+              min={1}
+              max={availableCount || ticket?.numberOfTicket || 1}
+            />
+          ) : (
+            <Box sx={styles.defaultNumberOfTicket}>1</Box>
+          )}
           <Typography sx={styles.text}>回</Typography>
         </Stack>
       )}
@@ -101,6 +120,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   onAddTicket,
   onSelectedTicketOfMenu,
   createdById,
+  selectedMenu,
 }) => {
   const numberOfTicketRef = useRef<HTMLInputElement>(null);
   const handleGetLabel = (item: string) => {
@@ -160,6 +180,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   const availableCount = data?.ticket?.availableCount ?? 0;
 
   const isShowAvailableCount = availableCount === 0;
+  const isSelected = ticket?.id === selectedMenu;
 
   return (
     <Stack direction="row" alignItems="center">
@@ -223,6 +244,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                         <CircularProgress size="small" sx={styles.loading} />
                       ) : (
                         <TicketElement
+                          isSelected={isSelected}
                           isShowAvailableCount={isShowAvailableCount}
                           onAddTicket={onAddTicket}
                           availableCount={availableCount}

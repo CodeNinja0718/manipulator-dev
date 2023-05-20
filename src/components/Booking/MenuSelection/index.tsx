@@ -97,6 +97,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
               {menu.ticket !== null ? (
                 <TicketMenu
                   {...menu}
+                  selectedMenu={selectedMenu?.[0]?.ticket?.id}
                   onAddTicket={() => onAddTicket(menu?.ticket?.id || '')}
                   onSelectedTicketOfMenu={handleSelectedTicketOfMenu}
                 />

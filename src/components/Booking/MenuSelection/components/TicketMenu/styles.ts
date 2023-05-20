@@ -59,6 +59,16 @@ const styles = {
     height: 40,
     color: (theme: Theme) => theme.palette.orangeBold,
   },
+  defaultNumberOfTicket: {
+    border: '1px solid',
+    padding: '7.6px 0',
+    pl: 15,
+    minWidth: 66,
+    fontSize: 16,
+    fontWeight: 700,
+    borderRadius: '5px',
+    borderColor: (theme: Theme) => theme.palette.grullo,
+  },
 } as Record<string, SxProps<Theme>>;
 
 export default styles;
