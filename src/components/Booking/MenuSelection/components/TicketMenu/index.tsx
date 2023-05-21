@@ -1,18 +1,9 @@
-import ArrowRight from '@icons/arrow-right.svg';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Radio,
-  Stack,
-  Typography,
-} from '@mui/material';
-import { NumberInput } from 'components/NumberInput';
+import { Box, CircularProgress, Radio, Stack, Typography } from '@mui/material';
 import { useFetch } from 'hooks';
 import head from 'lodash/head';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
-import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type { IReservationMenu } from 'models/manipulator/interface';
 import type { ITicketOfMenu } from 'models/ticket/interface';
 import ticketQuery from 'models/ticket/query';
 import React, { useMemo, useRef } from 'react';
@@ -20,94 +11,13 @@ import { NumericFormat } from 'react-number-format';
 import { MENU_TYPES, MENU_TYPES_KEYS } from 'utils/const';
 
 import styles from './styles';
+import TicketElement from './TicketElement';
 
 interface IMenuSelection extends IReservationMenu {
   onAddTicket: () => void;
   onSelectedTicketOfMenu: (value: number | any) => void;
   selectedMenu: string | any;
 }
-
-interface ITicketElement {
-  isShowAvailableCount: boolean;
-  onAddTicket: () => void;
-  availableCount: number;
-  handleChangeTicket: () => void;
-  numberOfTicketRef: React.RefObject<HTMLInputElement>;
-  ticket: ITicket | any;
-  isSelected: boolean | any;
-}
-
-const TicketElement: React.FC<ITicketElement> = ({
-  isShowAvailableCount,
-  onAddTicket,
-  availableCount,
-  ticket,
-  handleChangeTicket,
-  numberOfTicketRef,
-  isSelected,
-}) => {
-  const handleExistTicket = () => {
-    const numberTicket = availableCount || ticket?.numberOfTicket || 0;
-    let numberOfSelectedTicket = ticket?.numberOfSelectedTicket || 1;
-
-    if (numberOfTicketRef?.current) {
-      const children: any = numberOfTicketRef?.current?.firstChild;
-      numberOfSelectedTicket = children?.value || 1;
-    }
-
-    return isSelected ? numberTicket - numberOfSelectedTicket : numberTicket;
-  };
-
-  return (
-    <Stack direction={'column'} alignItems={'flex-start'}>
-      {isShowAvailableCount ? (
-        <Button
-          size="medium"
-          color="primary"
-          endIcon={<ArrowRight />}
-          variant="contained"
-          sx={styles.addTicketBtn}
-          onClick={onAddTicket}
-        >
-          回数券購入へ進む
-        </Button>
-      ) : (
-        <Stack direction={'row'} spacing={10} pl={11} alignItems={'center'}>
-          <Box sx={styles.ticketLeft}>
-            <Typography sx={styles.ticketLeftText}>
-              残り
-              <Typography component={'span'} sx={styles.ticketLeftNumber}>
-                {handleExistTicket()}
-              </Typography>
-              回
-            </Typography>
-          </Box>
-          <Typography sx={styles.text} pl={5}>
-            使用する
-          </Typography>
-          {isSelected ? (
-            <NumberInput
-              ref={numberOfTicketRef}
-              sx={styles.numberInput}
-              onClick={handleChangeTicket}
-              required
-              inputProps={{
-                inputMode: 'numeric',
-                pattern: '[1-9]*',
-              }}
-              value={ticket?.numberOfSelectedTicket || 1}
-              min={1}
-              max={availableCount || ticket?.numberOfTicket || 1}
-            />
-          ) : (
-            <Box sx={styles.defaultNumberOfTicket}>1</Box>
-          )}
-          <Typography sx={styles.text}>回</Typography>
-        </Stack>
-      )}
-    </Stack>
-  );
-};
 
 const TicketMenu: React.FC<IMenuSelection> = ({
   _id,
