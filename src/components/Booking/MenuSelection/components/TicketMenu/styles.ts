@@ -53,6 +53,9 @@ const styles = {
       backgroundColor: '#ffffff',
       cursor: 'not-allowed',
     },
+    '&.hide': {
+      display: 'none',
+    },
   },
   loading: {
     width: 40,
@@ -60,6 +63,7 @@ const styles = {
     color: (theme: Theme) => theme.palette.orangeBold,
   },
   defaultNumberOfTicket: {
+    display: 'flex',
     border: '1px solid',
     padding: '7.6px 0',
     pl: 15,
@@ -68,6 +72,18 @@ const styles = {
     fontWeight: 700,
     borderRadius: '5px',
     borderColor: (theme: Theme) => theme.palette.grullo,
+    justifyContent: 'space-between',
+
+    '&.hide': {
+      display: 'none',
+    },
+  },
+  arrowGroupBtn: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: '3px',
+    pr: 14,
   },
 } as Record<string, SxProps<Theme>>;
 
