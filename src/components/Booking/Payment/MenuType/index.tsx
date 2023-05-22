@@ -4,6 +4,8 @@ import { Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import isEmpty from 'lodash/isEmpty';
 import type { ITicket } from 'models/manipulator/interface';
+import { useRouter } from 'next/router';
+import { STEPPER_CONTENT } from 'utils/const';
 
 import styles from './styles';
 
@@ -12,6 +14,9 @@ interface IMenuType {
 }
 
 const MenuType = ({ ticketMenu }: IMenuType) => {
+  const router = useRouter();
+  const { slug } = router.query;
+  const manipulatorId = slug![0] || '';
   const handleExistTicket = () => {
     const numberTicket =
       ticketMenu?.ticket?.availableCount ||
@@ -24,6 +29,15 @@ const MenuType = ({ ticketMenu }: IMenuType) => {
   };
 
   const isHaveTicket = !isEmpty(ticketMenu?.ticket);
+
+  const handleBackToSelectMenus = () => {
+    router.replace({
+      pathname: router.pathname,
+      query: {
+        slug: [manipulatorId, STEPPER_CONTENT[0].value],
+      },
+    });
+  };
 
   return (
     <Box sx={styles.wrapper}>
@@ -62,6 +76,7 @@ const MenuType = ({ ticketMenu }: IMenuType) => {
                 variant="outlined"
                 sx={styles.button}
                 startIcon={<SvgIcon component={IconReloadSvg} inheritViewBox />}
+                onClick={handleBackToSelectMenus}
               >
                 <span>変更する</span>
               </Button>
