@@ -89,7 +89,7 @@ const CardMenu = ({ data }: CardMenuProps) => {
                   justifyContent={{ xs: 'start', tablet: 'end' }}
                 >
                   <Typography sx={styles.textStyle}>
-                    {item.price || 0}円
+                    {item.price || item.ticket?.price || 0}円
                   </Typography>
                 </Stack>
               </Grid>

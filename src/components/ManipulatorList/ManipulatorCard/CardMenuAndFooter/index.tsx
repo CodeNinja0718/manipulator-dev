@@ -72,7 +72,7 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
               </Stack>
               <Stack>
                 <Typography component="p" sx={styles.textStyle}>
-                  {item.price || 0}円
+                  {item.price || item.ticket?.price || 0}円
                 </Typography>
               </Stack>
             </Box>
