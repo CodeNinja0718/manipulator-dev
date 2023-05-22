@@ -126,7 +126,9 @@ const TicketMenu: React.FC<IMenuSelection> = ({
                 sx={{
                   py: 11,
                   borderTop:
-                    isTicket(item) && price ? '2px dashed #cccccc' : '',
+                    isTicket(item) && price && menuTypeList.length > 1
+                      ? '2px dashed #cccccc'
+                      : '',
                 }}
               >
                 <Stack
