@@ -31,6 +31,7 @@ export interface Menu {
   price: number;
   currency: string;
   timeDisplay: boolean;
+  ticket: ITicket;
 }
 
 export interface ITicket {
