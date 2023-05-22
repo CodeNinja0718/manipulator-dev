@@ -8,19 +8,23 @@ import Link from 'components/Link';
 import ManipulatorSummaryInfo from 'components/Manipulator/SummaryInfo';
 import dayjs from 'dayjs';
 import { useFetch, useGlobalState, useMutate, useUser } from 'hooks';
+import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import type {
   IManipulator,
   IReservationMenu,
+  ITicket,
 } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
 import type { CreateReservationPayload } from 'models/reservation/interface';
 import reservationQuery from 'models/reservation/query';
+import type { ITicketTime } from 'models/ticket/interface';
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { STEPPER_CONTENT } from 'utils/const';
+import { useMemo, useState } from 'react';
+import { PAYMENT_MENU_TYPES, STEPPER_CONTENT } from 'utils/const';
 import queryClient, { fetchData } from 'utils/queryClient';
 
 import styles from './styles';
@@ -34,17 +38,42 @@ const BookingMenuSelection = dynamic(
 const BookingPayment = dynamic(() => import('components/Booking/Payment'));
 const BookingOverview = dynamic(() => import('components/Booking/Overview'));
 
+const calculateTicketTimes = (
+  numberOfTickets: number,
+  startTime: string | undefined,
+  endTime: string | undefined,
+  estimatedTime: number = 0,
+) => {
+  if (numberOfTickets <= 0 || !startTime || !endTime) {
+    return [];
+  }
+
+  const startTimeDayjs = dayjs(startTime).tz();
+
+  const tickets: ITicketTime[] = [];
+
+  for (let i = 0; i < numberOfTickets; i += 1) {
+    const lastTicket = tickets.length ? tickets[tickets.length - 1] : undefined;
+    const initStartTime = lastTicket?.endTime || startTimeDayjs;
+    const initEndTime = initStartTime.add(estimatedTime, 'minute');
+
+    tickets.push({ startTime: initStartTime, endTime: initEndTime });
+  }
+
+  return tickets;
+};
+
 const BookingPage = () => {
   const { data: currentUser } = useUser();
   const router = useRouter();
   const { slug } = router.query;
   const manipulatorId = slug![0] || '';
   const step = slug![1] || STEPPER_CONTENT[0].value;
+  const [ticketMenu, setTicketMenu] = useState<ITicket | any>({});
 
   const { mutateAsync: createReservation, isSuccess } = useMutate(
     reservationQuery.createReservation,
   );
-
   const { data: manipulatorTimeSlots } = useFetch<{
     manipulator: IManipulator;
     availableSlots: string[];
@@ -63,10 +92,21 @@ const BookingPage = () => {
     staleTime: 1000 * 60 * 2,
   });
 
-  const [overviewBooking, setOverviewBooking] = useState({});
+  const [overviewBooking, setOverviewBooking] = useState<
+    CreateReservationPayload & {
+      menu?: IReservationMenu;
+    }
+  >({});
   const { booking, setBooking, setConfirmModal, setRedirectLogin } =
     useGlobalState();
-  const selectedMenu = manipulatorMenus?.docs.find(
+
+  // Manipulator Menu List
+  const manipulatorMenuList = useMemo(() => {
+    const result = manipulatorMenus?.docs || [];
+    return result;
+  }, [manipulatorMenus?.docs]);
+
+  const selectedMenu = manipulatorMenuList?.find(
     (menu) => menu._id === booking.menuId,
   );
 
@@ -119,22 +159,46 @@ const BookingPage = () => {
 
   const handleSubmitStep = (values: CreateReservationPayload) => {
     if (step === STEPPER_CONTENT[2].value && values.paymentMethod) {
-      createReservation(
-        {
-          ...booking,
-          ...values,
-          manipulatorId,
+      let params = omit(booking, 'ticket', 'couponCode');
+      const ticketParams =
+        !isEmpty(booking?.ticket) &&
+        values.selectedMenuType === PAYMENT_MENU_TYPES.TICKET
+          ? {
+              ticketId: booking?.ticket?.id,
+              ticketUse: booking?.ticket?.numberOfSelectedTicket,
+            }
+          : {};
+      const couponParams =
+        !isEmpty(values?.coupon) &&
+        values.selectedMenuType === PAYMENT_MENU_TYPES.COUPON
+          ? {
+              couponCode: values.coupon.code,
+            }
+          : {};
+
+      params = {
+        ...params,
+        ...ticketParams,
+        ...couponParams,
+        manipulatorId,
+        paymentMethod: values.paymentMethod,
+      };
+
+      createReservation(params, {
+        onSuccess: () => {
+          setOverviewBooking({
+            ...omit(
+              booking,
+              values.selectedMenuType !== PAYMENT_MENU_TYPES.TICKET
+                ? ['ticket']
+                : [],
+            ),
+            menu: selectedMenu,
+            coupon: values.coupon,
+          });
+          setBooking({});
         },
-        {
-          onSuccess: () => {
-            setOverviewBooking({
-              ...booking,
-              menu: selectedMenu,
-            });
-            setBooking({});
-          },
-        },
-      );
+      });
     }
     if (
       step === STEPPER_CONTENT[1].value &&
@@ -164,21 +228,53 @@ const BookingPage = () => {
         },
       });
     }
-    if (step === STEPPER_CONTENT[0].value && values.menuId) {
-      setBooking({ ...booking, ...values });
+    if (
+      step === STEPPER_CONTENT[0].value &&
+      (values.menuId || ticketMenu?._id)
+    ) {
+      const currentValue = ticketMenu?._id
+        ? { ...values, menuId: ticketMenu?._id, ticket: ticketMenu?.ticket }
+        : { ...values };
+      let data = ticketMenu?._id
+        ? { ...booking, ...currentValue }
+        : omit({ ...booking, ...currentValue }, 'ticket');
+
+      data = ticketMenu?.ticket?.numberOfSelectedTicket
+        ? data
+        : omit(data, ['ticket']);
+
+      setBooking(data);
       handleChangeStep(STEPPER_CONTENT[1].value);
     }
   };
 
+  const handleAddTicket = (ticketId: string) => {
+    router.push({
+      pathname: '/booking/add-ticket',
+      query: {
+        slug: [manipulatorId, ticketId],
+        href: router.pathname,
+      },
+    });
+  };
+
   const renderStepContent = () => {
     if (step === STEPPER_CONTENT[2].value) {
+      const tickets = calculateTicketTimes(
+        ticketMenu?.ticket?.numberOfSelectedTicket || 0,
+        booking?.startTime,
+        booking?.endTime,
+        ticketMenu?.estimatedTime || 0,
+      );
       return (
         <BookingPayment
           selectedMenu={selectedMenu}
+          ticketMenu={ticketMenu}
           startTime={booking?.startTime}
           endTime={booking?.endTime}
           handleChangeStep={handleChangeStep}
           onSubmit={handleSubmitStep}
+          ticketTimeList={tickets}
         />
       );
     }
@@ -188,23 +284,38 @@ const BookingPage = () => {
           selectedMenu={selectedMenu}
           handleChangeStep={handleChangeStep}
           onSubmit={handleSubmitStep}
+          ticketMenu={ticketMenu}
         />
       );
     }
     return (
       <BookingMenuSelection
-        initialMenu={booking.menuId || ''}
-        menus={manipulatorMenus?.docs || []}
+        initialMenu={
+          ticketMenu?.ticket?.numberOfSelectedTicket
+            ? ticketMenu?.ticket?.id
+            : ticketMenu?._id || ''
+        }
+        menus={manipulatorMenuList || []}
+        ticketMenu={ticketMenu}
         onSubmit={handleSubmitStep}
+        onSetTicketMenu={setTicketMenu}
+        onAddTicket={handleAddTicket}
       />
     );
   };
 
   if (isSuccess) {
+    const tickets = calculateTicketTimes(
+      overviewBooking?.ticket?.numberOfSelectedTicket || 0,
+      overviewBooking?.startTime,
+      overviewBooking?.endTime,
+      overviewBooking?.menu?.estimatedTime || 0,
+    );
     return (
       <BookingOverview
         manipulatorDetail={manipulatorTimeSlots?.manipulator}
         bookingDetail={overviewBooking}
+        ticketTimeList={tickets}
       />
     );
   }
@@ -257,14 +368,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       };
     }
 
-    await fetchData({
-      ...manipulatorQuery.manipulatorTimeSlots({
-        manipulatorId,
-        startTime: dayjs().tz().startOf('day').toISOString(),
-        endTime: dayjs().tz().startOf('day').add(7, 'day').toISOString(),
-      }),
-      staleTime: 1000 * 60 * 2,
-    });
     await fetchData({
       ...manipulatorQuery.manipulatorMenus(manipulatorId),
       staleTime: 1000 * 60 * 2,

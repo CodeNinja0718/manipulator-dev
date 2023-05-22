@@ -29,7 +29,7 @@ const CommonTabs = ({
   }, [tabs, value]);
 
   return (
-    <Box sx={styles.tabsContainer}>
+    <Box sx={styles.tabsContainer} className="wrapperTab">
       <Box sx={styles.tabList} className="customTabs">
         <Tabs value={value} onChange={handleChange}>
           {tabs.map((item, index) => (

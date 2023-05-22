@@ -10,20 +10,32 @@ import useFetch from 'hooks/useFetch';
 import get from 'lodash/get';
 import type { ICommonStation } from 'models/common/interface';
 import commonQuery from 'models/common/query';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import type { LinesProps, StationListProps } from './model';
 import styles from './styles';
 
-const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
+const StationList = ({
+  lines,
+  onSetSelectedStation,
+  selectedDefaultStations,
+  setSelectedLine,
+  selectedLine,
+}: StationListProps) => {
   const [selected, setSelected] = useState<string[]>([]);
-  const [selectedLine, setSelectedLine] = useState<number>(0);
   const handleSelectedLine = (value: number) => {
     setSelectedLine(value);
   };
   const { data: stations } = useFetch<ICommonStation>(
     commonQuery.stationListByLine(selectedLine),
   );
+
+  useEffect(() => {
+    if (selectedDefaultStations.length > 0) {
+      setSelected([...selectedDefaultStations]);
+    }
+  }, [selectedDefaultStations]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target;
     let currentSelected: string[] = [];
@@ -38,7 +50,6 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
 
   const handleBackLineList = () => {
     handleSelectedLine(0);
-    setSelected([]);
   };
 
   const line: LinesProps[] = useMemo(() => {
@@ -51,6 +62,9 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
   }, [stations]);
 
   const list = selectedLine ? stationsList : line;
+
+  const isCheckboxChecked = (item: LinesProps) =>
+    selected.indexOf(item._id.toString()) !== -1;
 
   return (
     <Box>
@@ -84,7 +98,13 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
                   key={item._id}
                   control={
                     selectedLine ? (
-                      <CheckboxBase iconClassName="customCheckbox" />
+                      <CheckboxBase
+                        iconClassName="customCheckbox"
+                        checked={isCheckboxChecked(item)}
+                        defaultChecked={selectedDefaultStations.includes(
+                          `${item.groupId}`,
+                        )}
+                      />
                     ) : (
                       <Typography />
                     )
@@ -92,7 +112,7 @@ const StationList = ({ lines, onSetSelectedStation }: StationListProps) => {
                   label={item.name}
                   sx={styles.checkboxItem}
                   labelPlacement="start"
-                  value={item.groupId}
+                  value={item._id}
                   onClick={() => !selectedLine && handleSelectedLine(item._id)}
                   onChange={(event: any) => selectedLine && handleChange(event)}
                 />

@@ -1,37 +1,89 @@
 import ArrowRight from '@icons/arrow-right.svg';
-import {
-  Box,
-  Button,
-  Radio,
-  RadioGroup,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Box, Button, RadioGroup, Stack, Typography } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
-import type { IReservationMenu } from 'models/manipulator/interface';
-import { useState } from 'react';
-import { NumericFormat } from 'react-number-format';
+import omit from 'lodash/omit';
+import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import { useMemo, useState } from 'react';
 
+import DefaultMenu from './components/DefaultMenu';
+import TicketMenu from './components/TicketMenu';
 import styles from './styles';
 
 interface BookingMenuSelectionProps {
   initialMenu: string;
+  ticketMenu: ITicket | any;
   menus: IReservationMenu[];
   onSubmit: (values: Record<string, unknown>) => void;
+  onSetTicketMenu: (values: ITicket | any) => void;
+  onAddTicket: (ticketId: string) => void;
 }
 
 const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
   initialMenu,
   menus,
   onSubmit,
+  onSetTicketMenu,
+  onAddTicket,
+  ticketMenu,
 }) => {
   const [menuId, setMenuId] = useState(initialMenu);
+  const selectedMenu = useMemo(
+    () =>
+      menus.filter(
+        (menu) => menu._id === menuId || menu?.ticket?.id === menuId,
+      ),
+    [menuId, menus],
+  );
 
-  const handleSelectMenu = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMenuId(e.target.value);
+  const handleChangeMenu = (id: string, numberOfSelectedTicket?: number) => {
+    const ticketMenuData = menus.filter(
+      (menu) => menu?.ticket?.id === id && menu?._id !== id,
+    );
+    const currentTicketMenu: IReservationMenu | any = ticketMenuData?.[0] || {};
+    onSetTicketMenu(
+      isEmpty(currentTicketMenu)
+        ? currentTicketMenu
+        : {
+            ...currentTicketMenu,
+            ticket: numberOfSelectedTicket
+              ? {
+                  ...currentTicketMenu?.ticket,
+                  numberOfSelectedTicket,
+                }
+              : {
+                  ...omit({ ...currentTicketMenu?.ticket }, [
+                    'numberOfSelectedTicket',
+                  ]),
+                },
+          },
+    );
+
+    setMenuId(id);
   };
 
-  const selectedMenu = menus.filter((menu) => menu._id === menuId);
+  const handleSelectedTicketOfMenu = (value: number | any) => {
+    if (value?.numberOfSelectedTicket) {
+      handleChangeMenu(value?.id, value?.numberOfSelectedTicket);
+    }
+  };
+
+  const handleSelectMenu = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChangeMenu(e.target.value);
+  };
+
+  const isTicket =
+    !isEmpty(selectedMenu?.[0]?.ticket) &&
+    menuId === selectedMenu?.[0]?.ticket?.id;
+
+  const menuList = useMemo(() => {
+    return menus;
+  }, [menus]);
+
+  const availableCount = ticketMenu?.ticket?.numberOfSelectedTicket ?? 0;
+  const isNotAvailableTicket =
+    availableCount === 0 &&
+    isTicket &&
+    selectedMenu?.[0]?.ticket?.id === menuId;
 
   return (
     <Stack sx={styles.bookingMenuWrapper}>
@@ -39,35 +91,19 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
         メニューを選択してください
       </Typography>
       <RadioGroup value={menuId} onChange={handleSelectMenu}>
-        {menus.map((menu) => {
+        {menuList.map((menu) => {
           return (
             <Box key={menu._id} sx={styles.menuItemWrapper}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                component="label"
-                sx={{
-                  cursor: 'pointer',
-                }}
-              >
-                <Radio value={menu._id} />
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  flexGrow={1}
-                  justifyContent="space-between"
-                >
-                  <Typography color="black">{menu.name}</Typography>
-                  <Typography color="black">
-                    <NumericFormat
-                      value={menu.price}
-                      thousandSeparator=","
-                      suffix="円"
-                      displayType="text"
-                    />
-                  </Typography>
-                </Stack>
-              </Stack>
+              {menu.ticket !== null ? (
+                <TicketMenu
+                  {...menu}
+                  selectedMenu={selectedMenu?.[0]?.ticket?.id}
+                  onAddTicket={() => onAddTicket(menu?.ticket?.id || '')}
+                  onSelectedTicketOfMenu={handleSelectedTicketOfMenu}
+                />
+              ) : (
+                <DefaultMenu {...menu} />
+              )}
             </Box>
           );
         })}
@@ -83,7 +119,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
         endIcon={<ArrowRight />}
         sx={styles.submitBtn}
         onClick={() => onSubmit({ menuId })}
-        disabled={isEmpty(selectedMenu)}
+        disabled={isNotAvailableTicket || isEmpty(selectedMenu)}
       >
         予約日時を選択する
       </Button>

@@ -31,6 +31,19 @@ export interface Menu {
   price: number;
   currency: string;
   timeDisplay: boolean;
+  ticket: ITicket;
+}
+
+export interface ITicket {
+  expiryMonth: number;
+  id: string;
+  numberOfTicket: number;
+  numberOfSelectedTicket: number;
+  price: number;
+  availableCount?: number;
+  expiredAt?: string;
+  manipulatorNameKana?: string;
+  salonNameKana?: string;
 }
 
 export interface IReservationMenu extends Omit<Menu, 'menuId' | 'order'> {
@@ -39,6 +52,7 @@ export interface IReservationMenu extends Omit<Menu, 'menuId' | 'order'> {
   menuTypes: string[];
   createdById: string;
   timeDisplay: boolean;
+  ticket: ITicket | any;
 }
 
 export interface Station {

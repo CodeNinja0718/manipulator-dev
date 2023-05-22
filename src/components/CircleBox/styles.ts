@@ -4,20 +4,20 @@ const styles = {
   boxContainer: {
     width: 97,
   },
-  circleBox: (theme: Theme) => ({
+  circleBox: {
     background: 'white',
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.16)',
     borderRadius: '50%',
-    '&:hover, &:active, &:focus': {
-      transition: '.5s',
-      background: theme.palette.orangeBold,
+    // '&:hover, &:active, &:focus': {
+    //   transition: '.5s',
+    //   background: theme.palette.orangeBold,
 
-      '& svg': {
-        color: 'white',
-      },
-    },
+    //   '& svg': {
+    //     color: 'white',
+    //   },
+    // },
     cursor: 'pointer',
-  }),
+  },
   circleBoxActive: (theme: Theme) => ({
     background: `${theme.palette.orangeBold}`,
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, 0.16)',

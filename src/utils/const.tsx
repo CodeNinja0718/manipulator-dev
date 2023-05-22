@@ -284,3 +284,23 @@ export enum SearchTopPageType {
   LOCATION = 0,
   STATION,
 }
+
+export enum CouponType {
+  PRIVATE = 0,
+  PUBLIC,
+}
+
+export const MENU_TYPES_KEYS = {
+  ONE_TIME: 'one_time',
+  COUPON: 'coupon',
+};
+
+export const PAYMENT_MENU_TYPES = {
+  TICKET: 'ticket',
+  COUPON: 'coupon',
+};
+
+export const MENU_TYPES = [
+  { value: MENU_TYPES_KEYS.ONE_TIME, label: '単発' },
+  { value: MENU_TYPES_KEYS.COUPON, label: '回数券利用' },
+];

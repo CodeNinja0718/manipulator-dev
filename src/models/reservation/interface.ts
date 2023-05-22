@@ -1,9 +1,21 @@
+import type { ICoupon } from 'models/discount/interface';
+
+interface ITicket {
+  expiryMonth: number;
+  id: string;
+  numberOfTicket: number;
+  numberOfSelectedTicket: number;
+  price: number;
+}
 export interface CreateReservationPayload {
   startTime?: string;
   endTime?: string;
   menuId?: string;
   manipulatorId?: string;
   paymentMethod?: string;
+  ticket?: ITicket;
+  selectedMenuType?: string;
+  coupon?: ICoupon;
 }
 
 export enum ReservationStatus {
@@ -14,9 +26,9 @@ export enum ReservationStatus {
 }
 
 export interface IReservationPlan {
-  amount: number;
+  originalPrice: number;
   discountAmount: number;
-  totalAmount: number;
+  finalPrice: number;
   menuId: string;
   menuInfo: {
     currency: string;
@@ -48,4 +60,6 @@ export interface IReservationItem {
   };
   plan: IReservationPlan;
   result: IReservationPlan;
+  ticketUsed: number;
+  couponDiscount: number;
 }

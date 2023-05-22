@@ -1,6 +1,6 @@
 import ArrowIcon from '@icons/arrow.svg';
 import ListSvg from '@icons/icon_list.svg';
-import { Box, Button, Grid, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
 import FormatDate from 'components/FormatDate';
 import dayjs from 'dayjs';
 import type { IManipulator, Menu } from 'models/manipulator/interface';
@@ -43,34 +43,39 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
               施術メニュー
             </Typography>
           </Stack>
-          {data.menus?.map((item: Menu, index: number) => (
-            <Grid
-              container
-              spacing={10}
-              key={`menu-${index}`}
-              marginBottom="5px"
+          {data.menus?.map((item: Menu) => (
+            <Box
+              display={'flex'}
+              flexDirection={'row'}
+              justifyContent={'space-between'}
+              key={`menu-${item.menuId}`}
+              sx={{ mb: 12 }}
             >
-              <Grid item xs={7} md={5}>
-                <Stack direction={'row'} spacing={8}>
-                  <Typography sx={styles.textStyle}>{item.name}</Typography>
-                  {item.timeDisplay && (
-                    <Typography sx={styles.textStyle}>
+              <Stack
+                display={'flex'}
+                flexDirection="row"
+                justifyContent={'flex-start'}
+                alignItems={'flex-start'}
+                sx={{ flex: 1, mr: 12 }}
+              >
+                <Typography sx={styles.textStyle}>
+                  {item.name}{' '}
+                  {!!item.timeDisplay && (
+                    <Typography
+                      component={'span'}
+                      sx={{ ...styles.textStyle, ml: 8 }}
+                    >
                       {item.estimatedTime}分
                     </Typography>
                   )}
-                </Stack>
-              </Grid>
-              <Grid
-                item
-                xs={5}
-                md={7}
-                textAlign={{ xs: 'right', tablet: 'left' }}
-              >
-                <Typography component="p" sx={styles.textStyle}>
-                  {item.price}円
                 </Typography>
-              </Grid>
-            </Grid>
+              </Stack>
+              <Stack>
+                <Typography component="p" sx={styles.textStyle}>
+                  {item.price || item.ticket?.price || 0}円
+                </Typography>
+              </Stack>
+            </Box>
           ))}
           {data.timeSlots?.length > 0 && (
             <Box sx={styles.reservableTimeBox}>

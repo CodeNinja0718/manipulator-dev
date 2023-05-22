@@ -81,6 +81,7 @@ const AdvanceSearch = ({
         <Box display="flex" justifyContent="center" paddingX="15px">
           <Button
             variant="contained"
+            color="inherit"
             sx={styles.button}
             disabled={disabled}
             startIcon={

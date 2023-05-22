@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { useFetch } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
 import times from 'lodash/times';
-import type { IReservationMenu } from 'models/manipulator/interface';
+import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -19,12 +19,14 @@ interface BookingSlotSelectionProps {
   selectedMenu?: IReservationMenu;
   handleChangeStep: (step: string) => void;
   onSubmit: (values: Record<string, unknown>) => void;
+  ticketMenu: ITicket | any;
 }
 
 const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
   selectedMenu,
   handleChangeStep,
   onSubmit,
+  ticketMenu,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -40,7 +42,6 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
       startTime: date.toISOString(),
       endTime: date.add(7, 'day').toISOString(),
     }),
-    staleTime: 1000 * 60 * 2,
   });
 
   useEffect(() => {
@@ -49,11 +50,20 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
     }
   }, [handleChangeStep, selectedMenu]);
 
+  const estimatedTime =
+    (selectedMenu?.estimatedTime || 0) *
+    (ticketMenu?.ticket?.numberOfSelectedTicket || 1);
+
+  const currentSelectedMenu: IReservationMenu | any = {
+    ...selectedMenu,
+    estimatedTime,
+  };
+
   const handleSelectSlot = (selectedDate: dayjs.Dayjs) => {
     onSubmit({
       startTime: selectedDate.toISOString(),
       endTime: selectedDate
-        .add(selectedMenu?.estimatedTime || 0, 'minute')
+        .add(currentSelectedMenu?.estimatedTime || 0, 'minute')
         .toISOString(),
     });
   };
@@ -63,8 +73,8 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
       <Stack direction="row" gap={24} sx={styles.selectedMenu}>
         <Typography fontWeight="bold">メニュー</Typography>
         <Typography>
-          {selectedMenu?.name}&nbsp;&nbsp;
-          {selectedMenu?.estimatedTime}分
+          {currentSelectedMenu?.name}&nbsp;&nbsp;
+          {currentSelectedMenu?.estimatedTime}分
         </Typography>
       </Stack>
       <Typography color="secondary" fontSize={18} fontWeight="bold" mb={18}>
@@ -110,7 +120,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
           const slotDate = date.add(index, 'day');
           return (
             <SlotColumn
-              selectedMenu={selectedMenu}
+              selectedMenu={currentSelectedMenu}
               date={slotDate}
               key={index}
               availableSlots={manipulatorTimeSlots?.availableSlots || []}

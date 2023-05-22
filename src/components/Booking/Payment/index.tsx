@@ -1,26 +1,31 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowRight from '@icons/arrow-right.svg';
 import PaymentSvg from '@icons/icon_payment.svg';
-import IconTag from '@icons/icon_reservation.svg';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Radio, RadioGroup, Stack, Typography } from '@mui/material';
 import AddCardFields from 'components/Card/AddCardFields';
 import type { AddCardFormValues } from 'components/Card/AddCardFields/schema';
 import schema from 'components/Card/AddCardFields/schema';
-import dayjs from 'dayjs';
-import { useFetch, useMutate, useUser } from 'hooks';
+import { useFetch, useList, useMutate, useUser } from 'hooks';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import type { ICardItem } from 'models/card/interface';
 import cardQuery from 'models/card/query';
-import type { IReservationMenu } from 'models/manipulator/interface';
+import type { ICoupon } from 'models/discount/interface';
+import discountQuery from 'models/discount/query';
+import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type { ITicketOfMenu, ITicketTime } from 'models/ticket/interface';
+import ticketQuery from 'models/ticket/query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NumericFormat } from 'react-number-format';
-import { STEPPER_CONTENT } from 'utils/const';
+import { PAYMENT_MENU_TYPES, STEPPER_CONTENT } from 'utils/const';
 import Helper from 'utils/helpers';
 
+import CouponSelectModal from './CouponSelectModal';
+import DetailMenu from './DetailMenu';
+import MenuType from './MenuType';
+import CouponType from './MenuType/CouponType';
 import styles from './styles';
 
 interface BookingPaymentProps {
@@ -29,6 +34,8 @@ interface BookingPaymentProps {
   endTime?: string;
   handleChangeStep: (step: string) => void;
   onSubmit: (values: Record<string, unknown>) => void;
+  ticketMenu: ITicket | any;
+  ticketTimeList: ITicketTime[];
 }
 
 const BookingPayment: React.FC<BookingPaymentProps> = ({
@@ -37,6 +44,8 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   endTime,
   handleChangeStep,
   onSubmit,
+  ticketMenu,
+  ticketTimeList,
 }) => {
   const { data: currentUser, isFetching } = useUser();
   const { data: cardList, isLoading: isLoadingCard } = useFetch<{
@@ -45,10 +54,30 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     ...cardQuery.cardList,
     enabled: !!currentUser,
   });
-  const [payment, setPayment] = useState(cardList?.items[0]?.id);
 
-  const startTimeDayjs = dayjs(startTime).tz();
-  const endTimeDayjs = dayjs(endTime).tz();
+  const { list: privateCouponsList, isLoading: isPrivateCouponLoading } =
+    useList<ICoupon>({
+      ...discountQuery.getDiscounts({
+        type: 'Private',
+      }),
+    });
+
+  const { list: publicCouponsList, isLoading: isPublicCouponLoading } =
+    useList<ICoupon>({
+      ...discountQuery.getDiscounts({
+        type: 'Public',
+      }),
+    });
+
+  const [payment, setPayment] = useState(cardList?.items[0]?.id);
+  const selectedMenuType = ticketMenu?.ticket?.numberOfSelectedTicket
+    ? PAYMENT_MENU_TYPES.TICKET
+    : PAYMENT_MENU_TYPES.COUPON;
+
+  const [couponSelectVisible, setCouponSelectVisibility] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState<ICoupon | undefined>(
+    undefined,
+  );
 
   const { mutateAsync: getCardToken, isLoading: isGettingToken } = useMutate<
     AddCardFormValues,
@@ -58,6 +87,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     token: string;
     type: string;
   }>({ ...cardQuery.addCard, successMessage: undefined });
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const {
     control,
@@ -73,29 +103,47 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     setPayment(event.target.value);
   };
 
+  const onCouponSelect = (code: string) => {
+    const currentCoupon = [...privateCouponsList, ...publicCouponsList].find(
+      (item) => item.code === code,
+    );
+
+    if (currentCoupon) {
+      setSelectedCoupon(currentCoupon);
+    }
+    setCouponSelectVisibility(false);
+  };
+
   const handleSubmit = async () => {
-    if (isEmpty(cardList?.items)) {
-      const values = getValues();
-      const data = await getCardToken({
-        ...values,
-        card_number: values.card_number.trim(),
-        security_code: values.security_code.trim(),
-      });
-      addCard(
-        { token: data.token, type: 'CARD' },
-        {
-          onSuccess: (response) => {
-            reset();
-            onSubmit({
-              paymentMethod: get(response, 'items[0].id'),
-            });
+    setIsSubmit(true);
+    try {
+      if (isEmpty(cardList?.items)) {
+        const values = getValues();
+        const data = await getCardToken({
+          ...values,
+          card_number: values.card_number.trim(),
+          security_code: values.security_code.trim(),
+        });
+        addCard(
+          { token: data.token, type: 'CARD' },
+          {
+            onSuccess: (response) => {
+              reset();
+              onSubmit({
+                paymentMethod: get(response, 'items[0].id'),
+              });
+            },
           },
-        },
-      );
-    } else {
-      onSubmit({
-        paymentMethod: payment,
-      });
+        );
+      } else {
+        onSubmit({
+          paymentMethod: payment,
+          coupon: selectedCoupon,
+          selectedMenuType,
+        });
+      }
+    } catch {
+      setIsSubmit(false);
     }
   };
 
@@ -120,39 +168,58 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     }
   }, [cardList?.items]);
 
+  const { data } = useFetch<ITicketOfMenu>(
+    ticketQuery.getInfoOfTicket(
+      ticketMenu?.createdById,
+      ticketMenu?._id,
+      selectedMenuType === PAYMENT_MENU_TYPES.TICKET,
+    ),
+  );
+
+  const currentTicketMenu = data
+    ? {
+        ...ticketMenu,
+        ticket: {
+          ...ticketMenu?.ticket,
+          manipulatorNameKana: data?.manipulatorNameKana,
+          salonNameKana: data?.salonNameKana,
+          availableCount: data?.ticket?.availableCount,
+          expiredAt: data?.ticket?.expiredAt,
+        },
+      }
+    : ticketMenu;
+
   return (
     <Stack sx={styles.bookingPaymentWrapper}>
       <Typography color="secondary" fontSize={18} fontWeight="bold">
         予約内容をご確認ください
       </Typography>
-      <Stack direction="row" sx={styles.menuDetailWrapper} gap={12}>
-        <IconTag />
-        <Stack gap={4}>
-          <Typography fontSize={14}>
-            {startTimeDayjs.format('YYYY/MM/DD（ddd）')}
-            {`${startTimeDayjs.format('HH:mm')}～${endTimeDayjs.format(
-              'HH:mm',
-            )}`}
-          </Typography>
-          <Typography fontWeight="bold">
-            {selectedMenu?.name} {selectedMenu?.estimatedTime}分
-          </Typography>
-          <Typography fontSize={14}>
-            {selectedMenu?.estimatedTime}分 /{' '}
-            <NumericFormat
-              value={selectedMenu?.price}
-              thousandSeparator=","
-              suffix="円"
-              displayType="text"
-            />
-          </Typography>
-        </Stack>
-      </Stack>
+
+      {/* Menu detail Info */}
+      <DetailMenu
+        startTime={startTime}
+        endTime={endTime}
+        selectedMenu={selectedMenu}
+        ticketMenu={currentTicketMenu}
+        ticketsTimeList={ticketTimeList}
+      />
+
       <Typography fontSize={14} color="black">
         ※当日、整体院でメニュー変更できます。
         <br />
         ※料金はメニュー変更・オプション追加によって変動する場合があります。
       </Typography>
+
+      {selectedMenuType === PAYMENT_MENU_TYPES.TICKET ? (
+        <MenuType ticketMenu={currentTicketMenu} />
+      ) : (
+        <CouponType
+          onSelectCoupon={setCouponSelectVisibility}
+          coupon={selectedCoupon}
+          onSetCouponSelect={setSelectedCoupon}
+        />
+      )}
+
       <Stack sx={styles.selectPaymentWrapper}>
         <Typography
           color="secondary"
@@ -240,13 +307,27 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         sx={styles.submitBtn}
         disabled={
           (isEmpty(cardList?.items) && !isValid) ||
-          (!isEmpty(cardList?.items) && !payment)
+          (!isEmpty(cardList?.items) && !payment) ||
+          isSubmit
         }
         loading={isGettingToken || isAddingCard}
         onClick={handleSubmit}
       >
         予約を確定する
       </LoadingButton>
+      {couponSelectVisible && (
+        <CouponSelectModal
+          visible={couponSelectVisible}
+          isLoading={isPrivateCouponLoading || isPublicCouponLoading}
+          currentSelectedCouponCode={selectedCoupon?.code}
+          privateCoupons={privateCouponsList}
+          publicCoupons={publicCouponsList}
+          onClose={() => {
+            setCouponSelectVisibility(false);
+          }}
+          onSubmit={onCouponSelect}
+        />
+      )}
     </Stack>
   );
 };

@@ -25,6 +25,9 @@ interface LocationTabItemProps {
   }[];
   onSelectedSymptoms: (value: number[]) => void;
   onSetSelectedLocation: (value: string[]) => void;
+  selectedDefaultLocations: string[];
+  selectedDefaultSymptoms: number[];
+  setSelectedDefaultSymptoms: (value: number[]) => void;
 }
 
 const LocationTabItem = ({
@@ -36,6 +39,9 @@ const LocationTabItem = ({
   symptoms,
   onSelectedSymptoms,
   onSetSelectedLocation,
+  selectedDefaultLocations,
+  selectedDefaultSymptoms,
+  setSelectedDefaultSymptoms,
 }: LocationTabItemProps) => {
   return (
     <Box
@@ -49,6 +55,7 @@ const LocationTabItem = ({
           <LocationList
             locations={locations}
             onSetSelectedLocation={onSetSelectedLocation}
+            selectedDefaultLocations={selectedDefaultLocations}
           />
           <DatePicker
             currentDate={currentDate}
@@ -62,11 +69,13 @@ const LocationTabItem = ({
           <SymptomType
             selectedSymptomType={selectedSymptomType}
             onSetSelectedSymptomType={onSetSelectedSymptomType}
+            setSelectedDefaultSymptoms={setSelectedDefaultSymptoms}
           />
           <SymptomListByType
             symptoms={symptoms}
             selectedSymptomType={selectedSymptomType}
             onSelectedSymptoms={onSelectedSymptoms}
+            selectedDefaultSymptoms={selectedDefaultSymptoms}
           />
         </>
       </TabItem>

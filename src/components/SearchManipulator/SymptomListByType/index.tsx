@@ -15,12 +15,14 @@ interface CommonTagsProps {
   }[];
   selectedSymptomType: number;
   onSelectedSymptoms: (value: number[]) => void;
+  selectedDefaultSymptoms: number[];
 }
 
 const SymptomListByType = ({
   symptoms,
   selectedSymptomType,
   onSelectedSymptoms,
+  selectedDefaultSymptoms,
 }: CommonTagsProps) => {
   const [actives, setActives] = useState<number[]>([]);
   const list = useMemo(() => {
@@ -31,8 +33,12 @@ const SymptomListByType = ({
 
   useEffect(() => {
     // Clear selected tag when changed symptom type
-    setActives([]);
-    onSelectedSymptoms([]);
+    if (selectedDefaultSymptoms.length > 0) {
+      setActives([...selectedDefaultSymptoms]);
+    } else {
+      setActives([]);
+      onSelectedSymptoms([]);
+    }
   }, [symptoms, selectedSymptomType]);
 
   const handleClickTag = (value: number) => {
@@ -45,8 +51,8 @@ const SymptomListByType = ({
 
     // Handle selected tags
     const selectedValue = list
-      .filter((_item, index) => selected.includes(index))
-      .map((item) => item._id);
+      .filter((item) => selected.includes(item._id))
+      .map((_item) => _item._id);
     onSelectedSymptoms(selectedValue);
   };
 
@@ -72,12 +78,12 @@ const SymptomListByType = ({
       <Box height={{ tablet: 200 }} overflow="auto">
         <Box display="flex" rowGap={10} mt={20} columnGap={6}>
           <Box display="inherit" gap="inherit" flexWrap="wrap">
-            {list.map((item, index) => (
+            {list.map((item) => (
               <CommonTags
                 key={item._id}
-                index={index}
+                index={item._id}
                 label={item.symptomName}
-                active={actives.includes(index)}
+                active={actives.includes(item._id)}
                 onClick={handleClickTag}
               />
             ))}

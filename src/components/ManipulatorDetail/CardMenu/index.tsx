@@ -71,23 +71,26 @@ const CardMenu = ({ data }: CardMenuProps) => {
               borderRadius="10px"
               padding="15px 15px 15px 15px"
             >
-              <Grid item xs={12} tablet={5}>
-                <Typography component="p" sx={styles.textStyle}>
-                  {item.name}
-                </Typography>
+              <Grid item xs={12} tablet={8}>
+                <Stack direction={'row'} spacing={12}>
+                  <Typography component="p" sx={styles.textStyle}>
+                    {item.name}{' '}
+                    {!item.timeDisplay && (
+                      <Typography sx={styles.textStyle}>
+                        {item.estimatedTime}分
+                      </Typography>
+                    )}
+                  </Typography>
+                </Stack>
               </Grid>
-              <Grid item xs={12} tablet={7}>
+              <Grid item xs={12} tablet={4}>
                 <Stack
                   direction={'row'}
-                  spacing={5}
                   justifyContent={{ xs: 'start', tablet: 'end' }}
                 >
-                  {item.timeDisplay && (
-                    <Typography sx={styles.textStyle}>
-                      {item.estimatedTime}分
-                    </Typography>
-                  )}
-                  <Typography sx={styles.textStyle}>{item.price}円</Typography>
+                  <Typography sx={styles.textStyle}>
+                    {item.price || item.ticket?.price || 0}円
+                  </Typography>
                 </Stack>
               </Grid>
             </Grid>

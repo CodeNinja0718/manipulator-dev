@@ -2,6 +2,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 const styles = {
   tabsContainer: {
+    mb: 24,
     '& .customTabs': {
       '& .MuiTabs-indicator': {
         left: 'initial !important',

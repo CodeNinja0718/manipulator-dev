@@ -78,12 +78,17 @@ const useList = <TQueryFnData = unknown>(
       ...otherOptions,
     },
   );
+
+  const list = data?.docs || data?.items || [];
+  const total = data?.totalDocs || data?.total || 0;
+  const perPage = data?.limit || data?.perPage || 10;
+
   return {
-    list: data?.docs || [],
-    total: data?.totalDocs || 0,
+    list,
+    total,
     totalPages: data?.totalPages || 0,
     page: data?.page || 1,
-    perPage: data?.limit || 10,
+    perPage,
     isLoading,
     isFetching,
     refetch,

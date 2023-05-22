@@ -7,19 +7,6 @@ const styles: Record<string, SxProps> = {
       tablet: 40,
     },
   },
-  menuDetailWrapper: {
-    padding: 12,
-    border: '2px solid',
-    borderColor: 'secondary.main',
-    borderRadius: '5px',
-    color: 'black',
-    mt: 16,
-    mb: 25,
-    svg: {
-      width: 20,
-      height: 20,
-    },
-  },
   selectPaymentWrapper: {
     mt: 24,
     borderTop: '1px solid',
