@@ -248,6 +248,31 @@ const BookingPage = () => {
     }
   };
 
+  const handleInitTicketBookingReq = (
+    values: Record<string, string>,
+    onFailure: () => void,
+  ) => {
+    const { ticketId, ticketUse } = values;
+
+    const reqMenu = manipulatorMenuList.find(
+      (menu) => menu.ticket?.id === ticketId,
+    );
+
+    if (reqMenu) {
+      const reqTicket = {
+        ...reqMenu.ticket,
+        numberOfSelectedTicket: Number((ticketUse || 1) as string),
+      };
+      setBooking({ menuId: reqMenu._id, ticket: reqTicket });
+      setTicketMenu({
+        ...omit(reqMenu, ['ticket']),
+        ticket: reqTicket,
+      });
+    } else {
+      onFailure();
+    }
+  };
+
   const handleAddTicket = (ticketId: string) => {
     router.push({
       pathname: '/booking/add-ticket',
@@ -285,6 +310,7 @@ const BookingPage = () => {
           handleChangeStep={handleChangeStep}
           onSubmit={handleSubmitStep}
           ticketMenu={ticketMenu}
+          onInitTicketBooking={handleInitTicketBookingReq}
         />
       );
     }

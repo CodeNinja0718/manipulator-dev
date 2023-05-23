@@ -101,7 +101,7 @@ const TicketCard = ({ data }: TicketCardProps) => {
         endIcon={<ArrowRight />}
         sx={styles.btn}
         disabled={timesUse < 1}
-        href={`/booking/${data.manipulatorInfo.manipulatorId}?ticketId=${data.ticketId}&ticketUse=${timesUse}`}
+        href={`/booking/${data.manipulatorInfo.manipulatorId}/slot?ticketId=${data.ticketId}&ticketUse=${timesUse}`}
       >
         回数券を使って予約する
       </Button>

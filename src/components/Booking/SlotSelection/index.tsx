@@ -19,6 +19,10 @@ interface BookingSlotSelectionProps {
   selectedMenu?: IReservationMenu;
   handleChangeStep: (step: string) => void;
   onSubmit: (values: Record<string, unknown>) => void;
+  onInitTicketBooking: (
+    values: Record<string, string>,
+    onFailure: () => void,
+  ) => void;
   ticketMenu: ITicket | any;
 }
 
@@ -26,10 +30,11 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
   selectedMenu,
   handleChangeStep,
   onSubmit,
+  onInitTicketBooking,
   ticketMenu,
 }) => {
   const router = useRouter();
-  const { slug } = router.query;
+  const { slug, ticketId, ticketUse } = router.query;
   const manipulatorId = slug![0] || '';
 
   const [date, setDate] = useState(dayjs().tz().startOf('day'));
@@ -45,10 +50,29 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
   });
 
   useEffect(() => {
-    if (isEmpty(selectedMenu)) {
-      handleChangeStep(STEPPER_CONTENT[0].value);
+    if (router.isReady && isEmpty(selectedMenu)) {
+      if (ticketId) {
+        onInitTicketBooking(
+          {
+            ticketId: ticketId as string,
+            ticketUse: ticketUse as string,
+          },
+          () => {
+            handleChangeStep(STEPPER_CONTENT[0].value);
+          },
+        );
+      } else {
+        handleChangeStep(STEPPER_CONTENT[0].value);
+      }
     }
-  }, [handleChangeStep, selectedMenu]);
+  }, [
+    handleChangeStep,
+    onInitTicketBooking,
+    router.isReady,
+    selectedMenu,
+    ticketId,
+    ticketUse,
+  ]);
 
   const estimatedTime =
     (selectedMenu?.estimatedTime || 0) *
