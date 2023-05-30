@@ -157,7 +157,10 @@ const BookingPage = () => {
     });
   };
 
-  const handleSubmitStep = (values: CreateReservationPayload) => {
+  const handleSubmitStep = (
+    values: CreateReservationPayload,
+    onFailure?: () => void,
+  ) => {
     if (step === STEPPER_CONTENT[2].value && values.paymentMethod) {
       let params = omit(booking, 'ticket', 'couponCode');
       const ticketParams =
@@ -198,6 +201,7 @@ const BookingPage = () => {
           });
           setBooking({});
         },
+        onError: onFailure,
       });
     }
     if (
