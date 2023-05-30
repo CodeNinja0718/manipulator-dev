@@ -1,6 +1,6 @@
 import IconReloadSvg from '@icons/icon_sync.svg';
 import TicketSvg from '@icons/icon_ticket.svg';
-import { Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Stack, SvgIcon, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import isEmpty from 'lodash/isEmpty';
 import type { ITicket } from 'models/manipulator/interface';
@@ -71,15 +71,17 @@ const MenuType = ({ ticketMenu }: IMenuType) => {
               </Typography>
             </Box>
             <Box>
-              <Button
-                size="small"
-                variant="outlined"
-                sx={styles.button}
-                startIcon={<SvgIcon component={IconReloadSvg} inheritViewBox />}
-                onClick={handleBackToSelectMenus}
-              >
-                <span>変更する</span>
-              </Button>
+              <Box sx={styles.button} onClick={handleBackToSelectMenus}>
+                <Typography
+                  fontSize={14}
+                  fontWeight={500}
+                  color="primary"
+                  margin="auto"
+                >
+                  <SvgIcon component={IconReloadSvg} inheritViewBox />
+                  <span>変更する</span>
+                </Typography>
+              </Box>
             </Box>
           </Box>
 

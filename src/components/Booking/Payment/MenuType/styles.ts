@@ -56,16 +56,22 @@ const styles: Record<string, SxProps> = {
     maxWidth: 'auto',
     pl: 0,
     pr: 0,
+    py: 8,
     backgroundColor: 'white',
+    borderRadius: '25px',
+    border: '1px solid rgba(36, 146, 135, 0.5)',
+    boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.16)',
+    justifyContent: 'center',
+    alignItems: 'center',
 
-    '& .MuiButton-startIcon': {
-      position: 'initial',
-      left: 'initial',
-      '& svg': {
-        width: 14,
-        height: 14,
-        mr: 10,
-      },
+    '& svg': {
+      width: 14,
+      height: 14,
+      mr: 10,
+    },
+
+    '&:hover': {
+      backgroundColor: 'rgba(36, 146, 135, 0.04)',
     },
   },
   submitBtn: {
