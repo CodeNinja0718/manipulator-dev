@@ -33,7 +33,7 @@ interface BookingPaymentProps {
   startTime?: string;
   endTime?: string;
   handleChangeStep: (step: string) => void;
-  onSubmit: (values: Record<string, unknown>) => void;
+  onSubmit: (values: Record<string, unknown>, onFailure?: () => void) => void;
   ticketMenu: ITicket | any;
   ticketTimeList: ITicketTime[];
 }
@@ -136,11 +136,16 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
           },
         );
       } else {
-        onSubmit({
-          paymentMethod: payment,
-          coupon: selectedCoupon,
-          selectedMenuType,
-        });
+        onSubmit(
+          {
+            paymentMethod: payment,
+            coupon: selectedCoupon,
+            selectedMenuType,
+          },
+          () => {
+            setIsSubmit(false);
+          },
+        );
       }
     } catch {
       setIsSubmit(false);
