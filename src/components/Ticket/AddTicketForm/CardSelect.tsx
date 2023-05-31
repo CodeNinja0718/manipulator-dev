@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import IconPayment from '@icons/icon_payment.svg';
 import {
   Box,
@@ -10,43 +9,35 @@ import {
 } from '@mui/material';
 import AddCardFields from 'components/Card/AddCardFields';
 import type { AddCardFormValues } from 'components/Card/AddCardFields/schema';
-import schema from 'components/Card/AddCardFields/schema';
-import { useFetch, useUser } from 'hooks';
 import isEmpty from 'lodash/isEmpty';
 import type { ICardItem } from 'models/card/interface';
-import cardQuery from 'models/card/query';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import type { Control } from 'react-hook-form';
 import Helper from 'utils/helpers';
 
 import styles from './styles';
 
 interface CardSelectProps {
   payment: string | undefined;
+  cardList: ICardItem[];
+  isLoading: boolean;
+  control: Control<AddCardFormValues>;
   setPayment: (payment: string | undefined) => void;
 }
 
-const CardSelect = ({ payment, setPayment }: CardSelectProps) => {
-  const { data: currentUser } = useUser();
-
-  const { data: cardList, isLoading: isLoadingCard } = useFetch<{
-    items: ICardItem[];
-  }>({
-    ...cardQuery.cardList,
-    enabled: !!currentUser,
-  });
-
-  const { control } = useForm<AddCardFormValues>({
-    resolver: yupResolver(schema),
-    mode: 'onTouched',
-  });
-
+const CardSelect = ({
+  control,
+  cardList,
+  isLoading,
+  payment,
+  setPayment,
+}: CardSelectProps) => {
   useEffect(() => {
-    if (!isEmpty(cardList?.items)) {
-      setPayment(cardList?.items[0]?.id);
+    if (!isEmpty(cardList)) {
+      setPayment(cardList[0]?.id);
     }
-  }, [cardList?.items, setPayment]);
+  }, [cardList, setPayment]);
 
   const handleChangePayment = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPayment(event.target.value);
@@ -69,7 +60,7 @@ const CardSelect = ({ payment, setPayment }: CardSelectProps) => {
           支払い方法
         </Typography>
       </Box>
-      {isEmpty(cardList?.items) && !isLoadingCard ? (
+      {isEmpty(cardList) && !isLoading ? (
         <>
           <Image
             src="/images/card_brand.webp"
@@ -95,7 +86,7 @@ const CardSelect = ({ payment, setPayment }: CardSelectProps) => {
           value={payment}
           onChange={handleChangePayment}
         >
-          {cardList?.items.map((item) => (
+          {cardList?.map((item) => (
             <Stack
               direction="row"
               alignItems="center"
