@@ -25,7 +25,7 @@ interface Options<TQueryFnData = unknown>
 const useList = <TQueryFnData = unknown>(
   options: Options<TQueryFnData>,
 ): {
-  list: TQueryFnData[];
+  list: TQueryFnData[] | undefined;
   total: number;
   page: number;
   perPage: number;
@@ -79,7 +79,7 @@ const useList = <TQueryFnData = unknown>(
     },
   );
 
-  const list = data?.docs || data?.items || [];
+  const list = data?.docs || data?.items || undefined;
   const total = data?.totalDocs || data?.total || 0;
   const perPage = data?.limit || data?.perPage || 10;
 

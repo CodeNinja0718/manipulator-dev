@@ -40,11 +40,11 @@ const ReservationListPage = () => {
         <ReservationSvg width={24} height={24} />
         予約履歴
       </Typography>
-      {isLoading && (
+      {!list || isLoading ? (
         <Stack height="100%" justifyContent="center">
           <CircularProgress />
         </Stack>
-      )}
+      ) : (
       <Stack gap={40} mb={40} sx={{ maxWidth: 570, width: '100%' }}>
         {list && list.length > 0 ? (
           list.map((item) => <ReservationCard key={item._id} data={item} />)
@@ -60,6 +60,7 @@ const ReservationListPage = () => {
           </Typography>
         )}
       </Stack>
+      )}
       {list && list.length > 0 && totalPages !== 1 && (
         <ListPagination total={total} limit={4} />
       )}
