@@ -2,14 +2,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Stack, Typography } from '@mui/material';
 import Layout from 'components/Layout';
 import { AddTicketForm } from 'components/Ticket';
-import { useFetch, useList, useMutate } from 'hooks';
+import { useFetch, useList, useMutate, useUser } from 'hooks';
 import _pick from 'lodash/pick';
+import type { ICardItem } from 'models/card/interface';
+import cardQuery from 'models/card/query';
 import type { IManipulator } from 'models/manipulator/interface';
 import manipulatorQuery from 'models/manipulator/query';
 import type { IAvailableTicket } from 'models/ticket/interface';
 import ticketQuery from 'models/ticket/query';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -49,7 +51,17 @@ const AddTicketScreen = () => {
       ...ticketQuery.getManipulatorTickets(manipulatorId),
     });
 
-  const { mutateAsync: buyTicketRequest } = useMutate(ticketQuery.buyTicket);
+  const { data: currentUser } = useUser();
+
+  const { data: cardList, isLoading: isLoadingCard } = useFetch<{
+    items: ICardItem[];
+  }>({
+    ...cardQuery.cardList,
+    enabled: !!currentUser,
+  });
+
+  const { mutateAsync: buyTicketRequest, isLoading: isSubmitLoading } =
+    useMutate(ticketQuery.buyTicket);
 
   useEffect(() => {
     if (
@@ -61,11 +73,14 @@ const AddTicketScreen = () => {
     }
   }, [currentTicketId, availableTicketsList, setValue]);
 
+  const [isSubmit, setSubmision] = useState(false);
+
   const handleSubmit = (payment: string) => {
     const selectedTicketId = getValues('ticketId') as string;
 
     if (!payment || !selectedTicketId) return;
 
+    setSubmision(true);
     buyTicketRequest(
       { ticketId: selectedTicketId, paymentMethod: payment },
       {
@@ -78,6 +93,9 @@ const AddTicketScreen = () => {
               slug: [manipulatorId],
             },
           });
+        },
+        onError: () => {
+          setSubmision(false);
         },
       },
     );
@@ -93,9 +111,12 @@ const AddTicketScreen = () => {
       <AddTicketForm
         control={control}
         ticketsList={availableTicketsList}
+        cardList={cardList?.items || []}
+        isCardListLoading={isLoadingCard}
         manipulator={{ ..._pick(manipulatorData, ['name', 'nameKana']) }}
         isLoading={isManiLoading || isTicketLoading}
         onSubmit={handleSubmit}
+        isSubmitLoading={isSubmitLoading || isSubmit}
       />
     </Stack>
   );
