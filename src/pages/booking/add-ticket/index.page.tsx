@@ -110,7 +110,7 @@ const AddTicketScreen = () => {
       </Box>
       <AddTicketForm
         control={control}
-        ticketsList={availableTicketsList}
+        ticketsList={availableTicketsList || []}
         cardList={cardList?.items || []}
         isCardListLoading={isLoadingCard}
         manipulator={{ ..._pick(manipulatorData, ['name', 'nameKana']) }}
