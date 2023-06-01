@@ -42,7 +42,7 @@ const TicketListPage = () => {
         </Stack>
       )}
       <Stack spacing={40} px={{ xs: 0, md: 40 }} width={'100%'} mb={40}>
-        {list.map((item) => (
+        {list?.map((item) => (
           <TicketCard key={item.ticketId} data={item} />
         ))}
         {total === 0 && !isLoading && (
