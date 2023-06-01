@@ -45,21 +45,21 @@ const ReservationListPage = () => {
           <CircularProgress />
         </Stack>
       ) : (
-      <Stack gap={40} mb={40} sx={{ maxWidth: 570, width: '100%' }}>
-        {list && list.length > 0 ? (
-          list.map((item) => <ReservationCard key={item._id} data={item} />)
-        ) : (
-          <Typography
-            fontSize={24}
-            variant="subtitle1"
-            textAlign="center"
-            color="gray"
-            mb={30}
-          >
-            空のリスト
-          </Typography>
-        )}
-      </Stack>
+        <Stack gap={40} mb={40} sx={{ maxWidth: 570, width: '100%' }}>
+          {list && list.length > 0 ? (
+            list.map((item) => <ReservationCard key={item._id} data={item} />)
+          ) : (
+            <Typography
+              fontSize={24}
+              variant="subtitle1"
+              textAlign="center"
+              color="gray"
+              mb={30}
+            >
+              空のリスト
+            </Typography>
+          )}
+        </Stack>
       )}
       {list && list.length > 0 && totalPages !== 1 && (
         <ListPagination total={total} limit={4} />
