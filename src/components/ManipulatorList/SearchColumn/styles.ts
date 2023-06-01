@@ -26,6 +26,9 @@ const styles = {
     color: (theme: Theme) => theme.palette.orangeText,
     padding: { xs: '2px 5px', tablet: '8px 5px' },
     borderRadius: '5px',
+    '&.Mui-disabled': {
+      opacity: 1,
+    },
   },
   listItemText: {
     display: { xs: 'flex', tablet: 'block' },
@@ -36,6 +39,7 @@ const styles = {
     '& svg': {
       fontSize: '20px',
     },
+
     '&.Mui-selected': {
       backgroundColor: '#ffffff',
 
