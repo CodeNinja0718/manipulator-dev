@@ -8,13 +8,13 @@ import theme from 'theme';
 import styles from './styles';
 
 interface ManipulatorCardPhotoProps {
-  data: IManipulator;
+  photos?: IManipulator['photos'];
   width: number;
   height: number;
   isInDetail?: boolean;
 }
 const ManipulatorCardPhoto = ({
-  data,
+  photos,
   width,
   height,
   isInDetail,
@@ -32,10 +32,15 @@ const ManipulatorCardPhoto = ({
     setImage(value);
     setOpen(true);
   };
+
+  if (!photos || !photos.length) {
+    return null;
+  }
+
   return (
     <Box>
       <Box sx={styles.photoWrap}>
-        {data.salon[0]?.photos?.map((item, index) => (
+        {photos.map((item, index) => (
           <Image
             key={`photo-${index}`}
             src={`${item.url || ''}`}
