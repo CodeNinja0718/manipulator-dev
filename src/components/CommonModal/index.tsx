@@ -69,10 +69,13 @@ const CommonModal = ({
           <Box display="flex" justifyContent="center" sx={styles.titleModal}>
             {titleElement || <Typography variant="title">{title}</Typography>}
           </Box>
+
           {/* Close Button */}
           {renderCloseButton(isHideCloseButton, iconClose, onClose)}
+
           {/* Content of Modal */}
           <Box sx={styles.bodyModal}>{children}</Box>
+
           {/* Button */}
           {buttonElement && (
             <Box maxWidth={522} m="auto" mt={40}>
