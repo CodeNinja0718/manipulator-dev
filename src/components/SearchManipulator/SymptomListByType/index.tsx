@@ -37,21 +37,14 @@ const SymptomListByType = ({
       setActives([...selectedDefaultSymptoms]);
     } else {
       setActives([]);
-      onSelectedSymptoms([]);
     }
-  }, [
-    symptoms,
-    selectedSymptomType,
-    selectedDefaultSymptoms,
-    onSelectedSymptoms,
-  ]);
+  }, [symptoms, selectedSymptomType, selectedDefaultSymptoms]);
 
   const handleClickTag = (value: number) => {
     let selected: number[] = [];
     if (actives.indexOf(value) > -1) {
       selected = actives.filter((item) => item !== value);
     } else selected = [...actives, value];
-
     setActives(selected);
 
     // Handle selected tags
