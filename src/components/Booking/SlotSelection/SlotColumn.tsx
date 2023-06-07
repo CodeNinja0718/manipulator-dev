@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import difference from 'lodash/difference';
 import times from 'lodash/times';
 import type { IReservationMenu } from 'models/manipulator/interface';
+import { useEffect, useState } from 'react';
 import { WORK_TIMES } from 'utils/const';
 
 import styles from './styles';
@@ -24,8 +25,21 @@ const SlotColumn: React.FC<SlotColumnProps> = ({
   handleSelectSlot,
   isLoading,
 }) => {
-  const currentDateTime = dayjs().tz();
-  const currentDate = dayjs().tz().startOf('day');
+  const [currentDateTime, setCurrentDateTime] = useState(dayjs().tz());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = dayjs().tz();
+
+      if (now.minute() % 30 === 0 && now.diff(date, 'day') === 0) {
+        setCurrentDateTime(now);
+      }
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [date]);
+
+  const currentDate = currentDateTime.startOf('day');
 
   return (
     <Stack flex="auto">
@@ -49,8 +63,11 @@ const SlotColumn: React.FC<SlotColumnProps> = ({
           .add(Number(timeSplit[0]) || 0, 'h')
           .add(Number(timeSplit[1]) || 0, 'm');
         const menuSlots = times(
-          selectedMenu?.estimatedTime ? selectedMenu.estimatedTime / 30 : 0,
+          selectedMenu?.estimatedTime
+            ? Math.ceil(selectedMenu.estimatedTime / 30)
+            : 0,
         ).map((i) => slotDateTime.add(i ? i * 30 : 0, 'minute').toISOString());
+
         const slotAvailable =
           currentDateTime.isBefore(slotDateTime, 'minute') &&
           availableSlots.includes(slotDateTime.toISOString()) &&
