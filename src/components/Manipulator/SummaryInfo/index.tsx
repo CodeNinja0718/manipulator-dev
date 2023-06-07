@@ -4,6 +4,7 @@ import { Box, IconButton, Stack, Typography } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import type { IManipulator } from 'models/manipulator/interface';
 import Image from 'next/image';
+import { PHOTO_TYPE_VALUE } from 'utils/const';
 
 import styles from './styles';
 
@@ -22,12 +23,16 @@ const ManipulatorSummaryInfo: React.FC<ManipulatorSummaryInfoProps> = ({
   ...props
 }) => {
   const salonInfo = data?.salon[0];
+
+  const avatar = data?.photos?.find(
+    (item) => item.type === PHOTO_TYPE_VALUE.avatar,
+  )?.url;
   return (
     <Stack direction="row" gap={20} {...props}>
       <Box sx={styles.avatarWrapper}>
         <Image
-          src="/icons/default-avatar.svg"
-          alt="Manipulator avatar"
+          src={avatar || '/icons/default-avatar.svg'}
+          alt={data?.name || 'Manipulator avatar'}
           fill
           sizes="10vw"
         />
