@@ -6,6 +6,7 @@ import BackButton from 'components/ManipulatorDetail/BackButton';
 import Review from 'components/ManipulatorDetail/Review';
 import SalonInfo from 'components/ManipulatorDetail/SalonInfo';
 import ManipulatorCardLicences from 'components/ManipulatorList/ManipulatorCard/CardNationalLicences';
+import ManipulatorCardPhoto from 'components/ManipulatorList/ManipulatorCard/CardPhoto';
 import type { IManipulator } from 'models/manipulator/interface';
 import Link from 'next/link';
 import { MENU_MANIPULATOR_DETAIL } from 'utils/const';
@@ -19,8 +20,6 @@ interface ManipulatorDetailProps {
   data?: IManipulator;
 }
 const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
-  // const salonInfo = data?.salon?.[0];
-
   return (
     <Stack
       direction="row"
@@ -92,16 +91,16 @@ const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
           {data && data.nationalLicenses?.length > 0 && (
             <ManipulatorCardLicences data={data} />
           )}
-          {/* {salonInfo && salonInfo.photos?.length > 0 && (
+          {data && data?.photos?.length > 0 && (
             <Box margin="20px 0px">
               <ManipulatorCardPhoto
-                data={data}
+                photos={data?.photos}
                 width={200}
                 height={136}
                 isInDetail={true}
               />
             </Box>
-          )} */}
+          )}
         </Box>
         <Box id="id_2">{data && <CardMenu data={data} />}</Box>
         <Box id="id_3" padding={{ xs: '0px 20px', tablet: 0 }}>
