@@ -96,7 +96,7 @@ const SearchTopPage = () => {
     }
 
     if (
-      // !data.symptoms &&
+      !data.symptoms &&
       !data.areas &&
       !data.stationGroups &&
       !isSkipCondition
