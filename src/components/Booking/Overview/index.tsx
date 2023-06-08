@@ -176,7 +176,7 @@ const BookingOverview: React.FC<BookingOverviewProps> = ({
                 お支払い金額予定
               </Typography>
               <NumericFormat
-                value={totalPrice}
+                value={totalPrice >= 0 ? totalPrice : 0}
                 thousandSeparator=","
                 displayType="text"
                 renderText={(value) => (
