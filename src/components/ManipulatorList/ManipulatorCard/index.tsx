@@ -32,7 +32,11 @@ const ManipulatorCard = ({ data }: ManipulatorCardProps) => {
           <Typography component="p" fontSize="12px" color="graySolid">
             {salonInfo?.access?.length ? salonInfo?.access[0] : ''}
           </Typography>
-          <ManipulatorCardPhoto photos={data?.photos} width={120} height={80} />
+          <ManipulatorCardPhoto
+            photos={data?.photos?.filter((photo) => photo.type === 'pr')}
+            width={120}
+            height={80}
+          />
           {!!data.careerStart && (
             <Box display="flex" marginTop="5px" alignItems="center">
               <Box flex="0 0 75px">
