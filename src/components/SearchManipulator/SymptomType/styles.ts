@@ -12,7 +12,7 @@ const styles = {
     justifyContent: {
       xs: 'flex-start',
       sm: 'space-between',
-      tablet: 'flex-start',
+      // tablet: 'flex-start',
     },
     gap: { xs: 15, tablet: 7 },
     mt: 20,
