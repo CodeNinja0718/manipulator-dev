@@ -65,7 +65,12 @@ const SearchModal = ({
       }
     >
       <Box sx={styles.contentContainer}>
-        <CommonTabs tabs={tabs} active={activeTab} onChangeTab={onChangeTab} />
+        <CommonTabs
+          tabs={tabs}
+          active={activeTab}
+          onChangeTab={onChangeTab}
+          isShowTabs
+        />
       </Box>
     </CommonModal>
   );

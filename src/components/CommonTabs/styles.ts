@@ -13,6 +13,7 @@ const styles = {
   tabList: {
     border: 'none',
     position: 'relative',
+    mb: 28,
     '& .MuiTabs-flexContainer': {
       display: 'flex',
       justifyContent: 'center',
@@ -75,7 +76,6 @@ const styles = {
   contentContainer: {
     overflow: 'auto',
     maxHeight: { xs: '44vh', tablet: '51vh' },
-    mt: 28,
   },
 } as Record<string, SxProps<Theme>>;
 
