@@ -94,7 +94,7 @@ const ManipulatorDetail = ({ data }: ManipulatorDetailProps) => {
           {data && data?.photos?.length > 0 && (
             <Box margin="20px 0px">
               <ManipulatorCardPhoto
-                photos={data?.photos}
+                photos={data.photos.filter((photo) => photo.type === 'pr')}
                 width={200}
                 height={136}
                 isInDetail={true}
