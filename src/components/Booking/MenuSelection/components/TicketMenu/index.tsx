@@ -17,6 +17,7 @@ interface IMenuSelection extends IReservationMenu {
   onAddTicket: () => void;
   onSelectedTicketOfMenu: (value: number | any) => void;
   selectedMenu: string | any;
+  currentUser?: any;
 }
 
 const TicketMenu: React.FC<IMenuSelection> = ({
@@ -31,6 +32,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   onSelectedTicketOfMenu,
   createdById,
   selectedMenu,
+  currentUser,
 }) => {
   const numberOfTicketRef = useRef<HTMLInputElement>(null);
   const handleGetLabel = (item: string) => {
@@ -85,7 +87,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   };
 
   const { data, fetchStatus } = useFetch<ITicketOfMenu>(
-    ticketQuery.getInfoOfTicket(createdById, _id, true),
+    ticketQuery.getInfoOfTicket(createdById, _id, true, currentUser?.id),
   );
   const availableCount = data?.ticket?.availableCount ?? 0;
 

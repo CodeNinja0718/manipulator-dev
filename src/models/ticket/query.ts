@@ -1,6 +1,5 @@
 const ticketQuery = {
   getTickets: {
-    staleTime: Infinity,
     apiUrl: '/coupon/customer/tickets',
     queryKey: ['currentUser', 'ticket-list'],
   },
@@ -8,6 +7,7 @@ const ticketQuery = {
     manipulatorId: string | any,
     menuId: string | any,
     isTicket: boolean,
+    userId: any,
   ) => ({
     apiUrl: `/coupon/customer/tickets/${manipulatorId}/menu/${menuId}`,
     queryKey: [
@@ -17,7 +17,7 @@ const ticketQuery = {
       manipulatorId,
       menuId,
     ],
-    enabled: !!manipulatorId && !!menuId && isTicket,
+    enabled: !!manipulatorId && !!menuId && isTicket && !!userId,
   }),
   getManipulatorTickets: (manipulatorId: string) => ({
     apiUrl: `/coupon/customer/tickets/${manipulatorId}`,
