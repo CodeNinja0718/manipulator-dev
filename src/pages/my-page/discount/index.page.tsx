@@ -16,7 +16,8 @@ import styles from './styles';
 
 const DiscountListPage = () => {
   const router = useRouter();
-  const { type = PRIVATE_COUPON, page } = router.query;
+  // const { type = PRIVATE_COUPON, page } = router.query;
+  const { type = PUBLIC_COUPON, page } = router.query;
 
   const { list, perPage, total, isLoading } = useList<ICoupon>({
     ...discountQuery.getDiscounts({
@@ -78,6 +79,7 @@ const DiscountListPage = () => {
         active={
           type === PRIVATE_COUPON ? CouponType.PRIVATE : CouponType.PUBLIC
         }
+        // active={CouponType.PUBLIC}
         onChangeTab={handleChangeTab}
       />
       {totalPages > 1 && <ListPagination total={total} limit={4} />}

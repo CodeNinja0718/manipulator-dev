@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import styles from './styles';
@@ -12,17 +12,17 @@ interface CommonTabsProps {
 const CommonTabs = ({
   tabs = [],
   active = 0,
-  onChangeTab,
-}: CommonTabsProps) => {
+}: // onChangeTab,
+CommonTabsProps) => {
   const [value, setValue] = useState(0);
   useEffect(() => {
     setValue(active);
   }, [active]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-    if (onChangeTab) onChangeTab(newValue);
-  };
+  // const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  //   setValue(newValue);
+  //   if (onChangeTab) onChangeTab(newValue);
+  // };
 
   const currentContent = useMemo(() => {
     return tabs.filter((item, index) => index === value) || [];
@@ -30,7 +30,7 @@ const CommonTabs = ({
 
   return (
     <Box sx={styles.tabsContainer} className="wrapperTab">
-      <Box sx={styles.tabList} className="customTabs">
+      {/* <Box sx={styles.tabList} className="customTabs">
         <Tabs value={value} onChange={handleChange}>
           {tabs.map((item, index) => (
             <Tab
@@ -40,8 +40,8 @@ const CommonTabs = ({
             />
           ))}
         </Tabs>
-      </Box>
-      <Box sx={styles.underline} className="underlineCustom"></Box>
+      </Box> */}
+      {/* <Box sx={styles.underline} className="underlineCustom"></Box>
       {/* Current Component */}
       {currentContent && (
         <Box sx={styles.contentContainer} className="contentTab">
