@@ -1,7 +1,7 @@
 import AutonomicNervesIcon from '@icons/autonomic_nerves.svg';
 import HipJoinKneeFootIcon from '@icons/hip_join_knee_foot.svg';
 import NeckShoulderIcon from '@icons/neck_shoulder.svg';
-import OtherSymptomsIcon from '@icons/other_symptoms.svg';
+// import OtherSymptomsIcon from '@icons/other_symptoms.svg';
 import SportsInjurIcon from '@icons/sports_injur.svg';
 import WaistIcon from '@icons/waist.svg';
 
