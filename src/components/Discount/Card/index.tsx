@@ -10,7 +10,10 @@ interface DiscountCardProps {
 }
 
 const DiscountCard = ({ data }: DiscountCardProps) => {
-  const expiredDate = dayjs(data.expiredAt).format(DateFormat.YEAR_MONTH_DATE);
+  const expiredDate = data.expiredAt
+    ? dayjs(data.expiredAt).format(DateFormat.YEAR_MONTH_DATE)
+    : null;
+
   return (
     <Box sx={styles.ticketWrapper}>
       <Box sx={styles.header}>
@@ -19,22 +22,27 @@ const DiscountCard = ({ data }: DiscountCardProps) => {
             {`期間限定 ${data.amount}円クーポン`}
           </Typography>
         </Box>
-        <Box sx={styles.headerBellow}>
-          <Stack spacing={10} direction={'row'}>
-            <Typography fontSize={14}>{`有効期限：${expiredDate}`}</Typography>
-          </Stack>
-        </Box>
+        {expiredDate && (
+          <Box sx={styles.headerBellow}>
+            <Stack spacing={10} direction={'row'}>
+              <Typography fontSize={14}>
+                {`有効期限：${expiredDate}`}
+              </Typography>
+            </Stack>
+          </Box>
+        )}
       </Box>
       <Stack spacing={6} sx={styles.contentWrapper}>
         <Typography
           sx={styles.title}
         >{`支払額から${data.amount}円OFF`}</Typography>
-        <Typography fontSize={14}>
+        {/* <Typography fontSize={14}>
           {`※${data.amount}円以上のメニューにご利用いただけます。`}
         </Typography>
         <Typography fontSize={14}>
           ※お一人様、一回限り有効となります。
-        </Typography>
+        </Typography> */}
+        <Typography fontSize={14}>{data.description}</Typography>
       </Stack>
     </Box>
   );
