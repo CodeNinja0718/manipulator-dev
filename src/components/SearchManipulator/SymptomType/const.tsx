@@ -41,11 +41,11 @@ export const FILTER_ITEMS = [
     viewBox: '0 0 54 49',
     url: '/icons/waist.svg',
   },
-  {
-    _id: 6,
-    icon: OtherSymptomsIcon,
-    label: `その他`,
-    viewBox: '0 0 53.297 55.182',
-    url: '/icons/other_symptoms.svg',
-  },
+  // {
+  //   _id: 6,
+  //   icon: OtherSymptomsIcon,
+  //   label: `その他`,
+  //   viewBox: '0 0 53.297 55.182',
+  //   url: '/icons/other_symptoms.svg',
+  // },
 ];
