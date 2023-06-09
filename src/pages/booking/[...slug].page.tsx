@@ -23,6 +23,7 @@ import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
+import type { MouseEventHandler } from 'react';
 import { useMemo, useState } from 'react';
 import { PAYMENT_MENU_TYPES, STEPPER_CONTENT } from 'utils/const';
 import queryClient, { fetchData } from 'utils/queryClient';
@@ -117,12 +118,17 @@ const BookingPage = () => {
       shallow?: boolean;
       replace?: boolean;
       content: string;
+      onClick?: MouseEventHandler<HTMLAnchorElement>;
     }
   > = {
     menu: {
       href: `/manipulator/${manipulatorId}`,
       shallow: false,
       content: '整体師詳細に戻る',
+      onClick: (event) => {
+        event.preventDefault();
+        router.back();
+      },
     },
     slot: {
       href: {
@@ -134,6 +140,12 @@ const BookingPage = () => {
       replace: true,
       shallow: true,
       content: 'メニュー選択に戻る',
+      onClick: (event) => {
+        if (router.query.ticketId) {
+          event.preventDefault();
+          router.back();
+        }
+      },
     },
     confirm: {
       href: {
@@ -357,6 +369,7 @@ const BookingPage = () => {
         shallow={backNavigateContent[step]?.shallow}
         replace={backNavigateContent[step]?.replace}
         sx={styles.backNavigate}
+        onClick={backNavigateContent[step]?.onClick}
       >
         <ArrowLeftIcon />
         {backNavigateContent[step]?.content}

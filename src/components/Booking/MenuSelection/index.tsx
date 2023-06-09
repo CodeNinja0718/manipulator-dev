@@ -16,6 +16,7 @@ interface BookingMenuSelectionProps {
   onSubmit: (values: Record<string, unknown>) => void;
   onSetTicketMenu: (values: ITicket | any) => void;
   onAddTicket: (ticketId: string) => void;
+  currentUser?: any;
 }
 
 const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
@@ -25,6 +26,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
   onSetTicketMenu,
   onAddTicket,
   ticketMenu,
+  currentUser,
 }) => {
   const [menuId, setMenuId] = useState(initialMenu);
   const selectedMenu = useMemo(
@@ -100,6 +102,7 @@ const BookingMenuSelection: React.FC<BookingMenuSelectionProps> = ({
                   selectedMenu={selectedMenu?.[0]?.ticket?.id}
                   onAddTicket={() => onAddTicket(menu?.ticket?.id || '')}
                   onSelectedTicketOfMenu={handleSelectedTicketOfMenu}
+                  currentUser={currentUser}
                 />
               ) : (
                 <DefaultMenu {...menu} />
