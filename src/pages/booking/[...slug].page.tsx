@@ -93,6 +93,11 @@ const BookingPage = () => {
     staleTime: 1000 * 60 * 2,
   });
 
+  const { data: manipulatorData } = useFetch<IManipulator>({
+    ...manipulatorQuery.detailManiplator(manipulatorId),
+    enabled: false,
+  });
+
   const [overviewBooking, setOverviewBooking] = useState<
     CreateReservationPayload & {
       menu?: IReservationMenu;
@@ -380,7 +385,7 @@ const BookingPage = () => {
         sx={styles.bookingContentWrapper}
       >
         <ManipulatorSummaryInfo
-          data={manipulatorTimeSlots?.manipulator}
+          data={manipulatorData}
           className="manipulator-info"
         />
         <Stack className="step-content">
@@ -413,6 +418,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
     await fetchData({
       ...manipulatorQuery.manipulatorMenus(manipulatorId),
+      staleTime: 1000 * 60 * 2,
+    });
+
+    await fetchData({
+      ...manipulatorQuery.detailManiplator(manipulatorId),
       staleTime: 1000 * 60 * 2,
     });
 
