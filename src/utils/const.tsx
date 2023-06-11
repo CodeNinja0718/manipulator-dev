@@ -304,3 +304,5 @@ export const MENU_TYPES = [
   { value: MENU_TYPES_KEYS.ONE_TIME, label: '単発' },
   { value: MENU_TYPES_KEYS.COUPON, label: '回数券利用' },
 ];
+
+export const SCHEDULE_DURATION = 30;

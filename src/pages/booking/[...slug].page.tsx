@@ -81,8 +81,7 @@ const BookingPage = () => {
   }>({
     ...manipulatorQuery.manipulatorTimeSlots({
       manipulatorId,
-      startTime: dayjs().tz().startOf('day').toISOString(),
-      endTime: dayjs().tz().startOf('day').add(7, 'day').toISOString(),
+      date: dayjs().tz().startOf('day').toISOString(),
     }),
     enabled: false,
     staleTime: 1000 * 60 * 2,

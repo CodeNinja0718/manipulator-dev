@@ -44,8 +44,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
   }>({
     ...manipulatorQuery.manipulatorTimeSlots({
       manipulatorId,
-      startTime: date.toISOString(),
-      endTime: date.add(7, 'day').toISOString(),
+      date: date.toISOString(),
     }),
   });
 

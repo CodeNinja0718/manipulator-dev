@@ -3,13 +3,13 @@
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import dayjs from 'dayjs';
 import type { IListItem } from 'hooks/types';
-import { get, map } from 'lodash';
+import { get, isEmpty, map } from 'lodash';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import process from 'process';
 import type { ToastContent, ToastOptions } from 'react-toastify';
 import { toast } from 'react-toastify';
 
-import { FEATURES } from './const';
+import { DateFormat, FEATURES, SCHEDULE_DURATION, WORK_TIMES } from './const';
 
 const Helper = {
   getWebCookie: (
@@ -159,6 +159,132 @@ const Helper = {
     const countExp = expDay.diff(currentDay, 'day');
     const isWarningExp = countExp <= 30;
     return isWarningExp;
+  },
+  getValidDate: (date?: string | string[], dayAdded?: number) => {
+    if (
+      date &&
+      typeof date === 'string' &&
+      dayjs(date, DateFormat.YEAR_MONTH_DATE_DASH).isValid()
+    ) {
+      const currentDate = dayjs(date, DateFormat.YEAR_MONTH_DATE_DASH);
+      if (typeof dayAdded === 'number') {
+        return currentDate
+          .add(dayAdded, 'day')
+          .format(DateFormat.YEAR_MONTH_DATE_DASH);
+      }
+      return currentDate.format(DateFormat.YEAR_MONTH_DATE_DASH);
+    }
+    return dayjs().format(DateFormat.YEAR_MONTH_DATE_DASH);
+  },
+  getDateTimeByDuration: (value: string | number | Date | dayjs.Dayjs) => {
+    let result = dayjs(value);
+
+    if (
+      Number(dayjs(value).tz().format('mm')) > 0 &&
+      (Number(dayjs(value).tz().format('mm')) < SCHEDULE_DURATION ||
+        Number(dayjs(value).tz().format('mm')) < SCHEDULE_DURATION * 2)
+    ) {
+      let duration = SCHEDULE_DURATION;
+      if (Number(dayjs(value).tz().format('mm')) < SCHEDULE_DURATION)
+        duration = SCHEDULE_DURATION;
+      if (
+        Number(dayjs(value).tz().format('mm')) > SCHEDULE_DURATION &&
+        Number(dayjs(value).tz().format('mm')) < SCHEDULE_DURATION * 2
+      )
+        duration = SCHEDULE_DURATION * 2;
+      result = dayjs(value).minute(duration);
+
+      result = dayjs(value).minute(SCHEDULE_DURATION);
+    }
+    return result;
+  },
+  getTimeSlot: (
+    res: {
+      startTime: string;
+      endTime: string;
+    }[],
+  ) => {
+    const result = res || [];
+    const date = result?.[0]?.startTime;
+    const validDate = Helper.getValidDate(date);
+
+    return result.map((item: any) => {
+      // Get slots time
+      let slotsTime = [
+        {
+          0: dayjs
+            .utc(item?.startTime)
+            .tz()
+            .format(DateFormat.YEAR_MONTH_DATE_HOUR_DASH),
+          1: dayjs
+            .utc(item?.endTime)
+            .tz()
+            .format(DateFormat.YEAR_MONTH_DATE_HOUR_DASH),
+        },
+      ];
+
+      // Format slotsTime
+      if (!isEmpty(slotsTime)) {
+        let formatSlotsTime:
+          | string[]
+          | number[]
+          | Date[]
+          | dayjs.Dayjs[]
+          | any = [];
+
+        slotsTime?.forEach((ele) => {
+          const startTimeByDuration = Helper.getDateTimeByDuration(
+            dayjs(Object.assign([], ele)?.[0]),
+          );
+          const endTimeByDuration = Helper.getDateTimeByDuration(
+            dayjs(Object.assign([], ele)?.[1]),
+          );
+          formatSlotsTime = [startTimeByDuration, endTimeByDuration];
+        });
+
+        if (!isEmpty(formatSlotsTime)) {
+          slotsTime = [
+            {
+              0: formatSlotsTime[0].format(
+                DateFormat.YEAR_MONTH_DATE_HOUR_DASH,
+              ),
+              1: formatSlotsTime[1].format(
+                DateFormat.YEAR_MONTH_DATE_HOUR_DASH,
+              ),
+            },
+          ];
+        }
+      }
+
+      // Render Slot Time List
+      let slotTimes: any[] = [];
+
+      if (!isEmpty(slotsTime)) {
+        const slotsTimeIndex = Object.assign([], slotsTime?.[0]).map(
+          (el: any) => {
+            return WORK_TIMES.indexOf(el.split(' ')?.[1]);
+          },
+        );
+
+        const slotTimeList = WORK_TIMES.filter(
+          (_item, index) =>
+            index >= (slotsTimeIndex?.[0] || 0) &&
+            index <= (slotsTimeIndex?.[1] || WORK_TIMES.length - 1),
+        ).filter(Boolean);
+
+        slotTimes = slotTimeList
+          .filter((_item, index) => index !== slotTimeList.length - 1)
+          .map((_item) => {
+            return dayjs
+              .utc(
+                `${validDate} ${_item}`,
+                DateFormat.YEAR_MONTH_DATE_HOUR_DASH,
+              )
+              .toISOString();
+          });
+      }
+      return slotTimes;
+    });
   },
 };
 

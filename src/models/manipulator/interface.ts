@@ -72,6 +72,7 @@ export interface Address {
   prefectureName: string;
 }
 export interface IManipulator {
+  availableTimes: never[];
   _id: string;
   isFavorite?: boolean;
   timeSlots: string[];

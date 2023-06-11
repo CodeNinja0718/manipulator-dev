@@ -6,13 +6,19 @@ import dayjs from 'dayjs';
 import type { IManipulator, Menu } from 'models/manipulator/interface';
 import Link from 'next/link';
 import * as React from 'react';
+import Helper from 'utils/helpers';
 
 import styles from './styles';
 
 interface CardMenuAndFooterProps {
   data: IManipulator;
 }
+
 const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
+  const timeSlots = Helper.getTimeSlot(data?.availableTimes)
+    .filter(Boolean)
+    .flat(1);
+
   return (
     <Box>
       {data.menus?.length > 0 && (
@@ -77,18 +83,22 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
               </Stack>
             </Box>
           ))}
-          {data.timeSlots?.length > 0 && (
+          {timeSlots?.length > 0 && (
             <Box sx={styles.reservableTimeBox}>
               <Typography
                 component="p"
                 sx={styles.textStyle}
                 marginBottom="10px"
               >
-                {<FormatDate dateString={data.timeSlots[0]!} />}
+                {
+                  <FormatDate
+                    dateString={dayjs.utc(timeSlots?.[0]).toISOString()}
+                  />
+                }
                 の予約可能時間
               </Typography>
               <Box sx={styles.reservableTimeWrap}>
-                {data.timeSlots.map((item: string, index: number) => (
+                {timeSlots.map((item: string, index: number) => (
                   <Button
                     sx={styles.labelItem}
                     color={'inherit'}
@@ -98,7 +108,7 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
                   >
                     {
                       <FormatDate
-                        dateString={dayjs.utc(item).tz()}
+                        dateString={dayjs.utc(item)}
                         formatValue="HH:mm"
                       />
                     }
