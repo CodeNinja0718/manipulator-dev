@@ -294,6 +294,13 @@ const BookingPage = () => {
   };
 
   const handleAddTicket = (ticketId: string) => {
+    if (!currentUser?.id) {
+      router.push({
+        pathname: '/login',
+      });
+      return;
+    }
+
     router.push({
       pathname: '/booking/add-ticket',
       query: {
