@@ -294,7 +294,7 @@ const BookingPage = () => {
   };
 
   const handleAddTicket = (ticketId: string) => {
-    if (!currentUser?.id) {
+    if (!currentUser) {
       router.push({
         pathname: '/login',
       });
