@@ -49,7 +49,7 @@ const ManipulatorSummaryInfo: React.FC<ManipulatorSummaryInfoProps> = ({
           color="black"
           marginBottom={4}
         >
-          {salonInfo?.name}
+          {data?.name}
         </Typography>
         <Typography fontSize={14} fontWeight="bold">
           {salonInfo?.name}
