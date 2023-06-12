@@ -9,7 +9,13 @@ import process from 'process';
 import type { ToastContent, ToastOptions } from 'react-toastify';
 import { toast } from 'react-toastify';
 
-import { DateFormat, FEATURES, SCHEDULE_DURATION, WORK_TIMES } from './const';
+import {
+  DateFormat,
+  FEATURES,
+  SCHEDULE_DURATION,
+  WORK_TIMES,
+  WORK_TIMES_JS,
+} from './const';
 
 const Helper = {
   getWebCookie: (
@@ -199,10 +205,12 @@ const Helper = {
     return result;
   },
   getTimeSlot: (
-    res: {
-      startTime: string;
-      endTime: string;
-    }[],
+    res:
+      | {
+          startTime: string;
+          endTime: string;
+        }[]
+      | any,
   ) => {
     const result = res || [];
     const date = result?.[0]?.startTime;
@@ -266,10 +274,11 @@ const Helper = {
           },
         );
 
-        const slotTimeList = WORK_TIMES.filter(
-          (_item, index) =>
+        const slotTimeList = WORK_TIMES.map(
+          (_item: any, index: number) =>
             index >= (slotsTimeIndex?.[0] || 0) &&
-            index <= (slotsTimeIndex?.[1] || WORK_TIMES.length - 1),
+            index <= (slotsTimeIndex?.[1] || WORK_TIMES.length - 1) &&
+            WORK_TIMES_JS[index],
         ).filter(Boolean);
 
         slotTimes = slotTimeList

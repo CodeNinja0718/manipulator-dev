@@ -108,7 +108,7 @@ const CardMenuAndFooter = ({ data }: CardMenuAndFooterProps) => {
                   >
                     {
                       <FormatDate
-                        dateString={dayjs.utc(item)}
+                        dateString={dayjs.utc(item).tz()}
                         formatValue="HH:mm"
                       />
                     }

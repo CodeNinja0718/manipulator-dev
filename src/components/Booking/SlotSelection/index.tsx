@@ -3,6 +3,7 @@ import ArrowRight from '@icons/arrow-right.svg';
 import { Box, LinearProgress, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useFetch } from 'hooks';
+import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import times from 'lodash/times';
 import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
@@ -10,6 +11,7 @@ import manipulatorQuery from 'models/manipulator/query';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { STEPPER_CONTENT } from 'utils/const';
+import Helper from 'utils/helpers';
 
 import SlotColumn from './SlotColumn';
 import styles from './styles';
@@ -40,7 +42,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
   const [date, setDate] = useState(dayjs().tz().startOf('day'));
 
   const { data: manipulatorTimeSlots, isLoading } = useFetch<{
-    availableSlots: string[];
+    availableTimes: string[];
   }>({
     ...manipulatorQuery.manipulatorTimeSlots({
       manipulatorId,
@@ -90,6 +92,12 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
         .toISOString(),
     });
   };
+
+  const availableSlots = Helper.getTimeSlot(
+    get(manipulatorTimeSlots, 'availableTimes', []),
+  )
+    .filter(Boolean)
+    .flat(1);
 
   return (
     <Stack sx={styles.bookingSlotWrapper}>
@@ -146,7 +154,7 @@ const BookingSlotSelection: React.FC<BookingSlotSelectionProps> = ({
               selectedMenu={currentSelectedMenu}
               date={slotDate}
               key={index}
-              availableSlots={manipulatorTimeSlots?.availableSlots || []}
+              availableSlots={availableSlots || []}
               handleSelectSlot={handleSelectSlot}
               isLoading={isLoading}
             />
