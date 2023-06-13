@@ -21,6 +21,9 @@ const LocationList = ({
 
   useEffect(() => {
     setSelected([...selectedDefaultLocations]);
+    onSetSelectedLocation([...selectedDefaultLocations]);
+    // It will loop forever if depend onSetSelectedLocation
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDefaultLocations]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
