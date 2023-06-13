@@ -1,7 +1,7 @@
 import type { Gender } from 'utils/type';
 
 export interface ICustomer {
-  id: string;
+  _id: string;
   name: string;
   nameKana: string;
   phone: string;

@@ -86,11 +86,9 @@ const BookingPage = () => {
     enabled: false,
     staleTime: 1000 * 60 * 2,
   });
-  const { data: manipulatorMenus } = useFetch<{ docs: IReservationMenu[] }>({
-    ...manipulatorQuery.manipulatorMenus(manipulatorId),
-    enabled: false,
-    staleTime: 1000 * 60 * 2,
-  });
+  const { data: manipulatorMenus } = useFetch<{ docs: IReservationMenu[] }>(
+    manipulatorQuery.manipulatorMenus(manipulatorId),
+  );
 
   const { data: manipulatorData } = useFetch<IManipulator>({
     ...manipulatorQuery.detailManiplator(manipulatorId),
@@ -353,6 +351,7 @@ const BookingPage = () => {
         onSubmit={handleSubmitStep}
         onSetTicketMenu={setTicketMenu}
         onAddTicket={handleAddTicket}
+        currentUser={currentUser}
       />
     );
   };

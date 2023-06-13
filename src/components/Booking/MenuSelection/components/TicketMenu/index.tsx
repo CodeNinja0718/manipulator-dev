@@ -87,7 +87,7 @@ const TicketMenu: React.FC<IMenuSelection> = ({
   };
 
   const { data, fetchStatus } = useFetch<ITicketOfMenu>(
-    ticketQuery.getInfoOfTicket(createdById, _id, true, currentUser?.id),
+    ticketQuery.getInfoOfTicket(createdById, _id, true, currentUser?._id),
   );
   const availableCount = data?.ticket?.availableCount ?? 0;
 
