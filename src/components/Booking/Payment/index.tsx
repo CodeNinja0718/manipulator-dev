@@ -55,14 +55,14 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
     enabled: !!currentUser,
   });
 
-  const { list: privateCouponsList, isLoading: isPrivateCouponLoading } =
+  const { list: privateCouponsList = [], isLoading: isPrivateCouponLoading } =
     useList<ICoupon>({
       ...discountQuery.getDiscounts({
         type: 'Private',
       }),
     });
 
-  const { list: publicCouponsList, isLoading: isPublicCouponLoading } =
+  const { list: publicCouponsList = [], isLoading: isPublicCouponLoading } =
     useList<ICoupon>({
       ...discountQuery.getDiscounts({
         type: 'Public',
@@ -178,6 +178,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
       ticketMenu?.createdById,
       ticketMenu?._id,
       selectedMenuType === PAYMENT_MENU_TYPES.TICKET,
+      currentUser?._id,
     ),
   );
 
