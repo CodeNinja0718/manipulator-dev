@@ -85,11 +85,9 @@ const SearchColumn = () => {
     return dateCondition ? <FormatDate dateString={dateCondition} /> : '';
   }, [dateCondition]);
 
-  const handleSetActiveTab = (value: number) => setActiveTab(value);
-
   const handleOpenSearch = React.useCallback(() => {
     setOpen(true);
-    handleSetActiveTab(SearchTopPageType.LOCATION);
+    setDisabledSubmit(false);
   }, []);
 
   const handleSetSelectedSymptomType = (value: number) =>
@@ -169,7 +167,7 @@ const SearchColumn = () => {
 
     // Disable Button
     setDisabledSubmit(true);
-
+    setOpen(false);
     router.push(`${Helper.parseURLByParams(data, '/manipulator')}`);
   };
 
@@ -180,14 +178,23 @@ const SearchColumn = () => {
 
         setSelectedDefaultLocations(DefaultAreas);
         setSelectedLocation(DefaultAreas);
+        setActiveTab(SearchTopPageType.LOCATION);
+      } else {
+        setSelectedDefaultLocations([]);
+        setSelectedLocation([]);
       }
+
       if (defaultSymptoms) {
         const DefaultSymptoms: number[] = (defaultSymptoms as string)
           .split(',')
           .map((item) => Number(item));
         setSelectedDefaultSymptoms(DefaultSymptoms);
         setSelectedSymptom(DefaultSymptoms);
+      } else {
+        setSelectedDefaultSymptoms([]);
+        setSelectedSymptom([]);
       }
+
       if (defaultStationGroups) {
         const DefaultStationGroups: string[] = (
           defaultStationGroups as string
@@ -195,10 +202,11 @@ const SearchColumn = () => {
         setSelectedDefaultStations(DefaultStationGroups);
         setSelectedStation(DefaultStationGroups);
         setActiveTab(SearchTopPageType.STATION);
-
         setSelectedLine(Number(defaultLine));
+      } else {
+        setSelectedDefaultStations([]);
+        setSelectedStation([]);
       }
-      handleOpenSearch();
     }
 
     if (defaultDate && !Array.isArray(defaultDate)) {
@@ -210,7 +218,6 @@ const SearchColumn = () => {
     defaultStationGroups,
     defaultSymptoms,
     defaultLine,
-    handleOpenSearch,
   ]);
 
   return (

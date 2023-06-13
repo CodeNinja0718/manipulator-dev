@@ -38,6 +38,9 @@ const SymptomListByType = ({
     } else {
       setActives([]);
     }
+
+    // It will loop forever if depend onSelectedSymptoms
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [symptoms, selectedSymptomType, selectedDefaultSymptoms]);
 
   const handleClickTag = (value: number) => {
