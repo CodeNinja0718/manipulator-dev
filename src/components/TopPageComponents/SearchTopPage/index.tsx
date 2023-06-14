@@ -80,7 +80,6 @@ const SearchTopPage = () => {
     commonQuery.stationLineList(),
   );
   const handleSubmit = (isSkipCondition?: boolean) => {
-    setOpen(false);
     const data: any = {
       symptoms: selectedSymptom.join(),
       date: currentDate,
