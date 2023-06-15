@@ -13,6 +13,8 @@ const styles: Record<string, SxProps<Theme>> = {
       position: 'absolute',
       top: 10,
       left: 9,
+      borderRadius: '50%',
+      objectFit: 'cover',
     },
     '.manipulative-info': {
       height: 40,

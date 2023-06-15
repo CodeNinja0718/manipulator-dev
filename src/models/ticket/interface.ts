@@ -1,4 +1,5 @@
 import type dayjs from 'dayjs';
+import type { Photo } from 'models/manipulator/interface';
 
 export interface ITicketItem {
   ticketId: string;
@@ -14,6 +15,7 @@ export interface ITicketItem {
     manipulatorId: string;
     manipulatorName: string;
     manipulatorNameKana: string;
+    photos: Photo[];
   };
 }
 

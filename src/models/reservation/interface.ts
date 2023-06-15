@@ -1,4 +1,5 @@
 import type { ICoupon } from 'models/discount/interface';
+import type { Photo } from 'models/manipulator/interface';
 
 interface ITicket {
   expiryMonth: number;
@@ -52,6 +53,7 @@ export interface IReservationItem {
     manipulatorId: string;
     name: string;
     nameKana: string;
+    photos: Photo[];
   };
   salonInfo: {
     salonId: string;

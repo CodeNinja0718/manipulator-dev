@@ -17,6 +17,13 @@ const TicketCard = ({ data }: TicketCardProps) => {
     return Helper.checkExpTicketWarning(data.expiredAt);
   }, [data.expiredAt]);
 
+  const avatar = useMemo(() => {
+    return (
+      data.manipulatorInfo.photos?.find((item) => item.type === 'avatar')
+        ?.url || '/icons/default-avatar.svg'
+    );
+  }, [data]);
+
   return (
     <Box sx={styles.ticketWrapper}>
       <Box sx={styles.header}>
@@ -55,7 +62,7 @@ const TicketCard = ({ data }: TicketCardProps) => {
           <Stack direction={'row'} spacing={12} alignItems={'center'}>
             <Avatar
               alt={data.manipulatorInfo.manipulatorName}
-              src={''}
+              src={avatar}
               sx={styles.avatar}
             />
             <Typography sx={styles.text}>
