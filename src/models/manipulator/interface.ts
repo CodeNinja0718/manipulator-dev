@@ -1,4 +1,4 @@
-interface Photo {
+export interface Photo {
   type: string;
   url: string;
   objectKey: string;

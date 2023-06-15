@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import type { IReservationItem } from 'models/reservation/interface';
 import { ReservationStatus } from 'models/reservation/interface';
 import Image from 'next/image';
+import { useMemo } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { RESERVATION_STATUS_TEXT } from 'utils/const';
 
@@ -20,6 +21,12 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
   const bookingInfo =
     data.status === ReservationStatus.DONE ? data.result : data.plan;
   const { menuInfo } = bookingInfo;
+  const avatar = useMemo(() => {
+    return (
+      data.manipulatorInfo.photos?.find((item) => item.type === 'avatar')
+        ?.url || '/icons/default-avatar.svg'
+    );
+  }, [data]);
 
   const renderActions = () => {
     if (data.status === ReservationStatus.PAID_CANCELED) {
@@ -75,7 +82,7 @@ const ReservationCard = ({ data }: ReservationCardProps) => {
           {RESERVATION_STATUS_TEXT[data.status]}
         </Typography>
         <Image
-          src="/icons/default-avatar.svg"
+          src={avatar}
           alt="Manipulator avatar"
           width={52}
           height={52}
