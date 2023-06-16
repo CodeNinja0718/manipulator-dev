@@ -15,7 +15,7 @@ export interface ITicketItem {
     manipulatorId: string;
     manipulatorName: string;
     manipulatorNameKana: string;
-    photos: Photo[];
+    manipulatorPhotos: Photo[];
   };
 }
 
