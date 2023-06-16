@@ -19,8 +19,9 @@ const TicketCard = ({ data }: TicketCardProps) => {
 
   const avatar = useMemo(() => {
     return (
-      data.manipulatorInfo.photos?.find((item) => item.type === 'avatar')
-        ?.url || '/icons/default-avatar.svg'
+      data.manipulatorInfo.manipulatorPhotos?.find(
+        (item) => item.type === 'avatar',
+      )?.url || '/icons/default-avatar.svg'
     );
   }, [data]);
 
