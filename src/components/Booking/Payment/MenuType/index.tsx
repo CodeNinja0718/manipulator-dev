@@ -87,8 +87,8 @@ const MenuType = ({ ticketMenu }: IMenuType) => {
 
           <Box sx={styles.ticketBox}>
             <Typography fontWeight="bold" fontSize={14} mb={11}>
-              {ticketMenu?.ticket?.manipulatorNameKana} /{' '}
-              {ticketMenu?.ticket?.salonNameKana}
+              {ticketMenu?.ticket?.manipulatorName} /{' '}
+              {ticketMenu?.ticket?.salonName}
             </Typography>
             <Typography fontWeight="bold" fontSize={16} mb={13}>
               整体

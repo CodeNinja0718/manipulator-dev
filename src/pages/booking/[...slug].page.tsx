@@ -66,6 +66,7 @@ const calculateTicketTimes = (
 
 const BookingPage = () => {
   const { data: currentUser } = useUser();
+
   const router = useRouter();
   const { slug } = router.query;
   const manipulatorId = slug![0] || '';
