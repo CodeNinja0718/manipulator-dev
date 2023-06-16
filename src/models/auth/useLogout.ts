@@ -7,7 +7,7 @@ import queryClient from 'utils/queryClient';
 import authQuery from './query';
 
 const useLogout = () => {
-  const { replace, pathname } = useRouter();
+  const { replace, pathname, reload } = useRouter();
   const { setConfirmModal } = useGlobalState();
   const { mutateAsync: handleLogout } = useMutate<{ refreshToken: string }>(
     authQuery.logout,
@@ -24,6 +24,8 @@ const useLogout = () => {
         .forEach((query) => query.setData(undefined));
       if (pathname.startsWith('/my-page')) {
         replace('/login');
+      } else {
+        reload();
       }
     }
   };
