@@ -139,7 +139,6 @@ const AddTicketForm = ({
       <Typography fontSize={14} fontWeight={'bold'}>
         ※補足テキスト欄（不要であれば削除）
       </Typography>
-
       <TicketReview ticketData={selectedTicket} manipulator={manipulator} />
       <CardSelect
         payment={payment}
@@ -148,7 +147,6 @@ const AddTicketForm = ({
         isLoading={isCardListLoading}
         control={cardControl}
       />
-
       <Box display={'flex'} justifyContent={'center'} mt={32}>
         <LoadingButton
           size="medium"

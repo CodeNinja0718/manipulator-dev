@@ -187,8 +187,8 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         ...ticketMenu,
         ticket: {
           ...ticketMenu?.ticket,
-          manipulatorNameKana: data?.manipulatorNameKana,
-          salonNameKana: data?.salonNameKana,
+          manipulatorName: data?.manipulatorName,
+          salonName: data?.salonName,
           availableCount: data?.ticket?.availableCount,
           expiredAt: data?.ticket?.expiredAt,
         },

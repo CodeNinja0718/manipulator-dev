@@ -60,7 +60,7 @@ const TicketReview = ({ ticketData: data, manipulator }: TicketReviewProps) => {
         flexDirection={'column'}
       >
         <Typography fontSize={14} fontWeight={'bold'} mb={8}>
-          {`${manipulator?.nameKana || ''} / ${data.salonNameKana}`}
+          {`${manipulator?.name || ''} / ${data.salonName}`}
         </Typography>
         <Typography fontSize={14} fontWeight={'bold'} mb={12}>
           {`${data.ticketName}（目安時間：${data.estimatedTime}分）`}
