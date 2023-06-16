@@ -122,70 +122,75 @@ const TicketMenu: React.FC<IMenuSelection> = ({
             {menuTypeList.map((item, index) => (
               <Box
                 key={`menu-types-${_id}-${index}`}
-                display="flex"
-                flexDirection="row"
-                alignItems="flex-start"
                 sx={{
-                  py: 11,
                   borderTop:
                     isTicket(item) && price && menuTypeList.length > 1
                       ? '2px dashed #cccccc'
                       : '',
                 }}
               >
-                <Stack
-                  component="label"
-                  width="100%"
-                  sx={{
-                    cursor: 'pointer',
-                  }}
-                  onChange={() => handleChange(isTicket(item))}
-                >
-                  <Box display="flex" alignItems="center">
-                    <Radio
-                      sx={{
-                        p: 11,
-                      }}
-                      value={isTicket(item) ? ticket?.id : _id}
-                    />
-                    <Typography color="black" fontWeight="bold">
-                      {handleGetLabel(item)}
-                    </Typography>
-                  </Box>
-                  {isTicket(item) ? (
-                    <>
-                      {fetchStatus.indexOf('fetching') > -1 ? (
-                        <CircularProgress size="small" sx={styles.loading} />
-                      ) : (
-                        <TicketElement
-                          isSelected={isSelected}
-                          isShowAvailableCount={isShowAvailableCount}
-                          onAddTicket={onAddTicket}
-                          availableCount={availableCount}
-                          ticket={ticket}
-                          handleChangeTicket={handleChangeTicket}
-                          numberOfTicketRef={numberOfTicketRef}
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </Stack>
-
-                <Typography
-                  color="black"
-                  whiteSpace="nowrap"
-                  fontWeight="bold"
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="flex-start"
                   py={11}
                 >
-                  <NumericFormat
-                    value={handleGetPriceTicket(item)}
-                    thousandSeparator=","
-                    suffix={MENU_TYPES_KEYS.COUPON === item ? '円 / 1回' : '円'}
-                    displayType="text"
-                  />
-                </Typography>
+                  <Stack
+                    component="label"
+                    width="100%"
+                    sx={{
+                      cursor: 'pointer',
+                    }}
+                    onChange={() => handleChange(isTicket(item))}
+                  >
+                    <Box display="flex" alignItems="center">
+                      <Radio
+                        sx={{
+                          p: 11,
+                        }}
+                        value={isTicket(item) ? ticket?.id : _id}
+                      />
+                      <Typography color="black" fontWeight="bold">
+                        {handleGetLabel(item)}
+                      </Typography>
+                    </Box>
+                  </Stack>
+
+                  <Typography
+                    color="black"
+                    whiteSpace="nowrap"
+                    fontWeight="bold"
+                    py={11}
+                  >
+                    <NumericFormat
+                      value={handleGetPriceTicket(item)}
+                      thousandSeparator=","
+                      suffix={
+                        MENU_TYPES_KEYS.COUPON === item ? '円 / 1回' : '円'
+                      }
+                      displayType="text"
+                    />
+                  </Typography>
+                </Box>
+                {isTicket(item) ? (
+                  <>
+                    {fetchStatus.indexOf('fetching') > -1 ? (
+                      <CircularProgress size="small" sx={styles.loading} />
+                    ) : (
+                      <TicketElement
+                        isSelected={isSelected}
+                        isShowAvailableCount={isShowAvailableCount}
+                        onAddTicket={onAddTicket}
+                        availableCount={availableCount}
+                        ticket={ticket}
+                        handleChangeTicket={handleChangeTicket}
+                        numberOfTicketRef={numberOfTicketRef}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
               </Box>
             ))}
           </Box>

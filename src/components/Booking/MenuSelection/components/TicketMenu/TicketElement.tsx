@@ -39,7 +39,10 @@ const TicketElement: React.FC<ITicketElement> = ({
   };
 
   return (
-    <Stack direction={'column'} alignItems={'flex-start'}>
+    <Stack
+      direction={'column'}
+      alignItems={{ xs: 'flex-end', tablet: 'flex-start' }}
+    >
       {isShowAvailableCount ? (
         <Button
           size="medium"
