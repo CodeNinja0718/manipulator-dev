@@ -1,4 +1,4 @@
-import { Radio, Stack, Typography } from '@mui/material';
+import { Box, Radio, Stack, Typography } from '@mui/material';
 import type { IReservationMenu } from 'models/manipulator/interface';
 import { NumericFormat } from 'react-number-format';
 
@@ -25,17 +25,23 @@ const DefaultMenu: React.FC<IReservationMenu> = ({
         flexGrow={1}
         justifyContent="space-between"
       >
-        <Stack direction={'row'} spacing={12}>
-          <Typography component="p" fontWeight={'bold'} color={'black'}>
+        <Box>
+          <Typography component="span" fontWeight={'bold'} color={'black'}>
             {name}
           </Typography>
           {!timeDisplay && (
-            <Typography component={'p'} fontWeight={'bold'} color={'black'}>
+            <Typography
+              component={'span'}
+              fontWeight={'bold'}
+              color={'black'}
+              ml={12}
+              whiteSpace={'nowrap'}
+            >
               {estimatedTime}分
             </Typography>
           )}
-        </Stack>
-        <Typography color="black" fontWeight="bold">
+        </Box>
+        <Typography color="black" fontWeight="bold" minWidth={70}>
           <NumericFormat
             value={price}
             thousandSeparator=","
