@@ -13,7 +13,11 @@ import type { ICardItem } from 'models/card/interface';
 import cardQuery from 'models/card/query';
 import type { ICoupon } from 'models/discount/interface';
 import discountQuery from 'models/discount/query';
-import type { IReservationMenu, ITicket } from 'models/manipulator/interface';
+import type {
+  IManipulator,
+  IReservationMenu,
+  ITicket,
+} from 'models/manipulator/interface';
 import type { ITicketOfMenu, ITicketTime } from 'models/ticket/interface';
 import ticketQuery from 'models/ticket/query';
 import Image from 'next/image';
@@ -36,6 +40,7 @@ interface BookingPaymentProps {
   onSubmit: (values: Record<string, unknown>, onFailure?: () => void) => void;
   ticketMenu: ITicket | any;
   ticketTimeList: ITicketTime[];
+  manipulatorData: IManipulator | any;
 }
 
 const BookingPayment: React.FC<BookingPaymentProps> = ({
@@ -46,6 +51,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
   onSubmit,
   ticketMenu,
   ticketTimeList,
+  manipulatorData,
 }) => {
   const { data: currentUser, isFetching } = useUser();
   const { data: cardList, isLoading: isLoadingCard } = useFetch<{
@@ -187,7 +193,7 @@ const BookingPayment: React.FC<BookingPaymentProps> = ({
         ...ticketMenu,
         ticket: {
           ...ticketMenu?.ticket,
-          manipulatorName: data?.manipulatorName,
+          manipulatorName: manipulatorData?.name || data?.manipulatorName,
           salonName: data?.salonName,
           availableCount: data?.ticket?.availableCount,
           expiredAt: data?.ticket?.expiredAt,

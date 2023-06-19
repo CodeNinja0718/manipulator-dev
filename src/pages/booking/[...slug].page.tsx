@@ -326,6 +326,7 @@ const BookingPage = () => {
           handleChangeStep={handleChangeStep}
           onSubmit={handleSubmitStep}
           ticketTimeList={tickets}
+          manipulatorData={manipulatorData}
         />
       );
     }
@@ -340,6 +341,7 @@ const BookingPage = () => {
         />
       );
     }
+
     return (
       <BookingMenuSelection
         initialMenu={
