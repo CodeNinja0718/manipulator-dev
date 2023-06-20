@@ -112,7 +112,12 @@ const TicketMenu: React.FC<IMenuSelection> = ({
             {name}
           </Typography>
           {!timeDisplay && (
-            <Typography fontSize={16} fontWeight={'bold'} color={'black'}>
+            <Typography
+              fontSize={16}
+              fontWeight={'bold'}
+              color={'black'}
+              whiteSpace={'nowrap'}
+            >
               {estimatedTime}分
             </Typography>
           )}
