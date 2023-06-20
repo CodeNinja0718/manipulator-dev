@@ -26,6 +26,8 @@ const TicketElement: React.FC<ITicketElement> = ({
   numberOfTicketRef,
   isSelected,
 }) => {
+  const maximumNumOfTicket =
+    availableCount || (ticket?.numberOfTicket as number) || 1;
   const handleExistTicket = () => {
     const numberTicket = availableCount || ticket?.numberOfTicket || 0;
     let numberOfSelectedTicket = ticket?.numberOfSelectedTicket || 1;
@@ -36,6 +38,18 @@ const TicketElement: React.FC<ITicketElement> = ({
     }
 
     return isSelected ? numberTicket - numberOfSelectedTicket : numberTicket;
+  };
+
+  const handleNumberTicketBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (+e.target.value < 1) {
+      e.target.value = '1';
+    }
+
+    if (+e.target.value > maximumNumOfTicket) {
+      e.target.value = `${maximumNumOfTicket}`;
+    }
+
+    handleChangeTicket();
   };
 
   return (
@@ -73,6 +87,7 @@ const TicketElement: React.FC<ITicketElement> = ({
             sx={styles.numberInput}
             className={`${isSelected ? '' : ' hide'}`}
             onClick={handleChangeTicket}
+            onBlur={handleNumberTicketBlur}
             required
             inputProps={{
               inputMode: 'numeric',
@@ -80,7 +95,7 @@ const TicketElement: React.FC<ITicketElement> = ({
             }}
             value={ticket?.numberOfSelectedTicket || 1}
             min={1}
-            max={availableCount || ticket?.numberOfTicket || 1}
+            max={maximumNumOfTicket}
           />
           <Box
             sx={styles.defaultNumberOfTicket}
